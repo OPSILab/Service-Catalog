@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -30,7 +31,7 @@ import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
 import it.eng.opsi.servicecatalog.service.ServiceCatalogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
-@OpenAPIDefinition(tags = {
+@OpenAPIDefinition(info = @Info(title = "Service Catalog API", description = "Service Catalog APIs used to manage CRUD for Service Model descriptions.", version = "1.0"), tags = {
 		@Tag(name = "Service Model", description = "Service Model Description APIs to get and manage service model descriptions.") })
 @RestController
 @RequestMapping("/api/v2")
@@ -75,7 +76,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	public ResponseEntity<ServiceModel> createService(@RequestBody @Valid ServiceModel service) {
 
 		ServiceModel result = catalogService.createService(service);
-		return ResponseEntity.created(URI.create(result.getServiceId())).body(result);
+		return ResponseEntity.created(URI.create(result.getServiceId().replaceAll("\\s+",""))).body(result);
 	}
 
 	@Operation(summary = "Update Service Model description, by replacing the existing one", tags = {

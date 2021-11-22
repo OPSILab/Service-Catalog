@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 
-public interface ServiceModelRepository extends MongoRepository<ServiceModel, String> {
+public interface ServiceModelRepository extends MongoRepository<ServiceModel, String>, ServiceModelCustomRepository {
 
 	public Optional<ServiceModel> findByServiceId(String serviceId);
 

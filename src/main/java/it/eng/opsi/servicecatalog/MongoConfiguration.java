@@ -24,10 +24,12 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mapping.context.MappingContext;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.convert.MongoConverter;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
+import org.springframework.data.mongodb.core.index.Index;
 import org.springframework.data.mongodb.core.index.IndexOperations;
 import org.springframework.data.mongodb.core.index.MongoPersistentEntityIndexResolver;
 import org.springframework.data.mongodb.core.mapping.BasicMongoPersistentEntity;
@@ -56,6 +58,14 @@ public class MongoConfiguration {
 
 		MappingContext mappingContext = this.mongoConverter.getMappingContext();
 
+		/*
+		 * Ensure serviceId and identifier indexes on ServiceModel explicitly (to avoid missing @index
+		 * annotation on class after regeneration with json2pojo)
+		 */
+		mongoTemplate.indexOps("serviceModel") // collection name string or .class
+				.ensureIndex(new Index().on("serviceId", Sort.Direction.ASC).unique());
+		mongoTemplate.indexOps("serviceModel") // collection name string or .class
+		.ensureIndex(new Index().on("identifier", Sort.Direction.ASC).unique());
 		if (mappingContext instanceof MongoMappingContext) {
 			MongoMappingContext mongoMappingContext = (MongoMappingContext) mappingContext;
 
