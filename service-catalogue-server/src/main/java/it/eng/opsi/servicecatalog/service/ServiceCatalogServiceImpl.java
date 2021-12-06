@@ -1,16 +1,19 @@
 package it.eng.opsi.servicecatalog.service;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
 
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.jsonld.Serializer;
+import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.ServiceModel.ServiceDescriptionStatus;
 import it.eng.opsi.servicecatalog.repository.ServiceModelRepository;
@@ -20,8 +23,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
-	private static final Serializer jsonldSerializer = new Serializer();
-	
+	@Autowired
+	private Serializer jsonldSerializer;
+
 	@Value("${uriBasePath}")
 	private String uriBasePath;
 
@@ -73,7 +77,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		if (!serviceId.equals(service.getIdentifier()))
 			throw new ServiceNotEditableException("ServiceId in the path and the one in the body mismatch.");
-		
+
 		return serviceModelRepo.updateService(serviceId, service).orElseThrow(
 				() -> new ServiceNotFoundException("No Service description found for Service Id: " + serviceId));
 
@@ -89,10 +93,33 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public String getServiceByIdJsonLd(String serviceId) throws ServiceNotFoundException, IOException {
-		ServiceModel service =  serviceModelRepo.findByIdentifier(serviceId)
+		ServiceModel service = serviceModelRepo.findByIdentifier(serviceId)
 				.orElseThrow(() -> new ServiceNotFoundException("No Service found with Service Id: " + serviceId));
-		
+
 		return jsonldSerializer.serialize(service);
 	}
+
+	@Override
+	public List<HashMap<String, Object>> getCountBySector() {
+
+		return serviceModelRepo.getCountBySector();
+	}
+
+	@Override
+	public HasInfo getHasInfoById(String serviceId) throws ServiceNotFoundException {
+
+		return serviceModelRepo.getHasInfoByIdentifier(serviceId)
+				.orElseThrow(() -> new ServiceNotFoundException("No Service found with Service Id: " + serviceId)).getHasInfo();
+	}
+	
+	@Override
+	public String getHasInfoByIdJsonLd(String serviceId) throws ServiceNotFoundException, IOException {
+
+		HasInfo serviceHasInfo = serviceModelRepo.getHasInfoByIdentifier(serviceId)
+				.orElseThrow(() -> new ServiceNotFoundException("No Service found with Service Id: " + serviceId)).getHasInfo();
+
+		return jsonldSerializer.serialize(serviceHasInfo);
+	}
+
 
 }

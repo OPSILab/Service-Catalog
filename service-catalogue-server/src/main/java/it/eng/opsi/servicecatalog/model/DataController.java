@@ -1,6 +1,7 @@
 
 package it.eng.opsi.servicecatalog.model;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -10,11 +11,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
     "piiController",
     "onBehalf",
-    "org",
-    "contact",
-    "address",
+    "organizationName",
+    "hasContact",
+    "hasAddress",
     "email",
-    "phone",
+    "telephone",
     "operatorName"
 })
 public class DataController {
@@ -33,32 +34,33 @@ public class DataController {
      * 
      */
     @JsonProperty("onBehalf")
+    @Valid
     @NotNull
-    private Boolean onBehalf;
+    private OnBehalf onBehalf;
     /**
      * 
      * (Required)
      * 
      */
-    @JsonProperty("org")
+    @JsonProperty("organizationName")
     @NotNull
-    private String org;
+    private String organizationName;
     /**
      * 
      * (Required)
      * 
      */
-    @JsonProperty("contact")
+    @JsonProperty("hasContact")
     @NotNull
-    private String contact;
+    private String hasContact;
     /**
      * 
      * (Required)
      * 
      */
-    @JsonProperty("address")
+    @JsonProperty("hasAddress")
     @NotNull
-    private String address;
+    private String hasAddress;
     /**
      * 
      * (Required)
@@ -72,9 +74,9 @@ public class DataController {
      * (Required)
      * 
      */
-    @JsonProperty("phone")
+    @JsonProperty("telephone")
     @NotNull
-    private String phone;
+    private String telephone;
     /**
      * 
      * (Required)
@@ -94,23 +96,23 @@ public class DataController {
     /**
      * 
      * @param piiController
-     * @param address
-     * @param org
-     * @param phone
-     * @param contact
+     * @param hasAddress
+     * @param organizationName
      * @param onBehalf
+     * @param telephone
+     * @param hasContact
      * @param operatorName
      * @param email
      */
-    public DataController(String piiController, Boolean onBehalf, String org, String contact, String address, String email, String phone, String operatorName) {
+    public DataController(String piiController, OnBehalf onBehalf, String organizationName, String hasContact, String hasAddress, String email, String telephone, String operatorName) {
         super();
         this.piiController = piiController;
         this.onBehalf = onBehalf;
-        this.org = org;
-        this.contact = contact;
-        this.address = address;
+        this.organizationName = organizationName;
+        this.hasContact = hasContact;
+        this.hasAddress = hasAddress;
         this.email = email;
-        this.phone = phone;
+        this.telephone = telephone;
         this.operatorName = operatorName;
     }
 
@@ -140,7 +142,7 @@ public class DataController {
      * 
      */
     @JsonProperty("onBehalf")
-    public Boolean getOnBehalf() {
+    public OnBehalf getOnBehalf() {
         return onBehalf;
     }
 
@@ -150,7 +152,7 @@ public class DataController {
      * 
      */
     @JsonProperty("onBehalf")
-    public void setOnBehalf(Boolean onBehalf) {
+    public void setOnBehalf(OnBehalf onBehalf) {
         this.onBehalf = onBehalf;
     }
 
@@ -159,9 +161,9 @@ public class DataController {
      * (Required)
      * 
      */
-    @JsonProperty("org")
-    public String getOrg() {
-        return org;
+    @JsonProperty("organizationName")
+    public String getOrganizationName() {
+        return organizationName;
     }
 
     /**
@@ -169,9 +171,9 @@ public class DataController {
      * (Required)
      * 
      */
-    @JsonProperty("org")
-    public void setOrg(String org) {
-        this.org = org;
+    @JsonProperty("organizationName")
+    public void setOrganizationName(String organizationName) {
+        this.organizationName = organizationName;
     }
 
     /**
@@ -179,9 +181,9 @@ public class DataController {
      * (Required)
      * 
      */
-    @JsonProperty("contact")
-    public String getContact() {
-        return contact;
+    @JsonProperty("hasContact")
+    public String getHasContact() {
+        return hasContact;
     }
 
     /**
@@ -189,9 +191,9 @@ public class DataController {
      * (Required)
      * 
      */
-    @JsonProperty("contact")
-    public void setContact(String contact) {
-        this.contact = contact;
+    @JsonProperty("hasContact")
+    public void setHasContact(String hasContact) {
+        this.hasContact = hasContact;
     }
 
     /**
@@ -199,9 +201,9 @@ public class DataController {
      * (Required)
      * 
      */
-    @JsonProperty("address")
-    public String getAddress() {
-        return address;
+    @JsonProperty("hasAddress")
+    public String getHasAddress() {
+        return hasAddress;
     }
 
     /**
@@ -209,9 +211,9 @@ public class DataController {
      * (Required)
      * 
      */
-    @JsonProperty("address")
-    public void setAddress(String address) {
-        this.address = address;
+    @JsonProperty("hasAddress")
+    public void setHasAddress(String hasAddress) {
+        this.hasAddress = hasAddress;
     }
 
     /**
@@ -239,9 +241,9 @@ public class DataController {
      * (Required)
      * 
      */
-    @JsonProperty("phone")
-    public String getPhone() {
-        return phone;
+    @JsonProperty("telephone")
+    public String getTelephone() {
+        return telephone;
     }
 
     /**
@@ -249,9 +251,9 @@ public class DataController {
      * (Required)
      * 
      */
-    @JsonProperty("phone")
-    public void setPhone(String phone) {
-        this.phone = phone;
+    @JsonProperty("telephone")
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     /**
@@ -286,25 +288,25 @@ public class DataController {
         sb.append('=');
         sb.append(((this.onBehalf == null)?"<null>":this.onBehalf));
         sb.append(',');
-        sb.append("org");
+        sb.append("organizationName");
         sb.append('=');
-        sb.append(((this.org == null)?"<null>":this.org));
+        sb.append(((this.organizationName == null)?"<null>":this.organizationName));
         sb.append(',');
-        sb.append("contact");
+        sb.append("hasContact");
         sb.append('=');
-        sb.append(((this.contact == null)?"<null>":this.contact));
+        sb.append(((this.hasContact == null)?"<null>":this.hasContact));
         sb.append(',');
-        sb.append("address");
+        sb.append("hasAddress");
         sb.append('=');
-        sb.append(((this.address == null)?"<null>":this.address));
+        sb.append(((this.hasAddress == null)?"<null>":this.hasAddress));
         sb.append(',');
         sb.append("email");
         sb.append('=');
         sb.append(((this.email == null)?"<null>":this.email));
         sb.append(',');
-        sb.append("phone");
+        sb.append("telephone");
         sb.append('=');
-        sb.append(((this.phone == null)?"<null>":this.phone));
+        sb.append(((this.telephone == null)?"<null>":this.telephone));
         sb.append(',');
         sb.append("operatorName");
         sb.append('=');
@@ -322,11 +324,11 @@ public class DataController {
     public int hashCode() {
         int result = 1;
         result = ((result* 31)+((this.piiController == null)? 0 :this.piiController.hashCode()));
-        result = ((result* 31)+((this.address == null)? 0 :this.address.hashCode()));
-        result = ((result* 31)+((this.org == null)? 0 :this.org.hashCode()));
-        result = ((result* 31)+((this.phone == null)? 0 :this.phone.hashCode()));
-        result = ((result* 31)+((this.contact == null)? 0 :this.contact.hashCode()));
+        result = ((result* 31)+((this.hasAddress == null)? 0 :this.hasAddress.hashCode()));
+        result = ((result* 31)+((this.organizationName == null)? 0 :this.organizationName.hashCode()));
         result = ((result* 31)+((this.onBehalf == null)? 0 :this.onBehalf.hashCode()));
+        result = ((result* 31)+((this.telephone == null)? 0 :this.telephone.hashCode()));
+        result = ((result* 31)+((this.hasContact == null)? 0 :this.hasContact.hashCode()));
         result = ((result* 31)+((this.operatorName == null)? 0 :this.operatorName.hashCode()));
         result = ((result* 31)+((this.email == null)? 0 :this.email.hashCode()));
         return result;
@@ -341,7 +343,7 @@ public class DataController {
             return false;
         }
         DataController rhs = ((DataController) other);
-        return (((((((((this.piiController == rhs.piiController)||((this.piiController!= null)&&this.piiController.equals(rhs.piiController)))&&((this.address == rhs.address)||((this.address!= null)&&this.address.equals(rhs.address))))&&((this.org == rhs.org)||((this.org!= null)&&this.org.equals(rhs.org))))&&((this.phone == rhs.phone)||((this.phone!= null)&&this.phone.equals(rhs.phone))))&&((this.contact == rhs.contact)||((this.contact!= null)&&this.contact.equals(rhs.contact))))&&((this.onBehalf == rhs.onBehalf)||((this.onBehalf!= null)&&this.onBehalf.equals(rhs.onBehalf))))&&((this.operatorName == rhs.operatorName)||((this.operatorName!= null)&&this.operatorName.equals(rhs.operatorName))))&&((this.email == rhs.email)||((this.email!= null)&&this.email.equals(rhs.email))));
+        return (((((((((this.piiController == rhs.piiController)||((this.piiController!= null)&&this.piiController.equals(rhs.piiController)))&&((this.hasAddress == rhs.hasAddress)||((this.hasAddress!= null)&&this.hasAddress.equals(rhs.hasAddress))))&&((this.organizationName == rhs.organizationName)||((this.organizationName!= null)&&this.organizationName.equals(rhs.organizationName))))&&((this.onBehalf == rhs.onBehalf)||((this.onBehalf!= null)&&this.onBehalf.equals(rhs.onBehalf))))&&((this.telephone == rhs.telephone)||((this.telephone!= null)&&this.telephone.equals(rhs.telephone))))&&((this.hasContact == rhs.hasContact)||((this.hasContact!= null)&&this.hasContact.equals(rhs.hasContact))))&&((this.operatorName == rhs.operatorName)||((this.operatorName!= null)&&this.operatorName.equals(rhs.operatorName))))&&((this.email == rhs.email)||((this.email!= null)&&this.email.equals(rhs.email))));
     }
 
 }

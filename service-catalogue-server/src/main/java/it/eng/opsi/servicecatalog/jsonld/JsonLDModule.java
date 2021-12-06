@@ -13,16 +13,23 @@ import java.net.URI;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 
 /**
  * Jackson module which provides support for JSON-LD serialization
  */
+@Component
 public class JsonLDModule extends SimpleModule {
 
-    public JsonLDModule() {
+
+	@Autowired
+    public JsonLDModule(JsonLDSerializerModifier jsonldSerializerModifier
+	) {
         super();
         
-        setSerializerModifier(new JsonLDSerializerModifier());
+        setSerializerModifier(jsonldSerializerModifier);
         
         addSerializer(XMLGregorianCalendar.class, new XMLGregorianCalendarSerializer());
         addDeserializer(XMLGregorianCalendar.class, new XMLGregorianCalendarDeserializer());

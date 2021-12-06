@@ -10,14 +10,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
     "businessId",
     "name",
-    "address1",
-    "address2",
+    "hasAddress",
     "postalcode",
     "city",
     "state",
     "country",
     "email",
-    "phone",
+    "telephone",
     "jurisdiction"
 })
 public class ServiceProvider {
@@ -43,17 +42,9 @@ public class ServiceProvider {
      * (Required)
      * 
      */
-    @JsonProperty("address1")
+    @JsonProperty("hasAddress")
     @NotNull
-    private String address1;
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("address2")
-    @NotNull
-    private String address2;
+    private String hasAddress;
     /**
      * 
      * (Required)
@@ -99,9 +90,9 @@ public class ServiceProvider {
      * (Required)
      * 
      */
-    @JsonProperty("phone")
+    @JsonProperty("telephone")
     @NotNull
-    private String phone;
+    private String telephone;
     /**
      * 
      * (Required)
@@ -120,30 +111,28 @@ public class ServiceProvider {
 
     /**
      * 
+     * @param hasAddress
      * @param country
-     * @param address2
      * @param city
-     * @param phone
-     * @param address1
      * @param postalcode
      * @param jurisdiction
      * @param businessId
      * @param name
+     * @param telephone
      * @param state
      * @param email
      */
-    public ServiceProvider(String businessId, String name, String address1, String address2, String postalcode, String city, String state, String country, String email, String phone, String jurisdiction) {
+    public ServiceProvider(String businessId, String name, String hasAddress, String postalcode, String city, String state, String country, String email, String telephone, String jurisdiction) {
         super();
         this.businessId = businessId;
         this.name = name;
-        this.address1 = address1;
-        this.address2 = address2;
+        this.hasAddress = hasAddress;
         this.postalcode = postalcode;
         this.city = city;
         this.state = state;
         this.country = country;
         this.email = email;
-        this.phone = phone;
+        this.telephone = telephone;
         this.jurisdiction = jurisdiction;
     }
 
@@ -192,9 +181,9 @@ public class ServiceProvider {
      * (Required)
      * 
      */
-    @JsonProperty("address1")
-    public String getAddress1() {
-        return address1;
+    @JsonProperty("hasAddress")
+    public String getHasAddress() {
+        return hasAddress;
     }
 
     /**
@@ -202,29 +191,9 @@ public class ServiceProvider {
      * (Required)
      * 
      */
-    @JsonProperty("address1")
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("address2")
-    public String getAddress2() {
-        return address2;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("address2")
-    public void setAddress2(String address2) {
-        this.address2 = address2;
+    @JsonProperty("hasAddress")
+    public void setHasAddress(String hasAddress) {
+        this.hasAddress = hasAddress;
     }
 
     /**
@@ -332,9 +301,9 @@ public class ServiceProvider {
      * (Required)
      * 
      */
-    @JsonProperty("phone")
-    public String getPhone() {
-        return phone;
+    @JsonProperty("telephone")
+    public String getTelephone() {
+        return telephone;
     }
 
     /**
@@ -342,9 +311,9 @@ public class ServiceProvider {
      * (Required)
      * 
      */
-    @JsonProperty("phone")
-    public void setPhone(String phone) {
-        this.phone = phone;
+    @JsonProperty("telephone")
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
     /**
@@ -379,13 +348,9 @@ public class ServiceProvider {
         sb.append('=');
         sb.append(((this.name == null)?"<null>":this.name));
         sb.append(',');
-        sb.append("address1");
+        sb.append("hasAddress");
         sb.append('=');
-        sb.append(((this.address1 == null)?"<null>":this.address1));
-        sb.append(',');
-        sb.append("address2");
-        sb.append('=');
-        sb.append(((this.address2 == null)?"<null>":this.address2));
+        sb.append(((this.hasAddress == null)?"<null>":this.hasAddress));
         sb.append(',');
         sb.append("postalcode");
         sb.append('=');
@@ -407,9 +372,9 @@ public class ServiceProvider {
         sb.append('=');
         sb.append(((this.email == null)?"<null>":this.email));
         sb.append(',');
-        sb.append("phone");
+        sb.append("telephone");
         sb.append('=');
-        sb.append(((this.phone == null)?"<null>":this.phone));
+        sb.append(((this.telephone == null)?"<null>":this.telephone));
         sb.append(',');
         sb.append("jurisdiction");
         sb.append('=');
@@ -426,15 +391,14 @@ public class ServiceProvider {
     @Override
     public int hashCode() {
         int result = 1;
+        result = ((result* 31)+((this.hasAddress == null)? 0 :this.hasAddress.hashCode()));
         result = ((result* 31)+((this.country == null)? 0 :this.country.hashCode()));
-        result = ((result* 31)+((this.address2 == null)? 0 :this.address2 .hashCode()));
         result = ((result* 31)+((this.city == null)? 0 :this.city.hashCode()));
-        result = ((result* 31)+((this.phone == null)? 0 :this.phone.hashCode()));
-        result = ((result* 31)+((this.address1 == null)? 0 :this.address1 .hashCode()));
         result = ((result* 31)+((this.postalcode == null)? 0 :this.postalcode.hashCode()));
         result = ((result* 31)+((this.jurisdiction == null)? 0 :this.jurisdiction.hashCode()));
         result = ((result* 31)+((this.businessId == null)? 0 :this.businessId.hashCode()));
         result = ((result* 31)+((this.name == null)? 0 :this.name.hashCode()));
+        result = ((result* 31)+((this.telephone == null)? 0 :this.telephone.hashCode()));
         result = ((result* 31)+((this.state == null)? 0 :this.state.hashCode()));
         result = ((result* 31)+((this.email == null)? 0 :this.email.hashCode()));
         return result;
@@ -449,7 +413,7 @@ public class ServiceProvider {
             return false;
         }
         ServiceProvider rhs = ((ServiceProvider) other);
-        return ((((((((((((this.country == rhs.country)||((this.country!= null)&&this.country.equals(rhs.country)))&&((this.address2 == rhs.address2)||((this.address2 != null)&&this.address2 .equals(rhs.address2))))&&((this.city == rhs.city)||((this.city!= null)&&this.city.equals(rhs.city))))&&((this.phone == rhs.phone)||((this.phone!= null)&&this.phone.equals(rhs.phone))))&&((this.address1 == rhs.address1)||((this.address1 != null)&&this.address1 .equals(rhs.address1))))&&((this.postalcode == rhs.postalcode)||((this.postalcode!= null)&&this.postalcode.equals(rhs.postalcode))))&&((this.jurisdiction == rhs.jurisdiction)||((this.jurisdiction!= null)&&this.jurisdiction.equals(rhs.jurisdiction))))&&((this.businessId == rhs.businessId)||((this.businessId!= null)&&this.businessId.equals(rhs.businessId))))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.state == rhs.state)||((this.state!= null)&&this.state.equals(rhs.state))))&&((this.email == rhs.email)||((this.email!= null)&&this.email.equals(rhs.email))));
+        return (((((((((((this.hasAddress == rhs.hasAddress)||((this.hasAddress!= null)&&this.hasAddress.equals(rhs.hasAddress)))&&((this.country == rhs.country)||((this.country!= null)&&this.country.equals(rhs.country))))&&((this.city == rhs.city)||((this.city!= null)&&this.city.equals(rhs.city))))&&((this.postalcode == rhs.postalcode)||((this.postalcode!= null)&&this.postalcode.equals(rhs.postalcode))))&&((this.jurisdiction == rhs.jurisdiction)||((this.jurisdiction!= null)&&this.jurisdiction.equals(rhs.jurisdiction))))&&((this.businessId == rhs.businessId)||((this.businessId!= null)&&this.businessId.equals(rhs.businessId))))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.telephone == rhs.telephone)||((this.telephone!= null)&&this.telephone.equals(rhs.telephone))))&&((this.state == rhs.state)||((this.state!= null)&&this.state.equals(rhs.state))))&&((this.email == rhs.email)||((this.email!= null)&&this.email.equals(rhs.email))));
     }
 
 }

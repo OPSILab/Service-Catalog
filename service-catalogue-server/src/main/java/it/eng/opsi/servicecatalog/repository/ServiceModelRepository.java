@@ -1,17 +1,25 @@
 package it.eng.opsi.servicecatalog.repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
+import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
+import it.eng.opsi.servicecatalog.model.HasInfoOnly;
 
 public interface ServiceModelRepository extends MongoRepository<ServiceModel, String>, ServiceModelCustomRepository {
 
 	public Optional<ServiceModel> findByIdentifier(String serviceId);
 
+	
+	public Optional<HasInfoOnly> getHasInfoByIdentifier(String serviceId);
+	
 //	@Query(value = "{ $and:[{ 'serviceId': ?0}, { 'serviceInstance.cert':{$ne:null}}]}")
 //	public Optional<ServiceModel> findRegisteredByServiceId(String serviceId);
 
@@ -36,5 +44,9 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 //			"{ $match: { 'isDescribedAt.datasetId' : $1}}", "{ $unwind : '$isDescribedAt.dataMapping' }",
 //			"{ $replaceRoot: { 'newRoot' : '$isDescribedAt.dataMapping'}}" })
 //	public Optional<List<DataMapping>> getDatasetDataMappingByServiceIdAndDatasetId(String service, String datasetId);
+
+	@Aggregation(pipeline = { "{$unwind: '$hasInfo.sector'}", "{'$group':{'_id':'$hasInfo.sector','count':{$sum:1}}}",
+			"{$project:{'_id':0,'sector':'$_id','count':'$count'}}" })
+	public List<HashMap<String, Object>> getCountBySector();
 
 }

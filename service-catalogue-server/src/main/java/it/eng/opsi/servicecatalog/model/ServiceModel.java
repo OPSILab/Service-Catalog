@@ -7,14 +7,13 @@ import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.fasterxml.jackson.annotation.JsonValue;
 
@@ -26,38 +25,40 @@ import com.fasterxml.jackson.annotation.JsonValue;
  * 
  */
 @JsonTypeName("acr:ServiceModel")
-//@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type", include = As.PROPERTY, defaultImpl = ServiceModel.class)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "serviceId", "dct:name", "identifier", "issued", "createdByUserId", "serviceDescriptionVersion",
-		"serviceIconUrl", "status", "isPublicService", "hasInfo", "hasServiceInstance", "hasUsageRule",
-		"isPersonalDataHandling" })
+@JsonPropertyOrder({
+    "identifier",
+    "title",
+    "issued",
+    "createdByUserId",
+    "versionInfo",
+    "serviceIconUrl",
+    "status",
+    "isPublicService",
+    "hasInfo",
+    "hasServiceInstance",
+    "hasUsageRule",
+    "isPersonalDataHandling"
+})
 public class ServiceModel {
 
-	 /**
-     * 
-     * (Required)
-     * 
-     */
-	@JsonProperty("@id")
-	@JsonAlias({ "@id", "identifier" })
-    @NotNull
-    private String identifier;
-	/**
-	 * 
-	 * (Required)
-	 * 
-	 */
-
-	
     /**
      * 
      * (Required)
      * 
      */
-    @JsonProperty("name")
+    @JsonProperty("identifier")
     @NotNull
-    private String name;
-   
+    private String identifier;
+    /**
+     * name
+     * <p>
+     * 
+     * 
+     */
+    @JsonProperty("title")
+    private String title;
     /**
      * 
      * (Required)
@@ -75,13 +76,13 @@ public class ServiceModel {
     @NotNull
     private String createdByUserId;
     /**
+     * Description Version
+     * <p>
      * 
-     * (Required)
      * 
      */
-    @JsonProperty("serviceDescriptionVersion")
-    @NotNull
-    private String serviceDescriptionVersion;
+    @JsonProperty("versionInfo")
+    private String versionInfo;
     /**
      * 
      * (Required)
@@ -135,10 +136,10 @@ public class ServiceModel {
     @JsonProperty("hasUsageRule")
     @Valid
     @NotNull
-    private List<Object> hasUsageRule = new ArrayList<Object>();
+    private List<HasUsageRule> hasUsageRule = new ArrayList<HasUsageRule>();
     @JsonProperty("isPersonalDataHandling")
     @Valid
-    private List<Object> isPersonalDataHandling = new ArrayList<Object>();
+    private List<IsPersonalDataHandling> isPersonalDataHandling = new ArrayList<IsPersonalDataHandling>();
 
     /**
      * No args constructor for use in serialization
@@ -151,24 +152,24 @@ public class ServiceModel {
      * 
      * @param identifier
      * @param createdByUserId
-     * @param serviceDescriptionVersion
      * @param hasUsageRule
      * @param isPersonalDataHandling
-     * @param name
+     * @param versionInfo
      * @param hasServiceInstance
+     * @param title
      * @param issued
      * @param serviceIconUrl
      * @param hasInfo
      * @param status
      * @param isPublicService
      */
-    public ServiceModel(String name, String identifier, String issued, String createdByUserId, String serviceDescriptionVersion, String serviceIconUrl, ServiceModel.ServiceDescriptionStatus status, Boolean isPublicService, HasInfo hasInfo, HasServiceInstance hasServiceInstance, List<Object> hasUsageRule, List<Object> isPersonalDataHandling) {
+    public ServiceModel(String identifier, String title, String issued, String createdByUserId, String versionInfo, String serviceIconUrl, ServiceModel.ServiceDescriptionStatus status, Boolean isPublicService, HasInfo hasInfo, HasServiceInstance hasServiceInstance, List<HasUsageRule> hasUsageRule, List<IsPersonalDataHandling> isPersonalDataHandling) {
         super();
-        this.name = name;
         this.identifier = identifier;
+        this.title = title;
         this.issued = issued;
         this.createdByUserId = createdByUserId;
-        this.serviceDescriptionVersion = serviceDescriptionVersion;
+        this.versionInfo = versionInfo;
         this.serviceIconUrl = serviceIconUrl;
         this.status = status;
         this.isPublicService = isPublicService;
@@ -176,26 +177,6 @@ public class ServiceModel {
         this.hasServiceInstance = hasServiceInstance;
         this.hasUsageRule = hasUsageRule;
         this.isPersonalDataHandling = isPersonalDataHandling;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("name")
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
     }
 
     /**
@@ -216,6 +197,28 @@ public class ServiceModel {
     @JsonProperty("identifier")
     public void setIdentifier(String identifier) {
         this.identifier = identifier;
+    }
+
+    /**
+     * name
+     * <p>
+     * 
+     * 
+     */
+    @JsonProperty("title")
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * name
+     * <p>
+     * 
+     * 
+     */
+    @JsonProperty("title")
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
@@ -259,23 +262,25 @@ public class ServiceModel {
     }
 
     /**
+     * Description Version
+     * <p>
      * 
-     * (Required)
      * 
      */
-    @JsonProperty("serviceDescriptionVersion")
-    public String getServiceDescriptionVersion() {
-        return serviceDescriptionVersion;
+    @JsonProperty("versionInfo")
+    public String getVersionInfo() {
+        return versionInfo;
     }
 
     /**
+     * Description Version
+     * <p>
      * 
-     * (Required)
      * 
      */
-    @JsonProperty("serviceDescriptionVersion")
-    public void setServiceDescriptionVersion(String serviceDescriptionVersion) {
-        this.serviceDescriptionVersion = serviceDescriptionVersion;
+    @JsonProperty("versionInfo")
+    public void setVersionInfo(String versionInfo) {
+        this.versionInfo = versionInfo;
     }
 
     /**
@@ -388,7 +393,7 @@ public class ServiceModel {
      * 
      */
     @JsonProperty("hasUsageRule")
-    public List<Object> getHasUsageRule() {
+    public List<HasUsageRule> getHasUsageRule() {
         return hasUsageRule;
     }
 
@@ -398,17 +403,17 @@ public class ServiceModel {
      * 
      */
     @JsonProperty("hasUsageRule")
-    public void setHasUsageRule(List<Object> hasUsageRule) {
+    public void setHasUsageRule(List<HasUsageRule> hasUsageRule) {
         this.hasUsageRule = hasUsageRule;
     }
 
     @JsonProperty("isPersonalDataHandling")
-    public List<Object> getIsPersonalDataHandling() {
+    public List<IsPersonalDataHandling> getIsPersonalDataHandling() {
         return isPersonalDataHandling;
     }
 
     @JsonProperty("isPersonalDataHandling")
-    public void setIsPersonalDataHandling(List<Object> isPersonalDataHandling) {
+    public void setIsPersonalDataHandling(List<IsPersonalDataHandling> isPersonalDataHandling) {
         this.isPersonalDataHandling = isPersonalDataHandling;
     }
 
@@ -416,13 +421,13 @@ public class ServiceModel {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(ServiceModel.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("name");
-        sb.append('=');
-        sb.append(((this.name == null)?"<null>":this.name));
-        sb.append(',');
         sb.append("identifier");
         sb.append('=');
         sb.append(((this.identifier == null)?"<null>":this.identifier));
+        sb.append(',');
+        sb.append("title");
+        sb.append('=');
+        sb.append(((this.title == null)?"<null>":this.title));
         sb.append(',');
         sb.append("issued");
         sb.append('=');
@@ -432,9 +437,9 @@ public class ServiceModel {
         sb.append('=');
         sb.append(((this.createdByUserId == null)?"<null>":this.createdByUserId));
         sb.append(',');
-        sb.append("serviceDescriptionVersion");
+        sb.append("versionInfo");
         sb.append('=');
-        sb.append(((this.serviceDescriptionVersion == null)?"<null>":this.serviceDescriptionVersion));
+        sb.append(((this.versionInfo == null)?"<null>":this.versionInfo));
         sb.append(',');
         sb.append("serviceIconUrl");
         sb.append('=');
@@ -477,13 +482,13 @@ public class ServiceModel {
         int result = 1;
         result = ((result* 31)+((this.identifier == null)? 0 :this.identifier.hashCode()));
         result = ((result* 31)+((this.createdByUserId == null)? 0 :this.createdByUserId.hashCode()));
-        result = ((result* 31)+((this.serviceDescriptionVersion == null)? 0 :this.serviceDescriptionVersion.hashCode()));
         result = ((result* 31)+((this.hasUsageRule == null)? 0 :this.hasUsageRule.hashCode()));
         result = ((result* 31)+((this.isPersonalDataHandling == null)? 0 :this.isPersonalDataHandling.hashCode()));
+        result = ((result* 31)+((this.versionInfo == null)? 0 :this.versionInfo.hashCode()));
+        result = ((result* 31)+((this.title == null)? 0 :this.title.hashCode()));
         result = ((result* 31)+((this.serviceIconUrl == null)? 0 :this.serviceIconUrl.hashCode()));
         result = ((result* 31)+((this.hasInfo == null)? 0 :this.hasInfo.hashCode()));
         result = ((result* 31)+((this.isPublicService == null)? 0 :this.isPublicService.hashCode()));
-        result = ((result* 31)+((this.name == null)? 0 :this.name.hashCode()));
         result = ((result* 31)+((this.hasServiceInstance == null)? 0 :this.hasServiceInstance.hashCode()));
         result = ((result* 31)+((this.issued == null)? 0 :this.issued.hashCode()));
         result = ((result* 31)+((this.status == null)? 0 :this.status.hashCode()));
@@ -499,7 +504,7 @@ public class ServiceModel {
             return false;
         }
         ServiceModel rhs = ((ServiceModel) other);
-        return (((((((((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.createdByUserId == rhs.createdByUserId)||((this.createdByUserId!= null)&&this.createdByUserId.equals(rhs.createdByUserId))))&&((this.serviceDescriptionVersion == rhs.serviceDescriptionVersion)||((this.serviceDescriptionVersion!= null)&&this.serviceDescriptionVersion.equals(rhs.serviceDescriptionVersion))))&&((this.hasUsageRule == rhs.hasUsageRule)||((this.hasUsageRule!= null)&&this.hasUsageRule.equals(rhs.hasUsageRule))))&&((this.isPersonalDataHandling == rhs.isPersonalDataHandling)||((this.isPersonalDataHandling!= null)&&this.isPersonalDataHandling.equals(rhs.isPersonalDataHandling))))&&((this.serviceIconUrl == rhs.serviceIconUrl)||((this.serviceIconUrl!= null)&&this.serviceIconUrl.equals(rhs.serviceIconUrl))))&&((this.hasInfo == rhs.hasInfo)||((this.hasInfo!= null)&&this.hasInfo.equals(rhs.hasInfo))))&&((this.isPublicService == rhs.isPublicService)||((this.isPublicService!= null)&&this.isPublicService.equals(rhs.isPublicService))))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.hasServiceInstance == rhs.hasServiceInstance)||((this.hasServiceInstance!= null)&&this.hasServiceInstance.equals(rhs.hasServiceInstance))))&&((this.issued == rhs.issued)||((this.issued!= null)&&this.issued.equals(rhs.issued))))&&((this.status == rhs.status)||((this.status!= null)&&this.status.equals(rhs.status))));
+        return (((((((((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.createdByUserId == rhs.createdByUserId)||((this.createdByUserId!= null)&&this.createdByUserId.equals(rhs.createdByUserId))))&&((this.hasUsageRule == rhs.hasUsageRule)||((this.hasUsageRule!= null)&&this.hasUsageRule.equals(rhs.hasUsageRule))))&&((this.isPersonalDataHandling == rhs.isPersonalDataHandling)||((this.isPersonalDataHandling!= null)&&this.isPersonalDataHandling.equals(rhs.isPersonalDataHandling))))&&((this.versionInfo == rhs.versionInfo)||((this.versionInfo!= null)&&this.versionInfo.equals(rhs.versionInfo))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))))&&((this.serviceIconUrl == rhs.serviceIconUrl)||((this.serviceIconUrl!= null)&&this.serviceIconUrl.equals(rhs.serviceIconUrl))))&&((this.hasInfo == rhs.hasInfo)||((this.hasInfo!= null)&&this.hasInfo.equals(rhs.hasInfo))))&&((this.isPublicService == rhs.isPublicService)||((this.isPublicService!= null)&&this.isPublicService.equals(rhs.isPublicService))))&&((this.hasServiceInstance == rhs.hasServiceInstance)||((this.hasServiceInstance!= null)&&this.hasServiceInstance.equals(rhs.hasServiceInstance))))&&((this.issued == rhs.issued)||((this.issued!= null)&&this.issued.equals(rhs.issued))))&&((this.status == rhs.status)||((this.status!= null)&&this.status.equals(rhs.status))));
     }
 
     public enum ServiceDescriptionStatus {

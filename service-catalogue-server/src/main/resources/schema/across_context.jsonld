@@ -1,0 +1,373 @@
+{
+	"@context": {
+		"isTypeOf": "@type",
+		"id": "@id",
+		"acr": "https://across-h2020.eu/ns/serviceModel",
+		"adms": "http://www.w3.org/ns/adms#",
+		"cpsv": "http://purl.org/vocab/cpsv#",
+		"cv": "http://data.europa.eu/m8g/",
+		"dcat": "http://www.w3.org/ns/dcat#",
+		"dct": "http://purl.org/dc/terms/",
+		"dpv": "https://w3.org/ns/dpv",
+		"eli": "http://data.europa.eu/eli/ontology#",
+		"foaf": "http://xmlns.com/foaf/0.1/",
+		"ids": "https://w3id.org/idsa/core/",
+		"locn": "http://www.w3.org/ns/locn#",
+		"rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+		"schema": "https://schema.org/",
+		"skos": "http://www.w3.org/2004/02/skos/core#",
+		"xsd": "http://www.w3.org/2001/XMLSchema#",
+		"owl": "http://www.w3.org/2002/07/owl",
+		"prov": "https://www.w3.org/ns/prov#",
+		"vcard": "http://www.w3.org/2006/vcard/ns#",
+		"Agent": "dct:Agent",
+		"BusinessEvent": "cv:BusinessEvent",
+		"Channel": "cv:Channel",
+		"Collection": "skos:Collection",
+		"Concept": "skos:Concept",
+		"ContactPoint": "schema:ContactPoint",
+		"Cost": "cv:Cost",
+		"CriterionRequirement": "cv:CriterionRequirement",
+		"Event": "cv:Event",
+		"Evidence": "cv:Evidence",
+		"LegalResource": "eli:LegalResource",
+		"LifeEvent": "cv:LifeEvent",
+		"LinguisticSystem": "dct:LinguisticSystem",
+		"Location": "dct:Location",
+		"OpeningHoursSpecification": "schema:OpeningHoursSpecification",
+		"Output": "cv:Output",
+		"Participation": "cv:Participation",
+		"PublicOrganisation": "cv:PublicOrganisation",
+		"PublicService": "cpsv:PublicService",
+		"PublicServiceDataset": "cv:PublicServiceDataset",
+		"Rule": "cpsv:Rule",
+		"accessURL": {
+			"@id": "dcat:accessURL",
+			"@type": "@id"
+		},
+		"endpointInformation": {
+			"@id": "ids:endpointInformation",
+			"@type": "rdfs:Literal"
+		},
+		"endpointDocumentation": {
+			"@id": "ids:endpointDocumentation",
+			"@type": "rdfs:Literal"
+		},
+		"path": {
+			"@id": "ids:path",
+			"@type": "rdfs:Literal"
+		},
+		"createdByUserId": {
+			"@id": "acr:createdByUserId",
+			"@type": "rdfs:Literal"
+		},
+		"currency": {
+			"@id": "cv:currency",
+			"@type": "@id"
+		},
+		"connector": {
+			"@id": "ids:connector",
+			"@type": "@id"
+		},
+		"connectorEndpoint": {
+			"@id": "ids:hasDefaultEndpoint",
+			"@type": "@id"
+		},
+		"description": {
+			"@id": "dct:description",
+			"@type": "rdfs:Literal"
+		},
+		"email": {
+			"@id": "schema:email",
+			"@type": "rdfs:Literal"
+		},
+		"fax": {
+			"@id": "schema:faxNumber",
+			"@type": "rdfs:Literal"
+		},
+		"follows": {
+			"@id": "cpsv:follows",
+			"@type": "@id"
+		},
+		"follows": {
+			"@id": "cpsv:follows",
+			"@type": "@id"
+		},
+		"format": {
+			"@id": "dct:format",
+			"@type": "@id"
+		},
+		"hasAddress": {
+			"@id": "cv:hasAddress",
+			"@type": "@id"
+		},
+		"hasChannel": {
+			"@id": "cv:hasChannel",
+			"@type": "@id"
+		},
+		"hasCompetentAuthority": {
+			"@id": "cv:hasCompetentAuthority",
+			"@type": "@id"
+		},
+		"hasContactPoint": {
+			"@id": "cv:hasContactPoint",
+			"@type": "@id"
+		},
+		"hasCost": {
+			"@id": "cv:hasCost",
+			"@type": "@id"
+		},
+		"hasCriterion": {
+			"@id": "cv:hasCriterion",
+			"@type": "@id"
+		},
+		"hasDataController": {
+			"@id": "dpv:hasDataController",
+			"@type": "@id"
+		},
+		"hasInput": {
+			"@id": "cpsv:hasInput",
+			"@type": "@id"
+		},
+		"hasInfo": {
+			"@id": "acr:hasInfo",
+			"@type": "@id"
+		},
+		"hasLegalResource": {
+			"@id": "cv:hasLegalResource",
+			"@type": "@id"
+		},
+		"hasPart": {
+			"@id": "dct:hasPart",
+			"@type": "@id"
+		},
+		"hasParticipation": {
+			"@id": "cv:hasParticipation",
+			"@type": "@id"
+		},
+		"hasServiceInstance": {
+			"@id": "acr:hasServiceInstance",
+			"@type": "@id"
+		},
+		"hoursAvailable": {
+			"@id": "schema:hoursAvailable",
+			"@type": "@id"
+		},
+		"iconUrl": {
+			"@id": "schema:url",
+			"@type": "rdfs:Literal"
+		},
+		"identifier": {
+			"@id": "dct:identifier",
+			"@type": "rdfs:Literal"
+		},
+		"ifAccessedThrough": {
+			"@id": "cv:ifAccessedThrough",
+			"@type": "@id"
+		},
+		"implements": {
+			"@id": "cpsv:implements",
+			"@type": "@id"
+		},
+		"isClassifiedBy": {
+			"@id": "cv:isClassifiedBy",
+			"@type": "@id"
+		},
+		"isDefinedBy": {
+			"@id": "cv:isDefinedBy",
+			"@type": "@id"
+		},
+		"isDescribedAt": {
+			"@id": "cv:isDescribedAt",
+			"@type": "@id"
+		},
+		"isGroupedBy": {
+			"@id": "cv:isGroupedBy",
+			"@type": "@id"
+		},
+		"isPublicService": {
+			"@id": "acr:isPublicService",
+			"@type": "xsd:boolean"
+		},
+		"issued": {
+			"@id": "dct:issued",
+			"@type": "rdfs:Literal"
+		},
+		"keyword": {
+			"@id": "dcat:keyword",
+			"@type": "rdfs:Literal"
+		},
+		"publicKey": {
+			"@id": "ids:publicKey",
+			"@type": "@id"
+		},
+		"keyType": {
+			"@id": "ids:keyType",
+			"@type": "rdfs:Literal"
+		},
+		"keyValue": {
+			"@id": "ids:keyValue",
+			"@type": "rdfs:Literal"
+		},
+		"landingPage": {
+			"@id": "dcat:landingPage",
+			"@type": "@id"
+		},
+		"language": {
+			"@id": "dct:language",
+			"@type": "@id"
+		},
+		"libraryDomain": {
+			"@id": "dct:identifier",
+			"@type": "rdfs:Literal"
+		},
+		"loginUri": {
+			"@id": "dct:identifier",
+			"@type": "rdfs:Literal"
+		},
+		"linkingRedirectUri": {
+			"@id": "dct:identifier",
+			"@type": "rdfs:Literal"
+		},
+		"objectionUri": {
+			"@id": "dct:identifier",
+			"@type": "rdfs:Literal"
+		},
+		"notificationUri": {
+			"@id": "dct:identifier",
+			"@type": "rdfs:Literal"
+		},
+		"member": {
+			"@id": "skos:member",
+			"@type": "@id"
+		},
+		"onBehalf" : {
+			"@id": "prov:actedOnBehalfOf",
+			"@type": "@id"
+		},
+		"openingHours": {
+			"@id": "schema:openingHours",
+			"@type": "rdfs:Literal"
+		},
+		"operatorName": {
+			"@id": "acr:operatorName",
+			"@type": "rdfs:Literal"
+		},
+		"organizationName": {
+			"@id": "vcard:organization-name",
+			"@type": "rdfs:Literal"
+		},
+		"ownedBy": {
+			"@id": "cv:ownedBy",
+			"@type": "@id"
+		},
+		"page": {
+			"@id": "foaf:page",
+			"@type": "@id"
+		},
+		"playsRole": {
+			"@id": "cv:playsRole",
+			"@type": "@id"
+		},
+		"prefLabel": {
+			"@id": "skos:prefLabel",
+			"@type": "rdfs:Literal"
+		},
+		"processingTime": {
+			"@id": "cv:processingTime",
+			"@type": "rdfs:Literal"
+		},
+		"produces": {
+			"@id": "cpsv:produces",
+			"@type": "@id"
+		},
+		"publisher": {
+			"@id": "dct:publisher",
+			"@type": "@id"
+		},
+		"related": {
+			"@id": "dct:relation",
+			"@type": "@id"
+		},
+		"requires": {
+			"@id": "dct:requires",
+			"@type": "@id"
+		},
+		"role": {
+			"@id": "cv:role",
+			"@type": "@id"
+		},
+		"sector": {
+			"@id": "cv:sector",
+			"@type": "@id"
+		},
+		"serviceProvider": {
+			"@id": "acr:serviceProvider",
+			"@type": "@id"
+		},
+		"serviceUrls": {
+			"@id": "acr:serviceUrls",
+			"@type": "@id"
+		},
+		"businessId": {
+			"@id": "dct:identifier",
+			"@type": "rdfs:Literal"
+		},
+		"name": {
+			"@id": "foaf:name",
+			"@type": "rdfs:Literal"
+		},
+		"postalcode": {
+			"@id": "schema:postalCode",
+			"@type": "rdfs:Literal"
+		},
+		"city": {
+			"@id": "vcard:locality",
+			"@type": "rdfs:Literal"
+		},
+		"state": {
+			"@id": "vcard:region",
+			"@type": "rdfs:Literal"
+		},
+		"country": {
+			"@id": "vcard:country-name",
+			"@type": "rdfs:Literal"
+		},
+		"jurisdiction": {
+			"@id": "eli:jurisdiction",
+			"@type": "rdfs:Literal"
+		},
+		"spatial": {
+			"@id": "dct:spatial",
+			"@type": "@id"
+		},
+		"status": {
+			"@id": "adms:status",
+			"@type": "@id"
+		},
+		"telephone": {
+			"@id": "schema:telephone",
+			"@type": "rdfs:Literal"
+		},
+		"thematicArea": {
+			"@id": "cv:thematicArea",
+			"@type": "@id"
+		},
+		"title": {
+			"@id": "dct:title",
+			"@type": "rdfs:Literal"
+		},
+		"type": {
+			"@id": "dct:type",
+			"@type": "@id"
+		},
+		"value": {
+			"@id": "cv:value",
+			"@type": "xsd:double"
+		},
+		"versionInfo": {
+			"@id": "owv:versionInfo",
+			"@type": "http://www.w3.org/2001/XMLSchema#string"
+		}
+	}
+}

@@ -13,10 +13,10 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "identifier",
     "title",
     "description",
-    "type",
-    "related"
+    "language",
+    "page"
 })
-public class IsGroupedBy {
+public class HasInput {
 
     @JsonProperty("identifier")
     private String identifier;
@@ -31,40 +31,40 @@ public class IsGroupedBy {
     @JsonProperty("description")
     @Valid
     private Description__1 description;
-    @JsonProperty("type")
+    @JsonProperty("language")
     @Valid
-    private List<String> type = new ArrayList<String>();
+    private List<String> language = new ArrayList<String>();
     /**
-     * relatedService
+     * Related Documentation
      * <p>
      * 
      * 
      */
-    @JsonProperty("related")
-    private String related;
+    @JsonProperty("page")
+    private String page;
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public IsGroupedBy() {
+    public HasInput() {
     }
 
     /**
      * 
      * @param identifier
-     * @param related
      * @param description
+     * @param language
+     * @param page
      * @param title
-     * @param type
      */
-    public IsGroupedBy(String identifier, String title, Description__1 description, List<String> type, String related) {
+    public HasInput(String identifier, String title, Description__1 description, List<String> language, String page) {
         super();
         this.identifier = identifier;
         this.title = title;
         this.description = description;
-        this.type = type;
-        this.related = related;
+        this.language = language;
+        this.page = page;
     }
 
     @JsonProperty("identifier")
@@ -109,42 +109,42 @@ public class IsGroupedBy {
         this.description = description;
     }
 
-    @JsonProperty("type")
-    public List<String> getType() {
-        return type;
+    @JsonProperty("language")
+    public List<String> getLanguage() {
+        return language;
     }
 
-    @JsonProperty("type")
-    public void setType(List<String> type) {
-        this.type = type;
+    @JsonProperty("language")
+    public void setLanguage(List<String> language) {
+        this.language = language;
     }
 
     /**
-     * relatedService
+     * Related Documentation
      * <p>
      * 
      * 
      */
-    @JsonProperty("related")
-    public String getRelated() {
-        return related;
+    @JsonProperty("page")
+    public String getPage() {
+        return page;
     }
 
     /**
-     * relatedService
+     * Related Documentation
      * <p>
      * 
      * 
      */
-    @JsonProperty("related")
-    public void setRelated(String related) {
-        this.related = related;
+    @JsonProperty("page")
+    public void setPage(String page) {
+        this.page = page;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(IsGroupedBy.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(HasInput.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("identifier");
         sb.append('=');
         sb.append(((this.identifier == null)?"<null>":this.identifier));
@@ -157,13 +157,13 @@ public class IsGroupedBy {
         sb.append('=');
         sb.append(((this.description == null)?"<null>":this.description));
         sb.append(',');
-        sb.append("type");
+        sb.append("language");
         sb.append('=');
-        sb.append(((this.type == null)?"<null>":this.type));
+        sb.append(((this.language == null)?"<null>":this.language));
         sb.append(',');
-        sb.append("related");
+        sb.append("page");
         sb.append('=');
-        sb.append(((this.related == null)?"<null>":this.related));
+        sb.append(((this.page == null)?"<null>":this.page));
         sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
@@ -178,9 +178,9 @@ public class IsGroupedBy {
         int result = 1;
         result = ((result* 31)+((this.identifier == null)? 0 :this.identifier.hashCode()));
         result = ((result* 31)+((this.description == null)? 0 :this.description.hashCode()));
+        result = ((result* 31)+((this.language == null)? 0 :this.language.hashCode()));
+        result = ((result* 31)+((this.page == null)? 0 :this.page.hashCode()));
         result = ((result* 31)+((this.title == null)? 0 :this.title.hashCode()));
-        result = ((result* 31)+((this.type == null)? 0 :this.type.hashCode()));
-        result = ((result* 31)+((this.related == null)? 0 :this.related.hashCode()));
         return result;
     }
 
@@ -189,11 +189,11 @@ public class IsGroupedBy {
         if (other == this) {
             return true;
         }
-        if ((other instanceof IsGroupedBy) == false) {
+        if ((other instanceof HasInput) == false) {
             return false;
         }
-        IsGroupedBy rhs = ((IsGroupedBy) other);
-        return ((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.related == rhs.related)||((this.related!= null)&&this.related.equals(rhs.related))));
+        HasInput rhs = ((HasInput) other);
+        return ((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.language == rhs.language)||((this.language!= null)&&this.language.equals(rhs.language))))&&((this.page == rhs.page)||((this.page!= null)&&this.page.equals(rhs.page))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))));
     }
 
 }

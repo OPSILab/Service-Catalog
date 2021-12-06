@@ -12,7 +12,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "serviceProvider",
-    "cert",
     "connector",
     "dataset",
     "serviceUrls",
@@ -34,15 +33,6 @@ public class HasServiceInstance {
      * (Required)
      * 
      */
-    @JsonProperty("cert")
-    @Valid
-    @NotNull
-    private Cert cert;
-    /**
-     * 
-     * (Required)
-     * 
-     */
     @JsonProperty("connector")
     @Valid
     @NotNull
@@ -55,7 +45,7 @@ public class HasServiceInstance {
     @JsonProperty("dataset")
     @Valid
     @NotNull
-    private List<Object> dataset = new ArrayList<Object>();
+    private List<Dataset> dataset = new ArrayList<Dataset>();
     /**
      * 
      * (Required)
@@ -88,13 +78,11 @@ public class HasServiceInstance {
      * @param serviceUrls
      * @param serviceProvider
      * @param dataController
-     * @param cert
      * @param dataset
      */
-    public HasServiceInstance(ServiceProvider serviceProvider, Cert cert, Connector connector, List<Object> dataset, ServiceUrls serviceUrls, DataController dataController) {
+    public HasServiceInstance(ServiceProvider serviceProvider, Connector connector, List<Dataset> dataset, ServiceUrls serviceUrls, DataController dataController) {
         super();
         this.serviceProvider = serviceProvider;
-        this.cert = cert;
         this.connector = connector;
         this.dataset = dataset;
         this.serviceUrls = serviceUrls;
@@ -126,26 +114,6 @@ public class HasServiceInstance {
      * (Required)
      * 
      */
-    @JsonProperty("cert")
-    public Cert getCert() {
-        return cert;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
-    @JsonProperty("cert")
-    public void setCert(Cert cert) {
-        this.cert = cert;
-    }
-
-    /**
-     * 
-     * (Required)
-     * 
-     */
     @JsonProperty("connector")
     public Connector getConnector() {
         return connector;
@@ -167,7 +135,7 @@ public class HasServiceInstance {
      * 
      */
     @JsonProperty("dataset")
-    public List<Object> getDataset() {
+    public List<Dataset> getDataset() {
         return dataset;
     }
 
@@ -177,7 +145,7 @@ public class HasServiceInstance {
      * 
      */
     @JsonProperty("dataset")
-    public void setDataset(List<Object> dataset) {
+    public void setDataset(List<Dataset> dataset) {
         this.dataset = dataset;
     }
 
@@ -229,10 +197,6 @@ public class HasServiceInstance {
         sb.append('=');
         sb.append(((this.serviceProvider == null)?"<null>":this.serviceProvider));
         sb.append(',');
-        sb.append("cert");
-        sb.append('=');
-        sb.append(((this.cert == null)?"<null>":this.cert));
-        sb.append(',');
         sb.append("connector");
         sb.append('=');
         sb.append(((this.connector == null)?"<null>":this.connector));
@@ -260,12 +224,11 @@ public class HasServiceInstance {
     @Override
     public int hashCode() {
         int result = 1;
-        result = ((result* 31)+((this.connector == null)? 0 :this.connector.hashCode()));
-        result = ((result* 31)+((this.serviceUrls == null)? 0 :this.serviceUrls.hashCode()));
         result = ((result* 31)+((this.serviceProvider == null)? 0 :this.serviceProvider.hashCode()));
         result = ((result* 31)+((this.dataController == null)? 0 :this.dataController.hashCode()));
-        result = ((result* 31)+((this.cert == null)? 0 :this.cert.hashCode()));
+        result = ((result* 31)+((this.connector == null)? 0 :this.connector.hashCode()));
         result = ((result* 31)+((this.dataset == null)? 0 :this.dataset.hashCode()));
+        result = ((result* 31)+((this.serviceUrls == null)? 0 :this.serviceUrls.hashCode()));
         return result;
     }
 
@@ -278,7 +241,7 @@ public class HasServiceInstance {
             return false;
         }
         HasServiceInstance rhs = ((HasServiceInstance) other);
-        return (((((((this.connector == rhs.connector)||((this.connector!= null)&&this.connector.equals(rhs.connector)))&&((this.serviceUrls == rhs.serviceUrls)||((this.serviceUrls!= null)&&this.serviceUrls.equals(rhs.serviceUrls))))&&((this.serviceProvider == rhs.serviceProvider)||((this.serviceProvider!= null)&&this.serviceProvider.equals(rhs.serviceProvider))))&&((this.dataController == rhs.dataController)||((this.dataController!= null)&&this.dataController.equals(rhs.dataController))))&&((this.cert == rhs.cert)||((this.cert!= null)&&this.cert.equals(rhs.cert))))&&((this.dataset == rhs.dataset)||((this.dataset!= null)&&this.dataset.equals(rhs.dataset))));
+        return ((((((this.serviceProvider == rhs.serviceProvider)||((this.serviceProvider!= null)&&this.serviceProvider.equals(rhs.serviceProvider)))&&((this.dataController == rhs.dataController)||((this.dataController!= null)&&this.dataController.equals(rhs.dataController))))&&((this.connector == rhs.connector)||((this.connector!= null)&&this.connector.equals(rhs.connector))))&&((this.dataset == rhs.dataset)||((this.dataset!= null)&&this.dataset.equals(rhs.dataset))))&&((this.serviceUrls == rhs.serviceUrls)||((this.serviceUrls!= null)&&this.serviceUrls.equals(rhs.serviceUrls))));
     }
 
 }

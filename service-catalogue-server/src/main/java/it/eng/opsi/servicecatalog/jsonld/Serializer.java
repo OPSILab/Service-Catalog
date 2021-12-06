@@ -15,6 +15,8 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.riot.RDFLanguages;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -23,8 +25,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Component
 public class Serializer {
 
+	@Autowired
+	JsonLDModule jsonLdModule;
+	
     private static final ObjectMapper mapper = new ObjectMapper();
     private final List<JsonPreprocessor> preprocessors; //TODO: It seems like this list is never used...
     private final Logger logger = LoggerFactory.getLogger(Serializer.class);
@@ -38,6 +44,7 @@ public class Serializer {
         mapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
         mapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_EMPTY);
         mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         preprocessors = new ArrayList<>();
         this.addPreprocessor(new TypeNamePreprocessor());
 
@@ -65,7 +72,7 @@ public class Serializer {
         if (format != RDFLanguages.JSONLD && format != RDFLanguages.TURTLE && format != RDFLanguages.RDFXML) {
             throw new IOException("RDFFormat " + format + " is currently not supported by the serializer.");
         }
-        mapper.registerModule(new JsonLDModule());
+        mapper.registerModule(jsonLdModule);
         String jsonLD = (instance instanceof Collection)
                 ? serializeCollection((Collection<?>) instance)
                 : mapper.writerWithDefaultPrettyPrinter().writeValueAsString(instance);

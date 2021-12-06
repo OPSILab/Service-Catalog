@@ -2,11 +2,14 @@ package it.eng.opsi.servicecatalog.controller;
 
 import java.io.IOException;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,6 +44,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Autowired
 	IServiceCatalogService catalogService;
+
+	@Value("${uriBasePath}")
+	private String uriBasePath;
 
 	@Override
 	@Operation(summary = "Get all the Service Model descriptions.", description = "Get all the Service Model descriptions saved in the Service Catalog.", tags = {
@@ -77,7 +83,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	public ResponseEntity<ServiceModel> createService(@RequestBody @Valid ServiceModel service) {
 
 		ServiceModel result = catalogService.createService(service);
-		return ResponseEntity.created(URI.create(result.getIdentifier().replaceAll("\\s+", ""))).body(result);
+		return ResponseEntity.created(URI.create(uriBasePath + result.getIdentifier().replaceAll("\\s+", "")))
+				.body(result);
 	}
 
 	@Operation(summary = "Update Service Model description, by replacing the existing one", tags = {
@@ -105,14 +112,36 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get the Service Model description by Service Id, serialized as Json-LD.", description = "Get the Service Model description by Service Id, serialized as Json-LD.", tags = {
-			"Service Model" }, responses = {
+			"Service Model | JSON-LD" }, responses = {
 					@ApiResponse(description = "Returns the JSON-LD of the requested Service Model description.", responseCode = "200") })
 	@GetMapping(value = "/services/jsonld/{serviceId}", produces = MediaType.APPLICATION_JSON_VALUE)
 
-	public ResponseEntity<String> getServiceByIdJsonLd(@PathVariable String serviceId) throws ServiceNotFoundException, IOException {
+	public ResponseEntity<String> getServiceByIdJsonLd(@PathVariable String serviceId)
+			throws ServiceNotFoundException, IOException {
 
 		return ResponseEntity.ok(catalogService.getServiceByIdJsonLd(serviceId));
 
+	}
+
+	@Override
+	@Operation(summary = "Get the Service Models count grouped by Sector.", description = "Get the Service Models count grouped by Sector.", tags = {
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Return an object with count for each sector.", responseCode = "200") })
+	@GetMapping(value = "/services/count/sector", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<HashMap<String, Object>>> getCountBySector() {
+
+		return ResponseEntity.ok(catalogService.getCountBySector());
+	}
+
+	@Operation(summary = "Get the hasInfo part of Service Model description by Service Id, serialized as Json-LD according to CPSV-AP specification.", description = "Get the Service Model description by Service Id, serialized as Json-LD.", tags = {
+			"Service Model | JSON-LD" }, responses = {
+					@ApiResponse(description = "Returns the JSON-LD of the requested Service Model description.", responseCode = "200") })
+	@GetMapping(value = "/services/cpsv/jsonld/{serviceId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@Override
+	public ResponseEntity<String> getServiceHasInfoByIdJsonLd(@PathVariable String serviceId)
+			throws ServiceNotFoundException, IOException {
+		
+		return ResponseEntity.ok(catalogService.getHasInfoByIdJsonLd(serviceId));
 	}
 
 }

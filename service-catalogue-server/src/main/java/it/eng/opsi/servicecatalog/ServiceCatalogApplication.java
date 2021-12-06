@@ -23,6 +23,7 @@ import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.repository.ZonedDateTimeReadConverter;
 import it.eng.opsi.servicecatalog.repository.ZonedDateTimeWriteConverter;
 
@@ -55,7 +56,7 @@ public class ServiceCatalogApplication {
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.registerModule(new JavaTimeModule());
 		objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-//		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
 		return objectMapper;
 	}
 

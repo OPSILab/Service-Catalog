@@ -63,8 +63,6 @@ public class MongoConfiguration {
 		 * annotation on class after regeneration with json2pojo)
 		 */
 		mongoTemplate.indexOps("serviceModel") // collection name string or .class
-				.ensureIndex(new Index().on("serviceId", Sort.Direction.ASC).unique());
-		mongoTemplate.indexOps("serviceModel") // collection name string or .class
 		.ensureIndex(new Index().on("identifier", Sort.Direction.ASC).unique());
 		if (mappingContext instanceof MongoMappingContext) {
 			MongoMappingContext mongoMappingContext = (MongoMappingContext) mappingContext;

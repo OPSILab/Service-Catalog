@@ -8,11 +8,16 @@ import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
+@JsonTypeName("PublicService")
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type", include = As.PROPERTY, defaultImpl = HasInfo.class)	
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "identifier",
-    "name",
+    "title",
     "status",
     "keyword",
     "sector",
@@ -41,13 +46,15 @@ public class HasInfo {
     @NotNull
     private String identifier;
     /**
+     * name
+     * <p>
      * 
      * (Required)
      * 
      */
-    @JsonProperty("name")
+    @JsonProperty("title")
     @NotNull
-    private String name;
+    private String title;
     /**
      * 
      * (Required)
@@ -64,7 +71,7 @@ public class HasInfo {
     @JsonProperty("keyword")
     @Valid
     @NotNull
-    private List<Object> keyword = new ArrayList<Object>();
+    private List<String> keyword = new ArrayList<String>();
     /**
      * 
      * (Required)
@@ -73,7 +80,7 @@ public class HasInfo {
     @JsonProperty("sector")
     @Valid
     @NotNull
-    private List<Object> sector = new ArrayList<Object>();
+    private List<String> sector = new ArrayList<String>();
     /**
      * 
      * (Required)
@@ -82,7 +89,7 @@ public class HasInfo {
     @JsonProperty("thematicArea")
     @Valid
     @NotNull
-    private List<Object> thematicArea = new ArrayList<Object>();
+    private List<String> thematicArea = new ArrayList<String>();
     /**
      * 
      * (Required)
@@ -91,7 +98,7 @@ public class HasInfo {
     @JsonProperty("type")
     @Valid
     @NotNull
-    private List<Object> type = new ArrayList<Object>();
+    private List<String> type = new ArrayList<String>();
     /**
      * 
      * (Required)
@@ -100,7 +107,7 @@ public class HasInfo {
     @JsonProperty("language")
     @Valid
     @NotNull
-    private List<Object> language = new ArrayList<Object>();
+    private List<String> language = new ArrayList<String>();
     /**
      * 
      * (Required)
@@ -109,7 +116,7 @@ public class HasInfo {
     @JsonProperty("description")
     @Valid
     @NotNull
-    private List<Object> description = new ArrayList<Object>();
+    private Description description;
     /**
      * 
      * (Required)
@@ -126,7 +133,7 @@ public class HasInfo {
     @JsonProperty("isGroupedBy")
     @Valid
     @NotNull
-    private IsGroupedBy isGroupedBy;
+    private List<String> isGroupedBy = new ArrayList<String>();
     /**
      * 
      * (Required)
@@ -144,7 +151,7 @@ public class HasInfo {
     @JsonProperty("requires")
     @Valid
     @NotNull
-    private List<Object> requires = new ArrayList<Object>();
+    private List<String> requires = new ArrayList<String>();
     /**
      * 
      * (Required)
@@ -161,8 +168,10 @@ public class HasInfo {
     @JsonProperty("hasInput")
     @Valid
     @NotNull
-    private List<Object> hasInput = new ArrayList<Object>();
+    private List<HasInput> hasInput = new ArrayList<HasInput>();
     /**
+     * produces
+     * <p>
      * 
      * (Required)
      * 
@@ -170,7 +179,7 @@ public class HasInfo {
     @JsonProperty("produces")
     @Valid
     @NotNull
-    private List<Object> produces = new ArrayList<Object>();
+    private List<Produce> produces = new ArrayList<Produce>();
     /**
      * 
      * (Required)
@@ -188,7 +197,7 @@ public class HasInfo {
     @JsonProperty("hasChannel")
     @Valid
     @NotNull
-    private List<Object> hasChannel = new ArrayList<Object>();
+    private List<HasChannel> hasChannel = new ArrayList<HasChannel>();
 
     /**
      * No args constructor for use in serialization
@@ -206,9 +215,9 @@ public class HasInfo {
      * @param description
      * @param language
      * @param isGroupedBy
+     * @param title
      * @param type
      * @param processingTime
-     * @param name
      * @param produces
      * @param keyword
      * @param spatial
@@ -218,10 +227,10 @@ public class HasInfo {
      * @param status
      * @param requires
      */
-    public HasInfo(String identifier, String name, String status, List<Object> keyword, List<Object> sector, List<Object> thematicArea, List<Object> type, List<Object> language, List<Object> description, String processingTime, IsGroupedBy isGroupedBy, HasCompetentAuthority hasCompetentAuthority, List<Object> requires, String spatial, List<Object> hasInput, List<Object> produces, HasContactPoint hasContactPoint, List<Object> hasChannel) {
+    public HasInfo(String identifier, String title, String status, List<String> keyword, List<String> sector, List<String> thematicArea, List<String> type, List<String> language, Description description, String processingTime, List<String> isGroupedBy, HasCompetentAuthority hasCompetentAuthority, List<String> requires, String spatial, List<HasInput> hasInput, List<Produce> produces, HasContactPoint hasContactPoint, List<HasChannel> hasChannel) {
         super();
         this.identifier = identifier;
-        this.name = name;
+        this.title = title;
         this.status = status;
         this.keyword = keyword;
         this.sector = sector;
@@ -261,23 +270,27 @@ public class HasInfo {
     }
 
     /**
+     * name
+     * <p>
      * 
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    public String getName() {
-        return name;
+    @JsonProperty("title")
+    public String getTitle() {
+        return title;
     }
 
     /**
+     * name
+     * <p>
      * 
      * (Required)
      * 
      */
-    @JsonProperty("name")
-    public void setName(String name) {
-        this.name = name;
+    @JsonProperty("title")
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     /**
@@ -306,7 +319,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("keyword")
-    public List<Object> getKeyword() {
+    public List<String> getKeyword() {
         return keyword;
     }
 
@@ -316,7 +329,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("keyword")
-    public void setKeyword(List<Object> keyword) {
+    public void setKeyword(List<String> keyword) {
         this.keyword = keyword;
     }
 
@@ -326,7 +339,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("sector")
-    public List<Object> getSector() {
+    public List<String> getSector() {
         return sector;
     }
 
@@ -336,7 +349,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("sector")
-    public void setSector(List<Object> sector) {
+    public void setSector(List<String> sector) {
         this.sector = sector;
     }
 
@@ -346,7 +359,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("thematicArea")
-    public List<Object> getThematicArea() {
+    public List<String> getThematicArea() {
         return thematicArea;
     }
 
@@ -356,7 +369,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("thematicArea")
-    public void setThematicArea(List<Object> thematicArea) {
+    public void setThematicArea(List<String> thematicArea) {
         this.thematicArea = thematicArea;
     }
 
@@ -366,7 +379,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("type")
-    public List<Object> getType() {
+    public List<String> getType() {
         return type;
     }
 
@@ -376,7 +389,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("type")
-    public void setType(List<Object> type) {
+    public void setType(List<String> type) {
         this.type = type;
     }
 
@@ -386,7 +399,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("language")
-    public List<Object> getLanguage() {
+    public List<String> getLanguage() {
         return language;
     }
 
@@ -396,7 +409,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("language")
-    public void setLanguage(List<Object> language) {
+    public void setLanguage(List<String> language) {
         this.language = language;
     }
 
@@ -406,7 +419,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("description")
-    public List<Object> getDescription() {
+    public Description getDescription() {
         return description;
     }
 
@@ -416,7 +429,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("description")
-    public void setDescription(List<Object> description) {
+    public void setDescription(Description description) {
         this.description = description;
     }
 
@@ -446,7 +459,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("isGroupedBy")
-    public IsGroupedBy getIsGroupedBy() {
+    public List<String> getIsGroupedBy() {
         return isGroupedBy;
     }
 
@@ -456,7 +469,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("isGroupedBy")
-    public void setIsGroupedBy(IsGroupedBy isGroupedBy) {
+    public void setIsGroupedBy(List<String> isGroupedBy) {
         this.isGroupedBy = isGroupedBy;
     }
 
@@ -486,7 +499,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("requires")
-    public List<Object> getRequires() {
+    public List<String> getRequires() {
         return requires;
     }
 
@@ -496,7 +509,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("requires")
-    public void setRequires(List<Object> requires) {
+    public void setRequires(List<String> requires) {
         this.requires = requires;
     }
 
@@ -526,7 +539,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("hasInput")
-    public List<Object> getHasInput() {
+    public List<HasInput> getHasInput() {
         return hasInput;
     }
 
@@ -536,27 +549,31 @@ public class HasInfo {
      * 
      */
     @JsonProperty("hasInput")
-    public void setHasInput(List<Object> hasInput) {
+    public void setHasInput(List<HasInput> hasInput) {
         this.hasInput = hasInput;
     }
 
     /**
+     * produces
+     * <p>
      * 
      * (Required)
      * 
      */
     @JsonProperty("produces")
-    public List<Object> getProduces() {
+    public List<Produce> getProduces() {
         return produces;
     }
 
     /**
+     * produces
+     * <p>
      * 
      * (Required)
      * 
      */
     @JsonProperty("produces")
-    public void setProduces(List<Object> produces) {
+    public void setProduces(List<Produce> produces) {
         this.produces = produces;
     }
 
@@ -586,7 +603,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("hasChannel")
-    public List<Object> getHasChannel() {
+    public List<HasChannel> getHasChannel() {
         return hasChannel;
     }
 
@@ -596,7 +613,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("hasChannel")
-    public void setHasChannel(List<Object> hasChannel) {
+    public void setHasChannel(List<HasChannel> hasChannel) {
         this.hasChannel = hasChannel;
     }
 
@@ -608,9 +625,9 @@ public class HasInfo {
         sb.append('=');
         sb.append(((this.identifier == null)?"<null>":this.identifier));
         sb.append(',');
-        sb.append("name");
+        sb.append("title");
         sb.append('=');
-        sb.append(((this.name == null)?"<null>":this.name));
+        sb.append(((this.title == null)?"<null>":this.title));
         sb.append(',');
         sb.append("status");
         sb.append('=');
@@ -694,9 +711,9 @@ public class HasInfo {
         result = ((result* 31)+((this.description == null)? 0 :this.description.hashCode()));
         result = ((result* 31)+((this.language == null)? 0 :this.language.hashCode()));
         result = ((result* 31)+((this.isGroupedBy == null)? 0 :this.isGroupedBy.hashCode()));
+        result = ((result* 31)+((this.title == null)? 0 :this.title.hashCode()));
         result = ((result* 31)+((this.type == null)? 0 :this.type.hashCode()));
         result = ((result* 31)+((this.processingTime == null)? 0 :this.processingTime.hashCode()));
-        result = ((result* 31)+((this.name == null)? 0 :this.name.hashCode()));
         result = ((result* 31)+((this.produces == null)? 0 :this.produces.hashCode()));
         result = ((result* 31)+((this.keyword == null)? 0 :this.keyword.hashCode()));
         result = ((result* 31)+((this.spatial == null)? 0 :this.spatial.hashCode()));
@@ -717,7 +734,7 @@ public class HasInfo {
             return false;
         }
         HasInfo rhs = ((HasInfo) other);
-        return (((((((((((((((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.hasContactPoint == rhs.hasContactPoint)||((this.hasContactPoint!= null)&&this.hasContactPoint.equals(rhs.hasContactPoint))))&&((this.hasChannel == rhs.hasChannel)||((this.hasChannel!= null)&&this.hasChannel.equals(rhs.hasChannel))))&&((this.hasCompetentAuthority == rhs.hasCompetentAuthority)||((this.hasCompetentAuthority!= null)&&this.hasCompetentAuthority.equals(rhs.hasCompetentAuthority))))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.language == rhs.language)||((this.language!= null)&&this.language.equals(rhs.language))))&&((this.isGroupedBy == rhs.isGroupedBy)||((this.isGroupedBy!= null)&&this.isGroupedBy.equals(rhs.isGroupedBy))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.processingTime == rhs.processingTime)||((this.processingTime!= null)&&this.processingTime.equals(rhs.processingTime))))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.produces == rhs.produces)||((this.produces!= null)&&this.produces.equals(rhs.produces))))&&((this.keyword == rhs.keyword)||((this.keyword!= null)&&this.keyword.equals(rhs.keyword))))&&((this.spatial == rhs.spatial)||((this.spatial!= null)&&this.spatial.equals(rhs.spatial))))&&((this.hasInput == rhs.hasInput)||((this.hasInput!= null)&&this.hasInput.equals(rhs.hasInput))))&&((this.sector == rhs.sector)||((this.sector!= null)&&this.sector.equals(rhs.sector))))&&((this.thematicArea == rhs.thematicArea)||((this.thematicArea!= null)&&this.thematicArea.equals(rhs.thematicArea))))&&((this.status == rhs.status)||((this.status!= null)&&this.status.equals(rhs.status))))&&((this.requires == rhs.requires)||((this.requires!= null)&&this.requires.equals(rhs.requires))));
+        return (((((((((((((((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.hasContactPoint == rhs.hasContactPoint)||((this.hasContactPoint!= null)&&this.hasContactPoint.equals(rhs.hasContactPoint))))&&((this.hasChannel == rhs.hasChannel)||((this.hasChannel!= null)&&this.hasChannel.equals(rhs.hasChannel))))&&((this.hasCompetentAuthority == rhs.hasCompetentAuthority)||((this.hasCompetentAuthority!= null)&&this.hasCompetentAuthority.equals(rhs.hasCompetentAuthority))))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.language == rhs.language)||((this.language!= null)&&this.language.equals(rhs.language))))&&((this.isGroupedBy == rhs.isGroupedBy)||((this.isGroupedBy!= null)&&this.isGroupedBy.equals(rhs.isGroupedBy))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.processingTime == rhs.processingTime)||((this.processingTime!= null)&&this.processingTime.equals(rhs.processingTime))))&&((this.produces == rhs.produces)||((this.produces!= null)&&this.produces.equals(rhs.produces))))&&((this.keyword == rhs.keyword)||((this.keyword!= null)&&this.keyword.equals(rhs.keyword))))&&((this.spatial == rhs.spatial)||((this.spatial!= null)&&this.spatial.equals(rhs.spatial))))&&((this.hasInput == rhs.hasInput)||((this.hasInput!= null)&&this.hasInput.equals(rhs.hasInput))))&&((this.sector == rhs.sector)||((this.sector!= null)&&this.sector.equals(rhs.sector))))&&((this.thematicArea == rhs.thematicArea)||((this.thematicArea!= null)&&this.thematicArea.equals(rhs.thematicArea))))&&((this.status == rhs.status)||((this.status!= null)&&this.status.equals(rhs.status))))&&((this.requires == rhs.requires)||((this.requires!= null)&&this.requires.equals(rhs.requires))));
     }
 
 }
