@@ -1,0 +1,8 @@
+[{"name":"conncetor1",
+  "id":"id1",
+  "description":"a connector",
+  "status":"active",
+  "serviceId":"sId",
+  "url":"https://connector"  
+
+}]

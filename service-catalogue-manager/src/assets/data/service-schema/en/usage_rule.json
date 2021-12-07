@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "format": "categories",
+  "title": "Usage Rule",
+  "headerTemplate": "{{ self.usageName }}",
+  "required": [    
+  ],
+  "properties": {
+    "usageId": {
+      "type": "string",
+      "title": "Usage ID",
+      "description": "Purpose's ID, must be unique within the service description."
+    },
+    "usageName": {
+      "type": "string",
+      "title": "Usage Name",
+      "description": "Human readeable Purpose's Name, Short name that identifies the purpose."
+    },
+    "usageType": {
+      "type": "string",
+      "title": "Usage Category",
+      "description": "Category of contract agreements from a controlled taxonomy.",
+      "enum": [
+        "aaa",
+        "bbbb",
+        "cccc"        
+      ]
+    }
+  }
+}

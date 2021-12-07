@@ -1,0 +1,31 @@
+<nb-card tyle="width: 80vw; height: auto; max-width: 95vw; max-height: 95vh">
+  <nb-card-header class="d-flex justify-content-between">
+    <h5 class="">{{ 'general.editor.export' | translate }}</h5>
+    <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
+      <i class="material-icons">close</i>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <h7 class="">{{ 'general.editor.enter_filename' | translate }}</h7>
+    <div class="row m-2">
+       <input [(ngModel)]="name" nbInput placeholder="Name" />
+    </div>
+    <div class="row m-2">
+     
+      <nb-radio-group [(ngModel)]="exportOption">
+        <nb-radio value="cpsv">CPSV Model (json-ld)</nb-radio>
+        <nb-radio value="sdg">SDG Search Model</nb-radio>
+        <nb-radio value="json" [checked]>JSON</nb-radio>
+      </nb-radio-group>
+    </div>
+    
+  </nb-card-body>
+  <nb-card-footer class="d-flex justify-content-center">
+    <button nbButton status="primary" size="small" (click)="submit()">
+      {{ 'general.editor.download' | translate }}
+    </button>
+    <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="cancel()">
+      {{ 'general.cancel' | translate }}
+    </button>
+  </nb-card-footer>
+</nb-card>

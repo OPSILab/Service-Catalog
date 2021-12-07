@@ -1,0 +1,23 @@
+{
+  "serviceRegistry": {
+    "url": "https://www.cape-suite.eu/cape-server/service-registry"
+  },
+
+  "system": {
+    "sdkUrl": "https://www.cape-suite.eu/cape-service-sdk",
+    "checkConsentAtOperator": false,
+    "serviceEditorUrl": "https://www.cape-suite.eu/service-catalogue-manager",
+    "editorSchemaPath": "/assets/data/service-schema/",
+    "editorSchemaName": "service-model.json",
+    "auth": {
+      "idmHost": "https://idm.cape-suite.eu",
+      "clientId": "cape-service-sdk",
+      "disableAuth": "false",
+      "authProfile": "oidc",
+      "authRealm": "Cape"
+    }
+  },
+  "i18n": {
+    "locale": "en"
+  }
+}

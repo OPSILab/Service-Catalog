@@ -1,0 +1,83 @@
+{
+  
+  "title": "Descrizione Servizio",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "basicCategoryTitle":"Info Catalogo",
+  "format": "categories",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Nome Servizio",
+      "minLength": 1,
+      "description": "Service Name"
+    },
+    "identifier": {
+      "type": "string",
+      "title": "URI Servizio",
+      "description": "An URI"
+    },
+    "issued": {
+      "type": "string",
+      "format": "date-time",
+      "title": "Creato il",
+      "description": "Timestamp of the Service creation.",
+      "options": { "hidden": true }
+    },
+    "createdByUserId": {
+      "type": "string",
+      "title": "Created by User Id",
+      "description": "User Id of Service Editor (e.g. Data Controller).",
+      "minLength": 3
+    },
+    "serviceDescriptionVersion": {
+      "type": "string",
+      "title": "Service Description version",
+      "description": "Service description version number."
+    },
+    "serviceIconUrl": {
+      "type": "string",
+      "title": "Service Icon Url",
+      "description": "URL pointing to Service Icon file"
+    },
+    "status": {
+      "type": "string",
+      "title": "Service Description status",
+      "description": "Status of Service Description (Allowed values: *Completed*, *Deprecated*, *UnderDevelopment*, *Withdrawn*)",
+      "default": "UnderDevelopment",
+      "enum": ["Completed", "Deprecated", "UnderDevelopment", "WithDrawn"],
+      "options": { "hidden": true }
+    },
+    "isPublicService": {
+      "type": "boolean",
+      "title": "Public Service",
+      "description": "if public service or not"
+    },
+    
+    "hasInfo": {
+      "$ref": "./service-cpsv-entry.json"
+    },
+    "hasServiceInstance": {
+      "$ref": "./service_instance.json"
+    },
+    "hasUsageRule": {
+      "type": "array",
+      "title": "Usage Rule",
+      "format": "tabs",
+      "description": "It collects contract and usage rules for data sharing",
+      "items": {
+        "$ref": "./usage_rule.json"
+      }
+    },
+    "isPersonalDataHandling": {
+      "type": "array",
+      "title": "Personal Data Handling",
+      "format": "tabs",
+      "description": "It collects the different legal basis and requirements for personal data processing according to EU data protection Rules (Art. 6 GDPR). It describes describe different situations where a company or an organisation is allowed to collect or reuse your personal information: contract, legal obligation, vital interest, public interest, legitimate interest and consent",
+      "items": {
+        "$ref": "./processing_basis.json"
+      }
+    }
+  }
+}
