@@ -559,9 +559,6 @@
 						"piiController": {
 							"type": "string"
 						},
-						"onBehalf": {
-							"type": "object"
-						},
 						"organizationName": {
 							"type": "string"
 						},
@@ -583,7 +580,6 @@
 					},
 					"required": [
 						"piiController",
-						"onBehalf",
 						"organizationName",
 						"hasContact",
 						"hasAddress",

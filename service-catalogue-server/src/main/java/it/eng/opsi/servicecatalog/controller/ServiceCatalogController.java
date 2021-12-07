@@ -123,6 +123,17 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
+	@Operation(summary = "Get the hasInfo part of Service Model description by Service Id, serialized as Json-LD according to CPSV-AP specification.", description = "Get the Service Model description by Service Id, serialized as Json-LD.", tags = {
+			"Service Model | JSON-LD" }, responses = {
+					@ApiResponse(description = "Returns the JSON-LD of the requested Service Model description.", responseCode = "200") })
+	@GetMapping(value = "/services/cpsv/jsonld/{serviceId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	@Override
+	public ResponseEntity<String> getServiceHasInfoByIdJsonLd(@PathVariable String serviceId)
+			throws ServiceNotFoundException, IOException {
+
+		return ResponseEntity.ok(catalogService.getHasInfoByIdJsonLd(serviceId));
+	}
+
 	@Override
 	@Operation(summary = "Get the Service Models count grouped by Sector.", description = "Get the Service Models count grouped by Sector.", tags = {
 			"Service Model" }, responses = {
@@ -133,15 +144,24 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getCountBySector());
 	}
 
-	@Operation(summary = "Get the hasInfo part of Service Model description by Service Id, serialized as Json-LD according to CPSV-AP specification.", description = "Get the Service Model description by Service Id, serialized as Json-LD.", tags = {
-			"Service Model | JSON-LD" }, responses = {
-					@ApiResponse(description = "Returns the JSON-LD of the requested Service Model description.", responseCode = "200") })
-	@GetMapping(value = "/services/cpsv/jsonld/{serviceId}", produces = MediaType.APPLICATION_JSON_VALUE)
 	@Override
-	public ResponseEntity<String> getServiceHasInfoByIdJsonLd(@PathVariable String serviceId)
-			throws ServiceNotFoundException, IOException {
-		
-		return ResponseEntity.ok(catalogService.getHasInfoByIdJsonLd(serviceId));
+	@Operation(summary = "Get the Service Models count grouped by Thematic Area.", description = "Get the Service Models count grouped by Thematic Area.", tags = {
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Return an object with count for each sector.", responseCode = "200") })
+	@GetMapping(value = "/services/count/thematicArea", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<HashMap<String, Object>>> getCountByThematicArea() {
+
+		return ResponseEntity.ok(catalogService.getCountByThematicArea());
+	}
+
+	@Override
+	@Operation(summary = "Get the Service Models count grouped by GroupedBy.", description = "Get the Service Models count grouped by GroupedBy.", tags = {
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Return an object with count for each sector.", responseCode = "200") })
+	@GetMapping(value = "/services/count/groupedBy", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<HashMap<String, Object>>> getCountByGroupedBy() {
+
+		return ResponseEntity.ok(catalogService.getCountByGroupedBy());
 	}
 
 }

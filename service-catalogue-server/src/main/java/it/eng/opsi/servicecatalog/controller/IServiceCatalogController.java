@@ -35,4 +35,9 @@ public interface IServiceCatalogController {
 			throws ServiceNotFoundException, IOException;
 	
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountBySector();
+	
+	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByThematicArea();
+	
+	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByGroupedBy();
+	
 }
