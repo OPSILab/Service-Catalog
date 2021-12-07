@@ -125,7 +125,7 @@
                   "description": "Language used in textual description, in ISO 639-1 format.",
                   "enumSource": "possible_langs",
                   "watch": {
-                    "possible_langs": "root.language"
+                    "possible_langs": "root.hasInfo.language"
                   }
                 },
                 "description": {

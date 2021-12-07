@@ -166,6 +166,12 @@
 									"description"
 								]
 							},
+							"type": {
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							},
 							"language": {
 								"type": "array",
 								"items": {

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "identifier",
     "title",
     "description",
+    "type",
     "language",
     "page"
 })
@@ -31,6 +32,9 @@ public class HasInput {
     @JsonProperty("description")
     @Valid
     private Description__1 description;
+    @JsonProperty("type")
+    @Valid
+    private List<String> type = new ArrayList<String>();
     @JsonProperty("language")
     @Valid
     private List<String> language = new ArrayList<String>();
@@ -57,12 +61,14 @@ public class HasInput {
      * @param language
      * @param page
      * @param title
+     * @param type
      */
-    public HasInput(String identifier, String title, Description__1 description, List<String> language, String page) {
+    public HasInput(String identifier, String title, Description__1 description, List<String> type, List<String> language, String page) {
         super();
         this.identifier = identifier;
         this.title = title;
         this.description = description;
+        this.type = type;
         this.language = language;
         this.page = page;
     }
@@ -107,6 +113,16 @@ public class HasInput {
     @JsonProperty("description")
     public void setDescription(Description__1 description) {
         this.description = description;
+    }
+
+    @JsonProperty("type")
+    public List<String> getType() {
+        return type;
+    }
+
+    @JsonProperty("type")
+    public void setType(List<String> type) {
+        this.type = type;
     }
 
     @JsonProperty("language")
@@ -157,6 +173,10 @@ public class HasInput {
         sb.append('=');
         sb.append(((this.description == null)?"<null>":this.description));
         sb.append(',');
+        sb.append("type");
+        sb.append('=');
+        sb.append(((this.type == null)?"<null>":this.type));
+        sb.append(',');
         sb.append("language");
         sb.append('=');
         sb.append(((this.language == null)?"<null>":this.language));
@@ -181,6 +201,7 @@ public class HasInput {
         result = ((result* 31)+((this.language == null)? 0 :this.language.hashCode()));
         result = ((result* 31)+((this.page == null)? 0 :this.page.hashCode()));
         result = ((result* 31)+((this.title == null)? 0 :this.title.hashCode()));
+        result = ((result* 31)+((this.type == null)? 0 :this.type.hashCode()));
         return result;
     }
 
@@ -193,7 +214,7 @@ public class HasInput {
             return false;
         }
         HasInput rhs = ((HasInput) other);
-        return ((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.language == rhs.language)||((this.language!= null)&&this.language.equals(rhs.language))))&&((this.page == rhs.page)||((this.page!= null)&&this.page.equals(rhs.page))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))));
+        return (((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.language == rhs.language)||((this.language!= null)&&this.language.equals(rhs.language))))&&((this.page == rhs.page)||((this.page!= null)&&this.page.equals(rhs.page))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))));
     }
 
 }
