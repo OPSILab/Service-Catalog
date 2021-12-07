@@ -19,7 +19,7 @@ import { LoginService } from '../../../auth/login/login.service';
 import { ServiceModelStatusEnum } from '../../../model/services/serviceModel';
 @Component({
   template: `
-    <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.serviceId }}">
+    <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.identifier }}">
       <nb-icon icon="settings-2"></nb-icon>
     </button>
     <!-- Register Service modal ng-template -->
