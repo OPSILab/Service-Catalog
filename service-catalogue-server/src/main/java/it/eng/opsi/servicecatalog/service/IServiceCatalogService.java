@@ -35,4 +35,8 @@ public interface IServiceCatalogService {
 	public abstract void deleteService(String serviceId) throws ServiceNotFoundException;
 
 	public abstract List<HashMap<String, Object>> getCountBySector();
+	
+	public abstract List<HashMap<String, Object>> getCountByThematicArea();
+	
+	public abstract List<HashMap<String, Object>> getCountByGroupedBy();
 }

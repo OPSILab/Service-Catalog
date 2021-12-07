@@ -17,9 +17,8 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 
 	public Optional<ServiceModel> findByIdentifier(String serviceId);
 
-	
 	public Optional<HasInfoOnly> getHasInfoByIdentifier(String serviceId);
-	
+
 //	@Query(value = "{ $and:[{ 'serviceId': ?0}, { 'serviceInstance.cert':{$ne:null}}]}")
 //	public Optional<ServiceModel> findRegisteredByServiceId(String serviceId);
 
@@ -45,8 +44,17 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 //			"{ $replaceRoot: { 'newRoot' : '$isDescribedAt.dataMapping'}}" })
 //	public Optional<List<DataMapping>> getDatasetDataMappingByServiceIdAndDatasetId(String service, String datasetId);
 
+	@Aggregation(pipeline = { "{$unwind: '$hasInfo.isGroupedBy'}",
+			"{'$group':{'_id':'$hasInfo.isGroupedBy','count':{$sum:1}}}",
+			"{$project:{'_id':0,'isGroupedBy':'$_id','count':'$count'}}" })
+	public List<HashMap<String, Object>> getCountByGroupedBy();
+
+	@Aggregation(pipeline = { "{$unwind: '$hasInfo.thematicArea'}",
+			"{'$group':{'_id':'$hasInfo.thematicArea','count':{$sum:1}}}",
+			"{$project:{'_id':0,'thematicArea':'$_id','count':'$count'}}" })
+	public List<HashMap<String, Object>> getCountByThematicArea();
+
 	@Aggregation(pipeline = { "{$unwind: '$hasInfo.sector'}", "{'$group':{'_id':'$hasInfo.sector','count':{$sum:1}}}",
 			"{$project:{'_id':0,'sector':'$_id','count':'$count'}}" })
 	public List<HashMap<String, Object>> getCountBySector();
-
 }

@@ -100,26 +100,38 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
+	public HasInfo getHasInfoById(String serviceId) throws ServiceNotFoundException {
+
+		return serviceModelRepo.getHasInfoByIdentifier(serviceId)
+				.orElseThrow(() -> new ServiceNotFoundException("No Service found with Service Id: " + serviceId))
+				.getHasInfo();
+	}
+
+	@Override
+	public String getHasInfoByIdJsonLd(String serviceId) throws ServiceNotFoundException, IOException {
+
+		HasInfo serviceHasInfo = serviceModelRepo.getHasInfoByIdentifier(serviceId)
+				.orElseThrow(() -> new ServiceNotFoundException("No Service found with Service Id: " + serviceId))
+				.getHasInfo();
+
+		return jsonldSerializer.serialize(serviceHasInfo);
+	}
+
+	@Override
 	public List<HashMap<String, Object>> getCountBySector() {
 
 		return serviceModelRepo.getCountBySector();
 	}
 
 	@Override
-	public HasInfo getHasInfoById(String serviceId) throws ServiceNotFoundException {
-
-		return serviceModelRepo.getHasInfoByIdentifier(serviceId)
-				.orElseThrow(() -> new ServiceNotFoundException("No Service found with Service Id: " + serviceId)).getHasInfo();
+	public List<HashMap<String, Object>> getCountByThematicArea() {
+		return serviceModelRepo.getCountByThematicArea();
 	}
-	
+
 	@Override
-	public String getHasInfoByIdJsonLd(String serviceId) throws ServiceNotFoundException, IOException {
+	public List<HashMap<String, Object>> getCountByGroupedBy() {
 
-		HasInfo serviceHasInfo = serviceModelRepo.getHasInfoByIdentifier(serviceId)
-				.orElseThrow(() -> new ServiceNotFoundException("No Service found with Service Id: " + serviceId)).getHasInfo();
-
-		return jsonldSerializer.serialize(serviceHasInfo);
+		return serviceModelRepo.getCountByGroupedBy();
 	}
-
 
 }

@@ -580,7 +580,6 @@
 					},
 					"required": [
 						"piiController",
-						"onBehalf",
 						"organizationName",
 						"hasContact",
 						"hasAddress",

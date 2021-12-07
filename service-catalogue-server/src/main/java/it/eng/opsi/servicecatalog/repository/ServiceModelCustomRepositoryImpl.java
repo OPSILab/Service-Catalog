@@ -17,7 +17,7 @@ public class ServiceModelCustomRepositoryImpl implements ServiceModelCustomRepos
 
 	public Optional<ServiceModel> updateService(String serviceId, ServiceModel service) {
 
-		ServiceModel updatedService = template.findAndReplace(query(where("serviceId").is(serviceId)), service);
+		ServiceModel updatedService = template.findAndReplace(query(where("identifier").is(serviceId)), service);
 
 		return Optional.ofNullable(updatedService);
 
