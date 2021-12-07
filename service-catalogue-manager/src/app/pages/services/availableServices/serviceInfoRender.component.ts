@@ -18,16 +18,21 @@ export class ServiceInfoRenderComponent {
     this.modalService.open(this.serviceInfoModalRef, {
       context: {
         modalHeader: this.value.title,
-        description: this.value.hasInfo.description,
-        keywords: this.value.hasInfo.keyword,
+        description: this.value.hasInfo.description.description,
+        sector: this.value.hasInfo.sector,
+        event: this.value.hasInfo.isGroupedBy,
+        thematicArea: this.value.hasInfo.thematicArea,
         serviceId: this.value.identifier,
         serviceUri: this.value.identifier,
+        publicService:this.value.isPublicService,
         iconUrl: this.value.serviceIconUrl !== '' ? this.value.serviceIconUrl : 'favicon.png',
         provider: this.value.hasServiceInstance.serviceProvider.name,
         processings: this.value.isPersonalDataHandling,
-        datasetsMap: this.mapDatasetsConcept(this.value.hasServiceInstance.dataset),
+        channel:this.value.hasInfo.hasChannel,
+        language: this.value.hasInfo.language,
+        location: this.value.hasInfo.spatial,
         locale: this.value.locale,
-        dataController: this.value.hasServiceInstance.dataController,
+        competentAuthority: this.value.hasInfo.hasCompetentAuthority
       },
       hasScroll: true,
     });

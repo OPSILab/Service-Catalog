@@ -194,6 +194,11 @@
       "no_type": "Type not provided"
     },
     "services": {
+      "authority":"CompetentAuthority",
+      "location":"Location",
+      "channels":"Channels",
+      "sector":"Sector",
+      "event":"Event",
       "view_editor": "See more info",
       "add_new": "Add new",
       "all": "all",

@@ -1,0 +1,23 @@
+{
+  "serviceRegistry": {
+    "url": "http://localhost:8086/service-catalog"
+  },
+
+  "system": {
+    "sdkUrl": "http://localhost:8085/cape-service-sdk",
+    "checkConsentAtOperator": false,
+    "serviceEditorUrl": "http://localhost:81/service-catalogue-manager",
+    "editorSchemaPath": "/assets/data/service-schema/",
+    "editorSchemaName": "service-model.json",
+    "auth": {
+      "idmHost": "https://idm.cape-suite.eu",
+      "clientId": "cape-service-sdk",
+      "disableAuth": "false",
+      "authProfile": "oidc",
+      "authRealm": "Cape"
+    }
+  },
+  "i18n": {
+    "locale": "en"
+  }
+}

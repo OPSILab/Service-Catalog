@@ -96,6 +96,25 @@
 						"description"
 					]
 				},
+				
+				"isDescribedAt":{
+		     		 "type": "array",
+		     		 "items":{
+		        		"type": "object",
+		       			"properties":{
+					          "identifier": {
+					            "type": "string"
+					            },
+					          "name": {
+					            "type": "string"
+					            },  
+					          "landingPage": {
+					            "type": "string"
+					            }  
+		        		}
+				      }
+				 },			
+				
 				"processingTime": {
 					"type": "string"
 				},

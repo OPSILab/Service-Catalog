@@ -87,6 +87,29 @@
         "description"
       ]
     },
+    "isDescribedAt":{
+      "type": "array",
+      "title": "Described at",
+      "format": "tabs",
+      "items":{
+        "type": "object",
+        "title": "Document",
+        "headerTemplate": "{{ self.name }}",
+        "properties":{
+          "identifier": {
+            "type": "string"
+            },
+          "name": {
+            "type": "string"
+            },  
+          "landingPage": {
+            "type": "string"
+            }  
+        }
+
+      }
+
+    },
     "processingTime": {
       "type": "string",
       "title": "Processing Time",

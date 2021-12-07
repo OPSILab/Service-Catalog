@@ -5,9 +5,9 @@
   "format": "tabs",
   "items": {
     "type": "object",
-    "required": ["datasetId", "dataMapping"],
+    "required": ["identifier", "dataMapping"],
     "title": "Dataset",
-    "description": "Service dataset description (IsDescribedAt) describes the type and structure of the set of personal data processed by the Service. Each dataset will be linked in one or more specific processing base object.",
+    "description": "Service dataset description  describes the type and structure of the set of  data (personal) processed by the Service. Each dataset will be linked in one or more specific processing base object.",
     "options": {
       "collapsed": false
     },
@@ -125,7 +125,7 @@
                   "description": "Language used in textual description, in ISO 639-1 format.",
                   "enumSource": "possible_langs",
                   "watch": {
-                    "possible_langs": "root.language"
+                    "possible_langs": "root.hasInfo.language"
                   }
                 },
                 "description": {

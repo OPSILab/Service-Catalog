@@ -26,15 +26,13 @@
         </div>
       </div>
 
-      <div class="row justify-content-around">
+      
+      <div class="row justify-content-center">
         <div class="col-sm py-1">
           <div class="accent">
-            <i>
-              <b>{{ 'general.services.keywords' | translate }}: </b>
-            </i>
-            <div class="mx-1 p-1 badge badge-primary" *ngFor="let keyword of data.keywords; let i = index" [attr.data-index]="i">
-              <i>{{ keyword }}</i>
-            </div>
+            <i
+              ><b>{{ 'general.services.provider' | translate }}:</b> {{ data.provider }}</i
+            >
           </div>
         </div>
       </div>
@@ -42,8 +40,53 @@
         <div class="col-sm py-1">
           <div class="accent">
             <i
-              ><b>{{ 'general.services.provider' | translate }}:</b> {{ data.provider }}</i
+              ><b>{{ 'general.services.authority' | translate }}:</b> {{ data.competentAuthority.prefLabel }}</i
             >
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i
+              ><b>{{ 'general.services.location' | translate }}:</b> {{ data.location }}</i
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-around">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i>
+              <b>{{ 'general.services.channels' | translate }}: </b>
+            </i>
+            <div class="mx-1 p-1 badge badge-primary" *ngFor="let channel of data.channel; let i = index" [attr.data-index]="i">
+              <i>{{ channel.type }}</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-around">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i>
+              <b>{{ 'general.services.sector' | translate }}: </b>
+            </i>
+            <div class="mx-1 p-1 badge badge-warning" *ngFor="let sector of data.sector; let i = index" [attr.data-index]="i">
+              <i>{{ sector }}</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-around">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i>
+              <b>{{ 'general.services.event' | translate }}: </b>
+            </i>
+            <div class="mx-1 p-1 badge badge-success" *ngFor="let event of data.event; let i = index" [attr.data-index]="i">
+              <i>{{ event }}</i>
+            </div>
           </div>
         </div>
       </div>
@@ -57,10 +100,10 @@
           </div>
         </div>
       </div>
-
+<!--
       <nb-tabset class="mt-2" fullWidth status="success">
         <nb-tab [responsive]="true" tabTitle="{{ 'general.services.data_processing' | translate }}">
-          <!-- Processing Bases-->
+          
           <nb-accordion
             class="my-2 shadow-none border border-primary"
             *ngFor="let processing of data.processings; let i = index"
@@ -168,7 +211,7 @@
             </tbody>
           </table>
         </nb-tab>
-      </nb-tabset>
+      </nb-tabset> -->
     </nb-card-body>
 
     <nb-card-footer>

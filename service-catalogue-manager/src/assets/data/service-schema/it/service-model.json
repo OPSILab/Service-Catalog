@@ -1,27 +1,27 @@
 {
   
-  "title": "Descrizione Servizio",
+  "title": "Service Description",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "$id": "http://example.com/root.json",
   "type": "object",
-  "basicCategoryTitle":"Info Catalogo",
+  "basicCategoryTitle":"Catalogue Info",
   "format": "categories",
   "properties": {
-    "name": {
+     "title": {
       "type": "string",
-      "title": "Nome Servizio",
+      "title": "Service Name",
       "minLength": 1,
       "description": "Service Name"
     },
     "identifier": {
       "type": "string",
-      "title": "URI Servizio",
-      "description": "An URI"
+      "title": "Service Identifier",
+      "description": "Service URI if exists"
     },
     "issued": {
       "type": "string",
       "format": "date-time",
-      "title": "Creato il",
+      "title": "Issued at",
       "description": "Timestamp of the Service creation.",
       "options": { "hidden": true }
     },
@@ -31,7 +31,7 @@
       "description": "User Id of Service Editor (e.g. Data Controller).",
       "minLength": 3
     },
-    "serviceDescriptionVersion": {
+    "versionInfo": {
       "type": "string",
       "title": "Service Description version",
       "description": "Service description version number."
@@ -47,12 +47,13 @@
       "description": "Status of Service Description (Allowed values: *Completed*, *Deprecated*, *UnderDevelopment*, *Withdrawn*)",
       "default": "UnderDevelopment",
       "enum": ["Completed", "Deprecated", "UnderDevelopment", "WithDrawn"],
-      "options": { "hidden": true }
+      "options": { "enum_titles": ["Completed", "Deprecated", "Under Development", "Withdrawn"] }
     },
     "isPublicService": {
       "type": "boolean",
       "title": "Public Service",
-      "description": "if public service or not"
+      "description": "if public service or not",
+      "default": "true"
     },
     
     "hasInfo": {
@@ -76,7 +77,7 @@
       "format": "tabs",
       "description": "It collects the different legal basis and requirements for personal data processing according to EU data protection Rules (Art. 6 GDPR). It describes describe different situations where a company or an organisation is allowed to collect or reuse your personal information: contract, legal obligation, vital interest, public interest, legitimate interest and consent",
       "items": {
-        "$ref": "./processing_basis.json"
+        "$ref": "./isPersonalDataHandling.json"
       }
     }
   }
