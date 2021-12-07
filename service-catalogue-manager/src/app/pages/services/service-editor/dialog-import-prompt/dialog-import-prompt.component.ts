@@ -10,6 +10,7 @@ import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
 export class DialogImportPromptComponent {
   selectedFile: File;
   json: Record<string, unknown>;
+  selectedItem = 'json';
 
   constructor(protected ref: NbDialogRef<DialogImportPromptComponent>, private errorService: ErrorDialogService) {}
 
