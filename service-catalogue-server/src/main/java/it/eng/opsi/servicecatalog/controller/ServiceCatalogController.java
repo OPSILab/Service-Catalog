@@ -68,10 +68,10 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the count of the registered Service Model descriptions.", tags = {
+	@Operation(summary = "Get the count of the registered Service Model descriptions (total, public and private services).", tags = {
 			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
-	@GetMapping(value = "/services/count", produces = MediaType.TEXT_PLAIN_VALUE)
-	public ResponseEntity<String> getServicesCount() {
+	@GetMapping(value = "/services/count", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HashMap<String, Integer>> getServicesCount() {
 
 		return ResponseEntity.ok(catalogService.getServicesCount());
 	}

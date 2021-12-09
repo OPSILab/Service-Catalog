@@ -17,6 +17,7 @@ import { AvailableServicesService } from './availableServices.service';
 import { AvailableServiceRow } from './availableServices.component';
 import { LoginService } from '../../../auth/login/login.service';
 import { ServiceModelStatusEnum } from '../../../model/services/serviceModel';
+import { DialogExportPromptComponent } from '../service-editor/dialog-export-prompt/dialog-export-prompt.component';
 @Component({
   template: `
     <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.identifier }}">
@@ -126,7 +127,7 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
   @ViewChild('confirmDeleteDialog', { static: false }) confirmDeleteDialogTemplate: TemplateRef<unknown>;
   @ViewChild('confirmRegisterDialog', { static: false }) confirmRegisterDialog: TemplateRef<unknown>;
   @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
-  @ViewChild('confirmExportDialog', { static: false }) confirmExportDialog: TemplateRef<unknown>;
+  // @ViewChild('confirmExportDialog', { static: false }) confirmExportDialog: TemplateRef<unknown>;
 
   constructor(
     private availableServicesService: AvailableServicesService,
@@ -170,11 +171,64 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
             this.openDeRegisterDialog();
             break;
           case 'export':
-            this.openExportDialog();
-            break;  
+            this.saveAsFile();
+            break;
           default:
         }
       });
+  }
+
+  saveAsFile(): void {
+    this.dialogService
+      .open(DialogExportPromptComponent)
+      .onClose.subscribe((result) => result && this.saveFile(result.name, result.exportFormat, this.value.identifier));
+  }
+
+  async saveFile(name: string, exportFormat: string, serviceId: string): Promise<void> {
+    this.errorDialogService;
+    let model: Record<string, unknown>;
+    console.log('exportType: ' + exportFormat);
+
+    try {
+      switch (exportFormat) {
+        case 'cpsv':
+          model = await this.availableServicesService.getCpsvService(serviceId);
+          break;
+        case 'sdg':
+          break;
+
+        case 'json-ld':
+          model = await this.availableServicesService.getJsonldService(serviceId);
+          break;
+
+        default:
+          model = (this.value as unknown) as Record<string, unknown>;
+      }
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      this.errorDialogService.openErrorDialog(error);
+    }
+    const filename = `${name}.json`,
+      blob = new Blob([JSON.stringify(model, null, 2)], {
+        type: 'application/json;charset=utf-8',
+      });
+
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+      window.navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+      const a = document.createElement('a');
+      a.download = filename;
+      a.href = URL.createObjectURL(blob);
+      a.dataset.downloadurl = ['text/plain', a.download, a.href].join(':');
+
+      a.dispatchEvent(
+        new MouseEvent('click', {
+          view: window,
+          bubbles: true,
+          cancelable: false,
+        })
+      );
+    }
   }
 
   ngOnDestroy(): void {
@@ -267,19 +321,6 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
       })
       .onClose.subscribe((confirm) => {
         if (confirm) void this.onDeRegisterService();
-      });
-  }
-
-  openExportDialog(): void {
-    this.dialogService
-      .open(this.confirmExportDialog, {
-        hasScroll: false,
-        context: {
-          serviceName: this.value.title,
-        },
-      })
-      .onClose.subscribe((confirm) => {
-       // if (confirm) void this.onExportService();
       });
   }
 

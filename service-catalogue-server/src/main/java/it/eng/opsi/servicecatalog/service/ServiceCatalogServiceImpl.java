@@ -48,10 +48,10 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public String getServicesCount() {
+	public HashMap<String, Integer> getServicesCount() {
 
 //		log.info("Getting Service Count");
-		return Long.valueOf(serviceModelRepo.count()).toString();
+		return serviceModelRepo.getTotalCount();
 	}
 
 	@Override

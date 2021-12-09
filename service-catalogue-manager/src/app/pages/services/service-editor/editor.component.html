@@ -32,7 +32,15 @@
         <i class="mx-1 material-icons">save</i>
       </button>
     </ng-template>
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning" (click)="saveAsFile()" [disabled]="isNew">
+    <button
+      nbButton
+      class="mx-4"
+      shape="rectangle"
+      size="medium"
+      status="warning"
+      (click)="saveAsFile()"
+      [disabled]="isNew || readSessionStorageValue('isTouched') == 'true'"
+    >
       {{ 'general.editor.export' | translate }}
       <i class="mx-1 fas fa-file-export fa-lg"></i>
     </button>

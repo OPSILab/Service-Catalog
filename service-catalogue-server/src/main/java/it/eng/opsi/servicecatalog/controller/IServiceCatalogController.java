@@ -18,7 +18,7 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<ServiceModel> getServiceById(String serviceId) throws ServiceNotFoundException;
 
-	public abstract ResponseEntity<String> getServicesCount();
+	public abstract ResponseEntity<HashMap<String, Integer>> getServicesCount();
 
 	public abstract ResponseEntity<ServiceModel> createService(ServiceModel service);
 

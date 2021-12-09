@@ -10,9 +10,15 @@
     "cancel": "Annulla",
     "edit": "Modifica",
     "dashboard": {
-      "pdataCategories": "Categorie di Dati Personali",
-      "services": "Servizi",
-      "consents": "Consensi"
+      "pdataCategories": "Categorie dati personali",
+      "services": "Servizi disponibili",
+      "connectors": "Connettori disponibili",
+      "serviceSector": "Settori Servizi",
+      "thematicArea": "Area Tematica Servizi",
+      "lifeEvent": "Life event",
+      "businessEvent": "Business Event",
+      "publicServices": "Servizi pubblici",
+      "privateServices": "Servizi privati"
     },
     "menu": {
       "dashboard": "Cruscotto",
@@ -32,7 +38,7 @@
       "account": "Account"
     },
     "consents": {
-      "legalbasis":"Base giuridica",
+      "legalbasis": "Base giuridica",
       "history": "Cronologia",
       "consents": "Consensi",
       "dataprovider": "Fornitore Dati",

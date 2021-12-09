@@ -4,6 +4,7 @@ import 'rxjs/add/operator/toPromise';
 import { NgxConfigureService } from 'ngx-configure';
 import { ServiceModel } from '../../../model/services/serviceModel';
 import { AppConfig } from '../../../model/appConfig';
+import { ServicesCount } from '../../../model/services/servicesCount';
 
 @Injectable({ providedIn: 'root' })
 export class AvailableServicesService {
@@ -21,14 +22,33 @@ export class AvailableServicesService {
     return this.http.get<ServiceModel[]>(`${this.serviceRegistryUrl}/api/v2/services`).toPromise();
   }
 
-  getServicesCount(): Promise<number> {
-    return this.http.get<number>(`${this.serviceRegistryUrl}/api/v2/services/count`).toPromise();
+  getServicesCount(): Promise<ServicesCount> {
+    return this.http.get<ServicesCount>(`${this.serviceRegistryUrl}/api/v2/services/count`).toPromise();
+  }
+
+  getServicesCountBySector(): Promise<Record<string, number>[]> {
+    return this.http.get<Record<string, number>[]>(`${this.serviceRegistryUrl}/api/v2/services/count/sector`).toPromise();
+  }
+
+  getServicesCountByThematicArea(): Promise<Record<string, number>[]> {
+    return this.http.get<Record<string, number>[]>(`${this.serviceRegistryUrl}/api/v2/services/count/thematicArea`).toPromise();
+  }
+
+  getServicesCountByGroupedBy(): Promise<Record<string, number>[]> {
+    return this.http.get<Record<string, number>[]>(`${this.serviceRegistryUrl}/api/v2/services/count/groupedBy`).toPromise();
   }
 
   getService(serviceId: string): Promise<ServiceModel> {
     return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/${serviceId}`).toPromise();
   }
 
+  getJsonldService(serviceId: string): Promise<Record<string, unknown>> {
+    return this.http.get<Record<string, unknown>>(`${this.serviceRegistryUrl}/api/v2/services/jsonld/${serviceId}`).toPromise();
+  }
+
+  getCpsvService(serviceId: string): Promise<Record<string, unknown>> {
+    return this.http.get<Record<string, unknown>>(`${this.serviceRegistryUrl}/api/v2/services/cpsv/jsonld/${serviceId}`).toPromise();
+  }
   saveService(service: ServiceModel): Promise<ServiceModel> {
     return this.http.post<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services`, service).toPromise();
   }

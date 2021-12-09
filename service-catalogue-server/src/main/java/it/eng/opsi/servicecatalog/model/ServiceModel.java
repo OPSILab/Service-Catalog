@@ -50,10 +50,10 @@ public class ServiceModel {
      * (Required)
      * 
      */
-    @JsonProperty("@id")
-    @JsonAlias({"identifier","@id"})
+	@JsonProperty("@id")
+    @JsonAlias({ "identifier", "@id" })
     @NotNull
-    private String identifier;
+  	private String identifier;
     /**
      * name
      * <p>

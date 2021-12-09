@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -13,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("PublicService")
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type", include = As.PROPERTY, defaultImpl = HasInfo.class)
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "@type", include = As.PROPERTY, defaultImpl = HasInfo.class)		
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "identifier",
@@ -43,9 +45,10 @@ public class HasInfo {
      * (Required)
      * 
      */
-    @JsonProperty("identifier")
+	@JsonProperty("@id")
+    @JsonAlias({ "identifier", "@id" })
     @NotNull
-    private String identifier;
+  	private String identifier;
     /**
      * name
      * <p>

@@ -8,17 +8,16 @@
   <nb-card-body>
     <h7 class="">{{ 'general.editor.enter_filename' | translate }}</h7>
     <div class="row m-2">
-       <input [(ngModel)]="name" nbInput placeholder="Name" />
+      <input [(ngModel)]="name" nbInput placeholder="Name" />
     </div>
     <div class="row m-2">
-     
-      <nb-radio-group [(ngModel)]="exportOption">
+      <nb-radio-group [(ngModel)]="exportFormat">
         <nb-radio value="cpsv">CPSV Model (json-ld)</nb-radio>
         <nb-radio value="sdg">SDG Search Model</nb-radio>
         <nb-radio value="json" [checked]>JSON</nb-radio>
+        <nb-radio value="json-ld">JSON-LD</nb-radio>
       </nb-radio-group>
     </div>
-    
   </nb-card-body>
   <nb-card-footer class="d-flex justify-content-center">
     <button nbButton status="primary" size="small" (click)="submit()">

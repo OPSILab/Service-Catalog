@@ -58,7 +58,12 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
     this.systemConfig = this.config.system;
     this.systemLocale = this.config.i18n.locale;
     this.schemaDir =
-      (this.systemConfig.serviceEditorUrl.includes('localhost') ? '' : this.systemConfig.serviceEditorUrl) + this.systemConfig.editorSchemaPath+"/"+this.systemLocale+"/"+this.systemConfig.editorSchemaName;
+      (this.systemConfig.serviceEditorUrl.includes('localhost') ? '' : this.systemConfig.serviceEditorUrl) +
+      this.systemConfig.editorSchemaPath +
+      '/' +
+      this.systemLocale +
+      '/' +
+      this.systemConfig.editorSchemaName;
     this.loading = true;
   }
 
@@ -157,8 +162,9 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   saveAsFile(): void {
-    this.dialogService.open(DialogExportPromptComponent     
-      ).onClose.subscribe(result =>result && this.saveFile(result.name, result.exportOption));
+    this.dialogService
+      .open(DialogExportPromptComponent)
+      .onClose.subscribe((result) => result && this.saveFile(result.name, result.exportFormat, this.serviceId));
   }
 
   importAsFile(): void {
@@ -172,29 +178,34 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
     });
   }
 
-  saveFile(name: string, exportOption:string ): void {
+  async saveFile(name: string, exportFormat: string, serviceId: string): Promise<void> {
     this.errorDialogService;
-    var model: Record<string, unknown>;
-    console.log ("exportType: "+exportOption);
-  
-    if (exportOption=="cpsv"){
-       model = this.editor.getValue() as Record<string, unknown>
-    }
+    let model: Record<string, unknown>;
+    console.log('exportType: ' + exportFormat);
 
-    if (exportOption=="sdg"){
-      const model = this.editor.getValue() as Record<string, unknown>
-    }
+    try {
+      switch (exportFormat) {
+        case 'cpsv':
+          model = await this.availablesServicesService.getCpsvService(serviceId);
+          break;
+        case 'sdg':
+          break;
 
-    if (exportOption=="sdg"){
-      const model = this.editor.getValue() as Record<string, unknown>
+        case 'json-ld':
+          model = await this.availablesServicesService.getJsonldService(serviceId);
+          break;
+
+        default:
+          model = this.editor.getValue() as Record<string, unknown>;
+      }
+    } catch (error) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      this.errorDialogService.openErrorDialog(error);
     }
-    
     const filename = `${name}.json`,
       blob = new Blob([JSON.stringify(model, null, 2)], {
         type: 'application/json;charset=utf-8',
       });
-
-    
 
     if (window.navigator && window.navigator.msSaveOrOpenBlob) {
       window.navigator.msSaveOrOpenBlob(blob, filename);

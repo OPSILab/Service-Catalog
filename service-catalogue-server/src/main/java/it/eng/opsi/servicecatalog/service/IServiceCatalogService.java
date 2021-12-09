@@ -25,7 +25,7 @@ public interface IServiceCatalogService {
 	
 	public abstract String getServiceByIdJsonLd(String serviceId) throws ServiceNotFoundException, IOException;
 
-	public abstract String getServicesCount();
+	public abstract HashMap<String, Integer> getServicesCount();
 
 	public abstract ServiceModel createService(ServiceModel service);
 
@@ -39,4 +39,6 @@ public interface IServiceCatalogService {
 	public abstract List<HashMap<String, Object>> getCountByThematicArea();
 	
 	public abstract List<HashMap<String, Object>> getCountByGroupedBy();
+	
+	
 }

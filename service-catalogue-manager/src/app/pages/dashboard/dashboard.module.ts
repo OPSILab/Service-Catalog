@@ -9,12 +9,7 @@ import { AvailableServicesService } from '../services/availableServices/availabl
 import { PurposeCategoryPieComponent } from './charts/purposeCategoryPie.component';
 import { TranslateModule } from '@ngx-translate/core';
 
-const components = [
-  DashboardComponent,
-  StatusCardComponent,
-  PurposeCategoryPieComponent,
- 
-];
+const components = [DashboardComponent, StatusCardComponent, PurposeCategoryPieComponent];
 
 @NgModule({
   imports: [NbCardModule, ThemeModule, NgxChartsModule, NbIconModule, TranslateModule],
