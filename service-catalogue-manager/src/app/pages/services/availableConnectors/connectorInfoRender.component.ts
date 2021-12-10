@@ -1,8 +1,7 @@
 import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
-import { ConnectorEntry } from '../../../model/connector/ConnectorEntry';
-
+import { ConnectorEntry } from '../../../model/connector/connectorEntry';
 
 @Component({
   templateUrl: `./connectorInfoRender.component.html`,
@@ -26,5 +25,4 @@ export class ConnectorInfoRenderComponent {
       hasScroll: true,
     });
   }
-  
 }

@@ -10,8 +10,8 @@
  * Do not edit the class manually.
  */
 import { DataController } from '../services/dataController';
+import { Description } from '../services/description';
 import { RSDescription } from './rSDescription';
-import { Description } from '../services/Description';
 import { UsageRules } from './usageRules';
 
 export interface CommonPart {

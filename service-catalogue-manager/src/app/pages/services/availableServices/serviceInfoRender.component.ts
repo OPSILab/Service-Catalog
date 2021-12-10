@@ -24,15 +24,15 @@ export class ServiceInfoRenderComponent {
         thematicArea: this.value.hasInfo.thematicArea,
         serviceId: this.value.identifier,
         serviceUri: this.value.identifier,
-        publicService:this.value.isPublicService,
+        publicService: this.value.isPublicService,
         iconUrl: this.value.serviceIconUrl !== '' ? this.value.serviceIconUrl : 'favicon.png',
         provider: this.value.hasServiceInstance.serviceProvider.name,
         processings: this.value.isPersonalDataHandling,
-        channel:this.value.hasInfo.hasChannel,
+        channel: this.value.hasInfo.hasChannel,
         language: this.value.hasInfo.language,
         location: this.value.hasInfo.spatial,
         locale: this.value.locale,
-        competentAuthority: this.value.hasInfo.hasCompetentAuthority
+        competentAuthority: this.value.hasInfo.hasCompetentAuthority,
       },
       hasScroll: true,
     });

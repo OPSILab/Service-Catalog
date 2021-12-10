@@ -122,6 +122,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       // watcher on concepts fields
       const watcherCallback = function (path) {
         const value = JSON.stringify(this.getEditor(path).getValue() as Record<string, unknown>);
+
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         console.log(`field with path: [${path as string}] changed to [${JSON.stringify(this.getEditor(path).getValue())}]`);
 
@@ -134,11 +135,26 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
           this.getEditor(path.substr(0, path.lastIndexOf('.') + 1) + 'name').setValue(nameValue);
         }
       };
+
+      const rootHasInfoWhatcher = function (path) {
+        const value = this.getEditor(path).getValue() as string;
+
+        if ((path as string) === 'root.identifier') this.getEditor('root.hasInfo.identifier').setValue(value);
+        if ((path as string) === 'root.hasInfo.identifier') this.getEditor('root.identifier').setValue(value);
+
+        if ((path as string) === 'root.title') this.getEditor('root.hasInfo.title').setValue(value);
+        if ((path as string) === 'root.hasInfo.title') this.getEditor('root.title').setValue(value);
+      };
       for (const key in editor.editors) {
         const regex = '.conceptId';
 
         if (Object.prototype.hasOwnProperty.call(editor.editors, key) && RegExp(regex).exec(key)) {
           editor.watch(key, watcherCallback.bind(editor, key));
+        } else if (
+          Object.prototype.hasOwnProperty.call(editor.editors, key) &&
+          (key == 'root.identifier' || key == 'root.title' || key == 'root.hasInfo.identifier' || key == 'root.hasInfo.title')
+        ) {
+          editor.watch(key, rootHasInfoWhatcher.bind(editor, key));
         }
       }
     });

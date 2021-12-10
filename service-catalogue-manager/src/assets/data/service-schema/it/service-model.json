@@ -1,13 +1,12 @@
 {
-  
   "title": "Service Description",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "$id": "http://example.com/root.json",
   "type": "object",
-  "basicCategoryTitle":"Catalogue Info",
+  "basicCategoryTitle": "Catalogue Info",
   "format": "categories",
   "properties": {
-     "title": {
+    "title": {
       "type": "string",
       "title": "Service Name",
       "minLength": 1,
@@ -55,7 +54,7 @@
       "description": "if public service or not",
       "default": "true"
     },
-    
+
     "hasInfo": {
       "$ref": "./service-cpsv-entry.json"
     },

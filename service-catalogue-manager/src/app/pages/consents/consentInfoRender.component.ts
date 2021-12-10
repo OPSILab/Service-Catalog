@@ -36,7 +36,7 @@ export class ConsentInfoLinkRenderComponent {
         storage: this.value.payload.common_part.usage_rules.storage,
         collectionMethod: this.value.payload.common_part.usage_rules.collectionMethod,
         termination: this.value.payload.common_part.usage_rules.termination,
-        legalbasis:this.value.payload.common_part.usage_rules.legalBasis,
+        legalbasis: this.value.payload.common_part.usage_rules.legalBasis,
         history: this.value.consentStatusList,
       },
       hasScroll: true,

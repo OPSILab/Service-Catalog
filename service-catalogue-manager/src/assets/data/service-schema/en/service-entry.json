@@ -1,10 +1,9 @@
 {
-  
   "title": "Service Description",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "$id": "http://example.com/root.json",
   "type": "object",
-  "basicCategoryTitle":"General Info",
+  "basicCategoryTitle": "General Info",
   "format": "categories",
   "properties": {
     "serviceId": {

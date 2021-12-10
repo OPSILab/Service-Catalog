@@ -46,9 +46,9 @@ export class ConsentsComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     try {
       this.locale = (this.configService.config as AppConfig).i18n.locale; // TODO change with user language preferences
-      
+
       void this.source.load(
-        [] /*for demo. remove and de-comment row below*/ 
+        [] /*for demo. remove and de-comment row below*/
         /*(await this.consentsService.getConsents(QuerySortEnum.ASC)).filter((consent) => consent.payload.role_specific_part.role == 'Sink')*/
       );
     } catch (error) {

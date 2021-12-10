@@ -1,4 +1,3 @@
-
 export interface ConnectorEntryLog {
   connectorId: string;
   type: string;

@@ -18,7 +18,6 @@ import { Description } from '../../../model/services/description';
 import { Description2 } from '../../../model/services/description2';
 import { IsPersonalDataHandling } from '../../../model/services/isPersonalDataHandling';
 
-
 export interface AvailableServiceRow extends ServiceModel {
   locale?: string;
 }
@@ -61,10 +60,10 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
       void this.source.load(
         this.availableServices.map((availableServiceDescr) => {
           /* Get Localized Human readable description of the Service, default en */
-         // availableServiceDescr.hasInfo.description= this.getLocalizedDescription(availableServiceDescr);
+          // availableServiceDescr.hasInfo.description= this.getLocalizedDescription(availableServiceDescr);
 
           /* Get Localized Purposes descriptions, default en */
-         // availableServiceDescr.isPersonalDataHandling = this.getLocalizedPurposesDescription(availableServiceDescr);
+          // availableServiceDescr.isPersonalDataHandling = this.getLocalizedPurposesDescription(availableServiceDescr);
 
           return {
             ...availableServiceDescr,
@@ -89,7 +88,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
       });
   }
 
- /* private getLocalizedPurposesDescription(availableServiceDescr: ServiceModel): IsPersonalDataHandling[] {
+  /* private getLocalizedPurposesDescription(availableServiceDescr: ServiceModel): IsPersonalDataHandling[] {
     return availableServiceDescr.isPersonalDataHandling.map((IsPersonalDataHandling) => {
       return {
         ...IsPersonalDataHandling,

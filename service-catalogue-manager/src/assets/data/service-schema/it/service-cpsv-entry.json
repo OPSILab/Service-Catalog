@@ -22,12 +22,7 @@
       "title": "Service Description status",
       "description": "Status of Service Description (Allowed values: *Completed*, *Deprecated*, *UnderDevelopment*, *Withdrawn*)",
       "default": "UnderDevelopment",
-      "enum": [
-        "Completed",
-        "Deprecated",
-        "UnderDevelopment",
-        "WithDrawn"
-      ],
+      "enum": ["Completed", "Deprecated", "UnderDevelopment", "WithDrawn"],
       "options": {
         "hidden": true
       }
@@ -47,7 +42,7 @@
         "id": "arr_item"
       }
     },
-    
+
     "sector": {
       "$ref": "./sectors.json"
     },
@@ -82,33 +77,28 @@
           "format": "textarea"
         }
       },
-      "required": [
-        "locale",
-        "description"
-      ]
+      "required": ["locale", "description"]
     },
-    "isDescribedAt":{
+    "isDescribedAt": {
       "type": "array",
       "title": "Described at",
       "format": "tabs",
-      "items":{
+      "items": {
         "type": "object",
         "title": "Document",
         "headerTemplate": "{{ self.name }}",
-        "properties":{
+        "properties": {
           "identifier": {
             "type": "string"
-            },
+          },
           "name": {
             "type": "string"
-            },  
+          },
           "landingPage": {
             "type": "string"
-            }  
+          }
         }
-
       }
-
     },
     "processingTime": {
       "type": "string",
@@ -192,10 +182,7 @@
                 "format": "textarea"
               }
             },
-            "required": [
-              "locale",
-              "description"
-            ]
+            "required": ["locale", "description"]
           },
           "type": {
             "type": "array",
@@ -205,166 +192,132 @@
             "uniqueItems": true,
             "items": {
               "type": "string",
-              "enum": [
-                "Declaration",
-                "Physical object",
-                "Code",
-                "Financial obligation",
-                "Financial benefit",
-                "Recognition",
-                "Permit"
-
-              ]
-             }
-            
-          },
-            "language": {
-              "$ref": "./locale.json"
-            },
-            "page": {
-              "type": "string",
-              "title": "Related Documentation"
+              "enum": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
             }
+          },
+          "language": {
+            "$ref": "./locale.json"
+          },
+          "page": {
+            "type": "string",
+            "title": "Related Documentation"
           }
         }
-      },
-      "produces": {
+      }
+    },
+    "produces": {
+      "title": "Output",
+      "type": "array",
+      "format": "tabs",
+      "description": "describing the actual result of executing a given Public Service. Outputs can be any resource, for instance a document, artefact or anything else being produced as a result of executing the Public Service",
+      "items": {
+        "type": "object",
         "title": "Output",
-        "type": "array",
-        "format": "tabs",
-        "description": "describing the actual result of executing a given Public Service. Outputs can be any resource, for instance a document, artefact or anything else being produced as a result of executing the Public Service",
-        "items": {
-          "type": "object",
-          "title": "Output",
-            "options": {
-            "collapsed": false
+        "options": {
+          "collapsed": false
+        },
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "title": "id"
           },
-          "properties": {
-            "identifier": {
-              "type": "string",
-              "title": "id"
-            },
-            "title": {
-              "type": "string",
-              "title": "name"
-            },
-            "description": {
-              "type": "object",
-              "properties": {
-                "locale": {
-                  "type": "string",
-                  "description": "Language used in textual description, in ISO 639-1 format.",
-                  "enumSource": "possible_langs",
-                  "watch": {
-                    "possible_langs": "root.hasInfo.language"
-                  }
-                },
-                "description": {
-                  "type": "string",
-                  "description": "Textual description of the Distribution in specified language.",
-                  "format": "textarea"
+          "title": {
+            "type": "string",
+            "title": "name"
+          },
+          "description": {
+            "type": "object",
+            "properties": {
+              "locale": {
+                "type": "string",
+                "description": "Language used in textual description, in ISO 639-1 format.",
+                "enumSource": "possible_langs",
+                "watch": {
+                  "possible_langs": "root.hasInfo.language"
                 }
               },
-              "required": [
-                "locale",
-                "description"
-              ]
-            },
-            "type": {
-              "type": "array",
-              "title": "Type of Output",
-              "description": "Type of produced output by the service",
-              "format": "select2",
-              "uniqueItems": true,
-              "items": {
+              "description": {
                 "type": "string",
-                "enum": [
-                  "Declaration",
-                  "Physical object",
-                  "Code",
-                  "Financial obligation",
-                  "Financial benefit",
-                  "Recognition",
-                  "Permit"
-  
-                ]
-               }
-              
+                "description": "Textual description of the Distribution in specified language.",
+                "format": "textarea"
+              }
+            },
+            "required": ["locale", "description"]
+          },
+          "type": {
+            "type": "array",
+            "title": "Type of Output",
+            "description": "Type of produced output by the service",
+            "format": "select2",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
             }
           }
         }
-      },
-      "hasContactPoint": {
-        "title": "Contact Point",
-        "description": "A contact point for the service ",
+      }
+    },
+    "hasContactPoint": {
+      "title": "Contact Point",
+      "description": "A contact point for the service ",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "faxNumber": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "identifier": {
+          "type": "string"
+        },
+        "openingHours": {
+          "type": "string"
+        },
+        "hoursAvailable": {
+          "type": "string"
+        }
+      }
+    },
+    "hasChannel": {
+      "title": "Channel",
+      "description": "This property links the Public Service to any Channel through which an Agent provides, uses or otherwise interacts with the Public Service, such as an online service, phone number or office.",
+      "type": "array",
+      "format": "tabs",
+      "items": {
         "type": "object",
+        "title": "Channel",
+        "headerTemplate": "{{ self.type }}",
+        "options": {
+          "collapsed": false
+        },
         "properties": {
-          "email": {
-            "type": "string"
-          },
-          "faxNumber": {
-            "type": "string"
-          },
-          "telephone": {
-            "type": "string"
-          },
           "identifier": {
-            "type": "string"
+            "type": "string",
+            "title": "Identifier"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type of channel",
+            "description": "Type of channel",
+            "enum": ["E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location"]
           },
           "openingHours": {
-            "type": "string"
+            "type": "string",
+            "title": "Opening Hours",
+            "description": "the normal opening hours of a channel"
           },
           "hoursAvailable": {
-            "type": "string"
-          }
-        }
-      },
-      "hasChannel": {
-        "title": "Channel",
-        "description": "This property links the Public Service to any Channel through which an Agent provides, uses or otherwise interacts with the Public Service, such as an online service, phone number or office.",
-        "type": "array",
-        "format": "tabs",
-        "items": {
-          "type": "object",
-          "title": "Channel",
-          "headerTemplate": "{{ self.type }}",
-          "options": {
-            "collapsed": false
-          },
-          "properties": {
-            "identifier": {
-              "type": "string",
-              "title": "Identifier"
-            },
-            "type": {
-              "type": "string",
-              "title": "Type of channel",
-              "description": "Type of channel",
-              "enum": [
-                "E-mail",
-                "Homepage",
-                "Fax",
-                "Assistant",
-                "Telephone",
-                "Mobile App",
-                "Digital TV",
-                "Mail",
-                "Service Bureau",
-                "Client's Location"
-              ]
-            },
-            "openingHours": {
-              "type": "string",
-              "title": "Opening Hours",
-              "description": "the normal opening hours of a channel"
-            },
-            "hoursAvailable": {
-              "type": "string",
-              "title": "Opening Hours restriction",
-              "description": "the opening hours restriction of a channel"
-            }
+            "type": "string",
+            "title": "Opening Hours restriction",
+            "description": "the opening hours restriction of a channel"
           }
         }
       }
     }
   }
+}

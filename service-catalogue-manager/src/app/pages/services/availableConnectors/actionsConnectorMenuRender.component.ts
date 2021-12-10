@@ -14,9 +14,9 @@ import {
 } from '@nebular/theme';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { AvailableConnectorsService } from './availableConnectors.service';
-import { ConnectorEntry } from '../../../model/connector/ConnectorEntry';
 import { LoginService } from '../../../auth/login/login.service';
 import { ServiceModelStatusEnum } from '../../../model/services/serviceModel';
+import { ConnectorEntry } from '../../../model/connector/connectorEntry';
 @Component({
   template: `
     <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.serviceId }}">
@@ -221,7 +221,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
 
   onRegisterService = async (): Promise<void> => {
     try {
-      this.value = (await this.availableConnectorsService.registerConnector(this.value.serviceId)) as ConnectorEntry;
+      this.value = await this.availableConnectorsService.registerConnector(this.value.serviceId);
       this.showToast('primary', this.translate.instant('general.services.service_registered_message', { serviceName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {

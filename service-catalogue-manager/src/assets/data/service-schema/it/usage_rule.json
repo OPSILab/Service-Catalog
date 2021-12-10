@@ -3,8 +3,7 @@
   "format": "categories",
   "title": "Usage Rule",
   "headerTemplate": "{{ self.usageName }}",
-  "required": [    
-  ],
+  "required": [],
   "properties": {
     "usageId": {
       "type": "string",
@@ -20,11 +19,7 @@
       "type": "string",
       "title": "Usage Category",
       "description": "Category of contract agreements from a controlled taxonomy.",
-      "enum": [
-        "aaa",
-        "bbbb",
-        "cccc"        
-      ]
+      "enum": ["aaa", "bbbb", "cccc"]
     }
   }
 }

@@ -8,15 +8,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { NgxConfigureService } from 'ngx-configure';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { NbToastrService, NbGlobalLogicalPosition } from '@nebular/theme';
-import { ConnectorEntry } from '../../../model/connector/ConnectorEntry';
 import { AppConfig } from '../../../model/appConfig';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { LoginService } from '../../../auth/login/login.service';
 import { ActionsConnectorMenuRenderComponent } from './actionsConnectorMenuRender.component';
-
-
-
+import { ConnectorEntry } from '../../../model/connector/connectorEntry';
 
 @Component({
   selector: 'available-connectors-smart-table',
@@ -33,7 +30,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   public settings: Record<string, unknown>;
   private locale: string;
   public source: LocalDataSource = new LocalDataSource();
-  private availableConnectors:ConnectorEntry[];
+  private availableConnectors: ConnectorEntry[];
   private unsubscribe: Subject<void> = new Subject();
 
   constructor(
@@ -53,9 +50,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     try {
       this.availableConnectors = await this.availableConnectorsService.getConnectors();
-      void this.source.load(
-        this.availableConnectors
-      );
+      void this.source.load(this.availableConnectors);
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (error.error.statusCode === '401') {
@@ -72,8 +67,6 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
         duration: 3500,
       });
   }
-
-    
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy');
@@ -143,7 +136,6 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
             instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe((updatedServiceData: unknown) => this.ngOnInit());
           },
         },
-       
       },
     };
   }

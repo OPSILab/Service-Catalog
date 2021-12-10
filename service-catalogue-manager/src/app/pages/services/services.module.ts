@@ -21,13 +21,14 @@ import {
   NbToastrModule,
   NbContextMenuModule,
   NbInputModule,
-  NbTabsetModule, 
+  NbTabsetModule,
   NbCheckboxModule,
   NbRadioModule,
 } from '@nebular/theme';
 import { ActionsServiceMenuRenderComponent } from './availableServices/actionsServiceMenuRender.component';
 import { ActionsConnectorMenuRenderComponent } from './availableConnectors/actionsConnectorMenuRender.component';
 import { FormsModule } from '@angular/forms';
+import { AvailableConnectorsService } from './availableConnectors/availableConnectors.service';
 
 @NgModule({
   imports: [
@@ -60,7 +61,14 @@ import { FormsModule } from '@angular/forms';
     ActionsConnectorMenuRenderComponent,
     ActionsServiceMenuRenderComponent,
   ],
-  providers: [AvailableServicesService],
-  entryComponents: [ActionsServiceMenuRenderComponent, ServiceInfoRenderComponent, DialogImportPromptComponent, DialogImportPromptComponent],
+  providers: [AvailableServicesService, AvailableConnectorsService],
+  entryComponents: [
+    ActionsServiceMenuRenderComponent,
+    ActionsConnectorMenuRenderComponent,
+    ServiceInfoRenderComponent,
+    ConnectorInfoRenderComponent,
+    DialogImportPromptComponent,
+    DialogExportPromptComponent,
+  ],
 })
 export class ServicesModule {}

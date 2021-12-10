@@ -3,13 +3,13 @@
   "title": "Service Instance",
   "description": "Technical, Service Provider and Data Controller Descriptions of actual instance where service is deployed.",
   "format": "categories",
-  "required": ["serviceProvider", "serviceUrls","connector","dataset", "dataController"],
+  "required": ["serviceProvider", "serviceUrls", "connector", "dataset", "dataController"],
   "properties": {
     "serviceProvider": {
       "type": "object",
       "title": "Service Provider",
       "description": "Object describing Service Provider.",
-      "required": ["businessId", "name", "hasAddress",  "postalcode", "city", "state", "country", "email", "telephone", "jurisdiction"],
+      "required": ["businessId", "name", "hasAddress", "postalcode", "city", "state", "country", "email", "telephone", "jurisdiction"],
       "properties": {
         "businessId": {
           "type": "string",
@@ -63,34 +63,34 @@
         }
       }
     },
-    "connector":{
+    "connector": {
       "type": "object",
       "title": "Service Connector",
       "description": "Service Connector",
       "properties": {
-        "connectorEndpoint":{
-          "type":"object",
-          "title":"Connector Endpoint",
+        "connectorEndpoint": {
+          "type": "object",
+          "title": "Connector Endpoint",
           "properties": {
-            "accessURL":{
-              "type":"string",
-              "title":"Access URL",
-              "description":"Access URL of an endpoint."
+            "accessURL": {
+              "type": "string",
+              "title": "Access URL",
+              "description": "Access URL of an endpoint."
             },
-            "endpointInformation":{
-              "type":"string",
-              "title":"Access URL",
-              "description":"Endpoint description"
+            "endpointInformation": {
+              "type": "string",
+              "title": "Access URL",
+              "description": "Endpoint description"
             },
-            "endpointDocumentation":{
-              "type":"string",
-              "title":"Endpoint documentation",
-              "description":"IRI reference to a documentation of the endpoint, e.g., reference to an OpenAPI-based documentation."
+            "endpointDocumentation": {
+              "type": "string",
+              "title": "Endpoint documentation",
+              "description": "IRI reference to a documentation of the endpoint, e.g., reference to an OpenAPI-based documentation."
             },
-            "path":{
-              "type":"string",
-              "title":"Path",
-              "description":"Relative path, topic or queue at which the content is published by the related host."
+            "path": {
+              "type": "string",
+              "title": "Path",
+              "description": "Relative path, topic or queue at which the content is published by the related host."
             }
           }
         },
@@ -109,18 +109,14 @@
               }
             }
           },
-          "required": [
-            "keyType",
-            "keyValue"
-          ]
+          "required": ["keyType", "keyValue"]
         }
-
       }
     },
- 
-    "dataset":{
+
+    "dataset": {
       "$ref": "./dataset.json"
-    }, 
+    },
 
     "serviceUrls": {
       "type": "object",

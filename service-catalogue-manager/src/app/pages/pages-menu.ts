@@ -29,7 +29,7 @@ export const MENU_ITEMS: NbMenuItem[] = [
     title: 'general.menu.editor',
     icon: 'edit-outline',
     link: '/pages/services/service-editor',
-  }, 
+  },
   {
     title: 'general.menu.connectors',
     icon: 'link-2-outline',
