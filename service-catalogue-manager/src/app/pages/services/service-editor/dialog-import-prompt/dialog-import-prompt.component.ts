@@ -10,7 +10,7 @@ import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
 export class DialogImportPromptComponent {
   selectedFile: File;
   json: Record<string, unknown>;
-  selectedItem = 'json';
+  selectedItem = 'Json';
 
   constructor(protected ref: NbDialogRef<DialogImportPromptComponent>, private errorService: ErrorDialogService) {}
 
@@ -44,6 +44,6 @@ export class DialogImportPromptComponent {
 
   onUpload(): void {
     // upload code goes here
-    this.ref.close(this.json);
+    this.ref.close({ content: this.json, format: this.selectedItem });
   }
 }

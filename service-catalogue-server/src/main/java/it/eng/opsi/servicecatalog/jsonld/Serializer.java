@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import it.eng.opsi.servicecatalog.jsonld.preprocessing.JsonPreprocessor;
-import it.eng.opsi.servicecatalog.jsonld.preprocessing.TypeNamePreprocessor;
+//import it.eng.opsi.servicecatalog.jsonld.preprocessing.TypeNamePreprocessor;
 
 import org.apache.jena.rdf.model.Model;
 import org.apache.jena.rdf.model.ModelFactory;
@@ -46,7 +46,7 @@ public class Serializer {
         mapper.enable(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         preprocessors = new ArrayList<>();
-        this.addPreprocessor(new TypeNamePreprocessor());
+//        this.addPreprocessor(new TypeNamePreprocessor());
 
         if(!Charset.defaultCharset().equals(StandardCharsets.UTF_8) && !charsetWarningPrinted)
         {

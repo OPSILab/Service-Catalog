@@ -7,18 +7,16 @@
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
     <div class="row justify-content-center p-3">{{ 'general.editor.select_file' | translate }}</div>
-    <nb-select placeholder="Select adapter or format" >
-     
+    <nb-select placeholder="Select adapter or format" [(ngModel)]="selectedItem">
       <nb-option-group title="Standard format">
-        <nb-option value="json">JSON</nb-option>
-        <nb-option value="cpsv">CPSV(json-ld)</nb-option>
+        <nb-option value="Json">JSON</nb-option>
+        <nb-option value="Cpsv">CPSV(json-ld)</nb-option>
       </nb-option-group>
 
       <nb-option-group title="Adapters">
         <nb-option value="a1">Germany adapter</nb-option>
         <nb-option value="a2">Latvia adapter</nb-option>
         <nb-option value="a3">Greece adapter</nb-option>
-
       </nb-option-group>
     </nb-select>
     <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput />

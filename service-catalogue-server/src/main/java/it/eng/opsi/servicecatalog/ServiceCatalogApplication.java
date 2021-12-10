@@ -2,6 +2,7 @@ package it.eng.opsi.servicecatalog;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -10,6 +11,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
+import org.springframework.security.web.firewall.HttpFirewall;
+import org.springframework.security.web.firewall.HttpStatusRequestRejectedHandler;
+import org.springframework.security.web.firewall.RequestRejectedHandler;
+import org.springframework.security.web.firewall.StrictHttpFirewall;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -88,4 +93,16 @@ public class ServiceCatalogApplication {
 		};
 	}
 
+	@Bean
+	public HttpFirewall allowUrlEncodedSlashHttpFirewall() {
+	    StrictHttpFirewall firewall = new StrictHttpFirewall();
+	    firewall.setAllowUrlEncodedSlash(true);
+	    firewall.setAllowBackSlash(true);
+	    firewall
+	      .setAllowUrlEncodedDoubleSlash(true);
+	    return firewall;
+	}
+	
+	
+	
 }

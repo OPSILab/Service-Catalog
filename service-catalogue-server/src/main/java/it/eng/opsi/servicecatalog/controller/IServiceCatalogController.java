@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.http.ResponseEntity;
 
@@ -16,23 +18,23 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<List<ServiceModel>> getServices() throws ServiceNotFoundException;
 
-	public abstract ResponseEntity<ServiceModel> getServiceById(String serviceId) throws ServiceNotFoundException;
+	public abstract ResponseEntity<?> getServiceById(HttpServletRequest request) throws ServiceNotFoundException, IOException;
 
 	public abstract ResponseEntity<HashMap<String, Integer>> getServicesCount();
 
 	public abstract ResponseEntity<ServiceModel> createService(ServiceModel service);
 
-	public abstract ResponseEntity<ServiceModel> updateService(String serviceId, ServiceModel service)
+	public abstract ResponseEntity<ServiceModel> updateService(HttpServletRequest request, ServiceModel service)
 			throws ServiceNotFoundException, ServiceNotEditableException;
 
-	public abstract ResponseEntity<Object> deleteService(String serviceId) throws ServiceNotFoundException;
+	public abstract ResponseEntity<Object> deleteService(HttpServletRequest request) throws ServiceNotFoundException;
 
-	public abstract ResponseEntity<String> getServiceByIdJsonLd(String serviceId)
-			throws ServiceNotFoundException, IOException;
-
-
-	public abstract ResponseEntity<String> getServiceHasInfoByIdJsonLd(String serviceId)
-			throws ServiceNotFoundException, IOException;
+//	public abstract ResponseEntity<String> getServiceByIdJsonLd(HttpServletRequest request)
+//			throws ServiceNotFoundException, IOException;
+//
+//
+//	public abstract ResponseEntity<String> getServiceHasInfoByIdJsonLd(HttpServletRequest request)
+//			throws ServiceNotFoundException, IOException;
 	
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountBySector();
 	

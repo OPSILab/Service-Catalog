@@ -34,7 +34,7 @@
 <div class="px-0 row d-flex justify-content-center">
   <div class="col-lg-12" *ngIf="servicesCountByGroupedBy && (servicesCountByGroupedBy | keyvalue)?.length">
     <nb-card>
-      <nb-card-header>{{ 'general.dashboard.lifeEvent' | translate }}</nb-card-header>
+      <nb-card-header>{{ 'general.dashboard.event' | translate }}</nb-card-header>
       <nb-card-body>
         <purpose-category-pie [inputData]="servicesCountByGroupedBy"></purpose-category-pie>
       </nb-card-body>

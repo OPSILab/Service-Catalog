@@ -145,13 +145,16 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
 
     //editor.on('ready', this.closeSpinner);
 
-    editor.on('ready', function () {
-      //editor.getEditor('root.serviceInstance.cert.x5u').disable();
-      //editor.getEditor('root.serviceInstance.cert.x5c').disable();
-
+    editor.on('ready', () => {
+      editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
       this.loading = false;
       $('nb-spinner').remove();
       if (sessionStorage.getItem('readOnly') === 'true') editor.disable();
+
+      if (!this.isNew) {
+        editor.getEditor('root.identifier').disable();
+        editor.getEditor('root.hasInfo.identifier').disable();
+      }
     });
   }
 
@@ -162,18 +165,23 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   saveAsFile(): void {
-    this.dialogService
-      .open(DialogExportPromptComponent)
-      .onClose.subscribe((result) => result && this.saveFile(result.name, result.exportFormat, this.serviceId));
+    this.dialogService.open(DialogExportPromptComponent).onClose.subscribe((result) => {
+      void this.saveFile(result.name, result.exportFormat, this.serviceId);
+    });
   }
 
   importAsFile(): void {
-    this.dialogService.open(DialogImportPromptComponent).onClose.subscribe((jsonContent) => {
-      if (jsonContent) {
-        this.editor.setValue(jsonContent);
-        this.editor.getEditor('root.serviceInstance.cert.x5u').disable();
-        this.editor.getEditor('root.serviceInstance.cert.x5c').disable();
-        this.serviceId = jsonContent.serviceId as string;
+    this.dialogService.open(DialogImportPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
+      if (result.content) {
+        this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
+
+        if (result.format == 'Cpsv') {
+          this.editor.getEditor('root.hasInfo').setValue(result.content);
+          this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());
+          this.editor.getEditor('root.title').setValue(this.editor.getEditor('root.hasInfo.title').getValue());
+        } else this.editor.setValue(result.content);
+
+        this.serviceId = result.content['identifier'] as string;
       }
     });
   }

@@ -13,14 +13,13 @@
       "pdataCategories": "Personal Data Categories",
       "services": "Available Services",
       "connectors": "Available Connectors",
-      "serviceSector":"Service Sector",
-      "thematicArea":"Thematic Area",
-      "lifeEvent":"Life Event",
-      "businessEvent":"Business Event",
-      "publicServices":"Public Services",
-      "privateServices":"Private Services"
-
-
+      "serviceSector": "Service Sector",
+      "thematicArea": "Thematic Area",
+      "event": "Event",
+      "lifeEvent": "Life Event",
+      "businessEvent": "Business Event",
+      "publicServices": "Public Services",
+      "privateServices": "Private Services"
     },
     "menu": {
       "dashboard": "Dashboard",
@@ -41,7 +40,7 @@
       "editorpage_title": "Service description"
     },
     "consents": {
-      "legalbasis":"Legal basis",
+      "legalbasis": "Legal basis",
       "history": "Consent History",
       "consents": "Consents",
       "dataprovider": "Data Provider",
@@ -194,11 +193,11 @@
       "no_type": "Type not provided"
     },
     "services": {
-      "authority":"CompetentAuthority",
-      "location":"Location",
-      "channels":"Channels",
-      "sector":"Sector",
-      "event":"Event",
+      "authority": "CompetentAuthority",
+      "location": "Location",
+      "channels": "Channels",
+      "sector": "Sector",
+      "event": "Event",
       "view_editor": "See more info",
       "add_new": "Add new",
       "all": "all",
@@ -237,8 +236,8 @@
       "deregister": "Disable",
       "delete": "Delete",
       "consents": "View consents",
-      "publish":"Publish",
-      "connector":"View Connector",
+      "publish": "Publish",
+      "connector": "View Connector",
       "register_service": "Service Registration",
       "register_service_message": "Are you sure to register and activate the service <strong>{{serviceName}}</strong><br>Once registered, you will not be able to edit it until you disabled it first.",
       "service_registered_message": "Service {{serviceName}} registered successfully!",
@@ -276,8 +275,8 @@
       "connector": "Connector",
       "description": "Description",
       "actions": "Actions",
-      "details":"Details",
-      "status":"Status",
+      "details": "Details",
+      "status": "Status",
       "link": "Link",
       "keywords": "Keywords",
       "provider": "Provider",
@@ -303,6 +302,5 @@
     "login_with_eidas": "Login with eIDAS",
     "login_with_eidas_description": "The eIDAS regulation is the legislative basis for electronic interactions between businesses, citizens and public authorities.",
     "eidas_link": "Sign in with a digital identity from another European Country"
-    
   }
 }
