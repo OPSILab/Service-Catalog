@@ -8,16 +8,20 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.5.6</version>
 		<relativePath /> <!-- lookup parent from repository -->
+		
 	</parent>
 	<groupId>it.eng.opsi</groupId>
 	<artifactId>service-catalogue</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>service-catalog</name>
 	<description>Demo project for Spring Boot</description>
+	
 	<properties>
 		<java.version>16</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<log4j2.version>2.15.0</log4j2.version>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
