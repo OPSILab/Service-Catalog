@@ -29,6 +29,7 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   private editor: any;
   public serviceId: string;
+  public serviceName: string;
   private serviceData: ServiceModel;
   loading = false;
   public readOnly = false;
@@ -77,6 +78,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
     sessionStorage.removeItem('isTouched');
     if (this.serviceId) {
       this.serviceData = await this.availablesServicesService.getService(this.serviceId);
+      this.serviceName= this.serviceData.title
     } else {
       this.isNew = true;
     }

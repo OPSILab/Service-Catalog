@@ -15,8 +15,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "purposeName",
     "legalBasis",
     "purposeCategory",
+    "hasSector",
+    "hasContext",
     "processingCategories",
     "description",
+    "hasPersonalDataCategory",
     "requiredDatasets",
     "storage",
     "recipients",
@@ -66,6 +69,24 @@ public class IsPersonalDataHandling {
      * (Required)
      * 
      */
+    @JsonProperty("hasSector")
+    @Valid
+    @NotNull
+    private List<String> hasSector = new ArrayList<String>();
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("hasContext")
+    @Valid
+    @NotNull
+    private List<String> hasContext = new ArrayList<String>();
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @JsonProperty("processingCategories")
     @Valid
     @NotNull
@@ -79,6 +100,15 @@ public class IsPersonalDataHandling {
     @Valid
     @NotNull
     private List<Description__5> description = new ArrayList<Description__5>();
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("hasPersonalDataCategory")
+    @Valid
+    @NotNull
+    private List<String> hasPersonalDataCategory = new ArrayList<String>();
     /**
      * 
      * (Required)
@@ -105,7 +135,7 @@ public class IsPersonalDataHandling {
     @JsonProperty("recipients")
     @Valid
     @NotNull
-    private List<Object> recipients = new ArrayList<Object>();
+    private List<String> recipients = new ArrayList<String>();
     /**
      * 
      * (Required)
@@ -175,21 +205,27 @@ public class IsPersonalDataHandling {
      * @param legalBasis
      * @param description
      * @param collectionOperator
+     * @param hasSector
      * @param storage
      * @param purposeCategory
      * @param policyRef
+     * @param hasContext
      * @param shareWith
      * @param recipients
+     * @param hasPersonalDataCategory
      * @param requiredDatasets
      */
-    public IsPersonalDataHandling(String purposeId, String purposeName, String legalBasis, String purposeCategory, List<String> processingCategories, List<Description__5> description, List<String> requiredDatasets, Storage storage, List<Object> recipients, List<ShareWith> shareWith, List<Obligation> obligations, String policyRef, String collectionMethod, String collectionOperator, String termination) {
+    public IsPersonalDataHandling(String purposeId, String purposeName, String legalBasis, String purposeCategory, List<String> hasSector, List<String> hasContext, List<String> processingCategories, List<Description__5> description, List<String> hasPersonalDataCategory, List<String> requiredDatasets, Storage storage, List<String> recipients, List<ShareWith> shareWith, List<Obligation> obligations, String policyRef, String collectionMethod, String collectionOperator, String termination) {
         super();
         this.purposeId = purposeId;
         this.purposeName = purposeName;
         this.legalBasis = legalBasis;
         this.purposeCategory = purposeCategory;
+        this.hasSector = hasSector;
+        this.hasContext = hasContext;
         this.processingCategories = processingCategories;
         this.description = description;
+        this.hasPersonalDataCategory = hasPersonalDataCategory;
         this.requiredDatasets = requiredDatasets;
         this.storage = storage;
         this.recipients = recipients;
@@ -286,6 +322,46 @@ public class IsPersonalDataHandling {
      * (Required)
      * 
      */
+    @JsonProperty("hasSector")
+    public List<String> getHasSector() {
+        return hasSector;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("hasSector")
+    public void setHasSector(List<String> hasSector) {
+        this.hasSector = hasSector;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("hasContext")
+    public List<String> getHasContext() {
+        return hasContext;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("hasContext")
+    public void setHasContext(List<String> hasContext) {
+        this.hasContext = hasContext;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @JsonProperty("processingCategories")
     public List<String> getProcessingCategories() {
         return processingCategories;
@@ -319,6 +395,26 @@ public class IsPersonalDataHandling {
     @JsonProperty("description")
     public void setDescription(List<Description__5> description) {
         this.description = description;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("hasPersonalDataCategory")
+    public List<String> getHasPersonalDataCategory() {
+        return hasPersonalDataCategory;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("hasPersonalDataCategory")
+    public void setHasPersonalDataCategory(List<String> hasPersonalDataCategory) {
+        this.hasPersonalDataCategory = hasPersonalDataCategory;
     }
 
     /**
@@ -367,7 +463,7 @@ public class IsPersonalDataHandling {
      * 
      */
     @JsonProperty("recipients")
-    public List<Object> getRecipients() {
+    public List<String> getRecipients() {
         return recipients;
     }
 
@@ -377,7 +473,7 @@ public class IsPersonalDataHandling {
      * 
      */
     @JsonProperty("recipients")
-    public void setRecipients(List<Object> recipients) {
+    public void setRecipients(List<String> recipients) {
         this.recipients = recipients;
     }
 
@@ -521,6 +617,14 @@ public class IsPersonalDataHandling {
         sb.append('=');
         sb.append(((this.purposeCategory == null)?"<null>":this.purposeCategory));
         sb.append(',');
+        sb.append("hasSector");
+        sb.append('=');
+        sb.append(((this.hasSector == null)?"<null>":this.hasSector));
+        sb.append(',');
+        sb.append("hasContext");
+        sb.append('=');
+        sb.append(((this.hasContext == null)?"<null>":this.hasContext));
+        sb.append(',');
         sb.append("processingCategories");
         sb.append('=');
         sb.append(((this.processingCategories == null)?"<null>":this.processingCategories));
@@ -528,6 +632,10 @@ public class IsPersonalDataHandling {
         sb.append("description");
         sb.append('=');
         sb.append(((this.description == null)?"<null>":this.description));
+        sb.append(',');
+        sb.append("hasPersonalDataCategory");
+        sb.append('=');
+        sb.append(((this.hasPersonalDataCategory == null)?"<null>":this.hasPersonalDataCategory));
         sb.append(',');
         sb.append("requiredDatasets");
         sb.append('=');
@@ -585,11 +693,14 @@ public class IsPersonalDataHandling {
         result = ((result* 31)+((this.legalBasis == null)? 0 :this.legalBasis.hashCode()));
         result = ((result* 31)+((this.description == null)? 0 :this.description.hashCode()));
         result = ((result* 31)+((this.collectionOperator == null)? 0 :this.collectionOperator.hashCode()));
+        result = ((result* 31)+((this.hasSector == null)? 0 :this.hasSector.hashCode()));
         result = ((result* 31)+((this.storage == null)? 0 :this.storage.hashCode()));
         result = ((result* 31)+((this.purposeCategory == null)? 0 :this.purposeCategory.hashCode()));
         result = ((result* 31)+((this.policyRef == null)? 0 :this.policyRef.hashCode()));
+        result = ((result* 31)+((this.hasContext == null)? 0 :this.hasContext.hashCode()));
         result = ((result* 31)+((this.shareWith == null)? 0 :this.shareWith.hashCode()));
         result = ((result* 31)+((this.recipients == null)? 0 :this.recipients.hashCode()));
+        result = ((result* 31)+((this.hasPersonalDataCategory == null)? 0 :this.hasPersonalDataCategory.hashCode()));
         result = ((result* 31)+((this.requiredDatasets == null)? 0 :this.requiredDatasets.hashCode()));
         return result;
     }
@@ -603,7 +714,7 @@ public class IsPersonalDataHandling {
             return false;
         }
         IsPersonalDataHandling rhs = ((IsPersonalDataHandling) other);
-        return ((((((((((((((((this.termination == rhs.termination)||((this.termination!= null)&&this.termination.equals(rhs.termination)))&&((this.collectionMethod == rhs.collectionMethod)||((this.collectionMethod!= null)&&this.collectionMethod.equals(rhs.collectionMethod))))&&((this.processingCategories == rhs.processingCategories)||((this.processingCategories!= null)&&this.processingCategories.equals(rhs.processingCategories))))&&((this.purposeId == rhs.purposeId)||((this.purposeId!= null)&&this.purposeId.equals(rhs.purposeId))))&&((this.purposeName == rhs.purposeName)||((this.purposeName!= null)&&this.purposeName.equals(rhs.purposeName))))&&((this.obligations == rhs.obligations)||((this.obligations!= null)&&this.obligations.equals(rhs.obligations))))&&((this.legalBasis == rhs.legalBasis)||((this.legalBasis!= null)&&this.legalBasis.equals(rhs.legalBasis))))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.collectionOperator == rhs.collectionOperator)||((this.collectionOperator!= null)&&this.collectionOperator.equals(rhs.collectionOperator))))&&((this.storage == rhs.storage)||((this.storage!= null)&&this.storage.equals(rhs.storage))))&&((this.purposeCategory == rhs.purposeCategory)||((this.purposeCategory!= null)&&this.purposeCategory.equals(rhs.purposeCategory))))&&((this.policyRef == rhs.policyRef)||((this.policyRef!= null)&&this.policyRef.equals(rhs.policyRef))))&&((this.shareWith == rhs.shareWith)||((this.shareWith!= null)&&this.shareWith.equals(rhs.shareWith))))&&((this.recipients == rhs.recipients)||((this.recipients!= null)&&this.recipients.equals(rhs.recipients))))&&((this.requiredDatasets == rhs.requiredDatasets)||((this.requiredDatasets!= null)&&this.requiredDatasets.equals(rhs.requiredDatasets))));
+        return (((((((((((((((((((this.termination == rhs.termination)||((this.termination!= null)&&this.termination.equals(rhs.termination)))&&((this.collectionMethod == rhs.collectionMethod)||((this.collectionMethod!= null)&&this.collectionMethod.equals(rhs.collectionMethod))))&&((this.processingCategories == rhs.processingCategories)||((this.processingCategories!= null)&&this.processingCategories.equals(rhs.processingCategories))))&&((this.purposeId == rhs.purposeId)||((this.purposeId!= null)&&this.purposeId.equals(rhs.purposeId))))&&((this.purposeName == rhs.purposeName)||((this.purposeName!= null)&&this.purposeName.equals(rhs.purposeName))))&&((this.obligations == rhs.obligations)||((this.obligations!= null)&&this.obligations.equals(rhs.obligations))))&&((this.legalBasis == rhs.legalBasis)||((this.legalBasis!= null)&&this.legalBasis.equals(rhs.legalBasis))))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.collectionOperator == rhs.collectionOperator)||((this.collectionOperator!= null)&&this.collectionOperator.equals(rhs.collectionOperator))))&&((this.hasSector == rhs.hasSector)||((this.hasSector!= null)&&this.hasSector.equals(rhs.hasSector))))&&((this.storage == rhs.storage)||((this.storage!= null)&&this.storage.equals(rhs.storage))))&&((this.purposeCategory == rhs.purposeCategory)||((this.purposeCategory!= null)&&this.purposeCategory.equals(rhs.purposeCategory))))&&((this.policyRef == rhs.policyRef)||((this.policyRef!= null)&&this.policyRef.equals(rhs.policyRef))))&&((this.hasContext == rhs.hasContext)||((this.hasContext!= null)&&this.hasContext.equals(rhs.hasContext))))&&((this.shareWith == rhs.shareWith)||((this.shareWith!= null)&&this.shareWith.equals(rhs.shareWith))))&&((this.recipients == rhs.recipients)||((this.recipients!= null)&&this.recipients.equals(rhs.recipients))))&&((this.hasPersonalDataCategory == rhs.hasPersonalDataCategory)||((this.hasPersonalDataCategory!= null)&&this.hasPersonalDataCategory.equals(rhs.hasPersonalDataCategory))))&&((this.requiredDatasets == rhs.requiredDatasets)||((this.requiredDatasets!= null)&&this.requiredDatasets.equals(rhs.requiredDatasets))));
     }
 
 }

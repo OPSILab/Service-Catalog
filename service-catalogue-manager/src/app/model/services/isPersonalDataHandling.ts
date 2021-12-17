@@ -19,11 +19,14 @@ export interface IsPersonalDataHandling {
   purposeName: string;
   legalBasis: string;
   purposeCategory: string;
+  hasSector: Array<string>;
+  hasContext: Array<string>;
   processingCategories: Array<string>;
   description: Array<Description6>;
+  hasPersonalDataCategory: Array<string>;
   requiredDatasets: Array<string>;
   storage: Storage;
-  recipients: Array<object>;
+  recipients: Array<string>;
   shareWith: Array<ShareWith>;
   obligations: Array<Obligation>;
   policyRef: string;

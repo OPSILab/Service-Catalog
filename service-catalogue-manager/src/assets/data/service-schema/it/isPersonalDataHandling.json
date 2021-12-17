@@ -87,7 +87,77 @@
         "SocialMediaMarketing",
         "UsageAnalytics",
         "UserInterfacePersonalisation"
-      ]
+      ],
+      "options": {
+        "enum_titles": [
+          "Academic Research",
+          "Access Control",
+          "Advertising",
+          "Commercial Interest",
+          "Commercial Research",
+          "Communication For Customer Care",
+          "Create Event Recommendations",
+          "Create Personalized Recommendations",
+          "Create Product Recommendations",
+          "Customer Care",
+          "Delivery Of Goods",
+          "Direct Marketing",
+          "Fraud Prevention And Detection",
+          "Identity Verification",
+          "Improve Existing Products And Services",
+          "Improve Internal CRM Processes",
+          "Increase Service Robustness",
+          "Internal Resource Optimisation",
+          "Legal Compliance",
+          "Marketing",
+          "Non Commercial Research",
+          "Optimisation For Consumer",
+          "Optimisation For Controller",
+          "Optimise User Interface",
+          "Payment",
+          "Personalised Advertising",
+          "Personalised Benefits",
+          "Registration Authentication",
+          "Research And Development",
+          "Security",
+          "Sell Data To Third Parties",
+          "Sell Insights From Data",
+          "Sell Products To Data Subject",
+          "Sell Targetted Advertisements",
+          "Service Optimization",
+          "Service Personalization",
+          "Service Provision",
+          "Social Media Marketing",
+          "Usage Analytics",
+          "User Interface Personalisation"
+        ]
+      }
+    },
+    "hasSector":{
+      "type": "array",
+      "format": "tabs",
+      "uniqueItems": true,
+      "title": "Sector",
+      "description": "Purposes can be further restricted to specific sectors",
+      "items": {
+        "type": "string",
+        "title": "Sector",
+        "enumSource": "possible_sectors",
+        "watch": {
+          "possible_sectors": "root.hasInfo.sector"
+        }
+      }
+    },
+    "hasContext":{
+      "type": "array",
+      "format": "tabs",
+      "uniqueItems": true,
+      "title": "Context",
+      "description": "Purposes can be further restricted to specific contexts",
+      "items": {
+        "type": "string",
+        "title": "Context"       
+      }
     },
     "processingCategories": {
       "type": "array",
@@ -134,11 +204,54 @@
           "Share",
           "Store",
           "Structure",
-          "Systematic Monitoring",
+          "SystematicMonitoring",
           "Transfer",
           "Transform",
           "Transmit"
-        ]
+        ],
+        "options": {
+          "enum_titles": [
+            "Acquire",
+            "Adapt",
+            "Align",
+            "Alter",
+            "Analyse",
+            "Anonymise",
+            "Automated Decision Making",
+            "Collect",
+            "Combine",
+            "Consult",
+            "Copy",
+            "DataSource",
+            "Derive",
+            "Destruct",
+            "Disclose",
+            "Disclose By Transmission",
+            "Disseminate",
+            "Erase",
+            "Evaluation Scoring",
+            "Innovative Use Of NewTechnologies",
+            "Large Scale Processing",
+            "Make Available",
+            "Matching Combining",
+            "Move",
+            "Obtain",
+            "Organise",
+            "Profiling",
+            "Pseudo-Anonymise",
+            "Record",
+            "Remove",
+            "Restrict",
+            "Retrieve",
+            "Share",
+            "Store",
+            "Structure",
+            "Systematic Monitoring",
+            "Transfer",
+            "Transform",
+            "Transmit"
+          ]
+        }
       }
     },
     "description": {
@@ -187,6 +300,9 @@
         "required": ["locale", "description"]
       }
     },
+    "hasPersonalDataCategory":{
+      "$ref": "./pcategory.json"
+    },
     "requiredDatasets": {
       "type": "array",
       "format": "tabs",
@@ -197,12 +313,12 @@
         "type": "string",
         "title": "Dataset",
         "watch": {
-          "possible_datasets": "root.isDescribedAt"
+          "possible_datasets": "root.hasServiceInstance.dataset"
         },
         "enumSource": [
           {
             "source": "possible_datasets",
-            "value": "{{item.datasetId}}"
+            "value": "{{item.identifier}}"
           }
         ]
       }

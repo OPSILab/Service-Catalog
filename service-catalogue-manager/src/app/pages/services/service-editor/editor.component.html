@@ -1,5 +1,5 @@
 <nb-card>
-  <nb-card-header class="h3"> {{ 'general.editor.title' | translate }}{{ serviceId ? ':' : '' }}&nbsp;{{ serviceId }} </nb-card-header>
+  <nb-card-header class="h3"> {{ 'general.editor.title' | translate }}{{ serviceName ? ':' : '' }}&nbsp;{{ serviceName }} </nb-card-header>
 
   <nb-card-body *ngIf="!readOnly" class="row justify-content-center">
     <ng-container *ngIf="!isNew; then updateButton; else createButton"> </ng-container>

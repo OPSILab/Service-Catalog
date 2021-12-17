@@ -662,6 +662,18 @@
 					"purposeCategory": {
 						"type": "string"
 					},
+					"hasSector":{
+						"type": "array",
+							"items": {
+								"type": "string"
+							}
+					},
+					"hasContext":{
+						"type": "array",
+							"items": {
+								"type": "string"
+							}
+					},
 					"processingCategories": {
 						"type": "array",
 						"items": {
@@ -698,6 +710,12 @@
 							]
 						}
 					},
+					"hasPersonalDataCategory": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					},
 					"requiredDatasets": {
 						"type": "array",
 						"items": {
@@ -721,7 +739,9 @@
 					},
 					"recipients": {
 						"type": "array",
-						"items": {}
+						"items": {
+							"type": "string"
+						}
 					},
 					"shareWith": {
 						"type": "array",
@@ -785,8 +805,11 @@
 					"purposeName",
 					"legalBasis",
 					"purposeCategory",
+					"hasSector",
+					"hasContext",
 					"processingCategories",
 					"description",
+					"hasPersonalDataCategory",
 					"requiredDatasets",
 					"storage",
 					"recipients",
