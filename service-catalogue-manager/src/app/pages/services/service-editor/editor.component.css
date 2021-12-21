@@ -6,4 +6,12 @@ button {
 .select2-container {
     width: 100% !important;
   }
-  
+
+  .flip-icon {
+    position: absolute;
+    right: 0.625rem;
+    top: 1rem;
+    cursor: pointer;
+  }
+
+ 

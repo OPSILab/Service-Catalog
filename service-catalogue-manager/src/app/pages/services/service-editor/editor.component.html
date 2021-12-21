@@ -1,58 +1,52 @@
-<nb-card>
-  <nb-card-header class="h3"> {{ 'general.editor.title' | translate }}{{ serviceName ? ':' : '' }}&nbsp;{{ serviceName }} </nb-card-header>
+<nb-flip-card [showToggleButton]="false" [flipped]="flipped">
+  <nb-card-front>
+    <nb-card>
+      <nb-card-header class="h3">
+        {{ 'general.editor.title' | translate }}{{ serviceName ? ':' : '' }}&nbsp;{{ serviceName }} </nb-card-header>
 
-  <nb-card-body *ngIf="!readOnly" class="row justify-content-center">
-    <ng-container *ngIf="!isNew; then updateButton; else createButton"> </ng-container>
+      <nb-card-body *ngIf="!readOnly" class="row justify-content-center">
+        <ng-container *ngIf="!isNew; then updateButton; else createButton"> </ng-container>
 
-    <ng-template #createButton>
-      <button
-        nbButton
-        class="mx-4"
-        shape="rectangle"
-        size="medium"
-        status="primary"
-        (click)="openSaveToRegistryDialog()"
-        [disabled]="readSessionStorageValue('isTouched') !== 'true'"
-      >
-        {{ 'general.save' | translate }}
-        <i class="mx-1 material-icons">save</i>
-      </button>
-    </ng-template>
-    <ng-template #updateButton>
-      <button
-        nbButton
-        class="mx-4"
-        shape="rectangle"
-        size="medium"
-        status="primary"
-        (click)="openUpdateToRegistryDialog()"
-        [disabled]="readSessionStorageValue('isTouched') !== 'true'"
-      >
-        {{ 'general.editor.update' | translate }}
-        <i class="mx-1 material-icons">save</i>
-      </button>
-    </ng-template>
-    <button
-      nbButton
-      class="mx-4"
-      shape="rectangle"
-      size="medium"
-      status="warning"
-      (click)="saveAsFile()"
-      [disabled]="isNew || readSessionStorageValue('isTouched') == 'true'"
-    >
-      {{ 'general.editor.export' | translate }}
-      <i class="mx-1 fas fa-file-export fa-lg"></i>
-    </button>
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger" (click)="importAsFile()" [disabled]="!isNew">
-      {{ 'general.editor.import' | translate }}
-      <i class="mx-1 fas fa-file-import fa-lg"></i>
-    </button>
-  </nb-card-body>
-  <nb-card-footer [nbSpinner]="loading" nbSpinnerStatus="primary">
-    <div id="editor"></div>
-  </nb-card-footer>
-</nb-card>
+        <ng-template #createButton>
+          <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
+            (click)="openSaveToRegistryDialog()" [disabled]="readSessionStorageValue('isTouched') !== 'true'">
+            {{ 'general.save' | translate }}
+            <i class="mx-1 material-icons">save</i>
+          </button>
+        </ng-template>
+        <ng-template #updateButton>
+          <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
+            (click)="openUpdateToRegistryDialog()" [disabled]="readSessionStorageValue('isTouched') !== 'true'">
+            {{ 'general.editor.update' | translate }}
+            <i class="mx-1 material-icons">save</i>
+          </button>
+        </ng-template>
+        <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning" (click)="saveAsFile()"
+          [disabled]="isNew || readSessionStorageValue('isTouched') == 'true'">
+          {{ 'general.editor.export' | translate }}
+          <i class="mx-1 fas fa-file-export fa-lg"></i>
+        </button>
+        <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger" (click)="importAsFile()"
+          [disabled]="!isNew">
+          {{ 'general.editor.import' | translate }}
+          <i class="mx-1 fas fa-file-import fa-lg"></i>
+        </button>
+      </nb-card-body>
+      <nb-card-footer [nbSpinner]="loading" nbSpinnerStatus="primary">
+        <div id="editor"></div>
+      </nb-card-footer>
+      <nb-icon icon="question-mark-circle" title="Guide" pack="eva" class="flip-icon" (click)="toggleView()"></nb-icon>
+    </nb-card>
+  </nb-card-front>
+  <nb-card-back>
+    <nb-card>
+      <nb-card-body>
+        Tutorial coming soon
+      </nb-card-body>
+      <nb-icon icon="chevron-left-outline" title="Back" pack="eva" class="flip-icon" (click)="toggleView()"></nb-icon>
+    </nb-card>
+  </nb-card-back>
+</nb-flip-card>
 
 <!-- Save Service modal ng-template -->
 <ng-template #confirmSaveDialog let-data let-ref="dialogRef">

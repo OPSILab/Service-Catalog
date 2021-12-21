@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { AfterContentInit, ChangeDetectorRef, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef,ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { JSONEditor } from '@json-editor/json-editor/dist/jsoneditor.js';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
@@ -24,6 +24,7 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 @Component({
   selector: 'ngx-spinner-color',
   templateUrl: './editor.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./editor.component.css'],
 })
 export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
@@ -39,6 +40,12 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   apiRoot: string;
   schemaDir: string;
   public isNew = false;
+
+  flipped = false;
+
+  toggleView() {
+    this.flipped = !this.flipped;
+  }
 
   @ViewChild('confirmSaveDialog', { static: false }) confirmSaveDialogTemplate: TemplateRef<any>;
   @ViewChild('confirmUpdateDialog', { static: false }) confirmUpdateDialogTemplate: TemplateRef<any>;
@@ -109,6 +116,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       disable_properties: true,
       prompt_before_delete: true,
       required_by_default: true,
+      use_default_values:false
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
