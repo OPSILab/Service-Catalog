@@ -24,7 +24,6 @@ import { analyzeAndValidateNgModules } from '@angular/compiler';
 @Component({
   selector: 'ngx-spinner-color',
   templateUrl: './editor.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./editor.component.css'],
 })
 export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
@@ -100,7 +99,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   readSessionStorageValue(key: string): string {
-    return sessionStorage.getItem(key);
+      return sessionStorage.getItem(key);
   }
 
   initializeEditor(serviceData: ServiceModel): void {
@@ -115,8 +114,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       no_additional_properties: true,
       disable_properties: true,
       prompt_before_delete: true,
-      required_by_default: true,
-      use_default_values:false
+      required_by_default: true
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment

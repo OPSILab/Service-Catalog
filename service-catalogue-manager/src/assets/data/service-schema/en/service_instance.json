@@ -85,7 +85,7 @@
             "endpointDocumentation": {
               "type": "string",
               "title": "Endpoint documentation",
-              "description": "IRI reference to a documentation of the endpoint, e.g., reference to an OpenAPI-based documentation."
+              "description": "URI reference to a documentation of the endpoint, e.g., reference to an OpenAPI-based documentation."
             },
             "path": {
               "type": "string",

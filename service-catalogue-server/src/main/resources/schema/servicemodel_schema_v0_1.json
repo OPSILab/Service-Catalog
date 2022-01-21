@@ -825,7 +825,7 @@
 	},
 	"required": [
 		"serviceId",
-		"name",
+		"title",
 		"identifier",
 		"issued",
 		"createdByUserId",

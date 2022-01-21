@@ -111,7 +111,7 @@
     },
     "hasCompetentAuthority": {
       "title": "Competent Authority",
-      "description": "If public Servivce, link to a Public Organization, which is the responsible Agent for the delivery of the Public Service.",
+      "description": "If public Service, link to a Public Organization, which is the responsible Agent for the delivery of the Public Service.",
       "type": "object",
       "properties": {
         "identifier": {
