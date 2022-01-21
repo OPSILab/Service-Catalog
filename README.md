@@ -20,7 +20,7 @@ Service Catalogue is an open source software developed by
 
 ## Content
 
--  
+
 
 ## Install
 
@@ -60,7 +60,7 @@ Service Catalogue Suite uses following libraries and frameworks.
 | [Spring Boot](https://spring.io/projects/spring-boot)                                   | 2.4.5         | Apache License 2.0                |
 | [Springdoc Openapi](https://springdoc.org)                                              | 1.5.8         | Apache License 2.0                |
 | [Spring Data](https://spring.io/projects/spring-data)                                   | 2.4.5         | Apache License 2.0                |
-| [Lombok](Nihttps://projectlombok.org/)                                                  | 1.18.12       | MIT                               |
+| [Lombok](https://projectlombok.org/)                                                    | 1.18.12       | MIT                               |
 | [Apache Commong Lang 3](https://commons.apache.org)                                     | 3.11          | Apache License 2.0                |
 | [JSONSchema2Pojo Plugin](http://jsonschema2pojo.org)                                    | 1.01          | Apache License 2.0                |
 | [Angular](angular.io)                                                                   | 11.2.12       | MIT                               |
