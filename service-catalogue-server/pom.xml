@@ -123,7 +123,7 @@
 	</dependencies>
 
 	<build>
-		<finalName>service-catalog</finalName>
+		<finalName>service-catalogue</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

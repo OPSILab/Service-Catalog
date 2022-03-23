@@ -1,6 +1,6 @@
 {
   "serviceRegistry": {
-    "url": "http://localhost:8086/service-catalog"
+    "url": "http://localhost:8086/service-catalogue"
   },
 
   "system": {
