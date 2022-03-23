@@ -18,6 +18,7 @@ import { AvailableServiceRow } from './availableServices.component';
 import { LoginService } from '../../../auth/login/login.service';
 import { ServiceModelStatusEnum } from '../../../model/services/serviceModel';
 import { DialogExportPromptComponent } from '../service-editor/dialog-export-prompt/dialog-export-prompt.component';
+import * as transformJSON from 'json-to-json-transformer/lib/transformJSON.js';
 @Component({
   template: `
     <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.identifier }}">
@@ -325,8 +326,13 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   onRegisterService = async (): Promise<void> => {
+    
     try {
-      this.value = (await this.availableServicesService.registerService(this.value.identifier)) as AvailableServiceRow;
+     //JSON TO JSON TRANSFORMATION
+     // var newObj = transformJSON.transform(this.value, /*to add modelmapping*/ this.value);
+     //console.log(newObj);
+     //TO-DO service registry invocation 
+     // this.value = (await this.availableServicesService.registerService(this.value.identifier)) as AvailableServiceRow;
       this.showToast('primary', this.translate.instant('general.services.service_registered_message', { serviceName: this.value.title }), '');
       this.updateResult.emit(this.value);
     } catch (error) {

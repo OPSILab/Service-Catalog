@@ -54,10 +54,13 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     this.locale = (this.configService.config as AppConfig).i18n.locale; // TODO change with user language preferences
   }
 
+
+ 
+
   async ngOnInit(): Promise<void> {
     try {
       this.availableServices = await this.availableServicesService.getServices();
-      void this.source.load(
+      void this.source.load( 
         this.availableServices.map((availableServiceDescr) => {
           /* Get Localized Human readable description of the Service, default en */
           // availableServiceDescr.hasInfo.description= this.getLocalizedDescription(availableServiceDescr);
@@ -133,18 +136,19 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
         delete: false,
       },
       columns: {
-        serviceName: {
+        title: {
           title: this.serviceLabel,
           type: 'text',
           width: '25%',
           valuePrepareFunction: (cell, row: AvailableServiceRow) => row.title,
         },
-        humanReadableDescription: {
+        description: {
           title: this.descriptionLabel,
           editor: {
             type: 'textarea',
           },
           width: '65%',
+          filter: false,
           valuePrepareFunction: (cell, row: AvailableServiceRow) => row.hasInfo.description.description,
         },
         details: {

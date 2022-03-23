@@ -58,6 +58,7 @@
     "intl": "1.2.5",
     "ionicons": "2.0.1",
     "jquery": "3.6.0",
+    "json-to-json-transformer": "1.1.0",
     "material-design-icons": "3.0.1",
     "nebular-icons": "1.1.0",
     "ng2-smart-table": "1.7.2",
