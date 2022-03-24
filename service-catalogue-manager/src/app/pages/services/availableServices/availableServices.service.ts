@@ -39,15 +39,15 @@ export class AvailableServicesService {
   }
 
   getService(serviceId: string): Promise<ServiceModel> {
-    return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/${serviceId}`).toPromise();
+    return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/json?identifier=${serviceId}`).toPromise(); 
   }
 
   getJsonldService(serviceId: string): Promise<Record<string, unknown>> {
-    return this.http.get<Record<string, unknown>>(`${this.serviceRegistryUrl}/api/v2/services/jsonld/${serviceId}`).toPromise();
+    return this.http.get<Record<string, unknown>>(`${this.serviceRegistryUrl}/api/v2/services/json/jsonld?identifier=${serviceId}`).toPromise();
   }
 
   getCpsvService(serviceId: string): Promise<Record<string, unknown>> {
-    return this.http.get<Record<string, unknown>>(`${this.serviceRegistryUrl}/api/v2/services/cpsv/jsonld/${serviceId}`).toPromise();
+    return this.http.get<Record<string, unknown>>(`${this.serviceRegistryUrl}/api/v2/services/json/cpsv/jsonld?identifier=${serviceId}`).toPromise();
   }
   saveService(service: ServiceModel): Promise<ServiceModel> {
     return this.http.post<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services`, service).toPromise();
@@ -64,10 +64,10 @@ export class AvailableServicesService {
   }
 
   updateService(service: ServiceModel, serviceId: string): Promise<ServiceModel> {
-    return this.http.put<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/${serviceId}`, service).toPromise();
+    return this.http.put<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${serviceId}`, service).toPromise();
   }
 
   deleteService(serviceId: string): Promise<ServiceModel> {
-    return this.http.delete<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/${serviceId}`).toPromise();
+    return this.http.delete<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${serviceId}`).toPromise();
   }
 }

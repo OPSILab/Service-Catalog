@@ -18,16 +18,16 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<List<ServiceModel>> getServices() throws ServiceNotFoundException;
 
-	public abstract ResponseEntity<?> getServiceById(HttpServletRequest request) throws ServiceNotFoundException, IOException;
+	public abstract ResponseEntity<?> getServiceById(HttpServletRequest request, String identifier) throws ServiceNotFoundException, IOException;
 
 	public abstract ResponseEntity<HashMap<String, Integer>> getServicesCount();
 
 	public abstract ResponseEntity<ServiceModel> createService(ServiceModel service);
 
-	public abstract ResponseEntity<ServiceModel> updateService(HttpServletRequest request, ServiceModel service)
+	public abstract ResponseEntity<ServiceModel> updateService(String identifier, ServiceModel service)
 			throws ServiceNotFoundException, ServiceNotEditableException;
 
-	public abstract ResponseEntity<Object> deleteService(HttpServletRequest request) throws ServiceNotFoundException;
+	public abstract ResponseEntity<Object> deleteService(String identifier) throws ServiceNotFoundException;
 
 //	public abstract ResponseEntity<String> getServiceByIdJsonLd(HttpServletRequest request)
 //			throws ServiceNotFoundException, IOException;
