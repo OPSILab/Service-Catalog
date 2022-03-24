@@ -1,0 +1,67 @@
+version: "3.8"
+services:
+  service-catalog:
+    image: capesuite/service-catalog
+    build: ./service-catalogue-server
+    ports:
+      - "8086:8086"
+    environment:
+     #- PROFILE=
+      - SPRING_LOGGING_LEVEL=INFO
+      - MONGO_LOGGING_LEVEL=ERROR
+      - SECURITY_LOGGING_LEVEL=DEBUG
+      - MONGODB_HOST=service-catalog-mongo
+      - MONGODB_PORT=27017
+      - MONGODB_USER=root
+      - MONGODB_PWD=root
+      - ENABLE_AUTH=false
+      - IDM_ISSUER_URI=https://idm.cape-suite.eu/auth/realms/Cape
+      - IDM_ALLOWED_ORIGIN_PATTERNS=http://localhost:81,http://localhost,http://localhost:82,http://localhost:83
+      - IDM_ALLOWED_ORIGINS=
+      
+    networks:
+      - sc-network
+
+  service-catalog-mongo:
+    image: mongo:4.4.6
+    restart: always
+    ports:
+     - "27022:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - type: volume
+        source: service-catalog-volume
+        target: /data/db
+        volume:
+          nocopy: true
+    networks:
+      - sc-network
+
+  service-catalogue-manager:
+    image: capesuite/service-catalogue-manager:latest
+    build:
+      context: ./service-catalogue-manager
+      args:
+        BASE_HREF: /service-catalogue-manager/
+    ports:
+      - "97:80"
+    volumes:
+      - ./service-catalogue-manager/src/assets/config.prod.json:/usr/share/nginx/html/assets/config.json
+      - ./service-catalogue-manager/nginx.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - sc-network
+
+volumes:
+  service-catalog-volume:
+
+networks:
+ sc-network:
+   name: sc-network
+   driver: bridge
+   driver_opts:
+     com.docker.network.driver.mtu: 1400
+   ipam:
+     config:
+       - subnet: 172.29.1.0/24
