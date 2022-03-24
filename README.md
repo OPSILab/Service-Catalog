@@ -4,7 +4,7 @@
 [![Docker Pulls](https://img.shields.io/docker/pulls/capesuite/service-catalog)](https://hub.docker.com/r/capesuite/service-catalog)
 
 
-Service Catalog provides all functionality to register, model, map and publish and manage all the information needed to support the uses of service (public&private) according to the following three points of view:
+Service Catalogue provides all functionality to register, model, map and publish and manage all the information needed to support the uses of service (public&private) according to the following three points of view:
 
 - Informational
 - Service Invocation
@@ -89,4 +89,4 @@ Service Catalogue uses the [Keycloak IdM](https://www.keycloak.org/) (Apache Lic
 ---
 
 
-© 2021 Engineering Ingegneria Informatica S.p.A.
+© 2021-2022 Engineering Ingegneria Informatica S.p.A.
