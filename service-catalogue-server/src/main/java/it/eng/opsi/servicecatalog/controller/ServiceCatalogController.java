@@ -207,5 +207,15 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 		return ResponseEntity.ok(catalogService.getCountByGroupedBy());
 	}
+	
+	@Override
+	@Operation(summary = "Get the Service Models count grouped by Spatial.", description = "Get the Service Models count grouped by Spatial.", tags = {
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Return an object with count for each location.", responseCode = "200") })
+	@GetMapping(value = "/services/count/location", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<HashMap<String, Object>>> getCountByLocation() {
+
+		return ResponseEntity.ok(catalogService.getCountByLocation());
+	}
 
 }

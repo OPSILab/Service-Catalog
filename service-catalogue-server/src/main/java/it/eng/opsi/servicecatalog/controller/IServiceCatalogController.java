@@ -41,5 +41,7 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByThematicArea();
 	
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByGroupedBy();
+
+	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByLocation();
 	
 }

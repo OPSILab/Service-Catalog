@@ -63,4 +63,8 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 			"{$project:{'_id':0,'publicServices':1,'privateServices':1,'total':{$sum:['$publicServices','$privateServices']}}}" })
 	public HashMap<String, Integer> getTotalCount();
 
+	@Aggregation(pipeline = { "{$unwind: '$hasInfo.spatial'}", "{'$group':{'_id':'$hasInfo.spatial','count':{$sum:1}}}",
+			"{$project:{'_id':0,'location':'$_id','count':'$count'}}" })
+	public List<HashMap<String, Object>> getCountByLocation();
+
 }

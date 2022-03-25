@@ -38,6 +38,10 @@ export class AvailableServicesService {
     return this.http.get<Record<string, number>[]>(`${this.serviceRegistryUrl}/api/v2/services/count/groupedBy`).toPromise();
   }
 
+  getServicesCountByLocation(): Promise<Record<string, number>[]> {
+    return this.http.get<Record<string, number>[]>(`${this.serviceRegistryUrl}/api/v2/services/count/location`).toPromise();
+  }
+
   getService(serviceId: string): Promise<ServiceModel> {
     return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/json?identifier=${serviceId}`).toPromise(); 
   }

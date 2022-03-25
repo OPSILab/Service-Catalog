@@ -4,10 +4,10 @@ import { Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'purpose-category-pie',
+  selector: 'category-pie',
   template: ` <ngx-charts-pie-chart [scheme]="colorScheme" [results]="pieData" [legend]="showLegend" [labels]="showLabels"> </ngx-charts-pie-chart> `,
 })
-export class PurposeCategoryPieComponent implements OnInit, OnDestroy {
+export class CategoryPieComponent implements OnInit, OnDestroy {
   @Input()
   inputData: Record<string, number>;
 

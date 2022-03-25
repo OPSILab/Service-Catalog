@@ -133,5 +133,12 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		return serviceModelRepo.getCountByGroupedBy();
 	}
+	 
+	
+	@Override
+	public List<HashMap<String, Object>> getCountByLocation() {
+		// TODO Auto-generated method stub
+		return serviceModelRepo.getCountByLocation();
+	}
 
 }

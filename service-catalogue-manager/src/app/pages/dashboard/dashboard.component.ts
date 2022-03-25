@@ -24,6 +24,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public servicesCountBySector: Record<string, number>;
   public servicesCountByThematicArea: Record<string, number>;
   public servicesCountByGroupedBy: Record<string, number>;
+  public servicesCountByLocation: Record<string, number>;
   public servicesCount: ServicesCount;
 
   constructor(
@@ -55,6 +56,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return {
           ...partial,
           [current['isGroupedBy']]: current['count'],
+        } as Record<string, number>;
+      }, {} as Record<string, number>);
+      this.servicesCountByLocation = (await this.servicesService.getServicesCountByLocation()).reduce((partial, current) => {
+        return {
+          ...partial,
+          [current['location']]: current['count'],
         } as Record<string, number>;
       }, {} as Record<string, number>);
 

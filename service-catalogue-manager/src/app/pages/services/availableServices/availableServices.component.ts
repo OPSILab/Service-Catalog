@@ -20,6 +20,7 @@ import { IsPersonalDataHandling } from '../../../model/services/isPersonalDataHa
 
 export interface AvailableServiceRow extends ServiceModel {
   locale?: string;
+  spatial?: string;
 }
 
 @Component({
@@ -33,6 +34,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   private actionsLabel: string;
   private detailsLabel: string;
   private statusLabel: string;
+  private spatialLabel: string
 
   public settings: Record<string, unknown>;
   private locale: string;
@@ -71,6 +73,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
           return {
             ...availableServiceDescr,
             locale: this.locale,
+            spatial: availableServiceDescr.hasInfo.spatial
           } as AvailableServiceRow;
         })
       );
@@ -124,6 +127,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     this.actionsLabel = this.translate.instant('general.services.actions') as string;
     this.detailsLabel = this.translate.instant('general.services.details') as string;
     this.statusLabel = this.translate.instant('general.services.status') as string;
+    this.spatialLabel = this.translate.instant('general.services.location') as string;
 
     return {
       mode: 'external',
@@ -142,45 +146,54 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
           width: '25%',
           valuePrepareFunction: (cell, row: AvailableServiceRow) => row.title,
         },
-        description: {
-          title: this.descriptionLabel,
-          editor: {
-            type: 'textarea',
-          },
-          width: '65%',
-          filter: false,
-          valuePrepareFunction: (cell, row: AvailableServiceRow) => row.hasInfo.description.description,
+      spatial: {
+        title: this.spatialLabel,
+        type: 'text',
+        width: '25%',
+        
+        valuePrepareFunction: (cell, row: AvailableServiceRow) => row.spatial,
+      },
+      
+      description: {
+        title: this.descriptionLabel,
+        editor: {
+          type: 'textarea',
         },
-        details: {
-          title: this.detailsLabel,
-          filter: false,
-          sort: false,
-          width: '5%',
-          type: 'custom',
-          valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
-          renderComponent: ServiceInfoRenderComponent,
+        width: '65%',
+        filter: false,
+        valuePrepareFunction: (cell, row: AvailableServiceRow) => row.hasInfo.description.description,
+      },
+      status: {
+        title: this.statusLabel,
+        sort: false,
+        filter: false,
+        width: '5%',
+        type: 'text',
+        valuePrepareFunction: (cell, row: AvailableServiceRow) => row.status,
+      }, 
+      details: {
+        title: this.detailsLabel,
+        filter: false,
+        sort: false,
+        width: '5%',
+        type: 'custom',
+        valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
+        renderComponent: ServiceInfoRenderComponent,
+      },
+      
+      actions: {
+        title: this.actionsLabel,
+        sort: false,
+        width: '5%',
+        filter: false,
+        type: 'custom',
+        valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
+        renderComponent: ActionsServiceMenuRenderComponent,
+        onComponentInitFunction: (instance) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
+          instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe((updatedServiceData: unknown) => this.ngOnInit());
         },
-        status: {
-          title: this.statusLabel,
-          filter: false,
-          sort: false,
-          width: '5%',
-          type: 'text',
-          valuePrepareFunction: (cell, row: AvailableServiceRow) => row.status,
-        },
-        actions: {
-          title: this.actionsLabel,
-          sort: false,
-          width: '5%',
-          filter: false,
-          type: 'custom',
-          valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
-          renderComponent: ActionsServiceMenuRenderComponent,
-          onComponentInitFunction: (instance) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
-            instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe((updatedServiceData: unknown) => this.ngOnInit());
-          },
-        },
+      },
       },
     };
   }

@@ -39,6 +39,8 @@ public interface IServiceCatalogService {
 	public abstract List<HashMap<String, Object>> getCountByThematicArea();
 	
 	public abstract List<HashMap<String, Object>> getCountByGroupedBy();
+
+	public abstract List<HashMap<String, Object>> getCountByLocation();
 	
 	
 }

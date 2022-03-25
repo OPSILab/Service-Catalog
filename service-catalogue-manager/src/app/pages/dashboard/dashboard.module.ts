@@ -6,10 +6,10 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { DashboardComponent } from './dashboard.component';
 import { StatusCardComponent } from './status-card/status-card.component';
 import { AvailableServicesService } from '../services/availableServices/availableServices.service';
-import { PurposeCategoryPieComponent } from './charts/purposeCategoryPie.component';
+import { CategoryPieComponent } from './charts/categoryPie.component';
 import { TranslateModule } from '@ngx-translate/core';
 
-const components = [DashboardComponent, StatusCardComponent, PurposeCategoryPieComponent];
+const components = [DashboardComponent, StatusCardComponent, CategoryPieComponent];
 
 @NgModule({
   imports: [NbCardModule, ThemeModule, NgxChartsModule, NbIconModule, TranslateModule],
