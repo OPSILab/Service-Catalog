@@ -36,7 +36,7 @@
               "type": "string",
               "description": "Language used in textual description, in ISO 639-1 format.",
               "watch": {
-                "possible_langs": "root.language"
+                "possible_langs": "root.hasInfo.language"
               },
               "enumSource": "possible_langs"
             },
@@ -92,6 +92,11 @@
         "description": "URL pointing to further description of the data (e.g. to JSON schema)."
       },
       "distribution": {
+        "type": "array",
+        "title": "Distribution",
+        "description": " Objects describing distribution points of the Datasets.",
+        "format": "tabs",
+        "items":{
         "type": "object",
         "title": "Distribution",
         "format": "categories",
@@ -143,6 +148,7 @@
             "description": "Data format (i.e json, csv...)"
           }
         }
+       }
       },
       "dataMapping": {
         "type": "array",
