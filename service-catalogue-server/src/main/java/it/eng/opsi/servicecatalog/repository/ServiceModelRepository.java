@@ -37,6 +37,15 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 //	@Query(value = "{ $and:[{ 'serviceInstance.serviceProvider.businessId': ?0}, { 'serviceInstance.cert':{$ne:null}}]}")
 //	public List<ServiceModel> findRegisteredServicesByServiceProviderBusinessId(String businessId);
 
+    @Query(value = "{ 'identifier': { $in: ?0}}")
+    public List<ServiceModel> findByServicebyIds(Object[] ids);
+	
+	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }",  count = true)
+	public List<ServiceModel> findServicesIsPersonalDataHandling();
+	
+	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }",  count = true)
+	public Long countServicesIsPersonalDataHandling();
+	
 	public Long deleteServiceModelByIdentifier(String serviceId);
 
 //	@Aggregation(pipeline = { "{ $match: { 'serviceId' : $0}}", "{ $unwind: '$isDescribedAt'}",

@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public servicesCountByGroupedBy: Record<string, number>;
   public servicesCountByLocation: Record<string, number>;
   public servicesCount: ServicesCount;
+  public servicesPersonalDataHandlingCount:String;
 
   constructor(
     private servicesService: AvailableServicesService,
@@ -39,6 +40,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     try {
       this.servicesCount = await this.servicesService.getServicesCount();
+      this.servicesPersonalDataHandlingCount = await this.servicesService.getServicesIsPersonalDataHandlingCount();
       this.servicesCountBySector = (await this.servicesService.getServicesCountBySector()).reduce((partial, current) => {
         return {
           ...partial,
@@ -89,6 +91,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
           iconClass: 'nb-e-commerce',
           type: 'warning',
           value: this.servicesCount.privateServices.toString(),
+        },
+        {
+          title: this.translateService.instant('general.dashboard.personalDataServices') as string,
+          iconClass: 'nb-person',
+          type: 'primary',
+          value: this.servicesPersonalDataHandlingCount.toString(),
         },
       ];
     } catch (error) {

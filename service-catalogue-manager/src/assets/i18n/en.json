@@ -20,7 +20,8 @@
       "lifeEvent": "Life Event",
       "businessEvent": "Business Event",
       "publicServices": "Public Services",
-      "privateServices": "Private Services"
+      "privateServices": "Private Services",
+      "personalDataServices": "Using Personal Data"
     },
     "menu": {
       "dashboard": "Dashboard",

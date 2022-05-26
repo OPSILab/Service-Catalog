@@ -1,6 +1,7 @@
 package it.eng.opsi.servicecatalog.service;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 
@@ -139,6 +140,25 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	public List<HashMap<String, Object>> getCountByLocation() {
 		// TODO Auto-generated method stub
 		return serviceModelRepo.getCountByLocation();
+	}
+
+	@Override
+	public List<ServiceModel> getServicesbyIds(List<String> ids) throws ServiceNotFoundException {
+		// TODO Auto-generated method stub
+			
+		return serviceModelRepo.findByServicebyIds(ids.stream().map(p -> java.net.URLDecoder.decode(p, StandardCharsets.UTF_8)).toArray());
+	}
+
+	@Override
+	public List<ServiceModel> getServicesIsPersonaDataHandling() throws ServiceNotFoundException {
+		// TODO Auto-generated method stub
+		return serviceModelRepo.findServicesIsPersonalDataHandling();
+	}
+
+	@Override
+	public Long getServicesIsPersonaDataHandlingCount() {
+		// TODO Auto-generated method stub
+		return serviceModelRepo.countServicesIsPersonalDataHandling();
 	}
 
 }

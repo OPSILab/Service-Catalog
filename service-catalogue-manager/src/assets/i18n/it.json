@@ -20,7 +20,8 @@
       "businessEvent": "Business Event",
       "event": "Event",
       "publicServices": "Servizi pubblici",
-      "privateServices": "Servizi privati"
+      "privateServices": "Servizi privati",
+      "personalDataServices": "Uso di dati personali"
     },
     "menu": {
       "dashboard": "Cruscotto",

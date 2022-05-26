@@ -84,6 +84,39 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			return ResponseEntity.ok(catalogService.getServiceById(decodedServiceIdentifier));
 
 	}
+	
+	
+	@Override
+	@Operation(summary = "Get the Service Model descriptions by specified Service Ids.", description = "Get the Service Model descriptions by specified Service Id.", tags = {
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
+	@GetMapping(value = "/services/specified/**", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getServiceByIds(HttpServletRequest request, @RequestParam("identifier") List<String> identifier) throws ServiceNotFoundException, IOException {
+
+		 return ResponseEntity.ok(catalogService.getServicesbyIds(identifier));
+
+	}
+	
+	@Override
+	@Operation(summary = "Get the Service Model descriptions is handling personal data", description = "Get the Service Model descriptions is handling personal data.", tags = {
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
+	@GetMapping(value = "/services/isPersonalDataHandling", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getServiceIsPersonalDataHandling(HttpServletRequest request) throws ServiceNotFoundException, IOException {
+
+		 return ResponseEntity.ok(catalogService.getServicesIsPersonaDataHandling());
+
+	}
+	
+	@Override
+	@Operation(summary = "Get the count of the  Service Model descriptions is personal data handling.", tags = {
+			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
+	@GetMapping(value = "/services/isPersonalDataHandling/count", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> getServicesIsPersonalDataHandlingCount() {
+
+		return ResponseEntity.ok(catalogService.getServicesIsPersonaDataHandlingCount().toString());
+	}
+	
 
 	@Override
 	@Operation(summary = "Get the count of the registered Service Model descriptions (total, public and private services).", tags = {

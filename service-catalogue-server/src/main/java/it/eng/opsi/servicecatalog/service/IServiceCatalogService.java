@@ -15,7 +15,13 @@ import it.eng.opsi.servicecatalog.model.ServiceModel;
 public interface IServiceCatalogService {
 
 	public abstract List<ServiceModel> getServices() throws ServiceNotFoundException;
+	
+	public abstract List<ServiceModel> getServicesbyIds(List<String> ids) throws ServiceNotFoundException;
+	
+	public abstract List<ServiceModel> getServicesIsPersonaDataHandling() throws ServiceNotFoundException;
 
+	public abstract Long getServicesIsPersonaDataHandlingCount();
+	
 	public abstract ServiceModel getServiceById(String serviceId) throws ServiceNotFoundException;
 
 	public abstract HasInfo getHasInfoById(String serviceId) throws ServiceNotFoundException;

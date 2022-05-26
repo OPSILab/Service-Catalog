@@ -19,6 +19,9 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<List<ServiceModel>> getServices() throws ServiceNotFoundException;
 
 	public abstract ResponseEntity<?> getServiceById(HttpServletRequest request, String identifier) throws ServiceNotFoundException, IOException;
+	
+	public abstract ResponseEntity<?> getServiceByIds(HttpServletRequest request, List<String> identifier) throws ServiceNotFoundException, IOException;
+
 
 	public abstract ResponseEntity<HashMap<String, Integer>> getServicesCount();
 
@@ -43,5 +46,11 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByGroupedBy();
 
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByLocation();
+
+	public abstract ResponseEntity<?> getServiceIsPersonalDataHandling(HttpServletRequest request) throws ServiceNotFoundException, IOException;
+
+	public abstract ResponseEntity<String> getServicesIsPersonalDataHandlingCount();
+
+	
 	
 }
