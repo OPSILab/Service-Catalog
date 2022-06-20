@@ -193,7 +193,7 @@
             "uniqueItems": true,
             "items": {
               "type": "string",
-              "enum": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
+              "enum": ["Required", "Non required", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
             }
           },
           "language": {
@@ -305,7 +305,7 @@
             "type": "string",
             "title": "Type of channel",
             "description": "Type of channel",
-            "enum": ["E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location"]
+            "enum": ["E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location", "RESTService"]
           },
           "openingHours": {
             "type": "string",
