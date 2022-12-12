@@ -228,3 +228,6 @@ hs_err_pid*
 
 # Current Config...
 .env
+
+.history
+.service-catalogue-server/.idea

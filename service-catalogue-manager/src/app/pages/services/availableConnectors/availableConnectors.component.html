@@ -9,6 +9,10 @@
         <button nbButton class="" shape="rectangle" size="medium" status="primary" >
           <i class="material-icons">add</i>&nbsp;{{ 'general.services.add_new' | translate }}
         </button>
+        <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger" (click)="importAsFile()">
+          {{ 'general.editor.import' | translate }}
+          <i class="mx-1 fas fa-file-import fa-lg"></i>
+        </button>
       </div>
 
       <div class="col-6 col-md-6 text-right">
