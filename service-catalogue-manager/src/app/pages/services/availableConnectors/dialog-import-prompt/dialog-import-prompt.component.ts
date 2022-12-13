@@ -1,3 +1,4 @@
+import { ServiceUrls } from './../../../../model/services/serviceUrls';
 import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {ReactiveFormsModule} from '@angular/forms';
@@ -11,6 +12,12 @@ import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
 })
 export class DialogAddNewPromptComponent {
   inputItemNgModel;
+  name;
+  description;
+  url;
+  status;
+  id;
+  serviceId;
   textareaItemNgModel;
   inputItemFormControl
   textareaItemFormControl
