@@ -18,6 +18,8 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
+import { DashboardModule } from './pages/dashboard/dashboard.module';
+
 import {
   NbDatepickerModule,
   NbDialogModule,

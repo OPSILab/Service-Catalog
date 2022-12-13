@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
 
@@ -7,15 +9,25 @@ import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
   templateUrl: 'dialog-import-prompt.component.html',
   styleUrls: ['dialog-import-prompt.component.scss'],
 })
-export class DialogImportPromptComponent {
+export class DialogAddNewPromptComponent {
+  inputItemNgModel;
+  textareaItemNgModel;
+  inputItemFormControl
+  textareaItemFormControl
+
   selectedFile: File;
   json: Record<string, unknown>;
   selectedItem = 'Json';
 
-  constructor(protected ref: NbDialogRef<DialogImportPromptComponent>, private errorService: ErrorDialogService) {}
+  constructor(protected ref: NbDialogRef<DialogAddNewPromptComponent>, private errorService: ErrorDialogService) {}
 
   cancel(): void {
     this.ref.close();
+  }
+
+  onInit(): void{
+    this.inputItemFormControl = new FormControl();
+    this.textareaItemFormControl = new FormControl();
   }
 
   onFileChanged(event: Event): void {
@@ -45,5 +57,12 @@ export class DialogImportPromptComponent {
   onUpload(): void {
     // upload code goes here
     this.ref.close({ content: this.json, format: this.selectedItem });
+  }
+
+  onSubmit() {
+    console.log("Submitted")
+    //this.submitted = true;
+    //this.connectorService.addConnector(this.connector).subscribe(b=>{this.connector=b;console.log(this.connector)});
+
   }
 }

@@ -10,6 +10,7 @@ import { ConnectorInfoRenderComponent } from './availableConnectors/connectorInf
 import { EditorComponent } from './service-editor/editor.component';
 import { DialogExportPromptComponent } from './service-editor/dialog-export-prompt/dialog-export-prompt.component';
 import { DialogImportPromptComponent } from './service-editor/dialog-import-prompt/dialog-import-prompt.component';
+import { DialogAddNewPromptComponent } from './availableConnectors/dialog-import-prompt/dialog-import-prompt.component';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   NbAccordionModule,
@@ -27,8 +28,10 @@ import {
 } from '@nebular/theme';
 import { ActionsServiceMenuRenderComponent } from './availableServices/actionsServiceMenuRender.component';
 import { ActionsConnectorMenuRenderComponent } from './availableConnectors/actionsConnectorMenuRender.component';
-import { FormsModule } from '@angular/forms';
+//import { FormsModule } from '@angular/forms';
 import { AvailableConnectorsService } from './availableConnectors/availableConnectors.service';
+
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -49,6 +52,7 @@ import { AvailableConnectorsService } from './availableConnectors/availableConne
     NbTabsetModule,
     TranslateModule.forChild({}),
     FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     AvailableServicesComponent,
@@ -58,6 +62,7 @@ import { AvailableConnectorsService } from './availableConnectors/availableConne
     EditorComponent,
     DialogExportPromptComponent,
     DialogImportPromptComponent,
+    DialogAddNewPromptComponent,
     ActionsConnectorMenuRenderComponent,
     ActionsServiceMenuRenderComponent,
   ],
@@ -68,6 +73,7 @@ import { AvailableConnectorsService } from './availableConnectors/availableConne
     ServiceInfoRenderComponent,
     ConnectorInfoRenderComponent,
     DialogImportPromptComponent,
+    DialogAddNewPromptComponent,
     DialogExportPromptComponent,
   ],
 })
