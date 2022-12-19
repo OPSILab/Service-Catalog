@@ -9,8 +9,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-    "connectorEndpoint",
-    "publicKey"
+        "name",
+        "description",
+        "status",
+        "serviceId",
+        "url"
 })
 public class Connector {
 
@@ -19,19 +22,34 @@ public class Connector {
      * (Required)
      * 
      */
-    @JsonProperty("connectorEndpoint")
+    @JsonProperty("name")
     @Valid
     @NotNull
-    private ConnectorEndpoint connectorEndpoint;
+    private String name;
     /**
      * 
      * (Required)
      * 
      */
-    @JsonProperty("publicKey")
+    @JsonProperty("description")
     @Valid
     @NotNull
-    private PublicKey publicKey;
+    private String description;
+
+    @JsonProperty("status")
+    @Valid
+    @NotNull
+    private String status;
+
+    @JsonProperty("serviceId")
+    @Valid
+    @NotNull
+    private String serviceId;
+
+    @JsonProperty("url")
+    @Valid
+    @NotNull
+    private String url;
 
     /**
      * No args constructor for use in serialization
@@ -42,13 +60,16 @@ public class Connector {
 
     /**
      * 
-     * @param publicKey
-     * @param connectorEndpoint
+     * @param name
+     * @param description
      */
-    public Connector(ConnectorEndpoint connectorEndpoint, PublicKey publicKey) {
+    public Connector(String name, String description, String status, String serviceId, String url) {
         super();
-        this.connectorEndpoint = connectorEndpoint;
-        this.publicKey = publicKey;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.serviceId = serviceId;
+        this.url = url;
     }
 
     /**
@@ -56,9 +77,9 @@ public class Connector {
      * (Required)
      * 
      */
-    @JsonProperty("connectorEndpoint")
-    public ConnectorEndpoint getConnectorEndpoint() {
-        return connectorEndpoint;
+    @JsonProperty("name")
+    public String getName() {
+        return name;
     }
 
     /**
@@ -66,9 +87,9 @@ public class Connector {
      * (Required)
      * 
      */
-    @JsonProperty("connectorEndpoint")
-    public void setConnectorEndpoint(ConnectorEndpoint connectorEndpoint) {
-        this.connectorEndpoint = connectorEndpoint;
+    @JsonProperty("name")
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -76,9 +97,9 @@ public class Connector {
      * (Required)
      * 
      */
-    @JsonProperty("publicKey")
-    public PublicKey getPublicKey() {
-        return publicKey;
+    @JsonProperty("description")
+    public String getDescription() {
+        return description;
     }
 
     /**
@@ -86,25 +107,26 @@ public class Connector {
      * (Required)
      * 
      */
-    @JsonProperty("publicKey")
-    public void setPublicKey(PublicKey publicKey) {
-        this.publicKey = publicKey;
+    @JsonProperty("description")
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(Connector.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
-        sb.append("connectorEndpoint");
+        sb.append(Connector.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this)))
+                .append('[');
+        sb.append("name");
         sb.append('=');
-        sb.append(((this.connectorEndpoint == null)?"<null>":this.connectorEndpoint));
+        sb.append(((this.name == null) ? "<null>" : this.name));
         sb.append(',');
-        sb.append("publicKey");
+        sb.append("description");
         sb.append('=');
-        sb.append(((this.publicKey == null)?"<null>":this.publicKey));
+        sb.append(((this.description == null) ? "<null>" : this.description));
         sb.append(',');
-        if (sb.charAt((sb.length()- 1)) == ',') {
-            sb.setCharAt((sb.length()- 1), ']');
+        if (sb.charAt((sb.length() - 1)) == ',') {
+            sb.setCharAt((sb.length() - 1), ']');
         } else {
             sb.append(']');
         }
@@ -114,8 +136,8 @@ public class Connector {
     @Override
     public int hashCode() {
         int result = 1;
-        result = ((result* 31)+((this.connectorEndpoint == null)? 0 :this.connectorEndpoint.hashCode()));
-        result = ((result* 31)+((this.publicKey == null)? 0 :this.publicKey.hashCode()));
+        result = ((result * 31) + ((this.name == null) ? 0 : this.name.hashCode()));
+        result = ((result * 31) + ((this.description == null) ? 0 : this.description.hashCode()));
         return result;
     }
 
@@ -128,7 +150,14 @@ public class Connector {
             return false;
         }
         Connector rhs = ((Connector) other);
-        return (((this.connectorEndpoint == rhs.connectorEndpoint)||((this.connectorEndpoint!= null)&&this.connectorEndpoint.equals(rhs.connectorEndpoint)))&&((this.publicKey == rhs.publicKey)||((this.publicKey!= null)&&this.publicKey.equals(rhs.publicKey))));
+        return (((this.name == rhs.name)
+                || ((this.name != null) && this.name.equals(rhs.name)))
+                && ((this.description == rhs.description)
+                        || ((this.description != null) && this.description.equals(rhs.description))));
+    }
+
+    public String getIdentifier() {
+        return null;
     }
 
 }

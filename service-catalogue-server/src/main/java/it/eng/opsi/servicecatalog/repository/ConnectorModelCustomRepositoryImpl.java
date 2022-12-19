@@ -8,18 +8,18 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import it.eng.opsi.servicecatalog.model.ServiceModel;
+import it.eng.opsi.servicecatalog.model.Connector;
 
-public class ServiceModelCustomRepositoryImpl implements ServiceModelCustomRepository {
+public class ConnectorModelCustomRepositoryImpl implements ConnectorModelCustomRepository {
 
 	@Autowired
 	MongoTemplate template;
 
-	public Optional<ServiceModel> updateService(String serviceId, ServiceModel service) {
+	public Optional<Connector> updateConnector(String connectorId, Connector connector) {
 
-		ServiceModel updatedService = template.findAndReplace(query(where("identifier").is(serviceId)), service);
+		Connector updatedConnector = template.findAndReplace(query(where("identifier").is(connectorId)), connector);
 
-		return Optional.ofNullable(updatedService);
+		return Optional.ofNullable(updatedConnector);
 
 	}
 

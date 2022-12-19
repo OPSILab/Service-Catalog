@@ -21,41 +21,42 @@ export class AvailableConnectorsService {
   }
 
   getConnectors(): Promise<ConnectorEntry[]> {
-    //return this.http.get<ServiceEntry[]>(`${this.serviceRegistryUrl}/api/v2/services?withCertificate=true`).toPromise();
-    return this.http.get<ConnectorEntry[]>(`${this.serviceManagerUrl}/assets/data/examples/connectors.json`).toPromise();
+    return this.http.get<ConnectorEntry[]>(`${this.serviceRegistryUrl}/api/v2/connectors?withCertificate=true`).toPromise();
+    //return this.http.get<ConnectorEntry[]>(`${this.serviceManagerUrl}/assets/data/examples/connectors.json`).toPromise();
   }
 
   getConnectorsCount(): Promise<number> {
-    return this.http.get<number>(`${this.serviceRegistryUrl}/api/v2/services/connectors/count`).toPromise();
+    return this.http.get<number>(`${this.serviceRegistryUrl}/api/v2/connectors/count`).toPromise();
   }
 
   getConnector(connectorId: string): Promise<ConnectorEntry> {
-    return this.http.get<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/services/connectors/${connectorId}`).toPromise();
+    return this.http.get<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors/${connectorId}`).toPromise();
   }
 
   saveConnector(connector: ConnectorEntry): Promise<ConnectorEntry> {
-    return this.http.post<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/services/connectors`, connector).toPromise();
+    console.log(`${this.serviceRegistryUrl}/api/v2/connectors`)
+    return this.http.post<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors`, connector).toPromise();
   }
 
   registerConnector(connectorId: string): Promise<ConnectorEntry> {
     return this.http
-      .post<ConnectorEntry>(`${this.sdkUrl}/api/v2/services/connectors/${connectorId}`, '', { headers: { 'Content-Type': 'application/json' } })
+      .post<ConnectorEntry>(`${this.sdkUrl}/api/v2/connectors/${connectorId}`, '', { headers: { 'Content-Type': 'application/json' } })
       .toPromise();
   }
 
   deregisterConnector(connectorId: string): Promise<ConnectorEntry> {
-    return this.http.delete<ConnectorEntry>(`${this.sdkUrl}/api/v2/services/connectors/${connectorId}`).toPromise();
+    return this.http.delete<ConnectorEntry>(`${this.sdkUrl}/api/v2/connectors/${connectorId}`).toPromise();
   }
 
   updateConnector(connector: ConnectorEntry, connectorId: string): Promise<ConnectorEntry> {
-    return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/services/connectors/${connectorId}`, connector).toPromise();
+    return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors/${connectorId}`, connector).toPromise();
   }
 
   deleteConnector(connectorId: string): Promise<ConnectorEntry> {
-    return this.http.delete<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/services/connectors/${connectorId}`).toPromise();
+    return this.http.delete<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors/${connectorId}`).toPromise();
   }
 
   getConnectorLogs(connectorId: string): Promise<ConnectorEntryLog[]> {
-    return this.http.get<ConnectorEntryLog[]>(`${this.serviceRegistryUrl}/api/v2/services/connectors/${connectorId}`).toPromise();
+    return this.http.get<ConnectorEntryLog[]>(`${this.serviceRegistryUrl}/api/v2/connectors/${connectorId}`).toPromise();
   }
 }

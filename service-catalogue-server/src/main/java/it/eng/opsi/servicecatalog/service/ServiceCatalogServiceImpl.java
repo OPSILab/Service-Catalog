@@ -16,8 +16,10 @@ import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.jsonld.Serializer;
 import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
+import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ServiceModel.ServiceDescriptionStatus;
 import it.eng.opsi.servicecatalog.repository.ServiceModelRepository;
+import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -33,17 +35,20 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Autowired
 	private ServiceModelRepository serviceModelRepo;
 
+	@Autowired
+	private ConnectorModelRepository connectorModelRepo;
+
 	@Override
 	public List<ServiceModel> getServices() throws ServiceNotFoundException {
 
-//		log.info("Reading all Service Models");
+		// log.info("Reading all Service Models");
 		return serviceModelRepo.findAll();
 	}
 
 	@Override
 	public ServiceModel getServiceById(String serviceId) throws ServiceNotFoundException {
 
-//		log.info("Finding Service Models");
+		// log.info("Finding Service Models");
 		return serviceModelRepo.findByIdentifier(serviceId)
 				.orElseThrow(() -> new ServiceNotFoundException("No Service found with Service Id: " + serviceId));
 	}
@@ -51,7 +56,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public HashMap<String, Integer> getServicesCount() {
 
-//		log.info("Getting Service Count");
+		// log.info("Getting Service Count");
 		return serviceModelRepo.getTotalCount();
 	}
 
@@ -59,7 +64,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	public ServiceModel createService(ServiceModel service) {
 
 		service.setStatus(ServiceDescriptionStatus.UNDER_DEVELOPMENT);
-//		log.info("Creating new Service Model");
+		// log.info("Creating new Service Model");
 		// If identifier is blank, set as the Service Id
 		if (StringUtils.isBlank(service.getIdentifier()))
 			service.setIdentifier(uriBasePath + service.getIdentifier());
@@ -67,11 +72,22 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		return serviceModelRepo.save(service);
 	}
 
+	public Connector createConnector(Connector connector) {
+
+		// connector.setStatus(ConnectorDescriptionStatus.UNDER_DEVELOPMENT); //TODO ?
+		// log.info("Creating new Service Model");
+		// If identifier is blank, set as the Service Id
+		// if (StringUtils.isBlank(connector.getIdentifier()))//TODO ?
+		// connector.setIdentifier(uriBasePath + connector.getIdentifier());//TODO ?
+
+		return connectorModelRepo.save(connector);
+	}
+
 	@Override
 	public ServiceModel updateService(String serviceId, ServiceModel service)
 			throws ServiceNotFoundException, ServiceNotEditableException {
 
-//		log.info("Updating Service Model");
+		// log.info("Updating Service Model");
 		// If identifier is blank, set as the Service Id
 		if (StringUtils.isBlank(service.getIdentifier()))
 			service.setIdentifier(uriBasePath + service.getIdentifier());
@@ -134,8 +150,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		return serviceModelRepo.getCountByGroupedBy();
 	}
-	 
-	
+
 	@Override
 	public List<HashMap<String, Object>> getCountByLocation() {
 		// TODO Auto-generated method stub
@@ -145,8 +160,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public List<ServiceModel> getServicesbyIds(List<String> ids) throws ServiceNotFoundException {
 		// TODO Auto-generated method stub
-			
-		return serviceModelRepo.findByServicebyIds(ids.stream().map(p -> java.net.URLDecoder.decode(p, StandardCharsets.UTF_8)).toArray());
+
+		return serviceModelRepo.findByServicebyIds(
+				ids.stream().map(p -> java.net.URLDecoder.decode(p, StandardCharsets.UTF_8)).toArray());
 	}
 
 	@Override

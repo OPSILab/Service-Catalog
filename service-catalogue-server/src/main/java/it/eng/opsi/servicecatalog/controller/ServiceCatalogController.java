@@ -35,6 +35,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
+import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
 import it.eng.opsi.servicecatalog.service.ServiceCatalogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +49,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Autowired
 	IServiceCatalogService catalogService;
+
+	@Autowired
+	IServiceCatalogController catalogController;
 
 	@Value("${uriBasePath}")
 	private String uriBasePath;
@@ -67,7 +71,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Returns the requested Service Model description.", responseCode = "200") })
 	@GetMapping(value = "/services/json/**", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getServiceById(HttpServletRequest request, @RequestParam("identifier") String identifier) throws ServiceNotFoundException, IOException {
+	public ResponseEntity<?> getServiceById(HttpServletRequest request, @RequestParam("identifier") String identifier)
+			throws ServiceNotFoundException, IOException {
 
 		String serviceIdentifier = request.getRequestURI().split(request.getContextPath() + "/api/v2/services/")[1];
 
@@ -80,34 +85,35 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 		else if (serviceIdentifier.startsWith("cpsv/jsonld"))
 			return getServiceHasInfoByIdJsonLd(decodedServiceIdentifier);
-		else  
+		else
 			return ResponseEntity.ok(catalogService.getServiceById(decodedServiceIdentifier));
 
 	}
-	
-	
+
 	@Override
 	@Operation(summary = "Get the Service Model descriptions by specified Service Ids.", description = "Get the Service Model descriptions by specified Service Id.", tags = {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/**", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getServiceByIds(HttpServletRequest request, @RequestParam("identifier") List<String> identifier) throws ServiceNotFoundException, IOException {
+	public ResponseEntity<?> getServiceByIds(HttpServletRequest request,
+			@RequestParam("identifier") List<String> identifier) throws ServiceNotFoundException, IOException {
 
-		 return ResponseEntity.ok(catalogService.getServicesbyIds(identifier));
+		return ResponseEntity.ok(catalogService.getServicesbyIds(identifier));
 
 	}
-	
+
 	@Override
 	@Operation(summary = "Get the Service Model descriptions is handling personal data", description = "Get the Service Model descriptions is handling personal data.", tags = {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/isPersonalDataHandling", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getServiceIsPersonalDataHandling(HttpServletRequest request) throws ServiceNotFoundException, IOException {
+	public ResponseEntity<?> getServiceIsPersonalDataHandling(HttpServletRequest request)
+			throws ServiceNotFoundException, IOException {
 
-		 return ResponseEntity.ok(catalogService.getServicesIsPersonaDataHandling());
+		return ResponseEntity.ok(catalogService.getServicesIsPersonaDataHandling());
 
 	}
-	
+
 	@Override
 	@Operation(summary = "Get the count of the  Service Model descriptions is personal data handling.", tags = {
 			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
@@ -116,7 +122,6 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 		return ResponseEntity.ok(catalogService.getServicesIsPersonaDataHandlingCount().toString());
 	}
-	
 
 	@Override
 	@Operation(summary = "Get the count of the registered Service Model descriptions (total, public and private services).", tags = {
@@ -138,6 +143,16 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				.body(result);
 	}
 
+	@Override
+	@PostMapping(value = "/connectors")
+	public ResponseEntity<Connector> createConnector(@RequestBody @Valid Connector connector) {
+
+		Connector result = catalogService.createConnector(connector);
+		// return ResponseEntity.created(URI.create(uriBasePath +
+		// result.getIdentifier().replaceAll("\\s+", ""))).body(result);
+		return ResponseEntity.created(URI.create(uriBasePath)).body(result);// G
+	}
+
 	@Operation(summary = "Update Service Model description, by replacing the existing one", tags = {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Returns the Model Service Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceModel.class))) })
@@ -146,7 +161,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	public ResponseEntity<ServiceModel> updateService(@RequestParam("identifier") String identifier,
 			@RequestBody @Valid ServiceModel service) throws ServiceNotFoundException, ServiceNotEditableException {
 
-		//String serviceIdentifier = request.getRequestURI().split(request.getContextPath() + "/api/v2/services/")[1];
+		// String serviceIdentifier =
+		// request.getRequestURI().split(request.getContextPath() +
+		// "/api/v2/services/")[1];
 
 		if (StringUtils.isBlank(identifier))
 			throw new IllegalArgumentException("Illegal Service Identifier in input");
@@ -156,13 +173,36 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.updateService(decodedServiceIdentifier, service));
 	}
 
+	@Operation(summary = "Update Connector Model description, by replacing the existing one", tags = {
+			"Connector Model" }, responses = {
+					@ApiResponse(description = "Returns the Model Connector Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Connector.class))) })
+	@Override
+	@PutMapping(value = "/connectors", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> updateConnector(@RequestParam("identifier") String identifier,
+			@RequestBody @Valid Connector connector) throws ServiceNotFoundException, ServiceNotEditableException {
+
+		// String serviceIdentifier =
+		// request.getRequestURI().split(request.getContextPath() +
+		// "/api/v2/services/")[1];
+
+		if (StringUtils.isBlank(identifier))
+			throw new IllegalArgumentException("Illegal Service Identifier in input");
+
+		String decodedServiceIdentifier = java.net.URLDecoder.decode(identifier, StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.updateConnector(decodedServiceIdentifier, connector));
+	}
+
 	@Operation(summary = "Delete Service Model description by Service Id.", tags = { "Service Model" }, responses = {
 			@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
 	@DeleteMapping(value = "/services")
-	public ResponseEntity<Object> deleteService( @RequestParam("identifier") String identifier) throws ServiceNotFoundException {
+	public ResponseEntity<Object> deleteService(@RequestParam("identifier") String identifier)
+			throws ServiceNotFoundException {
 
-		//String serviceIdentifier = request.getRequestURI().split(request.getContextPath() + "/api/v2/services/")[1];
+		// String serviceIdentifier =
+		// request.getRequestURI().split(request.getContextPath() +
+		// "/api/v2/services/")[1];
 
 		if (StringUtils.isBlank(identifier))
 			throw new IllegalArgumentException("Illegal Service Identifier in input");
@@ -175,18 +215,22 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
-//	@Override
-//	@Operation(summary = "Get the Service Model description by Service Id, serialized as Json-LD.", description = "Get the Service Model description by Service Id, serialized as Json-LD.", tags = {
-//			"Service Model | JSON-LD" }, responses = {
-//					@ApiResponse(description = "Returns the JSON-LD of the requested Service Model description.", responseCode = "200") })
-//	@GetMapping(value = "/services/jsonld/{serviceId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	// @Override
+	// @Operation(summary = "Get the Service Model description by Service Id,
+	// serialized as Json-LD.", description = "Get the Service Model description by
+	// Service Id, serialized as Json-LD.", tags = {
+	// "Service Model | JSON-LD" }, responses = {
+	// @ApiResponse(description = "Returns the JSON-LD of the requested Service
+	// Model description.", responseCode = "200") })
+	// @GetMapping(value = "/services/jsonld/{serviceId}", produces =
+	// MediaType.APPLICATION_JSON_VALUE)
 
 	public ResponseEntity<String> getServiceByIdJsonLd(String serviceIdentifier)
 			throws ServiceNotFoundException, IOException {
 
-//		String serviceIdentifier = request.getRequestURI()
-//		        .split(request.getContextPath() + "/api/v2/services/")[1];
-//		
+		// String serviceIdentifier = request.getRequestURI()
+		// .split(request.getContextPath() + "/api/v2/services/")[1];
+		//
 		if (StringUtils.isBlank(serviceIdentifier))
 			throw new IllegalArgumentException("Illegal Service Identifier in input");
 
@@ -194,17 +238,22 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
-//	@Operation(summary = "Get the hasInfo part of Service Model description by Service Id, serialized as Json-LD according to CPSV-AP specification.", description = "Get the Service Model description by Service Id, serialized as Json-LD.", tags = {
-//			"Service Model | JSON-LD" }, responses = {
-//					@ApiResponse(description = "Returns the JSON-LD of the requested Service Model description.", responseCode = "200") })
-//	@GetMapping(value = "/services/cpsv/jsonld/{serviceId}", produces = MediaType.APPLICATION_JSON_VALUE)
-//	@Override
+	// @Operation(summary = "Get the hasInfo part of Service Model description by
+	// Service Id, serialized as Json-LD according to CPSV-AP specification.",
+	// description = "Get the Service Model description by Service Id, serialized as
+	// Json-LD.", tags = {
+	// "Service Model | JSON-LD" }, responses = {
+	// @ApiResponse(description = "Returns the JSON-LD of the requested Service
+	// Model description.", responseCode = "200") })
+	// @GetMapping(value = "/services/cpsv/jsonld/{serviceId}", produces =
+	// MediaType.APPLICATION_JSON_VALUE)
+	// @Override
 	public ResponseEntity<String> getServiceHasInfoByIdJsonLd(String serviceIdentifier)
 			throws ServiceNotFoundException, IOException {
 
-//		String serviceIdentifier = request.getRequestURI()
-//		        .split(request.getContextPath() + "/api/v2/services/")[1];
-//		
+		// String serviceIdentifier = request.getRequestURI()
+		// .split(request.getContextPath() + "/api/v2/services/")[1];
+		//
 		if (StringUtils.isBlank(serviceIdentifier))
 			throw new IllegalArgumentException("Illegal Service Identifier in input");
 
@@ -240,7 +289,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 		return ResponseEntity.ok(catalogService.getCountByGroupedBy());
 	}
-	
+
 	@Override
 	@Operation(summary = "Get the Service Models count grouped by Spatial.", description = "Get the Service Models count grouped by Spatial.", tags = {
 			"Service Model" }, responses = {

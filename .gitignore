@@ -229,5 +229,11 @@ hs_err_pid*
 # Current Config...
 .env
 
+#Vscode extension
 .history
+
+#intelliJ 
 .service-catalogue-server/.idea
+
+#temp files
+temp/
