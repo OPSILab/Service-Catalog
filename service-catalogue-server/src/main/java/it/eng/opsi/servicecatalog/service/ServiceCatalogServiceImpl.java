@@ -101,6 +101,31 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
+	public Connector updateConnector(String serviceId, Connector connector)
+			throws ServiceNotFoundException, ServiceNotEditableException {
+		return connector;
+
+		// log.info("Updating Service Model");
+		// If identifier is blank, set as the Service Id
+		// G
+		/*
+		 * if (StringUtils.isBlank(service.getIdentifier()))
+		 * service.setIdentifier(uriBasePath + service.getIdentifier());
+		 * 
+		 * if (!serviceId.equals(service.getIdentifier()))
+		 * throw new
+		 * ServiceNotEditableException("ServiceId in the path and the one in the body mismatch."
+		 * );
+		 * 
+		 * return serviceModelRepo.updateService(serviceId, service).orElseThrow(
+		 * () -> new
+		 * ServiceNotFoundException("No Service description found for Service Id: " +
+		 * serviceId));
+		 */
+		// G
+	}
+
+	@Override
 	public void deleteService(String serviceId) throws ServiceNotFoundException {
 
 		if (serviceModelRepo.deleteServiceModelByIdentifier(serviceId) == 0L)
