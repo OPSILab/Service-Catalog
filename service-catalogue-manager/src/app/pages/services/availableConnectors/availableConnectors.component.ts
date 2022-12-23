@@ -24,11 +24,7 @@ import { DOCUMENT } from '@angular/common';
 import { Inject } from '@angular/core';
 import { AvailableServicesService } from '../availableServices/availableServices.service';
 
-
-
-
-
-
+import { Connector } from '../../../model/services/connector';
 
 @Component({
   selector: 'available-connectors-smart-table',
@@ -36,7 +32,7 @@ import { AvailableServicesService } from '../availableServices/availableServices
   styleUrls: ['./availableConnectors.component.scss'],
 })
 export class AvailableConnectorsComponent implements OnInit, OnDestroy {
-  private editor: any;
+  //private editor: any;
   private serviceData: ServiceModel;
   schemaDir: string;
   loading = false;
@@ -95,29 +91,35 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.serviceId = this.route.snapshot.params['serviceId'] as string;
-    this.initializeEditor(this.serviceData);
-    this.readOnly = <boolean>this.route.snapshot.params['readOnly'];
+    //this.serviceId = this.route.snapshot.params['serviceId'] as string;
+    //this.initializeEditor(this.serviceData);
+    //this.readOnly = <boolean>this.route.snapshot.params['readOnly'];
 
-    this.serviceData = await this.availablesServicesService.getService(this.serviceId);
+    //this.serviceData = await this.availablesServicesService.getService(this.serviceId);
     //per servicedata sono arrivato alla corrispondenza della riga 86
-
+    /*
     if (this.serviceId) {
       this.serviceData = await this.availablesServicesService.getService(this.serviceId);
       this.serviceName= this.serviceData.title
     } else {
       this.isNew = true;
     }
+    */
 
     try {
       this.availableConnectors = await this.availableConnectorsService.getConnectors();
       void this.source.load(this.availableConnectors);
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      //TODO de-comment
+      /*
       if (error.error.statusCode === '401') {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
         // this.router.navigate(['/login']);
-      } else this.errorDialogService.openErrorDialog(error);
+      } else
+      */
+      //TODO decomment this this.errorDialogService.openErrorDialog(error);
+      console.log(error)
     }
 
     // Open a Toastr if there is a message in input query
@@ -128,10 +130,10 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
         duration: 3500,
       });
 
-    this.initializeEditor(this.serviceData);
+    //this.initializeEditor(this.serviceData);
 
   }
-
+/*
   initializeEditor(serviceData: ServiceModel): void {
     const elem = this.document.getElementById('editor');
 
@@ -148,7 +150,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    this.editor = editor;
+    //this.editor = editor;
     let isFirstChange = true;
     // Hook up the validation indicator to update its status whenever the editor changes
     editor.on('change', function () {
@@ -210,7 +212,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
         editor.getEditor('root.hasInfo.identifier').disable();
       }
     });
-  }
+  }*/
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy');
@@ -221,13 +223,13 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   addNew(): void {
     this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
       if (result.content) {
-        this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
+        //this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
 
         if (result.format == 'Cpsv') {
-          this.editor.getEditor('root.hasInfo').setValue(result.content);
-          this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());
-          this.editor.getEditor('root.title').setValue(this.editor.getEditor('root.hasInfo.title').getValue());
-        } else this.editor.setValue(result.content);
+          //this.editor.getEditor('root.hasInfo').setValue(result.content);
+          //this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());
+          //this.editor.getEditor('root.title').setValue(this.editor.getEditor('root.hasInfo.title').getValue());
+        } //else this.editor.setValue(result.content);
 
         this.serviceId = result.content['identifier'] as string;
       }

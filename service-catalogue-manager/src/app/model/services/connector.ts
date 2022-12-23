@@ -13,6 +13,11 @@ import { ConnectorEndpoint } from './connectorEndpoint';
 import { PublicKey } from './publicKey';
 
 export interface Connector {
-  connectorEndpoint: ConnectorEndpoint;
-  publicKey: PublicKey;
+  //connectorEndpoint: ConnectorEndpoint;
+  //publicKey: PublicKey;
+  name: String;
+  description: String;
+  status: String;
+  serviceId: String
+  url: String
 }

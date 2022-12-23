@@ -326,12 +326,12 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   onRegisterService = async (): Promise<void> => {
-    
+
     try {
      //JSON TO JSON TRANSFORMATION
      // var newObj = transformJSON.transform(this.value, /*to add modelmapping*/ this.value);
      //console.log(newObj);
-     //TO-DO service registry invocation 
+     //TO-DO service registry invocation
      // this.value = (await this.availableServicesService.registerService(this.value.identifier)) as AvailableServiceRow;
       this.showToast('primary', this.translate.instant('general.services.service_registered_message', { serviceName: this.value.title }), '');
       this.updateResult.emit(this.value);
@@ -349,7 +349,7 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
       await this.availableServicesService.deregisterService(this.value.identifier);
 
       this.showToast('primary', this.translate.instant('general.services.service_deregistered_message', { serviceName: this.value.title }), '');
-      this.value.hasServiceInstance.connector.publicKey = null;
+      //this.value.hasServiceInstance.connector.publicKey = null;
       this.updateResult.emit(this.value);
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

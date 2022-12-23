@@ -21,7 +21,7 @@ export class AvailableConnectorsService {
   }
 
   getConnectors(): Promise<ConnectorEntry[]> {
-    return this.http.get<ConnectorEntry[]>(`${this.serviceRegistryUrl}/api/v2/connectors?withCertificate=true`).toPromise();
+    return this.http.get<ConnectorEntry[]>(`${this.serviceRegistryUrl}/api/v2/connectors`).toPromise();
     //return this.http.get<ConnectorEntry[]>(`${this.serviceManagerUrl}/assets/data/examples/connectors.json`).toPromise();
   }
 

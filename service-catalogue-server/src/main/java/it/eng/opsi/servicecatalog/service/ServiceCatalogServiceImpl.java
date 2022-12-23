@@ -202,4 +202,10 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		return serviceModelRepo.countServicesIsPersonalDataHandling();
 	}
 
+	@Override
+	public List<Connector> getConnectors() {
+		// TODO Auto-generated method stub
+		return connectorModelRepo.findAll();
+	}
+
 }

@@ -39,6 +39,18 @@ import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
 import it.eng.opsi.servicecatalog.service.ServiceCatalogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
+//@GetMapping(value = "/connectors/json/**"...)
+//@GetMapping(value = "/connectors/specified/**"...)
+//@GetMapping(value = "/connectors/specified/**", produces = MediaType.APPLICATION_JSON_VALUE)
+//@GetMapping(value = "/connectors/isPersonalDataHandling", produces = MediaType.APPLICATION_JSON_VALUE)
+//@GetMapping(value = "/connectors/isPersonalDataHandling/count", produces = MediaType.APPLICATION...)
+//TODO@GetMapping(value = "/connectors/count", produces = MediaType.APPLICATION_JSON_VALUE)
+//TODO@PutMapping(value = "/connectors", consumes = MediaType.APPLICATION_JSON_VALUE, produces = Medi...)
+//TODO@DeleteMapping(value = "/connectors")
+//TODOgetconnectorlogs
+//TODOregisterconnector
+//TODOderegisterconnector
+//TODO@GetMapping(value = "/connectors/**"...)
 
 @OpenAPIDefinition(info = @Info(title = "Service Catalog API", description = "Service Catalog APIs used to manage CRUD for Service Model descriptions.", version = "1.0"), tags = {
 		@Tag(name = "Service Model", description = "Service Model Description APIs to get and manage service model descriptions.") })
@@ -64,6 +76,17 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	public ResponseEntity<List<ServiceModel>> getServices() throws ServiceNotFoundException {
 
 		return ResponseEntity.ok(catalogService.getServices());
+	}
+
+	@Override
+	@Operation(summary = "Get all the Connector Model descriptions.", description = "Get all the Connector Model descriptions saved in the Service Catalog.", tags = {
+			"Connector" }, responses = {
+					@ApiResponse(description = "Returns the list of all registered Connectors descriptions.", responseCode = "200") })
+	@GetMapping(value = "/connectors", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Connector>> getConnectors() throws ServiceNotFoundException {// TODO G: throws connector
+																							// not found exception
+
+		return ResponseEntity.ok(catalogService.getConnectors());
 	}
 
 	@Override

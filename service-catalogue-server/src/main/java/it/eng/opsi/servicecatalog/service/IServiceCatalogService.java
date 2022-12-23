@@ -53,4 +53,6 @@ public interface IServiceCatalogService {
 
 	public abstract Object updateConnector(String decodedServiceIdentifier, @Valid Connector connector);
 
+	public abstract List<Connector> getConnectors();
+
 }
