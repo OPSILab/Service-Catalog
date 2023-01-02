@@ -37,14 +37,18 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<ServiceModel> updateService(String identifier, ServiceModel service)
 			throws ServiceNotFoundException, ServiceNotEditableException;
 
-	public abstract ResponseEntity<Object> updateConnector(String identifier, Connector connector)
-			throws ServiceNotFoundException, ServiceNotEditableException; // TODO G:throws ControllerNotFoundException,
-																			// ControllerNotEditableException and not
-																			// Object but connector
+	public abstract ResponseEntity<Connector> updateConnector(
+			String serviceId,
+			Connector connector)
+			throws ServiceNotFoundException, ServiceNotEditableException; // TODO
+	// G:throws ControllerNotFoundException,
+	// ControllerNotEditableException and not
+	// Object but connector
 
 	public abstract ResponseEntity<Object> deleteService(String identifier) throws ServiceNotFoundException;
 
-	// TODO G: public abstract ResponseEntity<Object> deleteConnector(String
+	public abstract ResponseEntity<Object> deleteConnector(String serviceId) throws ServiceNotFoundException;
+
 	// identifier) throws ConnectorNotFoundException;
 
 	// public abstract ResponseEntity<String>

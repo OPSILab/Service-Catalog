@@ -39,14 +39,15 @@ import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
 import it.eng.opsi.servicecatalog.service.ServiceCatalogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-//@GetMapping(value = "/connectors/json/**"...)
-//@GetMapping(value = "/connectors/specified/**"...)
+//@GetMapping(value = "/connectors/json/**", produces = MediaType.APPLICATION_JSON_VALUE)
 //@GetMapping(value = "/connectors/specified/**", produces = MediaType.APPLICATION_JSON_VALUE)
 //@GetMapping(value = "/connectors/isPersonalDataHandling", produces = MediaType.APPLICATION_JSON_VALUE)
-//@GetMapping(value = "/connectors/isPersonalDataHandling/count", produces = MediaType.APPLICATION...)
+//@GetMapping(value = "/connectors/isPersonalDataHandling/count", produces = MediaType.APPLICATION_JSON_VALUE)
+//@GetMapping(value = "/services/count/sector", produces = MediaType.APPLICATION_JSON_VALUE)
+//@GetMapping(value = "/services/count/thematicArea", produces = MediaType.APPLICATION_JSON_VALUE)
+//@GetMapping(value = "/services/count/groupedBy", produces = MediaType.APPLICATION_JSON_VALUE)
+//@GetMapping(value = "/services/count/location", produces = MediaType.APPLICATION_JSON_VALUE)
 //TODO@GetMapping(value = "/connectors/count", produces = MediaType.APPLICATION_JSON_VALUE)
-//TODO@PutMapping(value = "/connectors", consumes = MediaType.APPLICATION_JSON_VALUE, produces = Medi...)
-//TODO@DeleteMapping(value = "/connectors")
 //TODOgetconnectorlogs
 //TODOregisterconnector
 //TODOderegisterconnector
@@ -201,19 +202,25 @@ public class ServiceCatalogController implements IServiceCatalogController {
 					@ApiResponse(description = "Returns the Model Connector Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Connector.class))) })
 	@Override
 	@PutMapping(value = "/connectors", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> updateConnector(@RequestParam("identifier") String identifier,
-			@RequestBody @Valid Connector connector) throws ServiceNotFoundException, ServiceNotEditableException {
+	public ResponseEntity<Connector> updateConnector(
+			@RequestParam("serviceId") String serviceId,
+			@RequestBody @Valid Connector connector)
+			throws ServiceNotFoundException, ServiceNotEditableException {
 
 		// String serviceIdentifier =
 		// request.getRequestURI().split(request.getContextPath() +
 		// "/api/v2/services/")[1];
 
-		if (StringUtils.isBlank(identifier))
+		if (StringUtils.isBlank(serviceId))
 			throw new IllegalArgumentException("Illegal Service Identifier in input");
 
-		String decodedServiceIdentifier = java.net.URLDecoder.decode(identifier, StandardCharsets.UTF_8);
+		String decodedConnectorServiceId = java.net.URLDecoder.decode(serviceId,
+				StandardCharsets.UTF_8);
 
-		return ResponseEntity.ok(catalogService.updateConnector(decodedServiceIdentifier, connector));
+		return ResponseEntity.ok(catalogService.updateConnector(
+				decodedConnectorServiceId,
+				// serviceId,
+				connector));
 	}
 
 	@Operation(summary = "Delete Service Model description by Service Id.", tags = { "Service Model" }, responses = {
@@ -233,6 +240,29 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		String decodedServiceIdentifier = java.net.URLDecoder.decode(identifier, StandardCharsets.UTF_8);
 
 		catalogService.deleteService(decodedServiceIdentifier);
+
+		return ResponseEntity.noContent().build();
+
+	}
+
+	@Operation(summary = "Delete Connector Model description by Connector Id.", tags = {
+			"Connector Model" }, responses = {
+					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
+	@Override
+	@DeleteMapping(value = "/connectors")
+	public ResponseEntity<Object> deleteConnector(@RequestParam("serviceId") String serviceId)
+			throws ServiceNotFoundException {
+
+		// String serviceIdentifier =
+		// request.getRequestURI().split(request.getContextPath() +
+		// "/api/v2/services/")[1];
+
+		if (StringUtils.isBlank(serviceId))
+			throw new IllegalArgumentException("Illegal Service serviceId in input");
+
+		String decodedConnectorServiceId = java.net.URLDecoder.decode(serviceId, StandardCharsets.UTF_8);
+
+		catalogService.deleteConnector(decodedConnectorServiceId);
 
 		return ResponseEntity.noContent().build();
 

@@ -12,19 +12,20 @@ import org.springframework.data.mongodb.repository.Query;
 import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.HasInfoOnly;
+import it.eng.opsi.servicecatalog.model.ServiceModel;
 
 public interface ConnectorModelRepository extends MongoRepository<Connector, String>, ConnectorModelCustomRepository {
 
-	public Optional<Connector> findByIdentifier(String serviceId);
+	public Optional<Connector> findByServiceId(String serviceId);
 
-	public Optional<HasInfoOnly> getHasInfoByIdentifier(String serviceId);
+	public Optional<HasInfoOnly> getHasInfoByServiceId(String serviceId);
 
 	// @Query(value = "{ $and:[{ 'serviceId': ?0}, {
 	// 'serviceInstance.cert':{$ne:null}}]}")
 	// public Optional<Connector> findRegisteredByServiceId(String serviceId);
 
 	// @Query(value = "{ 'serviceInstance.cert':{$ne:null}}")
-	// public List<Connector> findAllRegisteredServices();
+	// public List<Connector> findAllRegisteredConnectors();
 
 	// @Query(value = "{ name: { $regex : ?0, $options: i}}", fields = "{
 	// 'serviceDescriptionSignature' : ?1, 'serviceInstance.cert' : ?2}")
@@ -40,9 +41,9 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 	// @Query(value = "{ $and:[{ 'serviceInstance.serviceProvider.businessId': ?0},
 	// { 'serviceInstance.cert':{$ne:null}}]}")
 	// public List<Connector>
-	// findRegisteredServicesByServiceProviderBusinessId(String businessId);
+	// findRegisteredConnectorsByServiceProviderBusinessId(String businessId);
 
-	@Query(value = "{ 'identifier': { $in: ?0}}")
+	@Query(value = "{ 'serviceId': { $in: ?0}}")
 	public List<Connector> findByConnectorbyIds(Object[] ids);
 
 	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }", count = true)
@@ -51,7 +52,7 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }", count = true)
 	public Long countConnectorsIsPersonalDataHandling();
 
-	public Long deleteConnectorByIdentifier(String serviceId);
+	public Long deleteConnectorModelByServiceId(String serviceId); // deleteConnectorModelByServiceId
 
 	// @Aggregation(pipeline = { "{ $match: { 'serviceId' : $0}}", "{ $unwind:
 	// '$isDescribedAt'}",
@@ -77,12 +78,14 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 	public List<HashMap<String, Object>> getCountBySector();
 
 	@Aggregation(pipeline = {
-			" {$group:{'_id':'_','publicServices':{$sum:{$cond:['$isPublicService',1,0]}},'privateServices':{$sum:{$cond:['$isPublicService',0,1]}}}}",
-			"{$project:{'_id':0,'publicServices':1,'privateServices':1,'total':{$sum:['$publicServices','$privateServices']}}}" })
+			" {$group:{'_id':'_','publicConnectors':{$sum:{$cond:['$isPublicService',1,0]}},'privateConnectors':{$sum:{$cond:['$isPublicService',0,1]}}}}",
+			"{$project:{'_id':0,'publicConnectors':1,'privateConnectors':1,'total':{$sum:['$publicConnectors','$privateConnectors']}}}" })
 	public HashMap<String, Integer> getTotalCount();
 
 	@Aggregation(pipeline = { "{$unwind: '$hasInfo.spatial'}", "{'$group':{'_id':'$hasInfo.spatial','count':{$sum:1}}}",
 			"{$project:{'_id':0,'location':'$_id','count':'$count'}}" })
 	public List<HashMap<String, Object>> getCountByLocation();
+
+	public Connector deleteConnector(String serviceId);
 
 }

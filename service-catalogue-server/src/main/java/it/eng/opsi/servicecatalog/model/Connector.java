@@ -112,6 +112,26 @@ public class Connector {
         this.description = description;
     }
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("serviceId")
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("serviceId")
+    public String getServiceId() {
+        return this.serviceId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -154,10 +174,6 @@ public class Connector {
                 || ((this.name != null) && this.name.equals(rhs.name)))
                 && ((this.description == rhs.description)
                         || ((this.description != null) && this.description.equals(rhs.description))));
-    }
-
-    public String getIdentifier() {
-        return null;
     }
 
 }

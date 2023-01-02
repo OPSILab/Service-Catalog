@@ -51,8 +51,10 @@ public interface IServiceCatalogService {
 
 	public abstract List<HashMap<String, Object>> getCountByLocation();
 
-	public abstract Object updateConnector(String decodedServiceIdentifier, @Valid Connector connector);
+	public abstract Connector updateConnector(String decodedServiceIdentifier, @Valid Connector connector);
 
 	public abstract List<Connector> getConnectors();
+
+	public abstract Connector deleteConnector(String decodedConnectorServiceId);
 
 }

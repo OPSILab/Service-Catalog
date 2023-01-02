@@ -8,4 +8,6 @@ public interface ConnectorModelCustomRepository {
 
 	public Optional<Connector> updateConnector(String serviceId, Connector connector);
 
+	public Connector deleteConnector(String serviceId);
+
 }
