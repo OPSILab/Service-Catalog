@@ -253,7 +253,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			"Connector Model" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
-	@DeleteMapping(value = "/connectors/")
+	@DeleteMapping(value = "/connectors")
 	public ResponseEntity<Object> deleteConnector(@RequestParam("serviceId") String serviceId)
 			throws ServiceNotFoundException {
 

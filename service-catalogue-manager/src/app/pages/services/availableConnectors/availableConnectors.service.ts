@@ -38,10 +38,11 @@ export class AvailableConnectorsService {
     return this.http.post<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors`, connector).toPromise();
   }
 
-  registerConnector(connectorId: string): Promise<ConnectorEntry> {
-    return this.http
-      .post<ConnectorEntry>(`${this.sdkUrl}/api/v2/connectors/${connectorId}`, '', { headers: { 'Content-Type': 'application/json' } })
-      .toPromise();
+  registerConnector(connector: ConnectorEntry): Promise<ConnectorEntry> {
+    //return this.http
+      //.post<ConnectorEntry>(`${this.sdkUrl}/api/v2/connectors/${connectorId}`, '', { headers: { 'Content-Type': 'application/json' } })
+      //.toPromise();
+      return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?serviceId=${connector.serviceId}`, connector).toPromise();
   }
 
   deregisterConnector(connectorId: string): Promise<ConnectorEntry> {
@@ -49,11 +50,11 @@ export class AvailableConnectorsService {
   }
 
   updateConnector(connector: ConnectorEntry, connectorId: string): Promise<ConnectorEntry> {
-    return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors/${connectorId}`, connector).toPromise();
+    return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?serviceId=${connectorId}`, connector).toPromise();
   }
 
   deleteConnector(connectorId: string): Promise<ConnectorEntry> {
-    return this.http.delete<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors/?serviceId=${connectorId}`).toPromise();
+    return this.http.delete<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?serviceId=${connectorId}`).toPromise();
   }
 
   getConnectorLogs(connectorId: string): Promise<ConnectorEntryLog[]> {

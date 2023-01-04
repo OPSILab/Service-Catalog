@@ -231,7 +231,8 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
 
   onRegisterService = async (): Promise<void> => {
     try {
-      this.value = await this.availableConnectorsService.registerConnector(this.value.serviceId);
+      this.value.status= this.value.status=="active"? "inactive" : "active";
+      this.value = await this.availableConnectorsService.registerConnector(this.value);
       this.showToast('primary', this.translate.instant('general.services.service_registered_message', { serviceName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
