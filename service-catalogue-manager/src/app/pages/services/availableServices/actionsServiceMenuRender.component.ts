@@ -157,6 +157,7 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
 
         switch (event.item.data) {
           case 'edit':
+            console.log("case edit");
             this.onEdit(this.value.identifier);
             break;
           case 'delete':
@@ -175,6 +176,8 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
             this.saveAsFile();
             break;
           default:
+            console.log("default");
+            break;
         }
       });
   }
@@ -292,6 +295,7 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   onEdit(serviceId: string): void {
+    console.log("onEdit")
     void this.router.navigate(['/pages/services/service-editor', { serviceId: serviceId }]);
   }
 

@@ -39,19 +39,11 @@ import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
 import it.eng.opsi.servicecatalog.service.ServiceCatalogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-//@GetMapping(value = "/connectors/json/**", produces = MediaType.APPLICATION_JSON_VALUE)
-//@GetMapping(value = "/connectors/specified/**", produces = MediaType.APPLICATION_JSON_VALUE)
-//@GetMapping(value = "/connectors/isPersonalDataHandling", produces = MediaType.APPLICATION_JSON_VALUE)
-//@GetMapping(value = "/connectors/isPersonalDataHandling/count", produces = MediaType.APPLICATION_JSON_VALUE)
-//@GetMapping(value = "/services/count/sector", produces = MediaType.APPLICATION_JSON_VALUE)
-//@GetMapping(value = "/services/count/thematicArea", produces = MediaType.APPLICATION_JSON_VALUE)
-//@GetMapping(value = "/services/count/groupedBy", produces = MediaType.APPLICATION_JSON_VALUE)
-//@GetMapping(value = "/services/count/location", produces = MediaType.APPLICATION_JSON_VALUE)
 //TODO@GetMapping(value = "/connectors/count", produces = MediaType.APPLICATION_JSON_VALUE)
 //TODOgetconnectorlogs
 //TODOregisterconnector
 //TODOderegisterconnector
-//TODO@GetMapping(value = "/connectors/**"...)
+//TODO get connector by servicemodel
 
 @OpenAPIDefinition(info = @Info(title = "Service Catalog API", description = "Service Catalog APIs used to manage CRUD for Service Model descriptions.", version = "1.0"), tags = {
 		@Tag(name = "Service Model", description = "Service Model Description APIs to get and manage service model descriptions.") })
@@ -168,14 +160,26 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@PostMapping(value = "/connectors")
+	@PostMapping(value = "/connectors") // TODO regex?
 	public ResponseEntity<Connector> createConnector(@RequestBody @Valid Connector connector) {
 
 		Connector result = catalogService.createConnector(connector);
 		// return ResponseEntity.created(URI.create(uriBasePath +
 		// result.getIdentifier().replaceAll("\\s+", ""))).body(result);
 		return ResponseEntity.created(URI.create(uriBasePath)).body(result);// G
-	}
+	}/*
+		 * @Override
+		 * 
+		 * @PostMapping(value = "/connectors/**")
+		 * public ResponseEntity<Connector> registerConnector(@RequestBody @Valid
+		 * Connector connector) {
+		 * 
+		 * Connector result = catalogService.createConnector(connector);
+		 * // return ResponseEntity.created(URI.create(uriBasePath +
+		 * // result.getIdentifier().replaceAll("\\s+", ""))).body(result);
+		 * return ResponseEntity.created(URI.create(uriBasePath)).body(result);// G
+		 * }
+		 */
 
 	@Operation(summary = "Update Service Model description, by replacing the existing one", tags = {
 			"Service Model" }, responses = {
@@ -249,7 +253,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			"Connector Model" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
-	@DeleteMapping(value = "/connectors")
+	@DeleteMapping(value = "/connectors/")
 	public ResponseEntity<Object> deleteConnector(@RequestParam("serviceId") String serviceId)
 			throws ServiceNotFoundException {
 

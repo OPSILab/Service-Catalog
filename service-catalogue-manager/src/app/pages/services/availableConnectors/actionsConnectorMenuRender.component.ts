@@ -114,29 +114,33 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
     private dialogService: NbDialogService,
     private translateService: TranslateService,
     private loginService: LoginService
-  ) {}
+  ) { }
 
   get registered(): boolean {
     return this.value.status == ServiceModelStatusEnum.Completed ? true : false;
   }
 
   ngOnInit(): void {
+    console.log("ngoninit")
     this.actions = this.translatedActionLabels();
     this.menuService
       .onItemClick()
       .pipe(takeUntil(this.unsubscribe))
-      .pipe(filter(({ tag }) => tag === 'service-context-menu' + this.value.id))
+      .pipe(filter(({ tag }) => tag === 'service-context-menu' + this.value.serviceId))
       .subscribe((event) => {
         console.log(event);
-
+        console.log("pre-switch")
         switch (event.item.data) {
           case 'edit':
-            this.onEdit(this.value.id);
+            this.onEdit(this.value.serviceId);
+            console.log("edit");
             break;
           case 'delete':
+            console.log("delete");
             this.openDeleteFromRegistryDialog();
             break;
           case 'register':
+            console.log("register");
             this.openRegisterDialog();
             break;
           case 'consents':
@@ -145,7 +149,12 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
           case 'deregister':
             this.openDeRegisterDialog();
             break;
+          case 'edit service':
+            this.onEdit(this.value.serviceId);
+            break;
           default:
+            console.log("default");
+            break;
         }
       });
   }
@@ -186,6 +195,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   onEdit(serviceId: string): void {
+    console.log("onEdit")
     void this.router.navigate(['/pages/services/service-editor', { serviceId: serviceId }]);
   }
 

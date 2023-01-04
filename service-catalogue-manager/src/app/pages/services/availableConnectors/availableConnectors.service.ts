@@ -53,7 +53,7 @@ export class AvailableConnectorsService {
   }
 
   deleteConnector(connectorId: string): Promise<ConnectorEntry> {
-    return this.http.delete<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors/${connectorId}`).toPromise();
+    return this.http.delete<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors/?serviceId=${connectorId}`).toPromise();
   }
 
   getConnectorLogs(connectorId: string): Promise<ConnectorEntryLog[]> {

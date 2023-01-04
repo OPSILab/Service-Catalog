@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
+
         "name",
         "description",
         "status",
@@ -24,7 +25,7 @@ public class Connector {
      */
     @JsonProperty("name")
     @Valid
-    @NotNull
+    // @NotNull
     private String name;
     /**
      * 
@@ -33,22 +34,22 @@ public class Connector {
      */
     @JsonProperty("description")
     @Valid
-    @NotNull
+    // @NotNull
     private String description;
 
     @JsonProperty("status")
     @Valid
-    @NotNull
+    // @NotNull
     private String status;
 
     @JsonProperty("serviceId")
     @Valid
-    @NotNull
+    // @NotNull
     private String serviceId;
 
     @JsonProperty("url")
     @Valid
-    @NotNull
+    // TODO @NotNull?
     private String url;
 
     /**
@@ -130,6 +131,26 @@ public class Connector {
     @JsonProperty("serviceId")
     public String getServiceId() {
         return this.serviceId;
+    }
+
+    @JsonProperty("status")
+    public String getStatus() {
+        return this.status;
+    }
+
+    @JsonProperty("status")
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    @JsonProperty("url")
+    public String getUrl() {
+        return this.url;
+    }
+
+    @JsonProperty("url")
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     @Override

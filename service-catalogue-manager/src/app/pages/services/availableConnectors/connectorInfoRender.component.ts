@@ -1,3 +1,4 @@
+//details: i (info) button
 import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
