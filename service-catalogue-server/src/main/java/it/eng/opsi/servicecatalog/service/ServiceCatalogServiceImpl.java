@@ -54,6 +54,13 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
+	public Connector getConnector(String serviceId) throws ServiceNotFoundException {
+
+		// log.info("Finding Service Models");
+		return connectorModelRepo.findByserviceId(serviceId);
+	}
+
+	@Override
 	public HashMap<String, Integer> getServicesCount() {
 
 		// log.info("Getting Service Count");

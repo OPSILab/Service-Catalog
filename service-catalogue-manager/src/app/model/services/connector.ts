@@ -21,3 +21,8 @@ export interface Connector {
   serviceId: String
   url: String
 }
+
+export enum ConnectorStatusEnum {
+  Active = 'active',
+  Inactive = 'inactive'
+}

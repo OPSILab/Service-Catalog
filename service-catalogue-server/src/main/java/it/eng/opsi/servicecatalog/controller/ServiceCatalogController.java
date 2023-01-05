@@ -227,6 +227,24 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				connector));
 	}
 
+	@Override
+	@GetMapping(value = "/connectors", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Connector> getConnector(@RequestParam("serviceId") String serviceId)
+			throws ServiceNotFoundException, ServiceNotEditableException {
+
+		// String serviceIdentifier =
+		// request.getRequestURI().split(request.getContextPath() +
+		// "/api/v2/services/")[1];
+
+		if (StringUtils.isBlank(serviceId))
+			throw new IllegalArgumentException("Illegal Service Identifier in input");
+
+		String decodedConnectorServiceId = java.net.URLDecoder.decode(serviceId,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.getConnector(decodedConnectorServiceId));
+	}
+
 	@Operation(summary = "Delete Service Model description by Service Id.", tags = { "Service Model" }, responses = {
 			@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override

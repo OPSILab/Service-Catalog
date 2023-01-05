@@ -19,39 +19,48 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 
 	public Optional<HasInfoOnly> getHasInfoByIdentifier(String serviceId);
 
-//	@Query(value = "{ $and:[{ 'serviceId': ?0}, { 'serviceInstance.cert':{$ne:null}}]}")
-//	public Optional<ServiceModel> findRegisteredByServiceId(String serviceId);
+	// @Query(value = "{ $and:[{ 'serviceId': ?0}, {
+	// 'serviceInstance.cert':{$ne:null}}]}")
+	// public Optional<ServiceModel> findRegisteredByServiceId(String serviceId);
 
-//	@Query(value = "{ 'serviceInstance.cert':{$ne:null}}")
-//	public List<ServiceModel> findAllRegisteredServices();
+	// @Query(value = "{ 'serviceInstance.cert':{$ne:null}}")
+	// public List<ServiceModel> findAllRegisteredServices();
 
-//	@Query(value = "{ name: { $regex : ?0, $options: i}}", fields = "{ 'serviceDescriptionSignature' : ?1, 'serviceInstance.cert' : ?2}")
-//	public Optional<ServiceModel> findByServiceName(String serviceName, Boolean withSignature, Boolean withCertificate);
+	// @Query(value = "{ name: { $regex : ?0, $options: i}}", fields = "{
+	// 'serviceDescriptionSignature' : ?1, 'serviceInstance.cert' : ?2}")
+	// public Optional<ServiceModel> findByServiceName(String serviceName, Boolean
+	// withSignature, Boolean withCertificate);
 
-//	@Query(value = "{ identifier: ?0}")
-//	public Optional<ServiceModel> findByServiceUrl(String serviceUrl);
+	// @Query(value = "{ identifier: ?0}")
+	// public Optional<ServiceModel> findByServiceUrl(String serviceUrl);
 
-//	@Query(value = "{ 'serviceInstance.serviceProvider.businessId': ?0}")
-//	public List<ServiceModel> findByServiceProviderBusinessId(String businessId);
+	// @Query(value = "{ 'serviceInstance.serviceProvider.businessId': ?0}")
+	// public List<ServiceModel> findByServiceProviderBusinessId(String businessId);
 
-//	@Query(value = "{ $and:[{ 'serviceInstance.serviceProvider.businessId': ?0}, { 'serviceInstance.cert':{$ne:null}}]}")
-//	public List<ServiceModel> findRegisteredServicesByServiceProviderBusinessId(String businessId);
+	// @Query(value = "{ $and:[{ 'serviceInstance.serviceProvider.businessId': ?0},
+	// { 'serviceInstance.cert':{$ne:null}}]}")
+	// public List<ServiceModel>
+	// findRegisteredServicesByServiceProviderBusinessId(String businessId);
 
-    @Query(value = "{ 'identifier': { $in: ?0}}")
-    public List<ServiceModel> findByServicebyIds(Object[] ids);
-	
-	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }",  count = true)
+	@Query(value = "{ 'identifier': { $in: ?0}}")
+	public List<ServiceModel> findByServicebyIds(Object[] ids);
+
+	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }", count = true)
 	public List<ServiceModel> findServicesIsPersonalDataHandling();
-	
-	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }",  count = true)
+
+	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }", count = true)
 	public Long countServicesIsPersonalDataHandling();
-	
+
 	public Long deleteServiceModelByIdentifier(String serviceId);
 
-//	@Aggregation(pipeline = { "{ $match: { 'serviceId' : $0}}", "{ $unwind: '$isDescribedAt'}",
-//			"{ $match: { 'isDescribedAt.datasetId' : $1}}", "{ $unwind : '$isDescribedAt.dataMapping' }",
-//			"{ $replaceRoot: { 'newRoot' : '$isDescribedAt.dataMapping'}}" })
-//	public Optional<List<DataMapping>> getDatasetDataMappingByServiceIdAndDatasetId(String service, String datasetId);
+	// @Aggregation(pipeline = { "{ $match: { 'serviceId' : $0}}", "{ $unwind:
+	// '$isDescribedAt'}",
+	// "{ $match: { 'isDescribedAt.datasetId' : $1}}", "{ $unwind :
+	// '$isDescribedAt.dataMapping' }",
+	// "{ $replaceRoot: { 'newRoot' : '$isDescribedAt.dataMapping'}}" })
+	// public Optional<List<DataMapping>>
+	// getDatasetDataMappingByServiceIdAndDatasetId(String service, String
+	// datasetId);
 
 	@Aggregation(pipeline = { "{$unwind: '$hasInfo.isGroupedBy'}",
 			"{'$group':{'_id':'$hasInfo.isGroupedBy','count':{$sum:1}}}",

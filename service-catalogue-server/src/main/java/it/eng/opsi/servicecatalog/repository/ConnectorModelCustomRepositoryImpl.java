@@ -29,5 +29,13 @@ public class ConnectorModelCustomRepositoryImpl implements ConnectorModelCustomR
 		template.findAllAndRemove(query(where("serviceId").is(serviceId)), serviceId);
 		return null;
 	}
+	/*
+	 * public Connector getConnector(String serviceId, Class Connector) {
+	 * // Class c = Class();
+	 * // TODO Auto-generated method stub
+	 * template.findOne(query(where("serviceId").is(serviceId)), Connector);
+	 * return null;
+	 * }
+	 */
 
 }

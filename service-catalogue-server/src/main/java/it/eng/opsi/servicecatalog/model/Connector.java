@@ -2,6 +2,7 @@
 package it.eng.opsi.servicecatalog.model;
 
 import javax.validation.Valid;
+import javax.validation.constraints.*;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -44,6 +45,7 @@ public class Connector {
 
     @JsonProperty("serviceId")
     @Valid
+    @Column(unique = true)
     // @NotNull
     private String serviceId;
 

@@ -49,6 +49,8 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<Object> deleteConnector(String serviceId) throws ServiceNotFoundException;
 
+	public abstract ResponseEntity<Connector> getConnector(String serviceId) throws ServiceNotFoundException;
+
 	// identifier) throws ConnectorNotFoundException;
 
 	// public abstract ResponseEntity<String>

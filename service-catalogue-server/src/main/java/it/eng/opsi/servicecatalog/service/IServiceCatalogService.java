@@ -57,4 +57,6 @@ public interface IServiceCatalogService {
 
 	public abstract Connector deleteConnector(String decodedConnectorServiceId);
 
+	public abstract Connector getConnector(String decodedConnectorServiceId);
+
 }

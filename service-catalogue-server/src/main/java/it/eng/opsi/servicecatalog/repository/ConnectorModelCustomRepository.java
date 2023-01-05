@@ -10,4 +10,6 @@ public interface ConnectorModelCustomRepository {
 
 	public Connector deleteConnector(String serviceId);
 
+	// public Connector getConnector(String serviceId);
+
 }

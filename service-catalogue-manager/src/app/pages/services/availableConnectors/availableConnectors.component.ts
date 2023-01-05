@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Component, OnInit, OnDestroy } from '@angular/core';
+//import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { AvailableConnectorsService } from './availableConnectors.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -23,6 +23,7 @@ import { ServiceModel } from '../../../model/services/serviceModel';
 import { DOCUMENT } from '@angular/common';
 import { Inject } from '@angular/core';
 import { AvailableServicesService } from '../availableServices/availableServices.service';
+import { Component, Input, Output, OnInit, TemplateRef, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
 
 import { Connector } from '../../../model/services/connector';
 
@@ -33,6 +34,8 @@ import { Connector } from '../../../model/services/connector';
 })
 export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   //private editor: any;
+  @Input() value: ConnectorEntry;
+  @Output() updateResult = new EventEmitter<unknown>();
   private serviceData: ServiceModel;
   schemaDir: string;
   loading = false;
@@ -218,20 +221,20 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   }
 
   addNew(): void {
-    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
-      if (result.content) {
-        //this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
+    DialogAddNewPromptComponent.edit = false;
+    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe();
+    DialogAddNewPromptComponent.edit = true;
+    //this.updateResult.emit(this.value);
+    //this.ngOnInit()
+    this.updateResult.emit(this.value);
+    //this.updateResult.emit(this.value);
+    this.ngOnInit()
+  }
 
-        if (result.format == 'Cpsv') {
-          //this.editor.getEditor('root.hasInfo').setValue(result.content);
-          //this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());
-          //this.editor.getEditor('root.title').setValue(this.editor.getEditor('root.hasInfo.title').getValue());
-        } //else this.editor.setValue(result.content);
-
-        this.serviceId = result.content['identifier'] as string;
-      }
-    }
+  onEdit(): void {
+    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {}
     );
+    this.ngOnInit()
   }
 
   loadTableSettings(): Record<string, unknown> {

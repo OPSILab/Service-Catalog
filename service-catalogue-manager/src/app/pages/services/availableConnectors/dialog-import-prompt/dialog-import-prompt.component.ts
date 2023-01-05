@@ -1,5 +1,4 @@
 import { ServiceUrls } from './../../../../model/services/serviceUrls';
-import { Component } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
@@ -8,6 +7,9 @@ import { AvailableConnectorsService } from '../availableConnectors.service'
 import { NgxConfigureService } from 'ngx-configure';
 import { HttpClient } from '@angular/common/http';
 import { ConnectorEntry } from '../../../../model/connector/connectorEntry'
+import {ActionsConnectorMenuRenderComponent} from '../actionsConnectorMenuRender.component'
+import { Component, Input, Output, OnInit, TemplateRef, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
+
 
 @Component({
   selector: 'ngx-dialog-import-prompt',
@@ -15,15 +17,17 @@ import { ConnectorEntry } from '../../../../model/connector/connectorEntry'
   styleUrls: ['dialog-import-prompt.component.scss'],
 })
 export class DialogAddNewPromptComponent {
+  @Input() value: ConnectorEntry;
+  @Output() editedValue = new EventEmitter<unknown>();
   http: HttpClient;
+  //menu: ActionsConnectorMenuRenderComponent;
   //availableConnectorService : AvailableConnectorsService
-  configService : NgxConfigureService;
+  configService: NgxConfigureService;
   inputItemNgModel;
   name: string = "name";
   description: string = "description";
   url: string = "url";
   status: string = "status";
-  id: string = "id";
   serviceId: string = "serviceId";
   textareaItemNgModel;
   inputItemFormControl
@@ -32,8 +36,9 @@ export class DialogAddNewPromptComponent {
   selectedFile: File;
   json: Record<string, unknown>;
   selectedItem = 'Json';
+  static edit: boolean = true;
 
-  constructor(protected ref: NbDialogRef<DialogAddNewPromptComponent>, private errorService: ErrorDialogService, private availableConnectorService : AvailableConnectorsService) { }
+  constructor(protected ref: NbDialogRef<DialogAddNewPromptComponent>, private errorService: ErrorDialogService, private availableConnectorService: AvailableConnectorsService) { }
 
   cancel(): void {
     this.ref.close();
@@ -42,6 +47,10 @@ export class DialogAddNewPromptComponent {
   onInit(): void {
     this.inputItemFormControl = new FormControl();
     this.textareaItemFormControl = new FormControl();
+  }
+
+  getEdit(): boolean{
+    return DialogAddNewPromptComponent.edit
   }
 
   onFileChanged(event: Event): void {
@@ -68,6 +77,15 @@ export class DialogAddNewPromptComponent {
     }
   }
 
+  onEdit() {
+    // upload code goes here
+    let name = this.name, description = this.description, status = this.status, serviceId = this.serviceId, url = this.url
+    this.availableConnectorService.updateConnector((({ name, description, status, serviceId, url } as unknown)) as ConnectorEntry, serviceId)
+    this.ref.close({ content: this.json, format: this.selectedItem });
+    console.log("edited")
+    this.editedValue.emit(this.value);
+  }
+
   onUpload(): void {
     // upload code goes here
     this.ref.close({ content: this.json, format: this.selectedItem });
@@ -76,12 +94,14 @@ export class DialogAddNewPromptComponent {
   onSubmit() {
     //let availableConnectorService = new AvailableConnectorsService(this.configService, this.http)
     console.log("Submitted")
-    let id = this.id, name = this.name, description = this.description, status = this.status, serviceId = this.serviceId, url = this.url
+    let name = this.name, description = this.description, status = this.status, serviceId = this.serviceId, url = this.url
     //this.submitted = true;
     //this.connectorService.addConnector(this.connector).subscribe(b=>{this.connector=b;console.log(this.connector)});
     //availableConnectorService.saveConnector({this.id, this.name, this.description, this.status, this.serviceId, this.url})
     console.log(this.availableConnectorService)
-    this.availableConnectorService.saveConnector((({ id, name, description, status, serviceId, url } as unknown)) as ConnectorEntry)
+    this.availableConnectorService.saveConnector((({ name, description, status, serviceId, url } as unknown)) as ConnectorEntry)
     console.log("Saved")
+    this.ref.close()
+    this.editedValue.emit(this.value);
   }
 }

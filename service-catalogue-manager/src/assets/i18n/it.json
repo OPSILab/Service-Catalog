@@ -270,6 +270,7 @@
     },
     "connectors": {
       "connector": "Connector",
+      "edit":"Modifica",
       "description": "Description",
       "link": "Link",
       "keywords": "Keywords",
@@ -282,7 +283,8 @@
       "created": "Created",
       "data_consent": "Data Consent",
       "enabled": "Enabled",
-      "disabled": "Disabled"
+      "disabled": "Disabled",
+      "editService": "Modifica Servizio"
     }
   },
   "login": {

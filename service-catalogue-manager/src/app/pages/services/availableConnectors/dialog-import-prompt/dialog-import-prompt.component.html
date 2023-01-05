@@ -10,26 +10,36 @@
     <form><!--(ngSubmit)="onSubmit()" #connectorForm="ngForm">!-->
       <label for="name">name</label>
       <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
-      <label for="id">id</label>
-      <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="id" [(ngModel)]="id" [ngModelOptions]="{standalone: true}">
+      <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
+        [ngModelOptions]="{standalone: true}">
       <label for="description">description</label>
       <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="description" [(ngModel)]="description" [ngModelOptions]="{standalone: true}">
+      <input type="text" nbInput fullWidth fieldSize="small" placeholder="description" [(ngModel)]="description"
+        [ngModelOptions]="{standalone: true}">
       <label for="status">status</label>
       <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
+      <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
+        [ngModelOptions]="{standalone: true}">
       <label for="serviceId">serviceId</label>
       <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="serviceId" [(ngModel)]="serviceId" [ngModelOptions]="{standalone: true}">
+      <input type="text" nbInput fullWidth fieldSize="small" placeholder="serviceId" [(ngModel)]="serviceId"
+        [ngModelOptions]="{standalone: true}">
       <label for="url">url</label>
       <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url" [ngModelOptions]="{standalone: true}">
+      <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+        [ngModelOptions]="{standalone: true}">
       <!--><button type="submit">Conferma inserimento</button>!-->
-       <button nbButton appearance="outline" shape="semi-round" size="small" status="info" (click)="onSubmit()">
-        <i class="mx-1">Confirm</i>
-      </button>
+      <div *ngIf="getEdit()==false; else elseBlock">
+        <button nbButton appearance="outline" shape="semi-round" size="small" status="info" (click)="onEdit()">
+          <i class="mx-1">Confirm edit</i>
+        </button>
+      </div>
+      <ng-template #elseBlock>
+        <button nbButton appearance="outline" shape="semi-round" size="small" status="info" (click)="onSubmit()">
+          <i class="mx-1">Confirm save</i>
+        </button>
+      </ng-template>
+
     </form>
   </nb-card-body>
   <nb-card-footer *ngIf="selectedFile">

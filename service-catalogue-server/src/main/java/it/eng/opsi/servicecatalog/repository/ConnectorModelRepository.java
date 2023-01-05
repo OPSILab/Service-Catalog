@@ -88,4 +88,8 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 
 	public Connector deleteConnector(String serviceId);
 
+	public Connector findByserviceId(String serviceId);
+
+	// public Connector findByIdentifier(String serviceId);
+
 }

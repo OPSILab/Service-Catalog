@@ -14,8 +14,10 @@ import {
 } from '@nebular/theme';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { AvailableConnectorsService } from './availableConnectors.service';
+import { DialogAddNewPromptComponent } from './dialog-import-prompt/dialog-import-prompt.component';
+
 import { LoginService } from '../../../auth/login/login.service';
-import { ServiceModelStatusEnum } from '../../../model/services/serviceModel';
+import { ConnectorStatusEnum } from '../../../model/services/connector';
 import { ConnectorEntry } from '../../../model/connector/connectorEntry';
 @Component({
   template: `
@@ -94,8 +96,11 @@ import { ConnectorEntry } from '../../../model/connector/connectorEntry';
   `,
 })
 export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
+
   @Input() value: ConnectorEntry;
   @Output() updateResult = new EventEmitter<unknown>();
+  @Input() editedValue: ConnectorEntry;
+  @Output() outValue= new EventEmitter<unknown>();
 
   private unsubscribe: Subject<void> = new Subject();
   actions: NbMenuItem[];
@@ -117,7 +122,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   ) { }
 
   get registered(): boolean {
-    return this.value.status == ServiceModelStatusEnum.Completed ? true : false;
+    return this.value.status == ConnectorStatusEnum.Active ? true : false;
   }
 
   ngOnInit(): void {
@@ -132,7 +137,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
         console.log("pre-switch")
         switch (event.item.data) {
           case 'edit':
-            this.onEdit(this.value.serviceId);
+            this.onEdit();//this.value.serviceId
             console.log("edit");
             break;
           case 'delete':
@@ -150,13 +155,20 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
             this.openDeRegisterDialog();
             break;
           case 'edit service':
-            this.onEdit(this.value.serviceId);
+            this.onEditService(this.value.serviceId);
             break;
           default:
             console.log("default");
             break;
         }
       });
+  }
+
+  async ngOnUpdate(): Promise<void>{
+    console.log("ngOnUpdate")
+    this.value = await this.availableConnectorsService.getConnector(this.value.serviceId);
+    this.updateResult.emit(this.value);
+      this.ngOnInit()
   }
 
   ngOnDestroy(): void {
@@ -175,11 +187,15 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
           title: this.translate.instant('general.services.consents') as string,
           data: 'consents',
         },
+        {
+          title: this.translate.instant('general.connectors.editService') as string,
+          data: 'edit service',
+        },
       ];
     } else {
       return [
         {
-          title: this.translate.instant('general.services.edit') as string,
+          title: this.translate.instant('general.connectors.edit') as string,
           data: 'edit',
         },
         {
@@ -190,11 +206,41 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
           title: this.translate.instant('general.services.delete') as string,
           data: 'delete',
         },
+        {
+          title: this.translate.instant('general.connectors.editService') as string,
+          data: 'edit service',
+        },
       ];
     }
   }
 
-  onEdit(serviceId: string): void {
+  async onEdit() {
+    console.log("onedit called")
+    DialogAddNewPromptComponent.edit = true;
+    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
+      //if (result.content) {
+        //this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
+
+        //if (result.format == 'Cpsv') {
+          //this.editor.getEditor('root.hasInfo').setValue(result.content);
+          //this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());
+          //this.editor.getEditor('root.title').setValue(this.editor.getEditor('root.hasInfo.title').getValue());
+        //} //else this.editor.setValue(result.content);
+
+        //this.value.serviceId = result.content['serviceId'] as string;
+      //}
+    }
+    );
+    //this.value = await this.availableConnectorsService.getConnector(this.value.serviceId);;
+    //this.value= quello preso dalla form
+    DialogAddNewPromptComponent.edit = false;
+    this.updateResult.emit(this.value);
+    console.log("onedit finished")
+    this.ngOnUpdate()
+    this.value=this.editedValue
+  }
+
+  onEditService(serviceId: string): void {
     console.log("onEdit")
     void this.router.navigate(['/pages/services/service-editor', { serviceId: serviceId }]);
   }
@@ -231,7 +277,8 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
 
   onRegisterService = async (): Promise<void> => {
     try {
-      this.value.status= this.value.status=="active"? "inactive" : "active";
+      console.log("register")
+      this.value.status = this.value.status == "active" ? "inactive" : "active";
       this.value = await this.availableConnectorsService.registerConnector(this.value);
       this.showToast('primary', this.translate.instant('general.services.service_registered_message', { serviceName: this.value.name }), '');
       this.updateResult.emit(this.value);
@@ -246,10 +293,11 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
 
   onDeRegisterService = async (): Promise<void> => {
     try {
-      await this.availableConnectorsService.deregisterConnector(this.value.id);
-
+      console.log("deregister")
+      this.value.status = this.value.status == "active" ? "inactive" : "active";
+      this.value = await this.availableConnectorsService.deregisterConnector(this.value);
       this.showToast('primary', this.translate.instant('general.services.service_deregistered_message', { serviceName: this.value.name }), '');
-      this.updateResult.emit(this.value);
+      this.updateResult.emit(this.value);//G: commentandolo smette di aggiornarsi il menu
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (error.error.statusCode === '401') {
