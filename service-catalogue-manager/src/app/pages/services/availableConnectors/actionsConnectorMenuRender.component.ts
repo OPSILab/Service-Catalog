@@ -19,6 +19,7 @@ import { DialogAddNewPromptComponent } from './dialog-import-prompt/dialog-impor
 import { LoginService } from '../../../auth/login/login.service';
 import { ConnectorStatusEnum } from '../../../model/services/connector';
 import { ConnectorEntry } from '../../../model/connector/connectorEntry';
+//<DialogAddNewPromptComponent (editedValue)="onChange($event)"></DialogAddNewPromptComponent>?
 @Component({
   template: `
     <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.serviceId }}">
@@ -100,7 +101,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   @Input() value: ConnectorEntry;
   @Output() updateResult = new EventEmitter<unknown>();
   @Input() editedValue: ConnectorEntry;
-  @Output() outValue= new EventEmitter<unknown>();
+  @Output() outValue = new EventEmitter<unknown>();
 
   private unsubscribe: Subject<void> = new Subject();
   actions: NbMenuItem[];
@@ -123,6 +124,10 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
 
   get registered(): boolean {
     return this.value.status == ConnectorStatusEnum.Active ? true : false;
+  }
+
+  onChange(value) {
+    this.value = value
   }
 
   ngOnInit(): void {
@@ -164,11 +169,11 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       });
   }
 
-  async ngOnUpdate(): Promise<void>{
+  async ngOnUpdate(): Promise<void> {
     console.log("ngOnUpdate")
     this.value = await this.availableConnectorsService.getConnector(this.value.serviceId);
     this.updateResult.emit(this.value);
-      this.ngOnInit()
+    this.ngOnInit()
   }
 
   ngOnDestroy(): void {
@@ -219,25 +224,28 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
     DialogAddNewPromptComponent.edit = true;
     this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
       //if (result.content) {
-        //this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
+      //this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
 
-        //if (result.format == 'Cpsv') {
-          //this.editor.getEditor('root.hasInfo').setValue(result.content);
-          //this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());
-          //this.editor.getEditor('root.title').setValue(this.editor.getEditor('root.hasInfo.title').getValue());
-        //} //else this.editor.setValue(result.content);
+      //if (result.format == 'Cpsv') {
+      //this.editor.getEditor('root.hasInfo').setValue(result.content);
+      //this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());
+      //this.editor.getEditor('root.title').setValue(this.editor.getEditor('root.hasInfo.title').getValue());
+      //} //else this.editor.setValue(result.content);
 
-        //this.value.serviceId = result.content['serviceId'] as string;
+      //this.value.serviceId = result.content['serviceId'] as string;
       //}
     }
     );
     //this.value = await this.availableConnectorsService.getConnector(this.value.serviceId);;
     //this.value= quello preso dalla form
     DialogAddNewPromptComponent.edit = false;
-    this.updateResult.emit(this.value);
+    //G:this.updateResult.emit(this.value);//G: commentandolo smette di aggiornarsi il menu
+    this.updateResult.emit(this.value.id);
     console.log("onedit finished")
-    this.ngOnUpdate()
-    this.value=this.editedValue
+    console.log(this.value)
+    //this.ngOnUpdate()
+    //this.value=this.editedValue
+    this.ngOnInit()
   }
 
   onEditService(serviceId: string): void {
