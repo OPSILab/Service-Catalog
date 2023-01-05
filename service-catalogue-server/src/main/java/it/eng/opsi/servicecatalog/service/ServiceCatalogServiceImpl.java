@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,6 +66,12 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		// log.info("Getting Service Count");
 		return serviceModelRepo.getTotalCount();
+	}
+
+	@Override
+	public HashMap<String, Object> getConnectorsCount() {
+		// TODO Auto-generated method stub
+		return connectorModelRepo.getTotalCount();
 	}
 
 	@Override
@@ -217,6 +224,12 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	public List<Connector> getConnectors() {
 		// TODO Auto-generated method stub
 		return connectorModelRepo.findAll();
+	}
+
+	@Override
+	public Connector getConnectorByserviceId(String serviceId) {
+		// TODO Auto-generated method stub
+		return connectorModelRepo.findByserviceId(serviceId);
 	}
 
 }

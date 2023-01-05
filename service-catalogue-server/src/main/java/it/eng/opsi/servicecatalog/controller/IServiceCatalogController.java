@@ -30,6 +30,8 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<HashMap<String, Integer>> getServicesCount();
 
+	public abstract ResponseEntity<HashMap<String, Object>> getConnectorsCount();
+
 	public abstract ResponseEntity<ServiceModel> createService(ServiceModel service);
 
 	public abstract ResponseEntity<Connector> createConnector(Connector connector);
@@ -49,18 +51,7 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<Object> deleteConnector(String serviceId) throws ServiceNotFoundException;
 
-	public abstract ResponseEntity<Connector> getConnector(String serviceId) throws ServiceNotFoundException;
-
-	// identifier) throws ConnectorNotFoundException;
-
-	// public abstract ResponseEntity<String>
-	// getServiceByIdJsonLd(HttpServletRequest request)
-	// throws ServiceNotFoundException, IOException;
-	//
-	//
-	// public abstract ResponseEntity<String>
-	// getServiceHasInfoByIdJsonLd(HttpServletRequest request)
-	// throws ServiceNotFoundException, IOException;
+	public abstract ResponseEntity<?> getConnector(String serviceId) throws ServiceNotFoundException;
 
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountBySector();
 

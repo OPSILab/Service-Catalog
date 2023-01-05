@@ -16,7 +16,7 @@ import it.eng.opsi.servicecatalog.model.ServiceModel;
 
 public interface ConnectorModelRepository extends MongoRepository<Connector, String>, ConnectorModelCustomRepository {
 
-	public Optional<Connector> findByServiceId(String serviceId);
+	public Connector findByserviceId(String serviceId);
 
 	public Optional<HasInfoOnly> getHasInfoByServiceId(String serviceId);
 
@@ -44,7 +44,7 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 	// findRegisteredConnectorsByServiceProviderBusinessId(String businessId);
 
 	@Query(value = "{ 'serviceId': { $in: ?0}}")
-	public List<Connector> findByConnectorbyIds(Object[] ids);
+	public List<Connector> findConnectorByserviceIds(Object[] ids);
 
 	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }", count = true)
 	public List<Connector> findConnectorsIsPersonalDataHandling();
@@ -80,7 +80,7 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 	@Aggregation(pipeline = {
 			" {$group:{'_id':'_','publicConnectors':{$sum:{$cond:['$isPublicService',1,0]}},'privateConnectors':{$sum:{$cond:['$isPublicService',0,1]}}}}",
 			"{$project:{'_id':0,'publicConnectors':1,'privateConnectors':1,'total':{$sum:['$publicConnectors','$privateConnectors']}}}" })
-	public HashMap<String, Integer> getTotalCount();
+	public HashMap<String, Object> getTotalCount();
 
 	@Aggregation(pipeline = { "{$unwind: '$hasInfo.spatial'}", "{'$group':{'_id':'$hasInfo.spatial','count':{$sum:1}}}",
 			"{$project:{'_id':0,'location':'$_id','count':'$count'}}" })
@@ -88,7 +88,7 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 
 	public Connector deleteConnector(String serviceId);
 
-	public Connector findByserviceId(String serviceId);
+	// public List<Connector> findByserviceIds(Object[] array);
 
 	// public Connector findByIdentifier(String serviceId);
 

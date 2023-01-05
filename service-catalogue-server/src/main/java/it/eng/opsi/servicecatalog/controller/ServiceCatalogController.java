@@ -41,9 +41,6 @@ import it.eng.opsi.servicecatalog.service.ServiceCatalogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 //TODO@GetMapping(value = "/connectors/count", produces = MediaType.APPLICATION_JSON_VALUE)
 //TODOgetconnectorlogs
-//TODOregisterconnector
-//TODOderegisterconnector
-//TODO get connector by servicemodel
 
 @OpenAPIDefinition(info = @Info(title = "Service Catalog API", description = "Service Catalog APIs used to manage CRUD for Service Model descriptions.", version = "1.0"), tags = {
 		@Tag(name = "Service Model", description = "Service Model Description APIs to get and manage service model descriptions.") })
@@ -92,10 +89,16 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 		String serviceIdentifier = request.getRequestURI().split(request.getContextPath() + "/api/v2/services/")[1];
 
+		System.out.println(identifier);
+		System.out.println(serviceIdentifier);
+
 		if (StringUtils.isBlank(serviceIdentifier))
 			throw new IllegalArgumentException("Illegal Service Identifier in input");
 
 		String decodedServiceIdentifier = java.net.URLDecoder.decode(identifier, StandardCharsets.UTF_8);
+
+		System.out.println(decodedServiceIdentifier);
+
 		if (serviceIdentifier.startsWith("jsonld"))
 			return getServiceByIdJsonLd(decodedServiceIdentifier);
 
@@ -148,6 +151,15 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getServicesCount());
 	}
 
+	@Override
+	@Operation(summary = "Get the count of the registered Service Model descriptions (total, public and private services).", tags = {
+			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
+	@GetMapping(value = "/connectors/count", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HashMap<String, Object>> getConnectorsCount() {
+
+		return ResponseEntity.ok(catalogService.getConnectorsCount());
+	}
+
 	@Operation(summary = "Create a new Service Model description.", tags = { "Service Model" }, responses = {
 			@ApiResponse(description = "Returns 201 Created with the created Service Model.", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceModel.class))) })
 	@Override
@@ -160,7 +172,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@PostMapping(value = "/connectors") // TODO regex?
+	@PostMapping(value = "/connectors")
 	public ResponseEntity<Connector> createConnector(@RequestBody @Valid Connector connector) {
 
 		Connector result = catalogService.createConnector(connector);
@@ -228,8 +240,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@GetMapping(value = "/connectors", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Connector> getConnector(@RequestParam("serviceId") String serviceId)
+	@GetMapping(value = "/connectors/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getConnector(@RequestParam("serviceId") String serviceId)
 			throws ServiceNotFoundException, ServiceNotEditableException {
 
 		// String serviceIdentifier =
@@ -242,7 +254,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		String decodedConnectorServiceId = java.net.URLDecoder.decode(serviceId,
 				StandardCharsets.UTF_8);
 
-		return ResponseEntity.ok(catalogService.getConnector(decodedConnectorServiceId));
+		return ResponseEntity.ok(catalogService.getConnectorByserviceId(decodedConnectorServiceId));
 	}
 
 	@Operation(summary = "Delete Service Model description by Service Id.", tags = { "Service Model" }, responses = {
@@ -267,7 +279,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
-	@Operation(summary = "Delete Connector Model description by Connector Id.", tags = {
+	@Operation(summary = "Delete Connector Model description by serviceId.", tags = {
 			"Connector Model" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override

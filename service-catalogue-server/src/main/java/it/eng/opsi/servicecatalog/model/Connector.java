@@ -4,6 +4,9 @@ package it.eng.opsi.servicecatalog.model;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import javax.validation.constraints.NotNull;
+
+import org.springframework.data.annotation.Id;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -45,7 +48,9 @@ public class Connector {
 
     @JsonProperty("serviceId")
     @Valid
-    @Column(unique = true)
+    // @Column(unique = true)
+    // @Indexed(unique = true)
+    @Id
     // @NotNull
     private String serviceId;
 

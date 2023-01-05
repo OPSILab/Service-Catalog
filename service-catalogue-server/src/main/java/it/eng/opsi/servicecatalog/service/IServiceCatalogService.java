@@ -3,6 +3,7 @@ package it.eng.opsi.servicecatalog.service;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -20,11 +21,16 @@ public interface IServiceCatalogService {
 
 	public abstract List<ServiceModel> getServicesbyIds(List<String> ids) throws ServiceNotFoundException;
 
+	// public abstract List<Connector> getConnectorbyserviceIds(List<String>
+	// serviceIds) throws ServiceNotFoundException;
+
 	public abstract List<ServiceModel> getServicesIsPersonaDataHandling() throws ServiceNotFoundException;
 
 	public abstract Long getServicesIsPersonaDataHandlingCount();
 
 	public abstract ServiceModel getServiceById(String serviceId) throws ServiceNotFoundException;
+
+	public abstract Connector getConnectorByserviceId(String serviceId);
 
 	public abstract HasInfo getHasInfoById(String serviceId) throws ServiceNotFoundException;
 
@@ -58,5 +64,7 @@ public interface IServiceCatalogService {
 	public abstract Connector deleteConnector(String decodedConnectorServiceId);
 
 	public abstract Connector getConnector(String decodedConnectorServiceId);
+
+	public abstract HashMap<String, Object> getConnectorsCount();
 
 }
