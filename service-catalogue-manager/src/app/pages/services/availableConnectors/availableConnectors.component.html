@@ -9,6 +9,11 @@
         <button nbButton class="" shape="rectangle" size="medium" status="primary" (click)="addNew()">
           <i class="material-icons">add</i>&nbsp;{{ 'general.services.add_new' | translate }}
         </button>
+        &nbsp;
+        <button nbButton class="" shape="rectangle" size="medium" status="primary" (click)="ngOnInit()">
+          <i class="material-icons">refresh</i><!-- &nbsp;{{ 'general.services.add_new' | translate }} -->
+          &nbsp; refresh
+        </button>
       </div>
 
       <div class="col-6 col-md-6 text-right">
@@ -17,6 +22,6 @@
         </button>
       </div>
     </div>
-    <ng2-smart-table [settings]="settings" [source]="source"> </ng2-smart-table>
+    <ng2-smart-table [settings]="settings" [source]="source" (updateResult) = ngOnInit()> </ng2-smart-table>
   </nb-card-body>
 </nb-card>

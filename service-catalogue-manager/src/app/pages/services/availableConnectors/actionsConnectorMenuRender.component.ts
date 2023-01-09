@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, TemplateRef, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
+import { Component, Input, Output, OnInit, OnChanges, TemplateRef, EventEmitter, OnDestroy, ViewChild, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -22,8 +22,10 @@ import { ConnectorEntry } from '../../../model/connector/connectorEntry';
 //<DialogAddNewPromptComponent (editedValue)="onChange($event)"></DialogAddNewPromptComponent>?
 @Component({
   template: `
-    <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.serviceId }}">
-      <nb-icon icon="settings-2"></nb-icon>
+<!--   <across-dialog-import-prompt (editedValue) = ngOnUpdate()> add new </across-dialog-import-prompt> -->
+<!--  <menu (editedValue)= ngOnInit()> -->
+    <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.serviceId }}" >
+      <nb-icon icon="settings-2" ></nb-icon>
     </button>
     <!-- Register Service modal ng-template -->
     <ng-template #confirmRegisterDialog let-data let-ref="dialogRef">
@@ -94,9 +96,11 @@ import { ConnectorEntry } from '../../../model/connector/connectorEntry';
         </nb-card-footer>
       </nb-card>
     </ng-template>
+
+<!-- </menu> -->
   `,
 })
-export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
+export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() value: ConnectorEntry;
   @Output() updateResult = new EventEmitter<unknown>();
@@ -109,6 +113,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   @ViewChild('confirmDeleteDialog', { static: false }) confirmDeleteDialogTemplate: TemplateRef<unknown>;
   @ViewChild('confirmRegisterDialog', { static: false }) confirmRegisterDialog: TemplateRef<unknown>;
   @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
+  //@ViewChild('connector',{ static: false }) addConnector: DialogAddNewPromptComponent;
 
   constructor(
     private availableConnectorsService: AvailableConnectorsService,
@@ -121,17 +126,21 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private loginService: LoginService
   ) { }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("ngonchanges")
+    this.updateResult.emit(this.value.id);  }
 
   get registered(): boolean {
     return this.value.status == ConnectorStatusEnum.Active ? true : false;
   }
 
-  onChange(value) {
-    this.value = value
+  ngOnChange() {
+    //this.value = value
+    this.updateResult.emit(this.value.id);
   }
 
   ngOnInit(): void {
-    console.log("ngoninit")
+    console.log("actionConnectorMenuComponent : ngoninit")
     this.actions = this.translatedActionLabels();
     this.menuService
       .onItemClick()
@@ -222,20 +231,9 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   async onEdit() {
     console.log("onedit called")
     DialogAddNewPromptComponent.edit = true;
-    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
-      //if (result.content) {
-      //this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
-
-      //if (result.format == 'Cpsv') {
-      //this.editor.getEditor('root.hasInfo').setValue(result.content);
-      //this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());
-      //this.editor.getEditor('root.title').setValue(this.editor.getEditor('root.hasInfo.title').getValue());
-      //} //else this.editor.setValue(result.content);
-
-      //this.value.serviceId = result.content['serviceId'] as string;
-      //}
-    }
-    );
+    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((confirm) => {
+      if (confirm) void this.updateResult.emit(this.value.id);
+    });
     //this.value = await this.availableConnectorsService.getConnector(this.value.serviceId);;
     //this.value= quello preso dalla form
     DialogAddNewPromptComponent.edit = false;
@@ -245,6 +243,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
     console.log(this.value)
     //this.ngOnUpdate()
     //this.value=this.editedValue
+    //this.ref.close();
     this.ngOnInit()
   }
 
@@ -340,6 +339,35 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       },
     });
   }
+
+  /*
+  editV2(): void {
+    // this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
+
+    const ref = this.dialogService.open(this.addConnector, {
+      context: {
+        serviceName: this.value.name,
+        callback: async () => {
+          try {
+            await this.availableConnectorsService.deleteConnector(this.addConnector.name);
+            this.showToast(
+              'primary',
+              this.translateService.instant('general.services.service_deleted_message', { serviceName: this.value.name }),
+              ''
+            );
+            ref.close();
+            this.updateResult.emit(this.value.id);
+          } catch (error) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+            if (error.error.statusCode === '401') {
+              void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
+              // this.router.navigate(['/login']);
+            } else this.errorDialogService.openErrorDialog(error);
+          }
+        },
+      },
+    });
+  }*/
 
   private showToast(type: NbComponentStatus, title: string, body: string) {
     const config = {

@@ -1,3 +1,4 @@
+import { Connector } from './../../../../model/services/connector';
 import { ServiceUrls } from './../../../../model/services/serviceUrls';
 import { FormControl } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +13,7 @@ import { Component, Input, Output, OnInit, TemplateRef, EventEmitter, OnDestroy,
 
 
 @Component({
-  selector: 'ngx-dialog-import-prompt',
+  selector: 'ngx-dialog-import-prompt', //ngx
   templateUrl: 'dialog-import-prompt.component.html',
   styleUrls: ['dialog-import-prompt.component.scss'],
 })
@@ -91,7 +92,7 @@ export class DialogAddNewPromptComponent {
     this.ref.close({ content: this.json, format: this.selectedItem });
   }
 
-  onSubmit() {
+  onSubmit(){
     //let availableConnectorService = new AvailableConnectorsService(this.configService, this.http)
     console.log("Submitted")
     let name = this.name, description = this.description, status = this.status, serviceId = this.serviceId, url = this.url
@@ -103,5 +104,7 @@ export class DialogAddNewPromptComponent {
     console.log("Saved")
     this.ref.close()
     this.editedValue.emit(this.value);
+
   }
+
 }

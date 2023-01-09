@@ -26,6 +26,7 @@ import { AvailableServicesService } from '../availableServices/availableServices
 import { Component, Input, Output, OnInit, TemplateRef, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
 
 import { Connector } from '../../../model/services/connector';
+import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
   selector: 'available-connectors-smart-table',
@@ -93,7 +94,8 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
     this.loading = true;
   }
 
-  async ngOnInit(): Promise<void> {
+  async ngOnInit() {
+    console.log("availableConnectors.component: ngOnInit()")
     //this.serviceId = this.route.snapshot.params['serviceId'] as string;
     //this.initializeEditor(this.serviceData);
     //this.readOnly = <boolean>this.route.snapshot.params['readOnly'];
@@ -111,25 +113,27 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
 
     try {
       this.availableConnectors = await this.availableConnectorsService.getConnectors();
+      //let source: LocalDataSource = new LocalDataSource()
       void this.source.load(this.availableConnectors);
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (error.error.statusCode === '401') {
+      /*if (error.error.statusCode === '401') {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
         // this.router.navigate(['/login']);
-      } else
-        this.errorDialogService.openErrorDialog(error);
+      } else*/
+      //this.errorDialogService.openErrorDialog(error);
       console.log(error)
     }
 
     // Open a Toastr if there is a message in input query
+    /*
     const queryParams = this.route.snapshot.queryParams;
     if (queryParams.toastrMessage)
       this.toastrService.primary('', queryParams.toastrMessage, {
         position: NbGlobalLogicalPosition.BOTTOM_END,
         duration: 3500,
       });
-
+    */
     //this.initializeEditor(this.serviceData);
 
   }
@@ -220,9 +224,15 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
     this.unsubscribe.complete();
   }
 
-  addNew(): void {
+  async addNew(): Promise<void> {
     DialogAddNewPromptComponent.edit = false;
-    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe();
+    console.log("AddNew");
+    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((confirm) => {
+      //if (confirm)
+      void console.log("confirm ok", this.ngOnInit());
+      //void this.source.load(this.availableConnectorsService.getConnectors());
+    });
+    console.log("Added");
     DialogAddNewPromptComponent.edit = true;
     //this.updateResult.emit(this.value);
     //this.ngOnInit()
@@ -232,7 +242,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   }
 
   onEdit(): void {
-    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {}
+    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => { }
     );
     this.ngOnInit()
   }
