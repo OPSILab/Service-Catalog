@@ -232,7 +232,7 @@ hs_err_pid*
 #Vscode extension
 .history
 
-#intelliJ 
+#intelliJ settings files
 .service-catalogue-server/.idea
 
 #temp files
