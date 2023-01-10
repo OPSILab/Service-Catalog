@@ -14,7 +14,7 @@ import {
 } from '@nebular/theme';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { AvailableConnectorsService } from './availableConnectors.service';
-import { DialogAddNewPromptComponent } from './dialog-import-prompt/dialog-import-prompt.component';
+import { DialogAddNewPromptComponent } from './addConnector/dialog-add-new-prompt.component';
 
 import { LoginService } from '../../../auth/login/login.service';
 import { ConnectorStatusEnum } from '../../../model/services/connector';
@@ -230,13 +230,13 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
 
   async onEdit() {
     console.log("onedit called")
-    DialogAddNewPromptComponent.edit = true;
+    DialogAddNewPromptComponent.formType = 'edit';
     this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((confirm) => {
       if (confirm) void this.updateResult.emit(this.value.id);
     });
     //this.value = await this.availableConnectorsService.getConnector(this.value.serviceId);;
     //this.value= quello preso dalla form
-    DialogAddNewPromptComponent.edit = false;
+    DialogAddNewPromptComponent.formType = 'add';
     //G:this.updateResult.emit(this.value);//G: commentandolo smette di aggiornarsi il menu
     this.updateResult.emit(this.value.id);
     console.log("onedit finished")

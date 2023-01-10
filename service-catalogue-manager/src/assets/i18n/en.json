@@ -292,7 +292,10 @@
       "data_consent": "Data Consent",
       "enabled": "Enabled",
       "disabled": "Disabled",
-      "editService": "Edit Service"
+      "editService": "Edit Service",
+      "confirm": "Confirm",
+      "serviceId": "Service ID",
+      "name": "Name"
     }
   },
   "login": {

@@ -10,7 +10,7 @@ import { ConnectorInfoRenderComponent } from './availableConnectors/connectorInf
 import { EditorComponent } from './service-editor/editor.component';
 import { DialogExportPromptComponent } from './service-editor/dialog-export-prompt/dialog-export-prompt.component';
 import { DialogImportPromptComponent } from './service-editor/dialog-import-prompt/dialog-import-prompt.component';
-import { DialogAddNewPromptComponent } from './availableConnectors/dialog-import-prompt/dialog-import-prompt.component';
+import { DialogAddNewPromptComponent } from './availableConnectors/addConnector/dialog-add-new-prompt.component';
 import { TranslateModule } from '@ngx-translate/core';
 import {
   NbAccordionModule,

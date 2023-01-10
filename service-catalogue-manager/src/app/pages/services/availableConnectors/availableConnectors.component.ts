@@ -2,42 +2,26 @@
 //import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { AvailableConnectorsService } from './availableConnectors.service';
-import { Router, ActivatedRoute } from '@angular/router';
 import { ConnectorInfoRenderComponent } from './connectorInfoRender.component';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxConfigureService } from 'ngx-configure';
-import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
-import { NbToastrService, NbGlobalLogicalPosition } from '@nebular/theme';
 import { AppConfig, System } from '../../../model/appConfig';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { LoginService } from '../../../auth/login/login.service';
 import { ActionsConnectorMenuRenderComponent } from './actionsConnectorMenuRender.component';
 import { ConnectorEntry } from '../../../model/connector/connectorEntry';
-
-import { DialogAddNewPromptComponent } from './dialog-import-prompt/dialog-import-prompt.component';
+import { DialogAddNewPromptComponent } from './addConnector/dialog-add-new-prompt.component';
 import { NbDialogService } from '@nebular/theme';
-import { JSONEditor } from '@json-editor/json-editor/dist/jsoneditor.js';
-import * as $ from 'jquery';
-import { ServiceModel } from '../../../model/services/serviceModel';
-import { DOCUMENT } from '@angular/common';
-import { Inject } from '@angular/core';
-import { AvailableServicesService } from '../availableServices/availableServices.service';
-import { Component, Input, Output, OnInit, TemplateRef, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
-
-import { Connector } from '../../../model/services/connector';
-import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
-
+import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 @Component({
   selector: 'available-connectors-smart-table',
   templateUrl: './availableConnectors.component.html',
   styleUrls: ['./availableConnectors.component.scss'],
 })
+
 export class AvailableConnectorsComponent implements OnInit, OnDestroy {
-  //private editor: any;
   @Input() value: ConnectorEntry;
   @Output() updateResult = new EventEmitter<unknown>();
-  private serviceData: ServiceModel;
   schemaDir: string;
   loading = false;
   public isNew = false;
@@ -47,15 +31,11 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   public serviceId: string;
   public serviceName: string;
   public readOnly = false;
-
-
-
   private connectorLabel: string;
   private descriptionLabel: string;
   private actionsLabel: string;
   private detailsLabel: string;
   private statusLabel: string;
-
   public settings: Record<string, unknown>;
   private locale: string;
   public source: LocalDataSource = new LocalDataSource();
@@ -63,27 +43,16 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
 
   constructor(
-    @Inject(DOCUMENT) private document: Document,
-
-    private availablesServicesService: AvailableServicesService,
     private availableConnectorsService: AvailableConnectorsService,
-    private route: ActivatedRoute,
-    private router: Router,
     private translate: TranslateService,
     private configService: NgxConfigureService,
-    private loginService: LoginService,
-    private errorDialogService: ErrorDialogService,
-    private toastrService: NbToastrService,
-
     private dialogService: NbDialogService
   ) {
     this.config = this.configService.config as AppConfig;
     this.systemConfig = this.config.system;
     this.systemLocale = this.config.i18n.locale;
-
     this.settings = this.loadTableSettings();
     this.locale = (this.configService.config as AppConfig).i18n.locale; // TODO change with user language preferences
-
     this.schemaDir =
       (this.systemConfig.serviceEditorUrl.includes('localhost') ? '' : this.systemConfig.serviceEditorUrl) +
       this.systemConfig.editorSchemaPath +
@@ -96,32 +65,10 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     console.log("availableConnectors.component: ngOnInit()")
-    //this.serviceId = this.route.snapshot.params['serviceId'] as string;
-    //this.initializeEditor(this.serviceData);
-    //this.readOnly = <boolean>this.route.snapshot.params['readOnly'];
-
-    //this.serviceData = await this.availablesServicesService.getService(this.serviceId);
-    //per servicedata sono arrivato alla corrispondenza della riga 86
-    /*
-    if (this.serviceId) {
-      this.serviceData = await this.availablesServicesService.getService(this.serviceId);
-      this.serviceName= this.serviceData.title
-    } else {
-      this.isNew = true;
-    }
-    */
-
     try {
       this.availableConnectors = await this.availableConnectorsService.getConnectors();
-      //let source: LocalDataSource = new LocalDataSource()
       void this.source.load(this.availableConnectors);
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      /*if (error.error.statusCode === '401') {
-        void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
-        // this.router.navigate(['/login']);
-      } else*/
-      //this.errorDialogService.openErrorDialog(error);
       console.log(error)
     }
 
@@ -225,15 +172,15 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   }
 
   async addNew(): Promise<void> {
-    DialogAddNewPromptComponent.edit = false;
+    DialogAddNewPromptComponent.formType = 'add';
     console.log("AddNew");
-    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((confirm) => {
+    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe(() => {
       //if (confirm)
       void console.log("confirm ok", this.ngOnInit());
       //void this.source.load(this.availableConnectorsService.getConnectors());
     });
     console.log("Added");
-    DialogAddNewPromptComponent.edit = true;
+    DialogAddNewPromptComponent.formType = 'edit';
     //this.updateResult.emit(this.value);
     //this.ngOnInit()
     this.updateResult.emit(this.value);
@@ -242,7 +189,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   }
 
   onEdit(): void {
-    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => { }
+    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe(() => { }
     );
     this.ngOnInit()
   }
@@ -307,7 +254,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
           renderComponent: ActionsConnectorMenuRenderComponent,
           onComponentInitFunction: (instance) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
-            instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe((updatedServiceData: unknown) => this.ngOnInit());
+            instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe(() => this.ngOnInit());
           },
         },
       },

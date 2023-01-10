@@ -6,40 +6,30 @@
     </button>
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
-    <!--><nb-card-body class="example-items-col"> !-->
-    <form><!--(ngSubmit)="onSubmit()" #connectorForm="ngForm">!-->
-      <label for="name">name</label>
+    <form>
+      <label for="name">{{ 'general.connectors.name' | translate }}</label>
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
         [ngModelOptions]="{standalone: true}">
-      <label for="description">description</label>
+      <label for="description">{{ 'general.connectors.description' | translate }}</label>
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="description" [(ngModel)]="description"
         [ngModelOptions]="{standalone: true}">
-      <label for="status">status</label>
+      <label for="status">{{ 'general.connectors.status' | translate }}</label>
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
         [ngModelOptions]="{standalone: true}">
-      <label for="serviceId">serviceId</label>
+      <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="serviceId" [(ngModel)]="serviceId"
         [ngModelOptions]="{standalone: true}">
-      <label for="url">url</label>
+      <label for="url">{{ 'general.connectors.url' | translate }}</label>
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
         [ngModelOptions]="{standalone: true}">
-      <!--><button type="submit">Conferma inserimento</button>!-->
-      <div *ngIf="getEdit()==false; else elseBlock">
-        <button nbButton appearance="outline" shape="semi-round" size="small" status="info" (click)="onEdit()">
-          <i class="mx-1">Confirm edit</i>
+        <button nbButton appearance="outline" shape="semi-round" size="small" status="info" (click)="confirm()">
+          <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i>
         </button>
-      </div>
-      <ng-template #elseBlock>
-        <button nbButton appearance="outline" shape="semi-round" size="small" status="info" (click)="onSubmit()">
-          <i class="mx-1">Confirm save</i>
-        </button>
-      </ng-template>
-
     </form>
   </nb-card-body>
   <nb-card-footer *ngIf="selectedFile">
