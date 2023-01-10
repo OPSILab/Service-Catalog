@@ -1,3 +1,4 @@
+import { StatusCardComponent } from './../../../dashboard/status-card/status-card.component';
 import { FormControl } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
@@ -23,7 +24,7 @@ export class DialogAddNewPromptComponent {
   description: string = "description";
   url: string = "url";
   status: string = "status";
-  serviceId: string = "serviceId";
+  serviceId: string = "id";
   textareaItemNgModel;
   inputItemFormControl
   textareaItemFormControl
@@ -32,7 +33,9 @@ export class DialogAddNewPromptComponent {
   selectedItem = 'Json';
   static formType: string = 'edit';
 
-  constructor(protected ref: NbDialogRef<DialogAddNewPromptComponent>, private errorService: ErrorDialogService, private availableConnectorService: AvailableConnectorsService) { }
+  constructor(protected ref: NbDialogRef<DialogAddNewPromptComponent>, private errorService: ErrorDialogService, private availableConnectorService: AvailableConnectorsService) {
+    console.log("constructor: ", this.value)
+   }
 
   cancel(): void {
     this.ref.close();
@@ -41,14 +44,21 @@ export class DialogAddNewPromptComponent {
   onInit(): void {
     this.inputItemFormControl = new FormControl();
     this.textareaItemFormControl = new FormControl();
+    console.log("onInit", this.value)
+    this.name = this.value.name
+    this.description=this.value.description
+    this.status=this.value.status
+    this.serviceId=this.value.serviceId
+    this.url=this.value.url
   }
 
-  getFormType(): string{
+  getFormType(): string {
     return DialogAddNewPromptComponent.formType
   }
 
   onFileChanged(event: Event): void {
     try {
+      console.log("onFileChanged", this.value)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       this.selectedFile = (<HTMLInputElement>event.target).files[0];
@@ -71,29 +81,26 @@ export class DialogAddNewPromptComponent {
     }
   }
 
-  confirm(){
-    if (DialogAddNewPromptComponent.formType!='edit')
+  confirm() {
+    console.log("confirm", this.value)
+    if (DialogAddNewPromptComponent.formType == 'edit')
       this.onEdit()
     else
       this.onSubmit()
   }
 
   onEdit() {
+    console.log("onedit value: ", this.value)
     let name = this.name, description = this.description, status = this.status, serviceId = this.serviceId, url = this.url;
     this.availableConnectorService.updateConnector((({ name, description, status, serviceId, url } as unknown)) as ConnectorEntry, serviceId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
+    console.log("dialog-add-new-prompt.component.ts.onEdit(): Updated")
     this.ref.close({ content: this.json, format: this.selectedItem });
-    console.log("dialog-add-new-prompt.component.ts.onEdit(): Dialog closed")
     this.editedValue.emit(this.value);
   }
 
-  onUpload(): void {
-    this.ref.close({ content: this.json, format: this.selectedItem });
-  }
-
-  onSubmit(){
-    console.log("ialog-add-new-prompt.component.ts.onSubmit: Submitted")
+  onSubmit() {
+    console.log("onsubmit", this.value)
     let name = this.name, description = this.description, status = this.status, serviceId = this.serviceId, url = this.url
-    console.log(this.availableConnectorService)
     this.availableConnectorService.saveConnector((({ name, description, status, serviceId, url } as unknown)) as ConnectorEntry)
     console.log("dialog-add-new-prompt.component.ts.onSubmit: Saved")
     this.ref.close()

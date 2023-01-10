@@ -231,19 +231,15 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
   async onEdit() {
     console.log("onedit called")
     DialogAddNewPromptComponent.formType = 'edit';
+    //DialogAddNewPromptComponent.form = 'edit';
     this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((confirm) => {
       if (confirm) void this.updateResult.emit(this.value.id);
     });
-    //this.value = await this.availableConnectorsService.getConnector(this.value.serviceId);;
-    //this.value= quello preso dalla form
-    DialogAddNewPromptComponent.formType = 'add';
-    //G:this.updateResult.emit(this.value);//G: commentandolo smette di aggiornarsi il menu
+    //DialogAddNewPromptComponent.formType = 'add';
+    //DialogAddNewPromptComponent.form = 'add';
     this.updateResult.emit(this.value.id);
     console.log("onedit finished")
     console.log(this.value)
-    //this.ngOnUpdate()
-    //this.value=this.editedValue
-    //this.ref.close();
     this.ngOnInit()
   }
 

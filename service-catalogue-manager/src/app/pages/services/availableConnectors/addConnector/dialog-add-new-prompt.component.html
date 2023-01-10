@@ -19,17 +19,19 @@
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
         [ngModelOptions]="{standalone: true}">
-      <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>
-      <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="serviceId" [(ngModel)]="serviceId"
-        [ngModelOptions]="{standalone: true}">
+      <!-- <div *ngIf="getFormType()=='add'"> -->
+        <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="serviceId" [(ngModel)]="serviceId"
+          [ngModelOptions]="{standalone: true}">
+      <!-- </div> -->
       <label for="url">{{ 'general.connectors.url' | translate }}</label>
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
         [ngModelOptions]="{standalone: true}">
-        <button nbButton appearance="outline" shape="semi-round" size="small" status="info" (click)="confirm()">
-          <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i>
-        </button>
+      <button nbButton appearance="outline" shape="semi-round" size="small" status="info" (click)="confirm()">
+        <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i>
+      </button>
     </form>
   </nb-card-body>
   <nb-card-footer *ngIf="selectedFile">

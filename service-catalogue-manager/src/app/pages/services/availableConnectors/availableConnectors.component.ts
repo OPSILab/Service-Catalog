@@ -172,20 +172,27 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   }
 
   async addNew(): Promise<void> {
-    DialogAddNewPromptComponent.formType = 'add';
-    console.log("AddNew");
-    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe(() => {
-      //if (confirm)
-      void console.log("confirm ok", this.ngOnInit());
-      //void this.source.load(this.availableConnectorsService.getConnectors());
-    });
-    console.log("Added");
-    DialogAddNewPromptComponent.formType = 'edit';
-    //this.updateResult.emit(this.value);
-    //this.ngOnInit()
-    this.updateResult.emit(this.value);
-    //this.updateResult.emit(this.value);
-    this.ngOnInit()
+    try {
+      DialogAddNewPromptComponent.formType = 'add';
+      //DialogAddNewPromptComponent.form = 'edit';
+      console.log("AddNew");
+      this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe(() => {
+        //if (confirm)
+        void console.log("confirm ok", this.ngOnInit());
+        //void this.source.load(this.availableConnectorsService.getConnectors());
+      });
+      console.log("Added");
+      //DialogAddNewPromptComponent.formType = 'edit';
+      //DialogAddNewPromptComponent.form = 'add';
+      //this.updateResult.emit(this.value);
+      //this.ngOnInit()
+      this.updateResult.emit(this.value);
+      //this.updateResult.emit(this.value);
+      this.ngOnInit()
+    }
+    catch(error){
+      console.log(error)
+    }
   }
 
   onEdit(): void {
