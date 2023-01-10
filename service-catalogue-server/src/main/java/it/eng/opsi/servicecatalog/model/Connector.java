@@ -34,7 +34,7 @@ public class Connector {
      */
     @JsonProperty("name")
     @Valid
-    // @NotNull
+    @NotNull
     private String name;
     /**
      * 
@@ -43,30 +43,27 @@ public class Connector {
      */
     @JsonProperty("description")
     @Valid
-    // @NotNull
+    @NotNull
     private String description;
 
     @JsonProperty("status")
     @Valid
-    // @NotNull
+    @NotNull
     private String status;
 
     @JsonProperty("connectorId")
     @Valid
-    // @NotNull
+    @NotNull
     private String connectorId;
 
     @JsonProperty("serviceId")
     @Valid
-    // @Column(unique = true)
-    // @Indexed(unique = true)
-    // @Id
     @NotNull
     private String serviceId;
 
     @JsonProperty("url")
     @Valid
-    // TODO @NotNull?
+    @NotNull
     private String url;
 
     /**

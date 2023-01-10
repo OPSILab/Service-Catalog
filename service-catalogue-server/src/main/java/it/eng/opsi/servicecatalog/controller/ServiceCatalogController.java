@@ -39,7 +39,6 @@ import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
 import it.eng.opsi.servicecatalog.service.ServiceCatalogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
 
 //TODOgetconnectorlogs
 
@@ -49,9 +48,6 @@ import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
 @RequestMapping("/api/v2")
 @Slf4j
 public class ServiceCatalogController implements IServiceCatalogController {
-
-	@Autowired
-	private ConnectorModelRepository connectorModelRepo;
 
 	@Autowired
 	IServiceCatalogService catalogService;
@@ -187,6 +183,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			result = catalogService.createConnector(connector);
 		} catch (Error e) {
 			System.out.println(e);
+			result.setStatus("Connector already exists");
+			return ResponseEntity.badRequest().body(result);
 		}
 		return ResponseEntity.created(URI.create(uriBasePath)).body(result);// G
 	}
