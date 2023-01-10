@@ -17,16 +17,16 @@ public class ConnectorModelCustomRepositoryImpl implements ConnectorModelCustomR
 
 	public Optional<Connector> updateConnector(String connectorId, Connector connector) {
 
-		Connector updatedConnector = template.findAndReplace(query(where("serviceId").is(connectorId)), connector);
+		Connector updatedConnector = template.findAndReplace(query(where("connectorId").is(connectorId)), connector);
 
 		return Optional.ofNullable(updatedConnector);
 
 	}
 
 	@Override
-	public Connector deleteConnector(String serviceId) {
+	public Connector deleteConnector(String connectorId) {
 		// TODO Auto-generated method stub
-		template.findAllAndRemove(query(where("serviceId").is(serviceId)), serviceId);
+		template.findAllAndRemove(query(where("connectorId").is(connectorId)), connectorId);
 		return null;
 	}
 	/*

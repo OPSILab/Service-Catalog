@@ -7,6 +7,10 @@
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
     <form>
+      <!--<label for="nameValue">nameValue</label>
+      <br>
+      <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="value.name"
+        [ngModelOptions]="{standalone: true}"> -->
       <label for="name">{{ 'general.connectors.name' | translate }}</label>
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
@@ -20,6 +24,10 @@
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
         [ngModelOptions]="{standalone: true}">
       <!-- <div *ngIf="getFormType()=='add'"> -->
+        <label for="connectorId">{{ 'general.connectors.connectorId' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="connectorId" [(ngModel)]="connectorId"
+          [ngModelOptions]="{standalone: true}">
         <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" placeholder="serviceId" [(ngModel)]="serviceId"

@@ -18,8 +18,9 @@ export interface Connector {
   name: String;
   description: String;
   status: String;
-  serviceId: String
-  url: String
+  connectorId: String;
+  serviceId: String;
+  url: String;
 }
 
 export enum ConnectorStatusEnum {

@@ -16,9 +16,9 @@ import it.eng.opsi.servicecatalog.model.ServiceModel;
 
 public interface ConnectorModelRepository extends MongoRepository<Connector, String>, ConnectorModelCustomRepository {
 
-	public Connector findByserviceId(String serviceId);
+	public Connector findByconnectorId(String connectorId);
 
-	public Optional<HasInfoOnly> getHasInfoByServiceId(String serviceId);
+	public Optional<HasInfoOnly> getHasInfoByconnectorId(String connectorId);
 
 	// @Query(value = "{ $and:[{ 'serviceId': ?0}, {
 	// 'serviceInstance.cert':{$ne:null}}]}")
@@ -43,8 +43,8 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 	// public List<Connector>
 	// findRegisteredConnectorsByServiceProviderBusinessId(String businessId);
 
-	@Query(value = "{ 'serviceId': { $in: ?0}}")
-	public List<Connector> findConnectorByserviceIds(Object[] ids);
+	@Query(value = "{ 'connectorId': { $in: ?0}}")
+	public List<Connector> findConnectorByconnectorIds(Object[] ids);
 
 	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }", count = true)
 	public List<Connector> findConnectorsIsPersonalDataHandling();
@@ -52,7 +52,7 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }", count = true)
 	public Long countConnectorsIsPersonalDataHandling();
 
-	public Long deleteConnectorModelByServiceId(String serviceId); // deleteConnectorModelByServiceId
+	public Long deleteConnectorModelByconnectorId(String connectorId); // deleteConnectorModelByServiceId
 
 	// @Aggregation(pipeline = { "{ $match: { 'serviceId' : $0}}", "{ $unwind:
 	// '$isDescribedAt'}",
@@ -86,7 +86,7 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 			"{$project:{'_id':0,'location':'$_id','count':'$count'}}" })
 	public List<HashMap<String, Object>> getCountByLocation();
 
-	public Connector deleteConnector(String serviceId);
+	public Connector deleteConnector(String connectorId);
 
 	// public List<Connector> findByserviceIds(Object[] array);
 

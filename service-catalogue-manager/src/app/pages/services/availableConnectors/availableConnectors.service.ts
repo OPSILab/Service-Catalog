@@ -30,7 +30,7 @@ export class AvailableConnectorsService {
   }
 
   getConnector(connectorId: string): Promise<ConnectorEntry> {
-    return this.http.get<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?serviceId=${connectorId}`).toPromise();
+    return this.http.get<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?connectorId=${connectorId}`).toPromise();
   }
 
   saveConnector(connector: ConnectorEntry): Promise<ConnectorEntry> {
@@ -42,20 +42,20 @@ export class AvailableConnectorsService {
     //return this.http
     //.post<ConnectorEntry>(`${this.sdkUrl}/api/v2/connectors/${connectorId}`, '', { headers: { 'Content-Type': 'application/json' } })
     //.toPromise();
-    return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?serviceId=${connector.serviceId}`, connector).toPromise();
+    return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?connectorId=${connector.connectorId}`, connector).toPromise();
   }
 
   deregisterConnector(connector: ConnectorEntry): Promise<ConnectorEntry> {
     //return this.http.delete<ConnectorEntry>(`${this.sdkUrl}/api/v2/connectors/${connectorId}`).toPromise();
-    return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?serviceId=${connector.serviceId}`, connector).toPromise();
+    return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?connectorId=${connector.connectorId}`, connector).toPromise();
   }
 
   updateConnector(connector: ConnectorEntry, connectorId: string): Promise<ConnectorEntry> {
-    return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?serviceId=${connectorId}`, connector).toPromise();
+    return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?connectorId=${connectorId}`, connector).toPromise();
   }
 
   deleteConnector(connectorId: string): Promise<ConnectorEntry> {
-    return this.http.delete<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?serviceId=${connectorId}`).toPromise();
+    return this.http.delete<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?connectorId=${connectorId}`).toPromise();
   }
 
   getConnectorLogs(connectorId: string): Promise<ConnectorEntryLog[]> {

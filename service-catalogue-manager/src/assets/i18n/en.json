@@ -295,6 +295,7 @@
       "editService": "Edit Service",
       "confirm": "Confirm",
       "serviceId": "Service ID",
+      "connectorId": "Connector ID",
       "name": "Name"
     }
   },

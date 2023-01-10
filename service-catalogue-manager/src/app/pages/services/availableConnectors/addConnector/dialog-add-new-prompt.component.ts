@@ -24,7 +24,8 @@ export class DialogAddNewPromptComponent {
   description: string = "description";
   url: string = "url";
   status: string = "status";
-  serviceId: string = "id";
+  connectorId:string="connectorId"
+  serviceId: string = "serviceId";
   textareaItemNgModel;
   inputItemFormControl
   textareaItemFormControl
@@ -48,6 +49,7 @@ export class DialogAddNewPromptComponent {
     this.name = this.value.name
     this.description=this.value.description
     this.status=this.value.status
+    this.connectorId=this.value.connectorId
     this.serviceId=this.value.serviceId
     this.url=this.value.url
   }
@@ -91,8 +93,8 @@ export class DialogAddNewPromptComponent {
 
   onEdit() {
     console.log("onedit value: ", this.value)
-    let name = this.name, description = this.description, status = this.status, serviceId = this.serviceId, url = this.url;
-    this.availableConnectorService.updateConnector((({ name, description, status, serviceId, url } as unknown)) as ConnectorEntry, serviceId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
+    let name = this.name, description = this.description, status = this.status, connectorId= this.connectorId, serviceId = this.serviceId, url = this.url;
+    this.availableConnectorService.updateConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry, connectorId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
     console.log("dialog-add-new-prompt.component.ts.onEdit(): Updated")
     this.ref.close({ content: this.json, format: this.selectedItem });
     this.editedValue.emit(this.value);
@@ -100,8 +102,8 @@ export class DialogAddNewPromptComponent {
 
   onSubmit() {
     console.log("onsubmit", this.value)
-    let name = this.name, description = this.description, status = this.status, serviceId = this.serviceId, url = this.url
-    this.availableConnectorService.saveConnector((({ name, description, status, serviceId, url } as unknown)) as ConnectorEntry)
+    let name = this.name, description = this.description, status = this.status, connectorId= this.connectorId, serviceId = this.serviceId, url = this.url
+    this.availableConnectorService.saveConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry)
     console.log("dialog-add-new-prompt.component.ts.onSubmit: Saved")
     this.ref.close()
     this.editedValue.emit(this.value);

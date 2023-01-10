@@ -30,7 +30,7 @@ public interface IServiceCatalogService {
 
 	public abstract ServiceModel getServiceById(String serviceId) throws ServiceNotFoundException;
 
-	public abstract Connector getConnectorByserviceId(String serviceId);
+	public abstract Connector getConnectorByconnectorId(String connectorId);
 
 	public abstract HasInfo getHasInfoById(String serviceId) throws ServiceNotFoundException;
 
@@ -57,13 +57,13 @@ public interface IServiceCatalogService {
 
 	public abstract List<HashMap<String, Object>> getCountByLocation();
 
-	public abstract Connector updateConnector(String decodedServiceIdentifier, @Valid Connector connector);
+	public abstract Connector updateConnector(String decodedConnectorIdentifier, @Valid Connector connector);
 
 	public abstract List<Connector> getConnectors();
 
-	public abstract Connector deleteConnector(String decodedConnectorServiceId);
+	public abstract Connector deleteConnector(String decodedConnectorConnectorId);
 
-	public abstract Connector getConnector(String decodedConnectorServiceId);
+	public abstract Connector getConnector(String decodedConnectorConnectorId);
 
 	public abstract HashMap<String, Object> getConnectorsCount();
 

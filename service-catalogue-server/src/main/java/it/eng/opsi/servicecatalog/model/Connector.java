@@ -5,11 +5,13 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -17,11 +19,14 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "name",
         "description",
         "status",
+        "connectorId",
         "serviceId",
         "url"
 })
 public class Connector {
 
+    @Autowired
+    private ConnectorModelRepository connectorModelRepo;
     /**
      * 
      * (Required)
@@ -46,12 +51,17 @@ public class Connector {
     // @NotNull
     private String status;
 
+    @JsonProperty("connectorId")
+    @Valid
+    // @NotNull
+    private String connectorId;
+
     @JsonProperty("serviceId")
     @Valid
     // @Column(unique = true)
     // @Indexed(unique = true)
-    @Id
-    // @NotNull
+    // @Id
+    @NotNull
     private String serviceId;
 
     @JsonProperty("url")
@@ -71,11 +81,19 @@ public class Connector {
      * @param name
      * @param description
      */
-    public Connector(String name, String description, String status, String serviceId, String url) {
+    public Connector(String name, String description, String status, String connectorId, String serviceId, String url) {
         super();
         this.name = name;
         this.description = description;
         this.status = status;
+        try {
+            this.connectorId = connectorId;
+            System.out.println(connectorModelRepo.findByconnectorId(connectorId));
+            if (connectorModelRepo.findByconnectorId(connectorId).connectorId == connectorId)
+                throw new Error("connectorId already exists");
+        } catch (Error e) {
+            System.out.println(e);
+        }
         this.serviceId = serviceId;
         this.url = url;
     }
@@ -118,6 +136,22 @@ public class Connector {
     @JsonProperty("description")
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    /**
+     * @return String return the connectorId
+     */
+    @JsonProperty("connectorId")
+    public String getConnectorId() {
+        return connectorId;
+    }
+
+    /**
+     * @param connectorId the connectorId to set
+     */
+    @JsonProperty("connectorId")
+    public void setConnectorId(String connectorId) {
+        this.connectorId = connectorId;
     }
 
     /**
@@ -203,5 +237,4 @@ public class Connector {
                 && ((this.description == rhs.description)
                         || ((this.description != null) && this.description.equals(rhs.description))));
     }
-
 }

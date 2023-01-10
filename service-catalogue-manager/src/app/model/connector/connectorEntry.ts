@@ -3,6 +3,7 @@ export interface ConnectorEntry {
   name: string;
   description: string;
   status: string;
+  connectorId: string;
   serviceId: string;
   url: string;
 }

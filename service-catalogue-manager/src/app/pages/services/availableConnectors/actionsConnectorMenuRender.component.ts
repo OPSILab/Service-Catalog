@@ -24,7 +24,7 @@ import { ConnectorEntry } from '../../../model/connector/connectorEntry';
   template: `
 <!--   <across-dialog-import-prompt (editedValue) = ngOnUpdate()> add new </across-dialog-import-prompt> -->
 <!--  <menu (editedValue)= ngOnInit()> -->
-    <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.serviceId }}" >
+    <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.connectorId }}" >
       <nb-icon icon="settings-2" ></nb-icon>
     </button>
     <!-- Register Service modal ng-template -->
@@ -145,7 +145,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
     this.menuService
       .onItemClick()
       .pipe(takeUntil(this.unsubscribe))
-      .pipe(filter(({ tag }) => tag === 'service-context-menu' + this.value.serviceId))
+      .pipe(filter(({ tag }) => tag === 'service-context-menu' + this.value.connectorId))
       .subscribe((event) => {
         console.log(event);
         console.log("pre-switch")
@@ -169,7 +169,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
             this.openDeRegisterDialog();
             break;
           case 'edit service':
-            this.onEditService(this.value.serviceId);
+            this.onEditService(this.value.connectorId);
             break;
           default:
             console.log("default");
@@ -180,7 +180,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
 
   async ngOnUpdate(): Promise<void> {
     console.log("ngOnUpdate")
-    this.value = await this.availableConnectorsService.getConnector(this.value.serviceId);
+    this.value = await this.availableConnectorsService.getConnector(this.value.connectorId);
     this.updateResult.emit(this.value);
     this.ngOnInit()
   }
@@ -316,7 +316,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
         serviceName: this.value.name,
         callback: async () => {
           try {
-            await this.availableConnectorsService.deleteConnector(this.value.serviceId);
+            await this.availableConnectorsService.deleteConnector(this.value.connectorId);
             this.showToast(
               'primary',
               this.translateService.instant('general.services.service_deleted_message', { serviceName: this.value.name }),

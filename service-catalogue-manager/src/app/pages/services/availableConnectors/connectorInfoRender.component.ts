@@ -19,6 +19,7 @@ export class ConnectorInfoRenderComponent {
       context: {
         modalHeader: this.value.name,
         description: this.value.description,
+        connectorId: this.value.connectorId,
         serviceId: this.value.serviceId,
         status: this.value.status,
         connectorUrl: this.value.url,

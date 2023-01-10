@@ -55,10 +55,10 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public Connector getConnector(String serviceId) throws ServiceNotFoundException {
+	public Connector getConnector(String connectorId) throws ServiceNotFoundException {
 
 		// log.info("Finding Service Models");
-		return connectorModelRepo.findByserviceId(serviceId);
+		return connectorModelRepo.findByconnectorId(connectorId);
 	}
 
 	@Override
@@ -115,21 +115,21 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public Connector updateConnector(String serviceId, Connector connector)
+	public Connector updateConnector(String connectorId, Connector connector)
 			throws ServiceNotFoundException, ServiceNotEditableException {
 
 		// log.info("Updating Service Model");
 		// If identifier is blank, set as the Service Id
 		// G
 
-		if (StringUtils.isBlank(connector.getServiceId()))
-			connector.setServiceId(uriBasePath + connector.getServiceId());
+		if (StringUtils.isBlank(connector.getConnectorId()))
+			connector.setConnectorId(uriBasePath + connector.getConnectorId());
 
-		if (!serviceId.equals(connector.getServiceId()))
-			throw new ServiceNotEditableException("ServiceId in the path and the one in the body mismatch.");
+		if (!connectorId.equals(connector.getConnectorId()))
+			throw new ServiceNotEditableException("ConnectorId in the path and the one in the body mismatch.");
 
-		return connectorModelRepo.updateConnector(serviceId, connector).orElseThrow(
-				() -> new ServiceNotFoundException("No Service description found for Service Id: " + serviceId));
+		return connectorModelRepo.updateConnector(connectorId, connector).orElseThrow(
+				() -> new ServiceNotFoundException("No Service description found for Service Id: " + connectorId));
 
 		// G
 	}
@@ -143,12 +143,12 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public Connector deleteConnector(String serviceId) throws ServiceNotFoundException {
+	public Connector deleteConnector(String connectorId) throws ServiceNotFoundException {
 
-		if (connectorModelRepo.deleteConnectorModelByServiceId(serviceId) == 0L)
-			throw new ServiceNotFoundException("No Service description found for Service Id: " + serviceId);
+		if (connectorModelRepo.deleteConnectorModelByconnectorId(connectorId) == 0L)
+			throw new ServiceNotFoundException("No Service description found for Service Id: " + connectorId);
 
-		return connectorModelRepo.deleteConnector(serviceId);
+		return connectorModelRepo.deleteConnector(connectorId);
 	}
 
 	@Override
@@ -227,9 +227,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public Connector getConnectorByserviceId(String serviceId) {
+	public Connector getConnectorByconnectorId(String connectorId) {
 		// TODO Auto-generated method stub
-		return connectorModelRepo.findByserviceId(serviceId);
+		return connectorModelRepo.findByconnectorId(connectorId);
 	}
 
 }

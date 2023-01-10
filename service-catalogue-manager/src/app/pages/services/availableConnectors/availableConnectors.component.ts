@@ -29,6 +29,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   private systemLocale: string;
   private config: AppConfig;
   public serviceId: string;
+  public connectorId: string;
   public serviceName: string;
   public readOnly = false;
   private connectorLabel: string;
