@@ -58,7 +58,7 @@ public class Connector {
 
     @JsonProperty("serviceId")
     @Valid
-    @NotNull
+    // NotNull
     private String serviceId;
 
     @JsonProperty("url")
@@ -86,7 +86,7 @@ public class Connector {
         try {
             this.connectorId = connectorId;
             System.out.println(connectorModelRepo.findByconnectorId(connectorId));
-            if (connectorModelRepo.findByconnectorId(connectorId).connectorId == connectorId)// TODO rivedere
+            if (connectorModelRepo.findByconnectorId(connectorId).connectorId == connectorId)
                 throw new Error("connectorId already exists");
         } catch (Error e) {
             System.out.println(e);
@@ -153,7 +153,7 @@ public class Connector {
 
     /**
      * 
-     * (Required)
+     * (Not required)
      * 
      */
     @JsonProperty("serviceId")
@@ -163,7 +163,7 @@ public class Connector {
 
     /**
      * 
-     * (Required)
+     * (Not required)
      * 
      */
     @JsonProperty("serviceId")

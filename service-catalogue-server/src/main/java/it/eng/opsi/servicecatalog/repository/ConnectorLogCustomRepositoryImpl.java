@@ -8,7 +8,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 
 public class ConnectorLogCustomRepositoryImpl implements ConnectorLogCustomRepository {
@@ -27,7 +26,7 @@ public class ConnectorLogCustomRepositoryImpl implements ConnectorLogCustomRepos
 
 	@Override
 	public ConnectorLog deleteConnectorLog(String connectorId) {
-		// TODO Auto-generated method stub
+
 		template.findAllAndRemove(query(where("connectorId").is(connectorId)), connectorId);
 		return null;
 	}

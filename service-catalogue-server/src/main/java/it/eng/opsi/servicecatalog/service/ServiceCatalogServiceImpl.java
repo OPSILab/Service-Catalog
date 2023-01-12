@@ -15,6 +15,8 @@ import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
 
 import it.eng.opsi.servicecatalog.exception.ConnectorLogNotFoundException;
+import it.eng.opsi.servicecatalog.exception.ConnectorNotEditableException;
+import it.eng.opsi.servicecatalog.exception.ConnectorNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.jsonld.Serializer;
@@ -63,7 +65,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public Connector getConnector(String connectorId) throws ServiceNotFoundException {
+	public Connector getConnector(String connectorId) throws ConnectorNotFoundException {
 
 		return connectorModelRepo.findByconnectorId(connectorId);
 	}
@@ -77,7 +79,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public HashMap<String, Object> getConnectorsCount() {
-		// TODO Auto-generated method stub
 		return connectorModelRepo.getTotalCount();
 	}
 
@@ -117,11 +118,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public Connector updateConnector(String connectorId, Connector connector)
-			throws ServiceNotFoundException, ServiceNotEditableException {
-
-		// log.info("Updating Service Model");
-		// If identifier is blank, set as the Service Id
-		// G
+			throws ConnectorNotFoundException, ConnectorNotEditableException {
 
 		if (StringUtils.isBlank(connector.getConnectorId()))
 			connector.setConnectorId(uriBasePath + connector.getConnectorId());
@@ -130,7 +127,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			throw new ServiceNotEditableException("ConnectorId in the path and the one in the body mismatch.");
 
 		return connectorModelRepo.updateConnector(connectorId, connector).orElseThrow(
-				() -> new ServiceNotFoundException("No Service description found for Service Id: " + connectorId));
+				() -> new ServiceNotFoundException("No Connector description found for Service Id: " + connectorId));
 
 		// G
 	}
@@ -144,10 +141,10 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public Connector deleteConnector(String connectorId) throws ServiceNotFoundException {
+	public Connector deleteConnector(String connectorId) throws ConnectorNotFoundException {
 
 		if (connectorModelRepo.deleteConnectorModelByconnectorId(connectorId) == 0L)
-			throw new ServiceNotFoundException("No Service description found for Service Id: " + connectorId);
+			throw new ServiceNotFoundException("No Connector description found for Connector Id: " + connectorId);
 
 		return connectorModelRepo.deleteConnector(connectorId);
 	}
@@ -223,40 +220,40 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public List<Connector> getConnectors() {
-		// TODO Auto-generated method stub
+
 		return connectorModelRepo.findAll();
 	}
 
 	@Override
 	public Connector getConnectorByconnectorId(String connectorId) {
-		// TODO Auto-generated method stub
+
 		return connectorModelRepo.findByconnectorId(connectorId);
 	}
 
 	@Override
 	public List<ConnectorLog> getConnectorLogs() {
-		// TODO Auto-generated method stub
+
 		return connectorLogRepo.findAll();
 	}
 
 	@Override
 	public List<ConnectorLog> getConnectorLogsByconnectorId(String decodedConnectorConnectorId) {
-		// TODO Auto-generated method stub
+
 		return connectorLogRepo.findByconnectorId(decodedConnectorConnectorId);
 	}
 
 	@Override
 	public ConnectorLog createConnectorLog(@Valid ConnectorLog connectorLog) {
-		// TODO Auto-generated method stub
+
 		return connectorLogRepo.save(connectorLog);
 	}
 
 	@Override
 	public ConnectorLog deleteConnectorLog(String decodedConnectorConnectorId) {
-		// TODO Auto-generated method stub
+
 		if (connectorLogRepo.deleteConnectorLogByconnectorId(decodedConnectorConnectorId) == 0L)
 			throw new ConnectorLogNotFoundException(
-					"No Service description found for Service Id: " + decodedConnectorConnectorId);
+					"No Connector log description found for Connector Id: " + decodedConnectorConnectorId);
 
 		return connectorLogRepo.deleteConnectorLog(decodedConnectorConnectorId);
 	}

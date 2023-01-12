@@ -9,6 +9,8 @@ import javax.validation.Valid;
 
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 
+import it.eng.opsi.servicecatalog.exception.ConnectorNotEditableException;
+import it.eng.opsi.servicecatalog.exception.ConnectorNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.HasInfo;
@@ -21,9 +23,6 @@ public interface IServiceCatalogService {
 	public abstract List<ServiceModel> getServices() throws ServiceNotFoundException;
 
 	public abstract List<ServiceModel> getServicesbyIds(List<String> ids) throws ServiceNotFoundException;
-
-	// public abstract List<Connector> getConnectorbyserviceIds(List<String>
-	// serviceIds) throws ServiceNotFoundException;
 
 	public abstract List<ServiceModel> getServicesIsPersonaDataHandling() throws ServiceNotFoundException;
 
@@ -58,7 +57,8 @@ public interface IServiceCatalogService {
 
 	public abstract List<HashMap<String, Object>> getCountByLocation();
 
-	public abstract Connector updateConnector(String decodedConnectorIdentifier, @Valid Connector connector);
+	public abstract Connector updateConnector(String decodedConnectorIdentifier, @Valid Connector connector)
+			throws ConnectorNotFoundException, ConnectorNotEditableException;
 
 	public abstract List<Connector> getConnectors();
 

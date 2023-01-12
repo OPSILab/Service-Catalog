@@ -47,11 +47,21 @@ public class ConnectorLog {
     @NotNull
     private String message;
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @JsonProperty("issued")
     @Valid
     @NotNull
     private Date issued;
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @JsonProperty("connectorId")
     @Valid
     @NotNull
