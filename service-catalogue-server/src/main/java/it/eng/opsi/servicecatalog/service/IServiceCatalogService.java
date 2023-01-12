@@ -14,6 +14,7 @@ import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Connector;
+import it.eng.opsi.servicecatalog.model.ConnectorLog;
 
 public interface IServiceCatalogService {
 
@@ -66,5 +67,13 @@ public interface IServiceCatalogService {
 	public abstract Connector getConnector(String decodedConnectorConnectorId);
 
 	public abstract HashMap<String, Object> getConnectorsCount();
+
+	public abstract List<ConnectorLog> getConnectorLogs();
+
+	public abstract List<ConnectorLog> getConnectorLogsByconnectorId(String decodedConnectorConnectorId);
+
+	public abstract ConnectorLog createConnectorLog(@Valid ConnectorLog connectorLog);
+
+	public abstract ConnectorLog deleteConnectorLog(String decodedConnectorConnectorId);
 
 }

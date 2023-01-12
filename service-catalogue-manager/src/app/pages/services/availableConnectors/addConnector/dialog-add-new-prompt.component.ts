@@ -1,12 +1,13 @@
 import { StatusCardComponent } from './../../../dashboard/status-card/status-card.component';
 import { FormControl } from '@angular/forms';
-import { NbDialogRef } from '@nebular/theme';
+import { NbComponentStatus, NbDialogRef, NbGlobalPhysicalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
 import { AvailableConnectorsService } from '../availableConnectors.service'
 import { NgxConfigureService } from 'ngx-configure';
 import { HttpClient } from '@angular/common/http';
 import { ConnectorEntry } from '../../../../model/connector/connectorEntry'
 import { Component, Input, Output, EventEmitter, } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'ngx-dialog-import-prompt',
@@ -23,8 +24,8 @@ export class DialogAddNewPromptComponent {
   name: string = "name";
   description: string = "description";
   url: string = "url";
-  status: string = "status";
-  connectorId:string="connectorId"
+  status: string = "inactive";
+  connectorId: string = "connectorId"
   serviceId: string = "serviceId";
   textareaItemNgModel;
   inputItemFormControl
@@ -34,9 +35,11 @@ export class DialogAddNewPromptComponent {
   selectedItem = 'Json';
   static formType: string = 'edit';
 
-  constructor(protected ref: NbDialogRef<DialogAddNewPromptComponent>, private errorService: ErrorDialogService, private availableConnectorService: AvailableConnectorsService) {
+
+  constructor(protected ref: NbDialogRef<DialogAddNewPromptComponent>, private toastrService: NbToastrService,
+    private errorService: ErrorDialogService, private availableConnectorService: AvailableConnectorsService, private translate: TranslateService) {
     console.log("constructor: ", this.value)
-   }
+  }
 
   cancel(): void {
     this.ref.close();
@@ -47,11 +50,11 @@ export class DialogAddNewPromptComponent {
     this.textareaItemFormControl = new FormControl();
     console.log("onInit", this.value)
     this.name = this.value.name
-    this.description=this.value.description
-    this.status=this.value.status
-    this.connectorId=this.value.connectorId
-    this.serviceId=this.value.serviceId
-    this.url=this.value.url
+    this.description = this.value.description
+    this.status = this.value.status
+    this.connectorId = this.value.connectorId
+    this.serviceId = this.value.serviceId
+    this.url = this.value.url
   }
 
   getFormType(): string {
@@ -93,7 +96,7 @@ export class DialogAddNewPromptComponent {
 
   onEdit() {
     console.log("onedit value: ", this.value)
-    let name = this.name, description = this.description, status = this.status, connectorId= this.connectorId, serviceId = this.serviceId, url = this.url;
+    let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url;
     this.availableConnectorService.updateConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry, connectorId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
     console.log("dialog-add-new-prompt.component.ts.onEdit(): Updated")
     this.ref.close({ content: this.json, format: this.selectedItem });
@@ -101,11 +104,44 @@ export class DialogAddNewPromptComponent {
   }
 
   onSubmit() {
-    console.log("onsubmit", this.value)
-    let name = this.name, description = this.description, status = this.status, connectorId= this.connectorId, serviceId = this.serviceId, url = this.url
-    this.availableConnectorService.saveConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry)
-    console.log("dialog-add-new-prompt.component.ts.onSubmit: Saved")
-    this.ref.close()
-    this.editedValue.emit(this.value);
+    try {
+      console.log("onsubmit", this.value)
+      let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url
+      if (connectorId == '' || connectorId == null) {
+        console.log("Connector ID must be set")
+        throw new Error("Connector ID must be set")
+      }
+      this.availableConnectorService.saveConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry)
+      console.log("dialog-add-new-prompt.component.ts.onSubmit: Saved")
+      this.ref.close()
+      this.editedValue.emit(this.value);
+      this.showToast('primary', this.translate.instant('general.connectors.connector_added_message'), '')//,{ serviceName: this.value.name }
+    }
+    catch (error) {
+      console.log(error)
+      this.errorService.openErrorDialog({ error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+        {
+            "path": "root.connectorId",
+            "property": "minLength",
+            "message": "Value required",
+            "errorcount": 1
+        }
+    ] });
+    }
   }
+
+
+  private showToast(type: NbComponentStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: true,
+      duration: 2500,
+      hasIcon: true,
+      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
+      preventDuplicates: true,
+    } as Partial<NbToastrConfig>;
+
+    this.toastrService.show(body, title, config);
+  }
+
 }

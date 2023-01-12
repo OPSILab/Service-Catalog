@@ -162,9 +162,11 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
             console.log("register");
             this.openRegisterDialog();
             break;
+          /*
           case 'consents':
             this.viewConsents(this.value.id);
             break;
+          */
           case 'deregister':
             this.openDeRegisterDialog();
             break;
@@ -197,10 +199,12 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
           title: this.translate.instant('general.services.deregister') as string,
           data: 'deregister',
         },
+        /*
         {
           title: this.translate.instant('general.services.consents') as string,
           data: 'consents',
         },
+        */
         {
           title: this.translate.instant('general.connectors.editService') as string,
           data: 'edit service',
@@ -231,12 +235,9 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
   async onEdit() {
     console.log("onedit called")
     DialogAddNewPromptComponent.formType = 'edit';
-    //DialogAddNewPromptComponent.form = 'edit';
     this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((confirm) => {
       if (confirm) void this.updateResult.emit(this.value.id);
     });
-    //DialogAddNewPromptComponent.formType = 'add';
-    //DialogAddNewPromptComponent.form = 'add';
     this.updateResult.emit(this.value.id);
     console.log("onedit finished")
     console.log(this.value)

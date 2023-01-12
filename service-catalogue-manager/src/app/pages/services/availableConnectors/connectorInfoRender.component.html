@@ -14,19 +14,104 @@
     <nb-card-body>
       <div class="row justify-content-around align-items-sm-center">
         <div class="col-sm py-2">
-          <img
-            style="width: 140px; height: 100px"
-            src="{{ data.iconUrl }}"
-            alt="{{ data.modalHeader }}"
-            onerror="this.onerror=null;this.src = 'favicon.png';"
-          />
+          <img style="width: 140px; height: 100px" src="{{ data.iconUrl }}" alt="{{ data.modalHeader }}"
+            onerror="this.onerror=null;this.src = 'favicon.png';" />
         </div>
-        <div class="col-sm">
-          {{ data.description }}
+      </div>
+      <br>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i><b>{{ 'general.connectors.name' | translate }}:</b> {{ value.name}}</i>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i><b>{{ 'general.connectors.description' | translate }}:</b> {{ data.description }}</i>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i><b>{{ 'general.connectors.status' | translate }}:</b> {{ data.status }}</i>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i><b>{{ 'general.connectors.serviceId' | translate }}:</b> {{ data.serviceId }}</i>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i><b>{{ 'general.connectors.connectorId' | translate }}:</b> {{ data.connectorId }}</i>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i><b>{{ 'general.connectors.url' | translate }}:</b> <a href="{{ value.url }}" target="_blank"><nb-icon
+                  icon="external-link-outline"></nb-icon></a></i>
+            <!--<a href="{{ value.url }}" target="_blank"><nb-icon icon="external-link-outline"></nb-icon></a>-->
+          </div>
         </div>
       </div>
 
-     <!-- <div class="row justify-content-around">
+      <nb-accordion>
+        <nb-accordion-item *ngFor="let log of logs" expanded = false >
+            <nb-accordion-item-header>
+                Logs
+            </nb-accordion-item-header>
+            <nb-accordion-item-body >
+                <ul >
+                    <li>
+                        <div class="col-9">{{log.type}}</div>
+                    </li>
+
+                    <li>
+                      <div class="col-9">{{log.message}}</div>
+                  </li>
+                  <li>
+                    <div class="col-9">{{log.issued}}</div>
+                </li>
+                </ul>
+            </nb-accordion-item-body>
+        </nb-accordion-item>
+    </nb-accordion>
+
+      <!--
+      <nb-tabset class="mt-2" fullWidth status="success">
+        <nb-tab [responsive]="true" tabTitle="{{ 'general.services.data_processing' | translate }}">
+
+          <nb-accordion class="my-2 shadow-none border border-primary"
+            *ngFor="let processing of data.processings; let i = index" [attr.data-index]="i">
+            <nb-accordion-item>
+              <nb-accordion-item-header class="bg-light bg-gradient">
+                <h5 class="h6 pr-3">{{ processing.purposeName }}</h5>
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="my-1">
+                  <i
+                    ><b> {{ value.name }}.</b></i
+                  >
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+        </nb-tab>
+      </nb-tabset>
+      -->
+
+
+          <!--
+        <div class="row justify-content-around">
         <div class="col-sm py-1">
           <div class="accent">
             <i>
@@ -58,9 +143,10 @@
         </div>
       </div>
 
+
       <nb-tabset class="mt-2" fullWidth status="success">
         <nb-tab [responsive]="true" tabTitle="{{ 'general.services.data_processing' | translate }}">
-          
+
           <nb-accordion
             class="my-2 shadow-none border border-primary"
             *ngFor="let processing of data.processings; let i = index"
@@ -168,20 +254,15 @@
             </tbody>
           </table>
         </nb-tab>
-      </nb-tabset>-->
+      </nb-tabset>
+-->
     </nb-card-body>
 
     <nb-card-footer>
       <div class="row justify-content-center">
-        <button
-          nbButton
-          class="mx-4"
-          shape="rectangle"
-          size="large"
-          status="primary"
+        <button nbButton class="mx-4" shape="rectangle" size="large" status="primary"
           [routerLink]="['/pages/services/service-editor', { serviceId: data.serviceId, readOnly: true }]"
-          (click)="ref.close()"
-        >
+          (click)="ref.close()">
           <i class="material-icons">info</i>&nbsp;{{ 'general.services.view_editor' | translate }}
         </button>
         <button nbButton class="mx-4" ghost shape="rectangle" size="large" status="primary" (click)="ref.close()">

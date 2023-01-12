@@ -9,21 +9,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import it.eng.opsi.servicecatalog.model.Connector;
+import it.eng.opsi.servicecatalog.model.ConnectorLog;
 
-public class ConnectorModelCustomRepositoryImpl implements ConnectorModelCustomRepository {
+public class ConnectorLogCustomRepositoryImpl implements ConnectorLogCustomRepository {
 
 	@Autowired
 	MongoTemplate template;
 
-	public Optional<Connector> updateConnector(String connectorId, Connector connector) {
+	public Optional<ConnectorLog> updateConnectorLog(String connectorId, ConnectorLog connectorLog) {
 
-		Connector updatedConnector = template.findAndReplace(query(where("connectorId").is(connectorId)), connector);
+		ConnectorLog updatedConnectorLog = template.findAndReplace(query(where("connectorId").is(connectorId)),
+				connectorLog);
 
-		return Optional.ofNullable(updatedConnector);
+		return Optional.ofNullable(updatedConnectorLog);
+
 	}
 
 	@Override
-	public Connector deleteConnector(String connectorId) {
+	public ConnectorLog deleteConnectorLog(String connectorId) {
+		// TODO Auto-generated method stub
 		template.findAllAndRemove(query(where("connectorId").is(connectorId)), connectorId);
 		return null;
 	}

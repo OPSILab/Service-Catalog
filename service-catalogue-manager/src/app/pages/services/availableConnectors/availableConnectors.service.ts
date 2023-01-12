@@ -39,9 +39,6 @@ export class AvailableConnectorsService {
   }
 
   registerConnector(connector: ConnectorEntry): Promise<ConnectorEntry> {
-    //return this.http
-    //.post<ConnectorEntry>(`${this.sdkUrl}/api/v2/connectors/${connectorId}`, '', { headers: { 'Content-Type': 'application/json' } })
-    //.toPromise();
     return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?connectorId=${connector.connectorId}`, connector).toPromise();
   }
 
@@ -59,6 +56,6 @@ export class AvailableConnectorsService {
   }
 
   getConnectorLogs(connectorId: string): Promise<ConnectorEntryLog[]> {
-    return this.http.get<ConnectorEntryLog[]>(`${this.serviceRegistryUrl}/api/v2/connectors/${connectorId}`).toPromise();
+    return this.http.get<ConnectorEntryLog[]>(`${this.serviceRegistryUrl}/api/v2/connectors/logs?connectorId=${connectorId}`).toPromise();
   }
 }

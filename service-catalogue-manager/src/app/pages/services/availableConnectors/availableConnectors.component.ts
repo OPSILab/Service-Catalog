@@ -11,8 +11,10 @@ import { takeUntil } from 'rxjs/operators';
 import { ActionsConnectorMenuRenderComponent } from './actionsConnectorMenuRender.component';
 import { ConnectorEntry } from '../../../model/connector/connectorEntry';
 import { DialogAddNewPromptComponent } from './addConnector/dialog-add-new-prompt.component';
-import { NbDialogService } from '@nebular/theme';
+import { NbComponentStatus, NbDialogService, NbGlobalPhysicalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
+import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
+
 @Component({
   selector: 'available-connectors-smart-table',
   templateUrl: './availableConnectors.component.html',
@@ -42,6 +44,8 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   public source: LocalDataSource = new LocalDataSource();
   private availableConnectors: ConnectorEntry[];
   private unsubscribe: Subject<void> = new Subject();
+  errorService: ErrorDialogService;
+  private toastrService: NbToastrService
 
   constructor(
     private availableConnectorsService: AvailableConnectorsService,
@@ -63,6 +67,9 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
       this.systemConfig.editorSchemaName;
     this.loading = true;
   }
+
+
+
 
   async ngOnInit() {
     console.log("availableConnectors.component: ngOnInit()")
@@ -173,6 +180,20 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   }
 
   async addNew(): Promise<void> {
+    /*
+    let c
+    const config = {
+      status: 'primary',
+      destroyByClick: true,
+      duration: 2500,
+      hasIcon: true,
+      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
+      preventDuplicates: true,
+      icons: "",
+      patchIcon: ""
+    } as unknown as NbToastrConfig
+    */
+    //let toastrService = new NbToastrService(config, c);
     try {
       DialogAddNewPromptComponent.formType = 'add';
       //DialogAddNewPromptComponent.form = 'edit';
@@ -190,9 +211,13 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
       this.updateResult.emit(this.value);
       //this.updateResult.emit(this.value);
       this.ngOnInit()
+      //this.showToast('primary', this.translate.instant('general.connector.connector_added_message'//,{ serviceName: this.value.name }
+      //),'');
+
     }
-    catch(error){
+    catch (error) {
       console.log(error)
+      this.errorService.openErrorDialog(error);
     }
   }
 
@@ -200,6 +225,19 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
     this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe(() => { }
     );
     this.ngOnInit()
+  }
+
+  private showToast(type: NbComponentStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: true,
+      duration: 2500,
+      hasIcon: true,
+      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
+      preventDuplicates: true,
+    } as Partial<NbToastrConfig>;
+
+    this.toastrService.show(body, title, config);
   }
 
   loadTableSettings(): Record<string, unknown> {

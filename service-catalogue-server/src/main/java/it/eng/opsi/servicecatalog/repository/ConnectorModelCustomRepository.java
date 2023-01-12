@@ -9,7 +9,4 @@ public interface ConnectorModelCustomRepository {
 	public Optional<Connector> updateConnector(String connectorId, Connector connector);
 
 	public Connector deleteConnector(String connectorId);
-
-	// public Connector getConnector(String serviceId);
-
 }

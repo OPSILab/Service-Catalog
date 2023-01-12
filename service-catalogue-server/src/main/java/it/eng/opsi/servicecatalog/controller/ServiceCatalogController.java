@@ -32,10 +32,15 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import it.eng.opsi.servicecatalog.exception.ConnectorLogNotFoundException;
+import it.eng.opsi.servicecatalog.exception.ConnectorNotEditableException;
+import it.eng.opsi.servicecatalog.exception.ConnectorLogNotEditableException;
+import it.eng.opsi.servicecatalog.exception.ConnectorNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Connector;
+import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
 import it.eng.opsi.servicecatalog.service.ServiceCatalogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
@@ -69,14 +74,23 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get all the Connector Model descriptions.", description = "Get all the Connector Model descriptions saved in the Service Catalog.", tags = {
+	@Operation(summary = "Get all the Connector descriptions.", description = "Get all the Connector descriptions saved in the Service Catalog.", tags = {
 			"Connector" }, responses = {
 					@ApiResponse(description = "Returns the list of all registered Connectors descriptions.", responseCode = "200") })
 	@GetMapping(value = "/connectors", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Connector>> getConnectors() throws ServiceNotFoundException {// TODO G: throws connector
-																							// not found exception
+	public ResponseEntity<List<Connector>> getConnectors() throws ConnectorNotFoundException {
 
 		return ResponseEntity.ok(catalogService.getConnectors());
+	}
+
+	@Override
+	@Operation(summary = "Get all Connectors Logs descriptions.", tags = {
+			"Connector" }, responses = {
+					@ApiResponse(description = "Get all Connectors Logs descriptions.", responseCode = "200") })
+	@GetMapping(value = "/connectors/logs/all", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ConnectorLog>> getConnectorLogs() throws ConnectorLogNotFoundException {
+
+		return ResponseEntity.ok(catalogService.getConnectorLogs());
 	}
 
 	@Override
@@ -107,6 +121,41 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		else
 			return ResponseEntity.ok(catalogService.getServiceById(decodedServiceIdentifier));
 
+	}
+
+	@Operation(summary = "Get Connector description by connectorId.", tags = {
+			"Connector" }, responses = {
+					@ApiResponse(description = "Get Connector description by connectorId.", responseCode = "200") })
+	@Override
+	@GetMapping(value = "/connectors/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getConnector(@RequestParam("connectorId") String connectorId)
+			throws ConnectorNotFoundException, ConnectorNotEditableException {
+
+		if (StringUtils.isBlank(connectorId))
+			throw new IllegalArgumentException("Illegal connectorId in input");
+
+		String decodedConnectorConnectorId = java.net.URLDecoder.decode(connectorId,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.getConnectorByconnectorId(decodedConnectorConnectorId));
+	}
+
+	@Operation(summary = "Get Connector Logs description by connectorId.", tags = {
+			"Connector" }, responses = {
+					@ApiResponse(description = "Get Connector Logs description by connectorId.", responseCode = "200") })
+	@Override
+	@GetMapping(value = "/connectors/logs", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ConnectorLog>> getConnectorLogsByconnectorId(
+			@RequestParam("connectorId") String connectorId)
+			throws ConnectorLogNotFoundException, ConnectorLogNotEditableException {
+
+		if (StringUtils.isBlank(connectorId))
+			throw new IllegalArgumentException("Illegal connector id in input");
+
+		String decodedConnectorConnectorId = java.net.URLDecoder.decode(connectorId,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.getConnectorLogsByconnectorId(decodedConnectorConnectorId));
 	}
 
 	@Override
@@ -152,7 +201,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the count of the registered Service Model descriptions (total, public and private services).", tags = {
+	@Operation(summary = "Get the count of the registered Connector descriptions (total, public and private services).", tags = {
 			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/connectors/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HashMap<String, Object>> getConnectorsCount() {
@@ -171,6 +220,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				.body(result);
 	}
 
+	@Operation(summary = "Create a new connector.", tags = {
+			"Connector" }, responses = {
+					@ApiResponse(description = "Create a new connector.", responseCode = "200") })
 	@Override
 	@PostMapping(value = "/connectors")
 	public ResponseEntity<Connector> createConnector(@RequestBody @Valid Connector connector) {
@@ -186,7 +238,19 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			result.setStatus("Connector already exists");
 			return ResponseEntity.badRequest().body(result);
 		}
-		return ResponseEntity.created(URI.create(uriBasePath)).body(result);// G
+		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
+	}
+
+	@Operation(summary = "Create a new connector.", tags = {
+			"Connector" }, responses = {
+					@ApiResponse(description = "Create a new connector.", responseCode = "200") })
+	@Override
+	@PostMapping(value = "/connectors/logs")
+	public ResponseEntity<ConnectorLog> createConnectorLog(@RequestBody @Valid ConnectorLog connectorLog) {
+
+		ConnectorLog result = new ConnectorLog();
+		result = catalogService.createConnectorLog(connectorLog);
+		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
 	}
 
 	@Operation(summary = "Update Service Model description, by replacing the existing one", tags = {
@@ -211,47 +275,55 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Operation(summary = "Update Connector Model description, by replacing the existing one", tags = {
 			"Connector Model" }, responses = {
-					@ApiResponse(description = "Returns the Model Connector Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Connector.class))) })
+					@ApiResponse(description = "Returns the Connector Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Connector.class))) })
 	@Override
 	@PutMapping(value = "/connectors", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Connector> updateConnector(
 			@RequestParam("connectorId") String connectorId,
 			@RequestBody @Valid Connector connector)
-			throws ServiceNotFoundException, ServiceNotEditableException {
-
-		// String serviceIdentifier =
-		// request.getRequestURI().split(request.getContextPath() +
-		// "/api/v2/services/")[1];
+			throws ConnectorNotFoundException, ConnectorNotEditableException {
 
 		if (StringUtils.isBlank(connectorId))
-			throw new IllegalArgumentException("Illegal Service Identifier in input");
+			throw new IllegalArgumentException("Illegal connectorid in input");
 
 		String decodedConnectorConnectorId = java.net.URLDecoder.decode(connectorId,
 				StandardCharsets.UTF_8);
 
 		return ResponseEntity.ok(catalogService.updateConnector(
-				decodedConnectorConnectorId,
-				// serviceId,
-				connector));
+				decodedConnectorConnectorId, connector));
 	}
 
-	@Override
-	@GetMapping(value = "/connectors/json", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getConnector(@RequestParam("connectorId") String connectorId)
-			throws ServiceNotFoundException, ServiceNotEditableException {
-
-		// String serviceIdentifier =
-		// request.getRequestURI().split(request.getContextPath() +
-		// "/api/v2/services/")[1];
-
-		if (StringUtils.isBlank(connectorId))
-			throw new IllegalArgumentException("Illegal Service Identifier in input");
-
-		String decodedConnectorConnectorId = java.net.URLDecoder.decode(connectorId,
-				StandardCharsets.UTF_8);
-
-		return ResponseEntity.ok(catalogService.getConnectorByconnectorId(decodedConnectorConnectorId));
-	}
+	/*
+	 * @Operation(summary =
+	 * "Update Connector log description, by replacing the existing one", tags = {
+	 * "Connector Model" }, responses = {
+	 * 
+	 * @ApiResponse(description = "Returns the Connector log.", responseCode =
+	 * "200", content = @Content(mediaType = "application/json", schema
+	 * = @Schema(implementation = Connector.class))) })
+	 * 
+	 * @Override
+	 * 
+	 * @PutMapping(value = "/connectors/logs", consumes =
+	 * MediaType.APPLICATION_JSON_VALUE, produces =
+	 * MediaType.APPLICATION_JSON_VALUE)
+	 * public ResponseEntity<Connector> updateConnectorLog(
+	 * 
+	 * @RequestParam("connectorId") String connectorId,
+	 * 
+	 * @RequestBody @Valid Connector connector)
+	 * throws ConnectorNotFoundException, ConnectorNotEditableException {
+	 * 
+	 * if (StringUtils.isBlank(connectorId))
+	 * throw new IllegalArgumentException("Illegal connectorid in input");
+	 * 
+	 * String decodedConnectorConnectorId = java.net.URLDecoder.decode(connectorId,
+	 * StandardCharsets.UTF_8);
+	 * 
+	 * return ResponseEntity.ok(catalogService.updateConnectorLog(
+	 * decodedConnectorConnectorId, connector));
+	 * }
+	 */
 
 	@Operation(summary = "Delete Service Model description by Service Id.", tags = { "Service Model" }, responses = {
 			@ApiResponse(description = "Returns No Content.", responseCode = "204") })
@@ -275,24 +347,39 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
-	@Operation(summary = "Delete Connector Model description by serviceId.", tags = {
+	@Operation(summary = "Delete Connector Model description by connectorId.", tags = {
 			"Connector Model" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
 	@DeleteMapping(value = "/connectors")
 	public ResponseEntity<Object> deleteConnector(@RequestParam("connectorId") String connectorId)
-			throws ServiceNotFoundException {
-
-		// String serviceIdentifier =
-		// request.getRequestURI().split(request.getContextPath() +
-		// "/api/v2/services/")[1];
+			throws ConnectorNotFoundException {
 
 		if (StringUtils.isBlank(connectorId))
-			throw new IllegalArgumentException("Illegal Service serviceId in input");
+			throw new IllegalArgumentException("Illegal connectorId in input");
 
 		String decodedConnectorConnectorId = java.net.URLDecoder.decode(connectorId, StandardCharsets.UTF_8);
 
 		catalogService.deleteConnector(decodedConnectorConnectorId);
+
+		return ResponseEntity.noContent().build();
+
+	}
+
+	@Operation(summary = "Delete Connector Log description by connectorId.", tags = {
+			"Connector Model" }, responses = {
+					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
+	@Override
+	@DeleteMapping(value = "/connectors/logs")
+	public ResponseEntity<Object> deleteConnectorLog(@RequestParam("connectorId") String connectorId)
+			throws ConnectorNotFoundException {
+
+		if (StringUtils.isBlank(connectorId))
+			throw new IllegalArgumentException("Illegal connectorId in input");
+
+		String decodedConnectorConnectorId = java.net.URLDecoder.decode(connectorId, StandardCharsets.UTF_8);
+
+		catalogService.deleteConnectorLog(decodedConnectorConnectorId);
 
 		return ResponseEntity.noContent().build();
 

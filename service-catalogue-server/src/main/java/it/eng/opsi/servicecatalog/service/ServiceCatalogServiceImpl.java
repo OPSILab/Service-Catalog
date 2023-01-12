@@ -6,20 +6,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
 
+import it.eng.opsi.servicecatalog.exception.ConnectorLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.jsonld.Serializer;
 import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Connector;
+import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.model.ServiceModel.ServiceDescriptionStatus;
 import it.eng.opsi.servicecatalog.repository.ServiceModelRepository;
+import it.eng.opsi.servicecatalog.repository.ConnectorLogRepository;
 import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,6 +44,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Autowired
 	private ConnectorModelRepository connectorModelRepo;
 
+	@Autowired
+	private ConnectorLogRepository connectorLogRepo;
+
 	@Override
 	public List<ServiceModel> getServices() throws ServiceNotFoundException {
 
@@ -57,7 +65,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public Connector getConnector(String connectorId) throws ServiceNotFoundException {
 
-		// log.info("Finding Service Models");
 		return connectorModelRepo.findByconnectorId(connectorId);
 	}
 
@@ -87,12 +94,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	public Connector createConnector(Connector connector) {
-
-		// connector.setStatus(ConnectorDescriptionStatus.UNDER_DEVELOPMENT); //TODO ?
-		// log.info("Creating new Service Model");
-		// If identifier is blank, set as the Service Id
-		// if (StringUtils.isBlank(connector.getIdentifier()))//TODO ?
-		// connector.setIdentifier(uriBasePath + connector.getIdentifier());//TODO ?
 
 		return connectorModelRepo.save(connector);
 	}
@@ -232,4 +233,31 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		return connectorModelRepo.findByconnectorId(connectorId);
 	}
 
+	@Override
+	public List<ConnectorLog> getConnectorLogs() {
+		// TODO Auto-generated method stub
+		return connectorLogRepo.findAll();
+	}
+
+	@Override
+	public List<ConnectorLog> getConnectorLogsByconnectorId(String decodedConnectorConnectorId) {
+		// TODO Auto-generated method stub
+		return connectorLogRepo.findByconnectorId(decodedConnectorConnectorId);
+	}
+
+	@Override
+	public ConnectorLog createConnectorLog(@Valid ConnectorLog connectorLog) {
+		// TODO Auto-generated method stub
+		return connectorLogRepo.save(connectorLog);
+	}
+
+	@Override
+	public ConnectorLog deleteConnectorLog(String decodedConnectorConnectorId) {
+		// TODO Auto-generated method stub
+		if (connectorLogRepo.deleteConnectorLogByconnectorId(decodedConnectorConnectorId) == 0L)
+			throw new ConnectorLogNotFoundException(
+					"No Service description found for Service Id: " + decodedConnectorConnectorId);
+
+		return connectorLogRepo.deleteConnectorLog(decodedConnectorConnectorId);
+	}
 }

@@ -296,7 +296,8 @@
       "confirm": "Confirm",
       "serviceId": "Service ID",
       "connectorId": "Connector ID",
-      "name": "Name"
+      "name": "Name",
+      "connector_added_message": "A new connector was added"
     }
   },
   "login": {

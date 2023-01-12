@@ -304,6 +304,8 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const validationErrors = this.editor.validate();
 
+
+
     if (validationErrors.length > 0)
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       this.errorDialogService.openErrorDialog({ error: 'EDITOR_VALIDATION_ERROR', validationErrors: validationErrors });
