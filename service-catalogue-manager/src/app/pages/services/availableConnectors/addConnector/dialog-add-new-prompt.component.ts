@@ -1,12 +1,12 @@
 import { FormControl } from '@angular/forms';
 import { NbComponentStatus, NbDialogRef, NbGlobalPhysicalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
-import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
 import { AvailableConnectorsService } from '../availableConnectors.service'
 import { NgxConfigureService } from 'ngx-configure';
 import { HttpClient } from '@angular/common/http';
 import { ConnectorEntry } from '../../../../model/connector/connectorEntry'
 import { Component, Input, Output, EventEmitter, } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorDialogConnectorService } from '../../../error-dialog/error-dialog-connector.service';
 
 @Component({
   selector: 'ngx-dialog-import-prompt',
@@ -36,7 +36,8 @@ export class DialogAddNewPromptComponent {
 
 
   constructor(protected ref: NbDialogRef<DialogAddNewPromptComponent>, private toastrService: NbToastrService,
-    private errorService: ErrorDialogService, private availableConnectorService: AvailableConnectorsService, private translate: TranslateService) {
+    private errorService: ErrorDialogConnectorService,
+    private availableConnectorService: AvailableConnectorsService, private translate: TranslateService) {
     console.log("constructor: ", this.value)
   }
 

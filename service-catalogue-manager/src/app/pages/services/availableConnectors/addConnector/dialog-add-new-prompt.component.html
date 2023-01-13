@@ -1,48 +1,52 @@
 <nb-card>
   <nb-card-header class="d-flex align-content-center justify-content-between">
+    <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
     <div *ngIf="getFormType()=='add'; else elseBlock">
-      <h5 class="">{{ 'general.personal_data.add_new' | translate }}</h5>
+      <h3>{{ 'general.connectors.add' | translate }}</h3>
     </div>
     <ng-template #elseBlock>
-      <h5 class="">{{ 'general.personal_data.edit' | translate }}</h5>
+      <h3>{{ 'general.connectors.edit' | translate }}</h3>
     </ng-template>
     <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
       <i class="material-icons">close</i>
     </button>
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
-    <form>
-      <label for="name">{{ 'general.connectors.name' | translate }}</label>
-      <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
-        [ngModelOptions]="{standalone: true}">
-      <label for="description">{{ 'general.connectors.description' | translate }}</label>
-      <br>
-      <textarea nbInput fullWidth fieldSize="small" placeholder="description" [(ngModel)]="description"
-        [ngModelOptions]="{standalone: true}"></textarea>
-      <label for="status">{{ 'general.connectors.status' | translate }}</label>
-      <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
-        [ngModelOptions]="{standalone: true}">
-      <label for="connectorId">{{ 'general.connectors.connectorId' | translate }}</label>
-      <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="connectorId" [(ngModel)]="connectorId"
-        [ngModelOptions]="{standalone: true}">
-      <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>
-      <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="serviceId" [(ngModel)]="serviceId"
-        [ngModelOptions]="{standalone: true}">
-      <label for="url">{{ 'general.connectors.url' | translate }}</label>
-      <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
-        [ngModelOptions]="{standalone: true}">
-      <div *ngIf="true; else elseBlock">
-        <button nbButton appearance="outline" shape="semi-round" size="small" status="info" (click)="confirm()">
-          <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i>
-        </button>
-      </div>
-      <ng-template #elseBlock>ServiceId should be set.</ng-template>
-    </form>
+    <h4>
+      <form>
+        <label for="name">{{ 'general.connectors.name' | translate }}</label>
+        <br>
+          <input type="text" nbInput fullWidth fieldSize="large" placeholder="name" [(ngModel)]="name"
+            [ngModelOptions]="{standalone: true}">
+        <label for="description">{{ 'general.connectors.description' | translate }}</label>
+        <br>
+        <textarea nbInput fullWidth fieldSize="large" placeholder="description" [(ngModel)]="description"
+          [ngModelOptions]="{standalone: true}"></textarea>
+        <label for="status">{{ 'general.connectors.status' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="large" placeholder="status" [(ngModel)]="status"
+          [ngModelOptions]="{standalone: true}">
+        <label for="connectorId">{{ 'general.connectors.connectorId' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="large" placeholder="connectorId" [(ngModel)]="connectorId"
+          [ngModelOptions]="{standalone: true}">
+        <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="large" placeholder="serviceId" [(ngModel)]="serviceId"
+          [ngModelOptions]="{standalone: true}">
+        <label for="url">{{ 'general.connectors.url' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="large" placeholder="url" [(ngModel)]="url"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <h3>
+          <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
+            <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i>
+          </button>
+        </h3>
+      </form>
+    </h4>
   </nb-card-body>
   <nb-card-footer *ngIf="selectedFile">
     <p *ngIf="selectedFile">

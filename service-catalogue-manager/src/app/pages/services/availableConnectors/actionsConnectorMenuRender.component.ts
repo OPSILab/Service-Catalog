@@ -19,7 +19,6 @@ import { DialogAddNewPromptComponent } from './addConnector/dialog-add-new-promp
 import { LoginService } from '../../../auth/login/login.service';
 import { ConnectorStatusEnum } from '../../../model/services/connector';
 import { ConnectorEntry } from '../../../model/connector/connectorEntry';
-//<DialogAddNewPromptComponent (editedValue)="onChange($event)"></DialogAddNewPromptComponent>?
 @Component({
   template: `
     <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.connectorId }}" >

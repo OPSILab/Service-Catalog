@@ -276,7 +276,8 @@
     },
     "connectors": {
       "connector": "Connector",
-      "edit": "Edit",
+      "edit": "Edit connector",
+      "add": "Add connector",
       "description": "Description",
       "actions": "Actions",
       "details": "Details",
@@ -288,7 +289,7 @@
       "url_link": "Link",
       "data_processed": "Data Processed",
       "close": "Close",
-      "url": "repository",
+      "url": "Repository",
       "created": "Created",
       "data_consent": "Data Consent",
       "enabled": "Enabled",
@@ -310,7 +311,8 @@
       "delete_connector_message": "Are you sure to delete permanently the connector <strong>{{connectorName}}</strong>?\n",
       "connector_deleted_message": "Connector {{connectorName}} deleted successfully!",
       "connector_registered_message": "Connector {{connectorName}} registered successfully!",
-      "connector_deregistered_message": "Connector {{connectorName}} disabled successfully!"
+      "connector_deregistered_message": "Connector {{connectorName}} disabled successfully!",
+      "validationErrors": "There are validation errors in the Connector description."
 
     }
   },

@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           title: this.translateService.instant('general.dashboard.connectors') as string,
           iconClass: 'nb-power',
           type: 'success',
-          value: '1' /*(await this.connectorsService.getConnectorsCount()).toString()*/,
+          value: (await this.connectorsService.getConnectorsCount()).total.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.publicServices') as string,
@@ -101,10 +101,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
       ];
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (error.error.statusCode === '401') {
+      if (error.statusCode === '401') {
         this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
         // this.router.navigate(['/login']);
-      } else this.errorDialogService.openErrorDialog(error);
+      } else console.log(error)//this.errorDialogService.openErrorDialog(error);
     }
   }
 

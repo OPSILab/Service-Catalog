@@ -20,8 +20,8 @@ export class AvailableConnectorsService {
     return this.http.get<ConnectorEntry[]>(`${this.serviceRegistryUrl}/api/v2/connectors`).toPromise();
   }
 
-  getConnectorsCount(): Promise<number> {
-    return this.http.get<number>(`${this.serviceRegistryUrl}/api/v2/connectors/count`).toPromise();
+  getConnectorsCount(): Promise<{total: number, publicConnectors, privateConnectors}> {
+    return this.http.get<{total: number, publicConnectors, privateConnectors}>(`${this.serviceRegistryUrl}/api/v2/connectors/count`).toPromise();
   }
 
   getConnector(connectorId: string): Promise<ConnectorEntry> {
