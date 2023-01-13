@@ -1,16 +1,17 @@
 <nb-card>
   <nb-card-header class="d-flex align-content-center justify-content-between">
-    <h5 class="">{{ 'general.personal_data.add_new' | translate }}</h5>
+    <div *ngIf="getFormType()=='add'; else elseBlock">
+      <h5 class="">{{ 'general.personal_data.add_new' | translate }}</h5>
+    </div>
+    <ng-template #elseBlock>
+      <h5 class="">{{ 'general.personal_data.edit' | translate }}</h5>
+    </ng-template>
     <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
       <i class="material-icons">close</i>
     </button>
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
     <form>
-      <!--<label for="nameValue">nameValue</label>
-      <br>
-      <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="value.name"
-        [ngModelOptions]="{standalone: true}"> -->
       <label for="name">{{ 'general.connectors.name' | translate }}</label>
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
@@ -23,7 +24,6 @@
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
         [ngModelOptions]="{standalone: true}">
-      <!-- <div *ngIf="getFormType()=='add'"> -->
       <label for="connectorId">{{ 'general.connectors.connectorId' | translate }}</label>
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="connectorId" [(ngModel)]="connectorId"
@@ -32,16 +32,12 @@
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="serviceId" [(ngModel)]="serviceId"
         [ngModelOptions]="{standalone: true}">
-      <!-- </div> -->
       <label for="url">{{ 'general.connectors.url' | translate }}</label>
       <br>
       <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
         [ngModelOptions]="{standalone: true}">
-
-      <!--<div *ngIf="serviceId!=''&&serviceId!=null; else elseBlock">-->
-        <div *ngIf="true; else elseBlock">
-        <button nbButton appearance="outline"
-          shape="semi-round" size="small" status="info" (click)="confirm()">
+      <div *ngIf="true; else elseBlock">
+        <button nbButton appearance="outline" shape="semi-round" size="small" status="info" (click)="confirm()">
           <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i>
         </button>
       </div>

@@ -1,4 +1,3 @@
-import { StatusCardComponent } from './../../../dashboard/status-card/status-card.component';
 import { FormControl } from '@angular/forms';
 import { NbComponentStatus, NbDialogRef, NbGlobalPhysicalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
@@ -28,8 +27,8 @@ export class DialogAddNewPromptComponent {
   connectorId: string = "connectorId"
   serviceId: string = "serviceId";
   textareaItemNgModel;
-  inputItemFormControl
-  textareaItemFormControl
+  inputItemFormControl;
+  textareaItemFormControl;
   selectedFile: File;
   json: Record<string, unknown>;
   selectedItem = 'Json';
@@ -48,7 +47,7 @@ export class DialogAddNewPromptComponent {
   onInit(): void {
     this.inputItemFormControl = new FormControl();
     this.textareaItemFormControl = new FormControl();
-    console.log("onInit", this.value)
+    console.log("dialog-add-new-prompt.component.ts.onInit()", this.value)
     this.name = this.value.name
     this.description = this.value.description
     this.status = this.value.status
@@ -87,7 +86,7 @@ export class DialogAddNewPromptComponent {
   }
 
   confirm() {
-    console.log("confirm", this.value)
+    console.log("dialog-add-new-prompt.component.ts.confirm()", this.value)
     if (DialogAddNewPromptComponent.formType == 'edit')
       this.onEdit()
     else
@@ -95,7 +94,7 @@ export class DialogAddNewPromptComponent {
   }
 
   onEdit() {
-    console.log("onedit value: ", this.value)
+    console.log("dialog-add-new-prompt.component.ts.onEdit() value: ", this.value)
     let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url;
     this.availableConnectorService.updateConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry, connectorId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
     console.log("dialog-add-new-prompt.component.ts.onEdit(): Updated")
@@ -105,17 +104,17 @@ export class DialogAddNewPromptComponent {
 
   onSubmit() {
     try {
-      console.log("onsubmit", this.value)
-      let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url
+      console.log("dialog-add-new-prompt.component.ts.onSubmit() ", this.value);
+      let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url;
       if (connectorId == '' || connectorId == null) {
-        console.log("Connector ID must be set")
-        throw new Error("Connector ID must be set")
+        console.log("dialog-add-new-prompt.component.ts.onSubmit(): Connector ID must be set");
+        throw new Error("Connector ID must be set");
       }
-      this.availableConnectorService.saveConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry)
-      console.log("dialog-add-new-prompt.component.ts.onSubmit: Saved")
-      this.ref.close()
+      this.availableConnectorService.saveConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry);
+      console.log("dialog-add-new-prompt.component.ts.onSubmit(): Saved")
+      this.ref.close();
       this.editedValue.emit(this.value);
-      this.showToast('primary', this.translate.instant('general.connectors.connector_added_message'), '')//,{ serviceName: this.value.name }
+      this.showToast('primary', this.translate.instant('general.connectors.connector_added_message'), '');
     }
     catch (error) {
       console.log(error)
@@ -130,7 +129,6 @@ export class DialogAddNewPromptComponent {
     }
   }
 
-
   private showToast(type: NbComponentStatus, title: string, body: string) {
     const config = {
       status: type,
@@ -143,5 +141,4 @@ export class DialogAddNewPromptComponent {
 
     this.toastrService.show(body, title, config);
   }
-
 }

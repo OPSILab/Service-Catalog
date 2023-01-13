@@ -22,27 +22,25 @@ import { ConnectorEntry } from '../../../model/connector/connectorEntry';
 //<DialogAddNewPromptComponent (editedValue)="onChange($event)"></DialogAddNewPromptComponent>?
 @Component({
   template: `
-<!--   <across-dialog-import-prompt (editedValue) = ngOnUpdate()> add new </across-dialog-import-prompt> -->
-<!--  <menu (editedValue)= ngOnInit()> -->
     <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.connectorId }}" >
       <nb-icon icon="settings-2" ></nb-icon>
     </button>
-    <!-- Register Service modal ng-template -->
+    <!-- Register Connector modal ng-template -->
     <ng-template #confirmRegisterDialog let-data let-ref="dialogRef">
       <nb-card>
         <nb-card-header class="d-flex justify-content-between">
-          <h5>{{ 'general.services.register_service' | translate }}</h5>
+          <h5>{{ 'general.connectors.register_connector' | translate: { connectorName: value.name } }}</h5>
           <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
             <i class="material-icons">close</i>
           </button>
         </nb-card-header>
         <nb-card-body
           class="p-5 text-center"
-          [innerHTML]="'general.services.register_service_message' | translate: { serviceName: data.serviceName }"
+          [innerHTML]="'general.connectors.register_connector_message' | translate: { connectorName: value.name }"
         ></nb-card-body>
         <nb-card-footer class="d-flex justify-content-center">
           <button nbButton status="primary" size="small" (click)="ref.close(true)">
-            {{ 'general.services.register' | translate }}
+            {{ 'general.connectors.register' | translate }}
           </button>
           <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
             {{ 'general.close' | translate }}
@@ -50,22 +48,22 @@ import { ConnectorEntry } from '../../../model/connector/connectorEntry';
         </nb-card-footer>
       </nb-card>
     </ng-template>
-    <!-- DeRegister Service modal ng-template -->
+    <!-- DeRegister Connector modal ng-template -->
     <ng-template #confirmDeRegisterDialog let-data let-ref="dialogRef">
       <nb-card>
         <nb-card-header class="d-flex justify-content-between">
-          <h5>{{ 'general.services.deregister_service' | translate }}</h5>
+          <h5>{{'general.connectors.deregister_connector' | translate: {connectorName: value.name} }}</h5>
           <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
             <i class="material-icons">close</i>
           </button>
         </nb-card-header>
         <nb-card-body
           class="p-5 text-center"
-          [innerHTML]="'general.services.deregister_service_message' | translate: { serviceName: data.serviceName }"
+          [innerHTML]="'general.connectors.deregister_connector_message' | translate: { connectorName: value.name }"
         ></nb-card-body>
         <nb-card-footer class="d-flex justify-content-center">
           <button nbButton status="primary" size="small" (click)="ref.close(true)">
-            {{ 'general.services.deregister' | translate }}
+            {{ 'general.connectors.deregister' | translate }}
           </button>
           <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
             {{ 'general.close' | translate }}
@@ -73,18 +71,18 @@ import { ConnectorEntry } from '../../../model/connector/connectorEntry';
         </nb-card-footer>
       </nb-card>
     </ng-template>
-    <!-- Delete Service modal ng-template -->
+    <!-- Delete Connector modal ng-template -->
     <ng-template #confirmDeleteDialog let-data let-ref="dialogRef">
       <nb-card>
         <nb-card-header class="d-flex justify-content-between">
-          <h5>{{ 'general.services.delete_service' | translate }}</h5>
+          <h5>{{ 'general.connectors.delete_connector' | translate: {connectorName: value.name} }}</h5>
           <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
             <i class="material-icons">close</i>
           </button>
         </nb-card-header>
         <nb-card-body
           class="p-5 text-center"
-          [innerHTML]="'general.services.delete_service_message' | translate: { serviceName: data.serviceName }"
+          [innerHTML]="'general.connectors.delete_connector_message' | translate: {connectorName: value.name}"
         ></nb-card-body>
         <nb-card-footer class="d-flex justify-content-center">
           <button nbButton status="danger" size="small" (click)="data.callback()">
@@ -96,8 +94,6 @@ import { ConnectorEntry } from '../../../model/connector/connectorEntry';
         </nb-card-footer>
       </nb-card>
     </ng-template>
-
-<!-- </menu> -->
   `,
 })
 export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, OnChanges {
@@ -127,7 +123,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
     private loginService: LoginService
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("ngonchanges")
+    console.log("actionsConnectorMenuRender.component.ts.ngOnChanges")
     this.updateResult.emit(this.value.id);  }
 
   get registered(): boolean {
@@ -135,12 +131,11 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
   }
 
   ngOnChange() {
-    //this.value = value
     this.updateResult.emit(this.value.id);
   }
 
   ngOnInit(): void {
-    console.log("actionConnectorMenuComponent : ngoninit")
+    console.log("actionConnectorMenuRender.component.ts.ngOnInit()")
     this.actions = this.translatedActionLabels();
     this.menuService
       .onItemClick()
@@ -151,7 +146,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
         console.log("pre-switch")
         switch (event.item.data) {
           case 'edit':
-            this.onEdit();//this.value.serviceId
+            this.onEdit();
             console.log("edit");
             break;
           case 'delete':
@@ -162,11 +157,6 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
             console.log("register");
             this.openRegisterDialog();
             break;
-          /*
-          case 'consents':
-            this.viewConsents(this.value.id);
-            break;
-          */
           case 'deregister':
             this.openDeRegisterDialog();
             break;
@@ -181,7 +171,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
   }
 
   async ngOnUpdate(): Promise<void> {
-    console.log("ngOnUpdate")
+    console.log("actionConnectorMenuRender.component.ts.ngOnUpdate()")
     this.value = await this.availableConnectorsService.getConnector(this.value.connectorId);
     this.updateResult.emit(this.value);
     this.ngOnInit()
@@ -196,15 +186,9 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
     if (this.registered) {
       return [
         {
-          title: this.translate.instant('general.services.deregister') as string,
+          title: this.translate.instant('general.connectors.deregister') as string,
           data: 'deregister',
         },
-        /*
-        {
-          title: this.translate.instant('general.services.consents') as string,
-          data: 'consents',
-        },
-        */
         {
           title: this.translate.instant('general.connectors.editService') as string,
           data: 'edit service',
@@ -217,11 +201,11 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
           data: 'edit',
         },
         {
-          title: this.translate.instant('general.services.register') as string,
+          title: this.translate.instant('general.connectors.register') as string,
           data: 'register',
         },
         {
-          title: this.translate.instant('general.services.delete') as string,
+          title: this.translate.instant('general.connectors.delete') as string,
           data: 'delete',
         },
         {
@@ -262,7 +246,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
         },
       })
       .onClose.subscribe((confirm) => {
-        if (confirm) void this.onRegisterService();
+        if (confirm) void this.onRegisterConnector();
       });
   }
 
@@ -275,16 +259,16 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
         },
       })
       .onClose.subscribe((confirm) => {
-        if (confirm) void this.onDeRegisterService();
+        if (confirm) void this.onDeRegisterConnector();
       });
   }
 
-  onRegisterService = async (): Promise<void> => {
+  onRegisterConnector = async (): Promise<void> => {
     try {
       console.log("register")
       this.value.status = this.value.status == "active" ? "inactive" : "active";
       this.value = await this.availableConnectorsService.registerConnector(this.value);
-      this.showToast('primary', this.translate.instant('general.services.service_registered_message', { serviceName: this.value.name }), '');
+      this.showToast('primary', this.translate.instant('general.connectors.connector_registered_message', { connectorName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -295,12 +279,12 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
     }
   };
 
-  onDeRegisterService = async (): Promise<void> => {
+  onDeRegisterConnector = async (): Promise<void> => {
     try {
       console.log("deregister")
       this.value.status = this.value.status == "active" ? "inactive" : "active";
       this.value = await this.availableConnectorsService.deregisterConnector(this.value);
-      this.showToast('primary', this.translate.instant('general.services.service_deregistered_message', { serviceName: this.value.name }), '');
+      this.showToast('primary', this.translate.instant('general.connectors.connector_deregistered_message', { connectorName: this.value.name }), '');
       this.updateResult.emit(this.value);//G: commentandolo smette di aggiornarsi il menu
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -320,7 +304,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
             await this.availableConnectorsService.deleteConnector(this.value.connectorId);
             this.showToast(
               'primary',
-              this.translateService.instant('general.services.service_deleted_message', { serviceName: this.value.name }),
+              this.translateService.instant('general.connectors.connector_deleted_message', { connectorName: this.value.name }),
               ''
             );
             ref.close();
@@ -336,35 +320,6 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
       },
     });
   }
-
-  /*
-  editV2(): void {
-    // this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
-
-    const ref = this.dialogService.open(this.addConnector, {
-      context: {
-        serviceName: this.value.name,
-        callback: async () => {
-          try {
-            await this.availableConnectorsService.deleteConnector(this.addConnector.name);
-            this.showToast(
-              'primary',
-              this.translateService.instant('general.services.service_deleted_message', { serviceName: this.value.name }),
-              ''
-            );
-            ref.close();
-            this.updateResult.emit(this.value.id);
-          } catch (error) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            if (error.error.statusCode === '401') {
-              void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
-              // this.router.navigate(['/login']);
-            } else this.errorDialogService.openErrorDialog(error);
-          }
-        },
-      },
-    });
-  }*/
 
   private showToast(type: NbComponentStatus, title: string, body: string) {
     const config = {

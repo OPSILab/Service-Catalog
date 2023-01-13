@@ -19,8 +19,9 @@ export class ConnectorInfoRenderComponent implements OnInit{
   logs:ConnectorEntryLog[]
 
   constructor(private modalService: NbDialogService, private translateService: TranslateService,private availableConnectorsService: AvailableConnectorsService,) {}
+
   async ngOnInit(): Promise<void> {
-    console.log("connector info render component On Init")
+    console.log("connectorInfoRender.component.ts.ngOnInit()")
     this.logs = await this.availableConnectorsService.getConnectorLogs(this.value.connectorId)
 
   }

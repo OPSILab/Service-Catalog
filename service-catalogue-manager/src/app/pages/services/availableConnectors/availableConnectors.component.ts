@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-//import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { AvailableConnectorsService } from './availableConnectors.service';
 import { ConnectorInfoRenderComponent } from './connectorInfoRender.component';
@@ -11,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ActionsConnectorMenuRenderComponent } from './actionsConnectorMenuRender.component';
 import { ConnectorEntry } from '../../../model/connector/connectorEntry';
 import { DialogAddNewPromptComponent } from './addConnector/dialog-add-new-prompt.component';
-import { NbComponentStatus, NbDialogService, NbGlobalPhysicalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
+import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 
@@ -45,7 +44,6 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   private availableConnectors: ConnectorEntry[];
   private unsubscribe: Subject<void> = new Subject();
   errorService: ErrorDialogService;
-  private toastrService: NbToastrService
 
   constructor(
     private availableConnectorsService: AvailableConnectorsService,
@@ -68,9 +66,6 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
     this.loading = true;
   }
 
-
-
-
   async ngOnInit() {
     console.log("availableConnectors.component: ngOnInit()")
     try {
@@ -79,99 +74,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.log(error)
     }
-
-    // Open a Toastr if there is a message in input query
-    /*
-    const queryParams = this.route.snapshot.queryParams;
-    if (queryParams.toastrMessage)
-      this.toastrService.primary('', queryParams.toastrMessage, {
-        position: NbGlobalLogicalPosition.BOTTOM_END,
-        duration: 3500,
-      });
-    */
-    //this.initializeEditor(this.serviceData);
-
   }
-  /*
-    initializeEditor(serviceData: ServiceModel): void {
-      const elem = this.document.getElementById('editor');
-
-      const editor = new JSONEditor(elem, {
-        ajax: true,
-        schema: { $ref: this.schemaDir },
-        startval: serviceData,
-        theme: 'bootstrap4',
-        iconlib: 'fontawesome5',
-        no_additional_properties: true,
-        disable_properties: true,
-        prompt_before_delete: true,
-        required_by_default: true
-      });
-
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      //this.editor = editor;
-      let isFirstChange = true;
-      // Hook up the validation indicator to update its status whenever the editor changes
-      editor.on('change', function () {
-        if (!isFirstChange) sessionStorage.setItem('isTouched', 'true');
-        else isFirstChange = false;
-        // Get an array of errors from the validator
-        // const errors = editor.validate();
-        // const indicator = document.getElementById('valid_indicator');
-        // watcher on concepts fields
-        const watcherCallback = function (path) {
-          const value = JSON.stringify(this.getEditor(path).getValue() as Record<string, unknown>);
-
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          console.log(`field with path: [${path as string}] changed to [${JSON.stringify(this.getEditor(path).getValue())}]`);
-
-          if (value !== '"undefined"' && value !== '""') {
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-            const e = $('select[name="' + this.getEditor(path).formname + '"]');
-            const nameValue = e[0].options[e[0].selectedIndex].text;
-            //console.log(path.substr(0, path.lastIndexOf(".") + 1) + ".name");
-            // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
-            this.getEditor(path.substr(0, path.lastIndexOf('.') + 1) + 'name').setValue(nameValue);
-          }
-        };
-
-        const rootHasInfoWhatcher = function (path) {
-          const value = this.getEditor(path).getValue() as string;
-
-          if ((path as string) === 'root.identifier') this.getEditor('root.hasInfo.identifier').setValue(value);
-          if ((path as string) === 'root.hasInfo.identifier') this.getEditor('root.identifier').setValue(value);
-
-          if ((path as string) === 'root.title') this.getEditor('root.hasInfo.title').setValue(value);
-          if ((path as string) === 'root.hasInfo.title') this.getEditor('root.title').setValue(value);
-        };
-        for (const key in editor.editors) {
-          const regex = '.conceptId';
-
-          if (Object.prototype.hasOwnProperty.call(editor.editors, key) && RegExp(regex).exec(key)) {
-            editor.watch(key, watcherCallback.bind(editor, key));
-          } else if (
-            Object.prototype.hasOwnProperty.call(editor.editors, key) &&
-            (key == 'root.identifier' || key == 'root.title' || key == 'root.hasInfo.identifier' || key == 'root.hasInfo.title')
-          ) {
-            editor.watch(key, rootHasInfoWhatcher.bind(editor, key));
-          }
-        }
-      });
-
-      //editor.on('ready', this.closeSpinner);
-
-      editor.on('ready', () => {
-        editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
-        this.loading = false;
-        $('nb-spinner').remove();
-        if (sessionStorage.getItem('readOnly') === 'true') editor.disable();
-
-        if (!this.isNew) {
-          editor.getEditor('root.identifier').disable();
-          editor.getEditor('root.hasInfo.identifier').disable();
-        }
-      });
-    }*/
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy');
@@ -180,40 +83,15 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   }
 
   async addNew(): Promise<void> {
-    /*
-    let c
-    const config = {
-      status: 'primary',
-      destroyByClick: true,
-      duration: 2500,
-      hasIcon: true,
-      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
-      preventDuplicates: true,
-      icons: "",
-      patchIcon: ""
-    } as unknown as NbToastrConfig
-    */
-    //let toastrService = new NbToastrService(config, c);
     try {
       DialogAddNewPromptComponent.formType = 'add';
-      //DialogAddNewPromptComponent.form = 'edit';
       console.log("AddNew");
       this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe(() => {
-        //if (confirm)
         void console.log("confirm ok", this.ngOnInit());
-        //void this.source.load(this.availableConnectorsService.getConnectors());
       });
       console.log("Added");
-      //DialogAddNewPromptComponent.formType = 'edit';
-      //DialogAddNewPromptComponent.form = 'add';
-      //this.updateResult.emit(this.value);
-      //this.ngOnInit()
       this.updateResult.emit(this.value);
-      //this.updateResult.emit(this.value);
       this.ngOnInit()
-      //this.showToast('primary', this.translate.instant('general.connector.connector_added_message'//,{ serviceName: this.value.name }
-      //),'');
-
     }
     catch (error) {
       console.log(error)
@@ -225,19 +103,6 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
     this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe(() => { }
     );
     this.ngOnInit()
-  }
-
-  private showToast(type: NbComponentStatus, title: string, body: string) {
-    const config = {
-      status: type,
-      destroyByClick: true,
-      duration: 2500,
-      hasIcon: true,
-      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
-      preventDuplicates: true,
-    } as Partial<NbToastrConfig>;
-
-    this.toastrService.show(body, title, config);
   }
 
   loadTableSettings(): Record<string, unknown> {

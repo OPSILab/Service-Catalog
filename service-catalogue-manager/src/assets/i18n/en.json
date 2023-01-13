@@ -178,6 +178,7 @@
       "title": "Edit,add or remove your personal data",
       "actions": "Actions",
       "add_new": "Add new",
+      "edit": "Edit",
       "no_data": "No data found",
       "add": "Add",
       "add_new_title": "Add new Personal Data",
@@ -297,7 +298,20 @@
       "serviceId": "Service ID",
       "connectorId": "Connector ID",
       "name": "Name",
-      "connector_added_message": "A new connector was added"
+      "connector_added_message": "A new connector was added",
+      "register": "Register",
+      "delete": "Delete",
+      "register_connector_message": "Are you sure to register and activate the connector <strong>{{connectorName}}</strong><br>Once registered, you will not be able to edit it until you disabled it first.",
+      "deregister_connector_message": "Are you sure to disable the connector <strong>{{connectorName}}</strong>?\n",
+      "deregister": "Disable",
+      "register_connector": "Connector Registration",
+      "delete_connector": "Delete connector",
+      "deregister_connector": "Disable connector",
+      "delete_connector_message": "Are you sure to delete permanently the connector <strong>{{connectorName}}</strong>?\n",
+      "connector_deleted_message": "Connector {{connectorName}} deleted successfully!",
+      "connector_registered_message": "Connector {{connectorName}} registered successfully!",
+      "connector_deregistered_message": "Connector {{connectorName}} disabled successfully!"
+
     }
   },
   "login": {

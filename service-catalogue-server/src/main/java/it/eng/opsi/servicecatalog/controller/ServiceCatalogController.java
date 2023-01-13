@@ -293,38 +293,6 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				decodedConnectorConnectorId, connector));
 	}
 
-	/*
-	 * @Operation(summary =
-	 * "Update Connector log description, by replacing the existing one", tags = {
-	 * "Connector Model" }, responses = {
-	 * 
-	 * @ApiResponse(description = "Returns the Connector log.", responseCode =
-	 * "200", content = @Content(mediaType = "application/json", schema
-	 * = @Schema(implementation = Connector.class))) })
-	 * 
-	 * @Override
-	 * 
-	 * @PutMapping(value = "/connectors/logs", consumes =
-	 * MediaType.APPLICATION_JSON_VALUE, produces =
-	 * MediaType.APPLICATION_JSON_VALUE)
-	 * public ResponseEntity<Connector> updateConnectorLog(
-	 * 
-	 * @RequestParam("connectorId") String connectorId,
-	 * 
-	 * @RequestBody @Valid Connector connector)
-	 * throws ConnectorNotFoundException, ConnectorNotEditableException {
-	 * 
-	 * if (StringUtils.isBlank(connectorId))
-	 * throw new IllegalArgumentException("Illegal connectorid in input");
-	 * 
-	 * String decodedConnectorConnectorId = java.net.URLDecoder.decode(connectorId,
-	 * StandardCharsets.UTF_8);
-	 * 
-	 * return ResponseEntity.ok(catalogService.updateConnectorLog(
-	 * decodedConnectorConnectorId, connector));
-	 * }
-	 */
-
 	@Operation(summary = "Delete Service Model description by Service Id.", tags = { "Service Model" }, responses = {
 			@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override

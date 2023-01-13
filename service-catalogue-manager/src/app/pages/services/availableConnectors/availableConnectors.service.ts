@@ -10,19 +10,14 @@ import { AppConfig } from '../../../model/appConfig';
 export class AvailableConnectorsService {
   private serviceRegistryUrl: string;
   private config: AppConfig;
-  private sdkUrl: string;
-  private serviceManagerUrl: String;
 
   constructor(private configService: NgxConfigureService, private http: HttpClient) {
     this.config = this.configService.config as AppConfig;
     this.serviceRegistryUrl = this.config.serviceRegistry.url;
-    this.sdkUrl = this.config.system.sdkUrl;
-    this.serviceManagerUrl = (this.config.system.serviceEditorUrl.includes('localhost') ? '' : this.config.system.serviceEditorUrl)
   }
 
   getConnectors(): Promise<ConnectorEntry[]> {
     return this.http.get<ConnectorEntry[]>(`${this.serviceRegistryUrl}/api/v2/connectors`).toPromise();
-    //return this.http.get<ConnectorEntry[]>(`${this.serviceManagerUrl}/assets/data/examples/connectors.json`).toPromise();
   }
 
   getConnectorsCount(): Promise<number> {
@@ -43,7 +38,6 @@ export class AvailableConnectorsService {
   }
 
   deregisterConnector(connector: ConnectorEntry): Promise<ConnectorEntry> {
-    //return this.http.delete<ConnectorEntry>(`${this.sdkUrl}/api/v2/connectors/${connectorId}`).toPromise();
     return this.http.put<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors?connectorId=${connector.connectorId}`, connector).toPromise();
   }
 
