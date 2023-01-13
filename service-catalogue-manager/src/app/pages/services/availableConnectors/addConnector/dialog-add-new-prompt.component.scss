@@ -23,22 +23,26 @@
     text-align: center;
   }
 
-  h4 {
+  h6 {
     text-align: left;
+    font-weight: normal;
   }
 
   input[type="text"] {
-    font-size: 18px;
+    //font-size: 18px;
     font-weight: normal;
     text-align: left;
   }
 
   textarea {
-    font-size: 18px;
+    //font-size: 18px;
     font-weight: normal;
     text-align: left;
   }
 
+  label{
+    text-align: left;
+  }
 
   .btn-success {
     margin-left: 1rem;
