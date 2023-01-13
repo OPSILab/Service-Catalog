@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           title: this.translateService.instant('general.dashboard.services') as string,
           iconClass: 'nb-grid-b-outline',
           type: 'primary',
-          value: this.servicesCount.total.toString(),
+          value: this.servicesCount==null? '0' : this.servicesCount.total.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.connectors') as string,
@@ -84,19 +84,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
           title: this.translateService.instant('general.dashboard.publicServices') as string,
           iconClass: 'nb-home',
           type: 'info',
-          value: this.servicesCount.publicServices.toString(),
+          value: this.servicesCount==null? '0' : this.servicesCount.publicServices.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.privateServices') as string,
           iconClass: 'nb-e-commerce',
           type: 'warning',
-          value: this.servicesCount.privateServices.toString(),
+          value: this.servicesCount==null? '0' : this.servicesCount.privateServices.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.personalDataServices') as string,
           iconClass: 'nb-person',
           type: 'primary',
-          value: this.servicesPersonalDataHandlingCount.toString(),
+          value: this.servicesPersonalDataHandlingCount==null? '0' : this.servicesPersonalDataHandlingCount.toString(),
         },
       ];
     } catch (error) {

@@ -272,7 +272,8 @@
       "confirm_overwrite": "Service {{name}} is already existing, do you want to overwrite it?",
       "overwrite": "OVERWRITE",
       "validationErrors": "There are validation errors in the Service description.",
-      "path": "Path"
+      "path": "Path",
+      "publish": "Publish"
     },
     "connectors": {
       "connector": "Connector",
