@@ -157,7 +157,6 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
 
         switch (event.item.data) {
           case 'edit':
-            console.log("case edit");
             this.onEdit(this.value.identifier);
             break;
           case 'delete':
@@ -175,7 +174,7 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
           case 'export':
             this.saveAsFile();
             break;
-          default:
+          default://G: is it useful?
             console.log("default");
             break;
         }
@@ -295,7 +294,6 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   onEdit(serviceId: string): void {
-    console.log("onEdit")
     void this.router.navigate(['/pages/services/service-editor', { serviceId: serviceId }]);
   }
 
@@ -353,7 +351,7 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
       await this.availableServicesService.deregisterService(this.value.identifier);
 
       this.showToast('primary', this.translate.instant('general.services.service_deregistered_message', { serviceName: this.value.title }), '');
-      //this.value.hasServiceInstance.connector.publicKey = null;
+      //this.value.hasServiceInstance.connector.publicKey = null;//G: property publickey does not exists on type connector anymore
       this.updateResult.emit(this.value);
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
