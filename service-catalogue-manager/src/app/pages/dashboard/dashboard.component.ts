@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
           title: this.translateService.instant('general.dashboard.connectors') as string,
           iconClass: 'nb-power',
           type: 'success',
-          value: (await this.connectorsService.getConnectorsCount()).total.toString(),
+          value: await this.connectorsService.getConnectorsCount()==null? '0': (await this.connectorsService.getConnectorsCount()).total.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.publicServices') as string,
