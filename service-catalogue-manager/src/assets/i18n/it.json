@@ -178,6 +178,7 @@
       "title": "Edit,add or remove your personal data",
       "actions": "Actions",
       "add_new": "Add new",
+      "edit": "Edit",
       "no_data": "No data found",
       "add": "Add",
       "add_new_title": "Add new Personal Data",
@@ -271,7 +272,11 @@
     "connectors": {
       "connector": "Connector",
       "edit":"Modifica",
+      "add": "Aggiungi connector",
       "description": "Description",
+       "actions": "Azioni",
+      "details": "Dettagli",
+      "status": "Status",
       "link": "Link",
       "keywords": "Keywords",
       "provider": "Provider",
@@ -284,7 +289,26 @@
       "data_consent": "Data Consent",
       "enabled": "Enabled",
       "disabled": "Disabled",
-      "editService": "Modifica Servizio"
+      "editService": "Modifica Servizio",
+
+      "confirm": "Conferma",
+      "serviceId": "Service ID",
+      "connectorId": "Connector ID",
+      "name": "Nome",
+      "connector_added_message": "E' stato aggiunto un nuovo connector",
+      "register": "Registra",
+      "delete": "Cancella",
+      "register_connector_message": "Sicuro di voler attivare il connector <strong>{{connectorName}}</strong><br>Una volta registrato, non potrai modificarlo se non dopo averlo disabilitato.",
+      "deregister_connector_message": "Sei sicuro di voler disabilitare il connector <strong>{{connectorName}}</strong>?\n",
+      "deregister": "Disabilita",
+      "register_connector": "registrazione connector",
+      "delete_connector": "Cancella connector",
+      "deregister_connector": "Disabilita connector",
+      "delete_connector_message": "Sei sicuro di voler cancellare permanentemente il connector <strong>{{connectorName}}</strong>?\n",
+      "connector_deleted_message": "Il connector {{connectorName}} è stato cancellato correttamente!",
+      "connector_registered_message": "Il connector {{connectorName}} è stato registrato correttamente!",
+      "connector_deregistered_message": "Il connector {{connectorName}} è stato disabilitato correttamente!",
+      "validationErrors": "Ci sono degli errori di validazione nella descrizione del Connector inserita."
     }
   },
   "login": {
