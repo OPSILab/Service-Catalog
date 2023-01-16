@@ -22,10 +22,12 @@ import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.jsonld.Serializer;
 import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
+import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.model.ServiceModel.ServiceDescriptionStatus;
 import it.eng.opsi.servicecatalog.repository.ServiceModelRepository;
+import it.eng.opsi.servicecatalog.repository.AdapterRepository;
 import it.eng.opsi.servicecatalog.repository.ConnectorLogRepository;
 import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +50,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Autowired
 	private ConnectorLogRepository connectorLogRepo;
+
+	@Autowired
+	private AdapterRepository adapterRepo;
 
 	@Override
 	public List<ServiceModel> getServices() throws ServiceNotFoundException {
@@ -256,5 +261,12 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 					"No Connector log description found for Connector Id: " + decodedConnectorConnectorId);
 
 		return connectorLogRepo.deleteConnectorLog(decodedConnectorConnectorId);
+	}
+
+	@Override
+	public List<Adapter> getAdapters() {
+
+		return adapterRepo.findAll();
+
 	}
 }

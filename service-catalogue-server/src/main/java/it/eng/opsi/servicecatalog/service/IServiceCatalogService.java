@@ -15,12 +15,15 @@ import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
+import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 
 public interface IServiceCatalogService {
 
 	public abstract List<ServiceModel> getServices() throws ServiceNotFoundException;
+
+	public abstract List<Adapter> getAdapters();// TODO G: throws;
 
 	public abstract List<ServiceModel> getServicesbyIds(List<String> ids) throws ServiceNotFoundException;
 
@@ -75,5 +78,4 @@ public interface IServiceCatalogService {
 	public abstract ConnectorLog createConnectorLog(@Valid ConnectorLog connectorLog);
 
 	public abstract ConnectorLog deleteConnectorLog(String decodedConnectorConnectorId);
-
 }

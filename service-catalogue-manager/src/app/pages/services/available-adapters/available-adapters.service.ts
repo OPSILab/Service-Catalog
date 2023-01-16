@@ -18,7 +18,7 @@ export class AvailableAdaptersService {
   }
   getAdapters(): AdapterEntry[] | Promise<AdapterEntry[]> {
     try {
-      return this.http.get<AdapterEntry[]>(`${this.serviceRegistryUrl}/api/v2/connectors`).toPromise();
+      return this.http.get<AdapterEntry[]>(`${this.serviceRegistryUrl}/api/v2/adapters`).toPromise();
     }
     catch (error) {
       console.log("AvailableAdaptersService: adapters not found")
