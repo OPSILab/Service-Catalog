@@ -6,6 +6,8 @@ import { AvailableServicesService } from '../services/availableServices/availabl
 import { TranslateService } from '@ngx-translate/core';
 import { AvailableConnectorsService } from '../services/availableConnectors/availableConnectors.service';
 import { ServicesCount } from '../../model/services/servicesCount';
+import { AvailableAdaptersService } from '../services/available-adapters/available-adapters.service';
+
 
 interface CardSettings {
   title: string;

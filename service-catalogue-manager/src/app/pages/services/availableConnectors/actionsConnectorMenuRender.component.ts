@@ -284,7 +284,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
       this.value.status = this.value.status == "active" ? "inactive" : "active";
       this.value = await this.availableConnectorsService.deregisterConnector(this.value);
       this.showToast('primary', this.translate.instant('general.connectors.connector_deregistered_message', { connectorName: this.value.name }), '');
-      this.updateResult.emit(this.value);//G: commentandolo smette di aggiornarsi il menu
+      this.updateResult.emit(this.value);
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (error.error.statusCode === '401') {

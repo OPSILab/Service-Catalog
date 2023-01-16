@@ -32,6 +32,10 @@ import { ActionsConnectorMenuRenderComponent } from './availableConnectors/actio
 import { AvailableConnectorsService } from './availableConnectors/availableConnectors.service';
 
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { AvailableAdaptersComponent } from './available-adapters/available-adapters.component';
+import { AddAdapterComponent } from './available-adapters/add-adapter/add-adapter.component';
+import { ActionsAdapterMenuRenderComponent } from './available-adapters/actions-adapter-menu-render/actions-adapter-menu-render.component';
+import { AdapterInfoRenderComponent } from './available-adapters/adapter-info-render/adapter-info-render.component';
 
 @NgModule({
   imports: [
@@ -65,6 +69,11 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     DialogAddNewPromptComponent,
     ActionsConnectorMenuRenderComponent,
     ActionsServiceMenuRenderComponent,
+    AvailableAdaptersComponent,
+    AddAdapterComponent,
+    AvailableAdaptersComponent,
+    ActionsAdapterMenuRenderComponent,
+    AdapterInfoRenderComponent,
   ],
   providers: [AvailableServicesService, AvailableConnectorsService],
   entryComponents: [
