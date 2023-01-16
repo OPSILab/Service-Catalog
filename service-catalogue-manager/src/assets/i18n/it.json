@@ -38,7 +38,8 @@
       "logs": "Log",
       "connectors": "Connettori",
       "registry": "Registro Servizi",
-      "account": "Account"
+      "account": "Account",
+      "adapters": "Adattatori"
     },
     "consents": {
       "legalbasis": "Base giuridica",
