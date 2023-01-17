@@ -22,12 +22,9 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<List<ServiceModel>> getServices() throws ServiceNotFoundException;
 
-	public abstract ResponseEntity<List<ConnectorLog>> getConnectorLogs() throws ServiceNotFoundException;// TODO G:
-																											// throws
+	public abstract ResponseEntity<List<ConnectorLog>> getConnectorLogs() throws ConnectorLogNotFoundException;
 
-	public abstract ResponseEntity<List<Connector>> getConnectors() throws ServiceNotFoundException;// TODO G: throws
-																									// connector not
-																									// found exception
+	public abstract ResponseEntity<List<Connector>> getConnectors() throws ConnectorNotFoundException;
 
 	public abstract ResponseEntity<?> getServiceById(HttpServletRequest request, String identifier)
 			throws ServiceNotFoundException, IOException;
@@ -50,10 +47,6 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<Connector> updateConnector(String connectorId, Connector connector)
 			throws ConnectorNotFoundException, ConnectorNotEditableException;
-
-	// public abstract ResponseEntity<Connector> updateConnectorLog(String
-	// connectorId, Connector connector)
-	// throws ConnectorNotFoundException, ConnectorNotEditableException;
 
 	public abstract ResponseEntity<Object> deleteService(String identifier) throws ServiceNotFoundException;
 

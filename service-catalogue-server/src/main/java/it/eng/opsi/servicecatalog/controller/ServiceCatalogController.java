@@ -222,7 +222,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Operation(summary = "Create a new connector.", tags = {
 			"Connector" }, responses = {
-					@ApiResponse(description = "Create a new connector.", responseCode = "200") })
+					@ApiResponse(description = "Create a new connector.", responseCode = "201") })
 	@Override
 	@PostMapping(value = "/connectors")
 	public ResponseEntity<Connector> createConnector(@RequestBody @Valid Connector connector) {
@@ -241,9 +241,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
 	}
 
-	@Operation(summary = "Create a new connector.", tags = {
+	@Operation(summary = "Create a new connector log.", tags = {
 			"Connector" }, responses = {
-					@ApiResponse(description = "Create a new connector.", responseCode = "200") })
+					@ApiResponse(description = "Create a new connector.", responseCode = "201") })
 	@Override
 	@PostMapping(value = "/connectors/logs")
 	public ResponseEntity<ConnectorLog> createConnectorLog(@RequestBody @Valid ConnectorLog connectorLog) {
@@ -340,7 +340,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@Override
 	@DeleteMapping(value = "/connectors/logs")
 	public ResponseEntity<Object> deleteConnectorLog(@RequestParam("connectorId") String connectorId)
-			throws ConnectorNotFoundException {
+			throws ConnectorLogNotFoundException {
 
 		if (StringUtils.isBlank(connectorId))
 			throw new IllegalArgumentException("Illegal connectorId in input");

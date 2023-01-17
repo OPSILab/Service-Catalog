@@ -65,12 +65,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public Connector getConnector(String connectorId) throws ConnectorNotFoundException {
-
-		return connectorModelRepo.findByconnectorId(connectorId);
-	}
-
-	@Override
 	public HashMap<String, Integer> getServicesCount() {
 
 		// log.info("Getting Service Count");
@@ -219,25 +213,26 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public List<Connector> getConnectors() {
+	public List<Connector> getConnectors() throws ConnectorNotFoundException {
 
 		return connectorModelRepo.findAll();
 	}
 
 	@Override
-	public Connector getConnectorByconnectorId(String connectorId) {
+	public Connector getConnectorByconnectorId(String connectorId) throws ConnectorNotFoundException {
 
 		return connectorModelRepo.findByconnectorId(connectorId);
 	}
 
 	@Override
-	public List<ConnectorLog> getConnectorLogs() {
+	public List<ConnectorLog> getConnectorLogs() throws ConnectorLogNotFoundException {
 
 		return connectorLogRepo.findAll();
 	}
 
 	@Override
-	public List<ConnectorLog> getConnectorLogsByconnectorId(String decodedConnectorConnectorId) {
+	public List<ConnectorLog> getConnectorLogsByconnectorId(String decodedConnectorConnectorId)
+			throws ConnectorLogNotFoundException {
 
 		return connectorLogRepo.findByconnectorId(decodedConnectorConnectorId);
 	}
@@ -249,7 +244,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public ConnectorLog deleteConnectorLog(String decodedConnectorConnectorId) {
+	public ConnectorLog deleteConnectorLog(String decodedConnectorConnectorId) throws ConnectorLogNotFoundException {
 
 		if (connectorLogRepo.deleteConnectorLogByconnectorId(decodedConnectorConnectorId) == 0L)
 			throw new ConnectorLogNotFoundException(

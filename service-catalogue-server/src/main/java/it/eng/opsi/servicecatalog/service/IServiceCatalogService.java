@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 
+import it.eng.opsi.servicecatalog.exception.ConnectorLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
@@ -30,7 +31,7 @@ public interface IServiceCatalogService {
 
 	public abstract ServiceModel getServiceById(String serviceId) throws ServiceNotFoundException;
 
-	public abstract Connector getConnectorByconnectorId(String connectorId);
+	public abstract Connector getConnectorByconnectorId(String connectorId) throws ConnectorNotFoundException;
 
 	public abstract HasInfo getHasInfoById(String serviceId) throws ServiceNotFoundException;
 
@@ -60,20 +61,20 @@ public interface IServiceCatalogService {
 	public abstract Connector updateConnector(String decodedConnectorIdentifier, @Valid Connector connector)
 			throws ConnectorNotFoundException, ConnectorNotEditableException;
 
-	public abstract List<Connector> getConnectors();
+	public abstract List<Connector> getConnectors() throws ConnectorNotFoundException;
 
-	public abstract Connector deleteConnector(String decodedConnectorConnectorId);
-
-	public abstract Connector getConnector(String decodedConnectorConnectorId);
+	public abstract Connector deleteConnector(String decodedConnectorConnectorId) throws ConnectorNotFoundException;
 
 	public abstract HashMap<String, Object> getConnectorsCount();
 
-	public abstract List<ConnectorLog> getConnectorLogs();
+	public abstract List<ConnectorLog> getConnectorLogs() throws ConnectorLogNotFoundException;
 
-	public abstract List<ConnectorLog> getConnectorLogsByconnectorId(String decodedConnectorConnectorId);
+	public abstract List<ConnectorLog> getConnectorLogsByconnectorId(String decodedConnectorConnectorId)
+			throws ConnectorLogNotFoundException;
 
 	public abstract ConnectorLog createConnectorLog(@Valid ConnectorLog connectorLog);
 
-	public abstract ConnectorLog deleteConnectorLog(String decodedConnectorConnectorId);
+	public abstract ConnectorLog deleteConnectorLog(String decodedConnectorConnectorId)
+			throws ConnectorLogNotFoundException;
 
 }
