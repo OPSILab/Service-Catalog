@@ -18,6 +18,31 @@
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" placeholder="adapterId" [(ngModel)]="adapterId"
           [ngModelOptions]="{standalone: true}">
+          <br><br>
+        <label for="name">{{ 'general.adapters.name' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
+          [ngModelOptions]="{standalone: true}">
+          <br><br>
+        <label for="description">{{ 'general.adapters.description' | translate }}</label>
+        <br>
+        <textarea nbInput fullWidth fieldSize="medium" placeholder="description" [(ngModel)]="description"
+          [ngModelOptions]="{standalone: true}"></textarea>
+          <br><br>
+        <label for="status">{{ 'general.adapters.status' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
+          [ngModelOptions]="{standalone: true}">
+          <br><br>
+        <label for="type">{{ 'general.adapters.type' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Model" [(ngModel)]="type"
+          [ngModelOptions]="{standalone: true}">
+          <br><br>
+        <label for="url">{{ 'general.adapters.url' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+          [ngModelOptions]="{standalone: true}">
         <br>
         <br>
         <h3>

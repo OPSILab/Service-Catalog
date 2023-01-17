@@ -28,21 +28,14 @@
       <div class="row justify-content-center">
         <div class="col-sm py-1">
           <div class="accent">
-            <i><b>{{ 'general.adapters.description' | translate }}:</b> {{ data.description }}</i>
+            <i><b>{{ 'general.adapters.description' | translate }}:</b> {{ value.description }}</i>
           </div>
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-sm py-1">
           <div class="accent">
-            <i><b>{{ 'general.adapters.status' | translate }}:</b> {{ data.status }}</i>
-          </div>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-sm py-1">
-          <div class="accent">
-            <i><b>{{ 'general.adapters.serviceId' | translate }}:</b> {{ data.serviceId }}</i>
+            <i><b>{{ 'general.adapters.status' | translate }}:</b> {{ value.status }}</i>
           </div>
         </div>
       </div>
@@ -56,13 +49,20 @@
       <div class="row justify-content-center">
         <div class="col-sm py-1">
           <div class="accent">
+            <i><b>{{ 'general.adapters.type' | translate }}:</b> {{ value.type }}</i>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
             <i><b>{{ 'general.adapters.url' | translate }}:</b> <a href="{{ value.url }}" target="_blank"><nb-icon
                   icon="external-link-outline"></nb-icon></a></i>
           </div>
         </div>
       </div>
       <nb-accordion>
-        <nb-accordion-item expanded = false><!--*ngFor="let log of logs" expanded=false-->
+        <nb-accordion-item expanded = false>
           <nb-accordion-item-header>
             Logs
           </nb-accordion-item-header>
@@ -73,9 +73,10 @@
       </nb-accordion>
     </nb-card-body>
     <nb-card-footer>
+      <!--
       <div class="row justify-content-center">
         <button nbButton class="mx-4" shape="rectangle" size="large" status="primary"
-          [routerLink]="['/pages/services/service-editor', { serviceId: data.serviceId, readOnly: true }]"
+          [routerLink]="['/pages/services/service-editor', { serviceId: value.serviceId, readOnly: true }]"
           (click)="ref.close()">
           <i class="material-icons">info</i>&nbsp;{{ 'general.services.view_editor' | translate }}
         </button>
@@ -83,6 +84,7 @@
           {{ 'general.close' | translate }}
         </button>
       </div>
+      -->
     </nb-card-footer>
   </nb-card>
 </ng-template>

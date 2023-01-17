@@ -319,7 +319,14 @@
       "actions": "Azioni",
       "description": "Descrizione",
       "details": "Dettagli",
-      "status":"Stato"
+      "status":"Stato",
+      "name": "Nome",
+      "adapterId" : "ID adattatore",
+      "url": "Endpoint",
+      "type": "Tipo",
+      "add": "Aggiungi adattatore",
+      "confirm": "Conferma",
+      "edit": "Modifica"
     }
   },
   "login": {

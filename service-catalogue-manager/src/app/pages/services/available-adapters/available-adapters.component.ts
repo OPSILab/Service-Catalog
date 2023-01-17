@@ -13,6 +13,7 @@ import { AddAdapterComponent } from './add-adapter/add-adapter.component';
 import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
+import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
 
 @Component({
   selector: 'available-adapters-smart-table',
@@ -23,6 +24,7 @@ import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 export class AvailableAdaptersComponent implements OnInit, OnDestroy {
   @Input() value: AdapterEntry;
   @Output() updateResult = new EventEmitter<unknown>();
+
   schemaDir: string;
   loading = false;
   public isNew = false;
@@ -129,7 +131,7 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
           title: this.adapterLabel,
           type: 'text',
           width: '25%',
-          valuePrepareFunction: (cell, row: AdapterEntry) => row.adapterId,
+          valuePrepareFunction: (cell, row: AdapterEntry) => row.name,
         },
         description: {
           title: this.descriptionLabel,

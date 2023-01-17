@@ -325,7 +325,14 @@
       "actions" : "Actions",
       "description": "Description",
       "details": "Details",
-      "status": "Status"
+      "status": "Status",
+      "name": "Name",
+      "adapterId" : "Adapter ID",
+      "url": "Url",
+      "type": "Type",
+      "add": "Add adapter",
+      "confirm": "Confirm",
+      "edit":"Edit adapter"
     }
   },
   "login": {

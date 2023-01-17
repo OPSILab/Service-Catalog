@@ -1,3 +1,5 @@
+import { StatusCardComponent } from './../../../dashboard/status-card/status-card.component';
+import { Description } from './../../../../model/services/description';
 import { FormControl } from '@angular/forms';
 import { NbComponentStatus, NbDialogRef, NbGlobalPhysicalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { AvailableAdaptersService } from '../available-adapters.service'
@@ -12,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'add-adapter',
   templateUrl: './add-adapter.component.html',
-  styleUrls: ['./add-adapter.component.css']
+  styleUrls: ['./add-adapter.component.scss']
 })
 
 export class AddAdapterComponent implements OnInit {
@@ -22,6 +24,11 @@ export class AddAdapterComponent implements OnInit {
   configService: NgxConfigureService;
   inputItemNgModel;
   adapterId: string = "adapterId"
+  name: string = "name"
+  description: string = "description"
+  status: string = "inactive"
+  type: string = "Model"//TODO enum
+  url: string = "https://www.adapter.com"
   textareaItemNgModel;
   inputItemFormControl;
   textareaItemFormControl;
@@ -42,10 +49,15 @@ export class AddAdapterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.inputItemFormControl = new FormControl();
-    this.textareaItemFormControl = new FormControl();
-    console.log("dialog-add-new-prompt.component.ts.onInit()", this.value)
-    this.adapterId = this.value.adapterId
+    try {
+      this.inputItemFormControl = new FormControl();
+      this.textareaItemFormControl = new FormControl();
+      console.log("dialog-add-new-prompt.component.ts.onInit()", this.value)
+      this.adapterId = this.value.adapterId
+    }
+    catch (error) {
+      console.log("Error", error)
+    }
 
   }
 

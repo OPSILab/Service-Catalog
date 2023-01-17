@@ -4,7 +4,7 @@ import { AvailableConnectorsService } from '../availableConnectors.service'
 import { NgxConfigureService } from 'ngx-configure';
 import { HttpClient } from '@angular/common/http';
 import { ConnectorEntry } from '../../../../model/connector/connectorEntry'
-import { Component, Input, Output, EventEmitter, } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorDialogConnectorService } from '../../../error-dialog/error-dialog-connector.service';
 
@@ -14,7 +14,7 @@ import { ErrorDialogConnectorService } from '../../../error-dialog/error-dialog-
   styleUrls: ['dialog-add-new-prompt.component.scss'],
 })
 
-export class DialogAddNewPromptComponent {
+export class DialogAddNewPromptComponent implements OnInit {
   @Input() value: ConnectorEntry;
   @Output() editedValue = new EventEmitter<unknown>();
   http: HttpClient;
@@ -45,16 +45,21 @@ export class DialogAddNewPromptComponent {
     this.ref.close();
   }
 
-  onInit(): void {
-    this.inputItemFormControl = new FormControl();
-    this.textareaItemFormControl = new FormControl();
-    console.log("dialog-add-new-prompt.component.ts.onInit()", this.value)
-    this.name = this.value.name
-    this.description = this.value.description
-    this.status = this.value.status
-    this.connectorId = this.value.connectorId
-    this.serviceId = this.value.serviceId
-    this.url = this.value.url
+  ngOnInit(): void {
+    try {
+      this.inputItemFormControl = new FormControl();
+      this.textareaItemFormControl = new FormControl();
+      console.log("dialog-add-new-prompt.component.ts.onInit()", this.value)
+      this.name = this.value.name
+      this.description = this.value.description
+      this.status = this.value.status
+      this.connectorId = this.value.connectorId
+      this.serviceId = this.value.serviceId
+      this.url = this.value.url
+    }
+    catch (error) {
+      console.log("Error", error)
+    }
   }
 
   getFormType(): string {
@@ -119,14 +124,16 @@ export class DialogAddNewPromptComponent {
     }
     catch (error) {
       console.log(error)
-      this.errorService.openErrorDialog({ error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
-        {
+      this.errorService.openErrorDialog({
+        error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+          {
             "path": "root.connectorId",
             "property": "minLength",
             "message": "Value required",
             "errorcount": 1
-        }
-    ] });
+          }
+        ]
+      });
     }
   }
 

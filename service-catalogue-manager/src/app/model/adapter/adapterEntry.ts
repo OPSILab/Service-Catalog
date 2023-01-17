@@ -1,4 +1,4 @@
-export interface AdapterEntry {//TODO G:modify with correct adapter model
+export interface AdapterEntry {
   id: string;
   adapterId: string;
   url: string,
