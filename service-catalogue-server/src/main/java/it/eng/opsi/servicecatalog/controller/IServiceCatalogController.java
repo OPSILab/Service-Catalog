@@ -9,18 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.http.ResponseEntity;
 
+import com.github.andrewoma.dexx.collection.internal.adapter.Adapters;
+
 import it.eng.opsi.servicecatalog.exception.ConnectorLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
+import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 
 public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<List<ServiceModel>> getServices() throws ServiceNotFoundException;
+
+	public abstract ResponseEntity<List<Adapter>> getAdapters(); // TODO G: throws AdaptersNotFoundException;
 
 	public abstract ResponseEntity<List<ConnectorLog>> getConnectorLogs() throws ConnectorLogNotFoundException;
 

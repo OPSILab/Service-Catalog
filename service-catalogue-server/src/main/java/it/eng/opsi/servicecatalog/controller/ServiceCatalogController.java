@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.andrewoma.dexx.collection.internal.adapter.Adapters;
+
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
@@ -39,13 +41,12 @@ import it.eng.opsi.servicecatalog.exception.ConnectorNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
+import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
 import it.eng.opsi.servicecatalog.service.ServiceCatalogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
-
-//TODOgetconnectorlogs
 
 @OpenAPIDefinition(info = @Info(title = "Service Catalog API", description = "Service Catalog APIs used to manage CRUD for Service Model descriptions.", version = "1.0"), tags = {
 		@Tag(name = "Service Model", description = "Service Model Description APIs to get and manage service model descriptions.") })
@@ -71,6 +72,18 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	public ResponseEntity<List<ServiceModel>> getServices() throws ServiceNotFoundException {
 
 		return ResponseEntity.ok(catalogService.getServices());
+	}
+
+	@Override
+	@Operation(summary = "Get all the Adapter Model descriptions.", description = "Get all the Adapter Model descriptions saved in the Service Catalog.", tags = {
+			"Adapter Model" }, responses = {
+					@ApiResponse(description = "Returns the list of all registered Adapter Model descriptions.", responseCode = "200") })
+	@GetMapping(value = "/adapters", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Adapter>> getAdapters()
+	// TODO G:throws AdapterNotFoundException
+	{
+
+		return ResponseEntity.ok(catalogService.getAdapters());
 	}
 
 	@Override

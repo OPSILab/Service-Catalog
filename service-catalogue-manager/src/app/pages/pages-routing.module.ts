@@ -21,6 +21,12 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'adapters',
+        redirectTo: 'adapters/availableAdapters',
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'consents',
         loadChildren: () => import('./consents/consents.module').then((m) => m.ConsentsModule),
         canActivate: [AuthGuard],
@@ -30,6 +36,7 @@ const routes: Routes = [
         loadChildren: () => import('./services/services.module').then((m) => m.ServicesModule),
         canActivate: [AuthGuard],
       },
+
     ],
   },
 ];

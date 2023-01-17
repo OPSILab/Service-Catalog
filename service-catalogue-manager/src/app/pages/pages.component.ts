@@ -81,6 +81,12 @@ export class PagesComponent implements OnInit, OnDestroy {
         link: '/pages/services/availableConnectors',
         hidden: this.hideServicesMenu,
       },
+      {
+        title: 'general.menu.adapters',
+        icon: 'link-2-outline',
+        link: '/pages/services/availableAdapters',
+        hidden: this.hideServicesMenu,
+      },
     ];
 
     // if put on constructor it will doing twice when refresh a page.

@@ -35,4 +35,9 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'link-2-outline',
     link: '/pages/services/availableConnectors',
   },
+  {
+    title: 'general.menu.adapters',
+    icon: 'link-2-outline',
+    link: '/pages/services/availableAdapters',
+  },
 ];

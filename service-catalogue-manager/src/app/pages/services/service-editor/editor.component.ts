@@ -21,6 +21,7 @@ import { AppConfig, System } from '../../../model/appConfig';
 import { ServiceModel } from '../../../model/services/serviceModel';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 
+
 @Component({
   selector: 'ngx-spinner-color',
   templateUrl: './editor.component.html',

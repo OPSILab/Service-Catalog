@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { AvailableServicesComponent } from './availableServices/availableServices.component';
 import { AvailableConnectorsComponent } from './availableConnectors/availableConnectors.component';
 import { EditorComponent } from './service-editor/editor.component';
+import { AvailableAdaptersComponent } from './available-adapters/available-adapters.component';
+
 
 const routes: Routes = [
   {
@@ -17,6 +19,10 @@ const routes: Routes = [
   {
     path: 'availableConnectors',
     component: AvailableConnectorsComponent,
+  },
+  {
+    path: 'availableAdapters',
+    component: AvailableAdaptersComponent,
   },
 ];
 

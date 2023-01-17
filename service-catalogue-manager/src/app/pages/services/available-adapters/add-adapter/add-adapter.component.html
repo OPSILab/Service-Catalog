@@ -1,0 +1,36 @@
+<nb-card>
+  <nb-card-header class="d-flex align-content-center justify-content-between">
+    <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+    <div *ngIf="getFormType()=='add'; else elseBlock">
+      <h3>{{ 'general.adapters.add' | translate }}</h3>
+    </div>
+    <ng-template #elseBlock>
+      <h3>{{ 'general.adapters.edit' | translate }}</h3>
+    </ng-template>
+    <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
+      <i class="material-icons">close</i>
+    </button>
+  </nb-card-header>
+  <nb-card-body class="m-2 p-4">
+    <h6>
+      <form>
+        <label for="adapterId">{{ 'general.adapters.adapterId' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="adapterId" [(ngModel)]="adapterId"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <h3>
+          <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
+            <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
+          </button>
+        </h3>
+      </form>
+    </h6>
+  </nb-card-body>
+  <nb-card-footer *ngIf="selectedFile">
+    <p *ngIf="selectedFile">
+      <b>{{ 'general.editor.selected' | translate }}:&nbsp;</b> <i> {{ selectedFile.name }}</i>
+    </p>
+  </nb-card-footer>
+</nb-card>

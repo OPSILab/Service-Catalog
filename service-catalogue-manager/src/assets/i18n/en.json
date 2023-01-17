@@ -39,7 +39,8 @@
       "connectors": "Connectors",
       "registry": "Service Registries",
       "account": "Account",
-      "editorpage_title": "Service description"
+      "editorpage_title": "Service description",
+      "adapters": "Adapters"
     },
     "consents": {
       "legalbasis": "Legal basis",
