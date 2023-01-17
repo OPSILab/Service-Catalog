@@ -14,6 +14,11 @@
   <nb-card-body class="m-2 p-4">
     <h6>
       <form>
+        <label for="connectorId">{{ 'general.connectors.connectorId' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="connectorId" [(ngModel)]="connectorId"
+          [ngModelOptions]="{standalone: true}">
+          <br><br>
         <label for="name">{{ 'general.connectors.name' | translate }}</label>
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
@@ -27,11 +32,6 @@
         <label for="status">{{ 'general.connectors.status' | translate }}</label>
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
-          [ngModelOptions]="{standalone: true}">
-          <br><br>
-        <label for="connectorId">{{ 'general.connectors.connectorId' | translate }}</label>
-        <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="connectorId" [(ngModel)]="connectorId"
           [ngModelOptions]="{standalone: true}">
           <br><br>
         <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>

@@ -12,13 +12,18 @@ import { AvailableConnectorsService } from './availableConnectors.service';
   templateUrl: `./connectorInfoRender.component.html`,
 })
 
-export class ConnectorInfoRenderComponent implements OnInit{
+export class ConnectorInfoRenderComponent implements OnInit {
   @Input() value: ConnectorEntry;
   @ViewChild('availableConnectorInfoModal', { static: true }) connectorInfoModalRef: TemplateRef<unknown>;
 
-  logs:ConnectorEntryLog[]
+  logs: ConnectorEntryLog[]
+  public settings: Record<string, unknown>;
+  private date: Date;
+  private message: String;
 
-  constructor(private modalService: NbDialogService, private translateService: TranslateService,private availableConnectorsService: AvailableConnectorsService,) {}
+  constructor(private translate: TranslateService, private modalService: NbDialogService, private translateService: TranslateService, private availableConnectorsService: AvailableConnectorsService,) {
+    this.settings = this.loadTableSettings();
+  }
 
   async ngOnInit(): Promise<void> {
     console.log("connectorInfoRender.component.ts.ngOnInit()")
@@ -38,5 +43,39 @@ export class ConnectorInfoRenderComponent implements OnInit{
       },
       hasScroll: true,
     });
+  }
+
+  loadTableSettings(): Record<string, unknown> {
+    this.date = this.translate.instant('general.logs.issued') as Date;
+    this.message = this.translate.instant('general.logs.message') as String;
+
+    return {
+      mode: 'external',
+      attr: {
+        class: 'table table-bordered',
+      },
+      actions: {
+        add: false,
+        edit: false,
+        delete: false,
+        editService: false
+      },
+      columns: {
+        date: {
+          title: this.date,
+          type: 'text',
+          width: '25%',
+          valuePrepareFunction: (cell, row: ConnectorEntryLog) => row.issued,
+        },
+        message: {
+          title: this.message,
+          editor: {
+            type: 'textarea',
+          },
+          width: '65%',
+          valuePrepareFunction: (cell, row: ConnectorEntryLog) => row.message,
+        }
+      }
+    };
   }
 }

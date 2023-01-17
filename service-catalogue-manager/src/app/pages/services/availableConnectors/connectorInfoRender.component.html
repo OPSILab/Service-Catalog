@@ -61,13 +61,14 @@
           </div>
         </div>
       </div>
-
       <nb-accordion>
-        <nb-accordion-item *ngFor="let log of logs" expanded=false>
+        <nb-accordion-item expanded = false><!--*ngFor="let log of logs" expanded=false-->
           <nb-accordion-item-header>
             Logs
           </nb-accordion-item-header>
           <nb-accordion-item-body>
+            <ng2-smart-table [settings]="settings" [source]="logs"> </ng2-smart-table>
+            <!--
             <ul>
               <li>
                 <div class="col-9">{{log.type}}</div>
@@ -80,11 +81,12 @@
                 <div class="col-9">{{log.issued}}</div>
               </li>
             </ul>
+            -->
+
           </nb-accordion-item-body>
         </nb-accordion-item>
       </nb-accordion>
     </nb-card-body>
-
     <nb-card-footer>
       <div class="row justify-content-center">
         <button nbButton class="mx-4" shape="rectangle" size="large" status="primary"

@@ -290,7 +290,7 @@
       "url_link": "Link",
       "data_processed": "Data Processed",
       "close": "Close",
-      "url": "Repository",
+      "url": "Endpoint",
       "created": "Created",
       "data_consent": "Data Consent",
       "enabled": "Enabled",
@@ -314,7 +314,10 @@
       "connector_registered_message": "Connector {{connectorName}} registered successfully!",
       "connector_deregistered_message": "Connector {{connectorName}} disabled successfully!",
       "validationErrors": "There are validation errors in the Connector description."
-
+    },
+    "logs": {
+      "issued": "Date",
+      "message": "Message"
     }
   },
   "login": {

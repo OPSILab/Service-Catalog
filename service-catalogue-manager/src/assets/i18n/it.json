@@ -309,6 +309,10 @@
       "connector_registered_message": "Il connector {{connectorName}} è stato registrato correttamente!",
       "connector_deregistered_message": "Il connector {{connectorName}} è stato disabilitato correttamente!",
       "validationErrors": "Ci sono degli errori di validazione nella descrizione del Connector inserita."
+    },
+    "logs": {
+      "issued": "Data",
+      "message": "Messaggio"
     }
   },
   "login": {
