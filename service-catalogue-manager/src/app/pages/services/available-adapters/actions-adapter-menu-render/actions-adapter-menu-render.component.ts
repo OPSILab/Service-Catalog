@@ -23,79 +23,79 @@ import { AdapterEntry } from '../../../../model/adapter/adapterEntry';
 @Component({
   selector: 'actions-adapter-menu-render',
   template: `
-    <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.adapterId }}" >
-      <nb-icon icon="settings-2" ></nb-icon>
-    </button>
-    <!-- Register Adapter modal ng-template -->
-    <ng-template #confirmRegisterDialog let-data let-ref="dialogRef">
-      <nb-card>
-        <nb-card-header class="d-flex justify-content-between">
-          <h5>{{ 'general.adapters.register_adapter' | translate: { adapterName: value.name } }}</h5>
-          <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
-            <i class="material-icons">close</i>
-          </button>
-        </nb-card-header>
-        <nb-card-body
-          class="p-5 text-center"
-          [innerHTML]="'general.adapters.register_adapter_message' | translate: { adapterName: value.name }"
-        ></nb-card-body>
-        <nb-card-footer class="d-flex justify-content-center">
-          <button nbButton status="primary" size="small" (click)="ref.close(true)">
-            {{ 'general.adapters.register' | translate }}
-          </button>
-          <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
-            {{ 'general.close' | translate }}
-          </button>
-        </nb-card-footer>
-      </nb-card>
-    </ng-template>
-    <!-- DeRegister Adapter modal ng-template -->
-    <ng-template #confirmDeRegisterDialog let-data let-ref="dialogRef">
-      <nb-card>
-        <nb-card-header class="d-flex justify-content-between">
-          <h5>{{'general.adapters.deregister_adapter' | translate: {adapterName: value.name} }}</h5>
-          <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
-            <i class="material-icons">close</i>
-          </button>
-        </nb-card-header>
-        <nb-card-body
-          class="p-5 text-center"
-          [innerHTML]="'general.adapters.deregister_adapter_message' | translate: { adapterName: value.name }"
-        ></nb-card-body>
-        <nb-card-footer class="d-flex justify-content-center">
-          <button nbButton status="primary" size="small" (click)="ref.close(true)">
-            {{ 'general.adapters.deregister' | translate }}
-          </button>
-          <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
-            {{ 'general.close' | translate }}
-          </button>
-        </nb-card-footer>
-      </nb-card>
-    </ng-template>
-    <!-- Delete Adapter modal ng-template -->
-    <ng-template #confirmDeleteDialog let-data let-ref="dialogRef">
-      <nb-card>
-        <nb-card-header class="d-flex justify-content-between">
-          <h5>{{ 'general.adapters.delete_adapter' | translate: {adapterName: value.name} }}</h5>
-          <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
-            <i class="material-icons">close</i>
-          </button>
-        </nb-card-header>
-        <nb-card-body
-          class="p-5 text-center"
-          [innerHTML]="'general.adapters.delete_adapter_message' | translate: {adapterName: value.name}"
-        ></nb-card-body>
-        <nb-card-footer class="d-flex justify-content-center">
-          <button nbButton status="danger" size="small" (click)="data.callback()">
-            {{ 'general.editor.delete' | translate }}
-          </button>
-          <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
-            {{ 'general.cancel' | translate }}
-          </button>
-        </nb-card-footer>
-      </nb-card>
-    </ng-template>
-  `,
+  <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.adapterId }}" >
+  <nb-icon icon="settings-2" ></nb-icon>
+</button>
+<!-- Register Adapter modal ng-template -->
+<ng-template #confirmRegisterDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{ 'general.adapters.register_adapter' | translate: { adapterName: value.name } }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body
+      class="p-5 text-center"
+      [innerHTML]="'general.adapters.register_adapter_message' | translate: { adapterName: value.name }"
+    ></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="ref.close(true)">
+        {{ 'general.adapters.register' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.close' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!-- DeRegister Adapter modal ng-template -->
+<ng-template #confirmDeRegisterDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{'general.adapters.deregister_adapter' | translate: {adapterName: value.name} }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body
+      class="p-5 text-center"
+      [innerHTML]="'general.adapters.deregister_adapter_message' | translate: { adapterName: value.name }"
+    ></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="ref.close(true)">
+        {{ 'general.adapters.deregister' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.close' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!-- Delete Adapter modal ng-template -->
+<ng-template #confirmDeleteDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{ 'general.adapters.delete_adapter' | translate: {adapterName: value.name} }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body
+      class="p-5 text-center"
+      [innerHTML]="'general.adapters.delete_adapter_message' | translate: {adapterName: value.name}"
+    ></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="danger" size="small" (click)="data.callback()">
+        {{ 'general.editor.delete' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+`,
   styleUrls: ['./actions-adapter-menu-render.component.scss']
 
 })
@@ -266,7 +266,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
   onRegisterAdapter = async (): Promise<void> => {
     try {
       console.log("register")
-     // this.value.status = this.value.status == "active" ? "inactive" : "active";
+      // this.value.status = this.value.status == "active" ? "inactive" : "active";
       //this.value = await this.availableAdaptersService.registerAdapter(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_registered_message', { adapterName: this.value.adapterId }), '');
       this.updateResult.emit(this.value);

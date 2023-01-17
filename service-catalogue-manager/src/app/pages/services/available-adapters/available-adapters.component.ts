@@ -130,7 +130,7 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
           type: 'text',
           width: '25%',
           valuePrepareFunction: (cell, row: AdapterEntry) => row.adapterId,
-        },/*
+        },
         description: {
           title: this.descriptionLabel,
           editor: {
@@ -155,7 +155,7 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
           width: '5%',
           type: 'text',
           valuePrepareFunction: (cell, row: AdapterEntry) => row.status,
-        },*/
+        },
         actions: {
           title: this.actionsLabel,
           sort: false,

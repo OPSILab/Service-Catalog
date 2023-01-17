@@ -319,6 +319,13 @@
     "logs": {
       "issued": "Date",
       "message": "Message"
+    },
+    "adapters":{
+      "adapter" : "Adapter",
+      "actions" : "Actions",
+      "description": "Description",
+      "details": "Details",
+      "status": "Status"
     }
   },
   "login": {

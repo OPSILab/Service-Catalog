@@ -272,10 +272,10 @@
     },
     "connectors": {
       "connector": "Connector",
-      "edit":"Modifica",
+      "edit": "Modifica",
       "add": "Aggiungi connector",
       "description": "Description",
-       "actions": "Azioni",
+      "actions": "Azioni",
       "details": "Dettagli",
       "status": "Status",
       "link": "Link",
@@ -291,7 +291,6 @@
       "enabled": "Enabled",
       "disabled": "Disabled",
       "editService": "Modifica Servizio",
-
       "confirm": "Conferma",
       "serviceId": "Service ID",
       "connectorId": "Connector ID",
@@ -314,6 +313,13 @@
     "logs": {
       "issued": "Data",
       "message": "Messaggio"
+    },
+    "adapters": {
+      "adapter": "Adattatori",
+      "actions": "Azioni",
+      "description": "Descrizione",
+      "details": "Dettagli",
+      "status":"Stato"
     }
   },
   "login": {

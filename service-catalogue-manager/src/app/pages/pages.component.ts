@@ -23,7 +23,7 @@ export class PagesComponent implements OnInit, OnDestroy {
   private hideConsentsMenu: boolean;
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private translateService: TranslateService, private cdr: ChangeDetectorRef, private accessChecker: NbAccessChecker) {}
+  constructor(private translateService: TranslateService, private cdr: ChangeDetectorRef, private accessChecker: NbAccessChecker) { }
 
   ngOnInit(): void {
     this.accessChecker
@@ -83,7 +83,7 @@ export class PagesComponent implements OnInit, OnDestroy {
       },
       {
         title: 'general.menu.adapters',
-        icon: 'link-2-outline',
+        icon: 'options-2-outline',
         link: '/pages/services/availableAdapters',
         hidden: this.hideServicesMenu,
       },
