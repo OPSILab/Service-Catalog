@@ -59,10 +59,10 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<Object> deleteConnectorLog(String connectorId) throws ConnectorLogNotFoundException;
 
-	public abstract ResponseEntity<?> getConnector(String serviceId) throws ServiceNotFoundException;
+	public abstract ResponseEntity<?> getConnector(String serviceId) throws ConnectorNotFoundException;
 
 	public abstract ResponseEntity<List<ConnectorLog>> getConnectorLogsByconnectorId(String serviceId)
-			throws ServiceNotFoundException;
+			throws ConnectorLogNotFoundException;
 
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountBySector();
 
