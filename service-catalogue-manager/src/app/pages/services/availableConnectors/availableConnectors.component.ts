@@ -67,7 +67,6 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    console.log("availableConnectors.component: ngOnInit()")
     try {
       this.availableConnectors = await this.availableConnectorsService.getConnectors();
       void this.source.load(this.availableConnectors);
@@ -77,7 +76,6 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('ngOnDestroy');
     this.unsubscribe.next();
     this.unsubscribe.complete();
   }
@@ -85,16 +83,14 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   async addNew(): Promise<void> {
     try {
       DialogAddNewPromptComponent.formType = 'add';
-      console.log("AddNew");
       this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe(() => {
         void console.log("confirm ok", this.ngOnInit());
       });
-      console.log("Added");
       this.updateResult.emit(this.value);
       this.ngOnInit()
     }
     catch (error) {
-      console.log(error)
+      console.log("error in addNew", error)
       this.errorService.openErrorDialog(error);
     }
   }

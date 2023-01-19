@@ -85,7 +85,6 @@ public class Connector {
         this.status = status;
         try {
             this.connectorId = connectorId;
-            System.out.println(connectorModelRepo.findByconnectorId(connectorId));
             if (connectorModelRepo.findByconnectorId(connectorId).connectorId == connectorId)
                 throw new Error("connectorId already exists");
         } catch (Error e) {

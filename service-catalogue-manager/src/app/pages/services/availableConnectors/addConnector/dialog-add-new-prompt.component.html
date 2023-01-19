@@ -14,31 +14,33 @@
   <nb-card-body class="m-2 p-4">
     <h6>
       <form>
-        <label for="connectorId">{{ 'general.connectors.connectorId' | translate }}</label>
-        <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="connectorId" [(ngModel)]="connectorId"
-          [ngModelOptions]="{standalone: true}">
+        <div *ngIf="getFormType()=='add'">
+          <label for="connectorId">{{ 'general.connectors.connectorId' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="connectorId" [(ngModel)]="connectorId"
+            [ngModelOptions]="{standalone: true}">
           <br><br>
+        </div>
         <label for="name">{{ 'general.connectors.name' | translate }}</label>
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
           [ngModelOptions]="{standalone: true}">
-          <br><br>
+        <br><br>
         <label for="description">{{ 'general.connectors.description' | translate }}</label>
         <br>
         <textarea nbInput fullWidth fieldSize="medium" placeholder="description" [(ngModel)]="description"
           [ngModelOptions]="{standalone: true}"></textarea>
-          <br><br>
+        <br><br>
         <label for="status">{{ 'general.connectors.status' | translate }}</label>
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
-          [ngModelOptions]="{standalone: true}">
-          <br><br>
+          [ngModelOptions]="{standalone: true}" disabled>
+        <br><br>
         <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" placeholder="serviceId" [(ngModel)]="serviceId"
           [ngModelOptions]="{standalone: true}">
-          <br><br>
+        <br><br>
         <label for="url">{{ 'general.connectors.url' | translate }}</label>
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"

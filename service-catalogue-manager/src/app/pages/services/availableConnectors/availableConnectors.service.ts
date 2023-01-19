@@ -20,8 +20,8 @@ export class AvailableConnectorsService {
     return this.http.get<ConnectorEntry[]>(`${this.serviceRegistryUrl}/api/v2/connectors`).toPromise();
   }
 
-  getConnectorsCount(): Promise<{total: number, publicConnectors, privateConnectors}> {
-    return this.http.get<{total: number, publicConnectors, privateConnectors}>(`${this.serviceRegistryUrl}/api/v2/connectors/count`).toPromise();
+  getConnectorsCount(): Promise<{ total: number, publicConnectors, privateConnectors }> {
+    return this.http.get<{ total: number, publicConnectors, privateConnectors }>(`${this.serviceRegistryUrl}/api/v2/connectors/count`).toPromise();
   }
 
   getConnector(connectorId: string): Promise<ConnectorEntry> {
@@ -29,8 +29,12 @@ export class AvailableConnectorsService {
   }
 
   saveConnector(connector: ConnectorEntry): Promise<ConnectorEntry> {
-    console.log(`${this.serviceRegistryUrl}/api/v2/connectors`)
-    return this.http.post<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors`, connector).toPromise();
+    try {
+      return this.http.post<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors`, connector).toPromise();
+    }
+    catch(error){
+      console.log("error nel service", error)
+    }
   }
 
   registerConnector(connector: ConnectorEntry): Promise<ConnectorEntry> {

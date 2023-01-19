@@ -40,7 +40,8 @@
       "registry": "Service Registries",
       "account": "Account",
       "editorpage_title": "Service description",
-      "adapters": "Adapters"
+      "adapters": "Adapters",
+      "connectors_adapters": "CONNECTORS & ADAPTERS"
     },
     "consents": {
       "legalbasis": "Legal basis",
@@ -250,7 +251,8 @@
       "service_deregistered_message": "Service {{serviceName}} disabled successfully!",
       "delete_service": "Delete service",
       "delete_service_message": "Are you sure to delete permanently the service <strong>{{serviceName}}</strong>?\n",
-      "service_deleted_message": "Service {{serviceName}} deleted successfully!"
+      "service_deleted_message": "Service {{serviceName}} deleted successfully!",
+      "view_service": "See service"
     },
     "editor": {
       "title": "Service Description, instances and personal data handling",
@@ -314,7 +316,8 @@
       "connector_deleted_message": "Connector {{connectorName}} deleted successfully!",
       "connector_registered_message": "Connector {{connectorName}} registered successfully!",
       "connector_deregistered_message": "Connector {{connectorName}} disabled successfully!",
-      "validationErrors": "There are validation errors in the Connector description."
+      "validationErrors": "There are validation errors in the Connector description.",
+      "logs" : "Connector logs"
     },
     "logs": {
       "issued": "Date",

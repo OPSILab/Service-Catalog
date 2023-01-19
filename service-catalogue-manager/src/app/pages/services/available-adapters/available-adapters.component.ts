@@ -69,7 +69,6 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    console.log("availableAdapters.component: ngOnInit()")
     try {
       this.availableAdapters = await this.availableAdaptersService.getAdapters();
       void this.source.load(this.availableAdapters);
@@ -79,7 +78,6 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('ngOnDestroy');
     this.unsubscribe.next();
     this.unsubscribe.complete();
   }
@@ -87,11 +85,9 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
   async addNew(): Promise<void> {
     try {
       AddAdapterComponent.formType = 'add';
-      console.log("AddNew");
       this.dialogService.open(AddAdapterComponent).onClose.subscribe(() => {
         void console.log("confirm ok", this.ngOnInit());
       });
-      console.log("Added");
       this.updateResult.emit(this.value);
       this.ngOnInit()
     }

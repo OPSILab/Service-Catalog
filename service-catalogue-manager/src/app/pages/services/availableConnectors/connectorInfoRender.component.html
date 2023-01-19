@@ -21,6 +21,13 @@
       <div class="row justify-content-center">
         <div class="col-sm py-1">
           <div class="accent">
+            <i><b>{{ 'general.connectors.connectorId' | translate }}:</b> {{ data.connectorId }}</i>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
             <i><b>{{ 'general.connectors.name' | translate }}:</b> {{ value.name}}</i>
           </div>
         </div>
@@ -49,22 +56,15 @@
       <div class="row justify-content-center">
         <div class="col-sm py-1">
           <div class="accent">
-            <i><b>{{ 'general.connectors.connectorId' | translate }}:</b> {{ data.connectorId }}</i>
-          </div>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-sm py-1">
-          <div class="accent">
             <i><b>{{ 'general.connectors.url' | translate }}:</b> <a href="{{ value.url }}" target="_blank"><nb-icon
                   icon="external-link-outline"></nb-icon></a></i>
           </div>
         </div>
       </div>
       <nb-accordion>
-        <nb-accordion-item expanded = false><!--*ngFor="let log of logs" expanded=false-->
+        <nb-accordion-item expanded=false><!--*ngFor="let log of logs" expanded=false-->
           <nb-accordion-item-header>
-            Logs
+            {{ 'general.connectors.logs' | translate }}
           </nb-accordion-item-header>
           <nb-accordion-item-body>
             <ng2-smart-table [settings]="settings" [source]="logs"> </ng2-smart-table>
@@ -74,9 +74,245 @@
     </nb-card-body>
     <nb-card-footer>
       <div class="row justify-content-center">
-        <button nbButton class="mx-4" shape="rectangle" size="large" status="primary"
+        <div *ngIf="value.serviceId else elseBlock ">
+          <button nbButton class="mx-4" shape="rectangle" size="large" status="primary" (click)="showServiceInfoModal()">
+            <i class="material-icons">info</i>&nbsp;{{ 'general.services.view_service' | translate }}
+          </button>
+          <button nbButton class="mx-4" ghost shape="rectangle" size="large" status="primary" (click)="ref.close()">
+            {{ 'general.close' | translate }}
+          </button>
+        </div>
+        <ng-template #elseBlock>
+          <button nbButton class="mx-4" ghost shape="rectangle" size="large" status="primary" (click)="ref.close()">
+            {{ 'general.close' | translate }}
+          </button>
+        </ng-template>
+      </div>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+
+<ng-template #availableServiceInfoModal let-data let-ref="dialogRef">
+  <nb-card style="width: 60vw; height: auto; max-width: 95vw; max-height: 95vh">
+    <nb-card-header class="d-flex justify-content-between">
+      <h5 class="h5">{{ data.modalHeader }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body>
+      <div class="row justify-content-around align-items-sm-center">
+        <div class="col-sm py-2">
+          <img
+            style="width: 100px; height: 100px"
+            src="{{ data.iconUrl }}"
+            alt="{{ data.modalHeader }}"
+            onerror="this.onerror=null;this.src = 'favicon.png';"
+          />
+        </div>
+        <div class="col-sm">
+          {{ data.description }}
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i
+              ><b>{{ 'general.services.provider' | translate }}:</b> {{ data.provider }}</i
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i
+              ><b>{{ 'general.services.authority' | translate }}:</b> {{ data.competentAuthority.prefLabel }}</i
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i
+              ><b>{{ 'general.services.location' | translate }}:</b> {{ data.location }}</i
+            >
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-around">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i>
+              <b>{{ 'general.services.channels' | translate }}: </b>
+            </i>
+            <div class="mx-1 p-1 badge badge-primary" *ngFor="let channel of data.channel; let i = index" [attr.data-index]="i">
+              <i>{{ channel.type }}</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-around">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i>
+              <b>{{ 'general.services.sector' | translate }}: </b>
+            </i>
+            <div class="mx-1 p-1 badge badge-warning" *ngFor="let sector of data.sector; let i = index" [attr.data-index]="i">
+              <i>{{ sector }}</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-around">
+        <div class="col-sm py-1">
+          <div class="accent">
+            <i>
+              <b>{{ 'general.services.event' | translate }}: </b>
+            </i>
+            <div class="mx-1 p-1 badge badge-success" *ngFor="let event of data.event; let i = index" [attr.data-index]="i">
+              <i>{{ event }}</i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+        <div class="col-sm py-1">
+          <div class="">
+            <i
+              ><b>{{ 'general.services.link' | translate }}: </b>
+              <a href="{{ data.serviceUri }}" target="_blank"><nb-icon icon="external-link-outline"></nb-icon></a
+            ></i>
+          </div>
+        </div>
+      </div>
+<!--
+      <nb-tabset class="mt-2" fullWidth status="success">
+        <nb-tab [responsive]="true" tabTitle="{{ 'general.services.data_processing' | translate }}">
+
+          <nb-accordion
+            class="my-2 shadow-none border border-primary"
+            *ngFor="let processing of data.processings; let i = index"
+            [attr.data-index]="i"
+          >
+            <nb-accordion-item>
+              <nb-accordion-item-header class="bg-light bg-gradient">
+                <h5 class="h6 pr-3">{{ processing.purposeName }}</h5>
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="my-1" *ngIf="processing.description[0]">
+                  <i
+                    ><b> {{ processing.description[0].title }}.</b></i
+                  >
+                </div>
+                <div class="" *ngIf="processing.description[0]">{{ processing.description[0].description }}</div>
+                <br />
+                <div class="my-1">
+                  <span class="subtitle">{{ 'general.services.purpose_category' | translate }}: </span> {{ processing.purposeCategory }}
+                </div>
+                <div class="my-1">
+                  <span class="subtitle">{{ 'general.services.processing_categories' | translate }}: </span>
+                  {{ processing.processingCategories }}
+                </div>
+                <div class="my-1">
+                  <span class="subtitle">{{ 'general.services.legal_basis' | translate }}: </span> {{ processing.legalBasis }}
+                </div>
+                <div class="my-1">
+                  <span class="subtitle">{{ 'general.services.policy_refs' | translate }}: </span>
+                  <a href="{{ processing.policyRef }}" target="_blank"><nb-icon icon="external-link-outline"></nb-icon></a>
+                </div>
+                <div class="my-1">
+                  <span class="subtitle">{{ 'general.services.storage' | translate }}: </span> {{ processing.storage.location }} ({{
+                    processing.storage.duration
+                  }})
+                </div>
+                <div class="my-1">
+                  <span class="subtitle">{{ 'general.services.recipients' | translate }}: </span> {{ processing.recipients }}
+                </div>
+                <div class="my-1">
+                  <span class="subtitle">{{ 'general.services.shared_with' | translate }}: </span>
+                  <span *ngFor="let org of processing.shareWith; let i = index" [attr.data-index]="i">
+                    {{ org.orgName }} ({{ org.businessType }})</span
+                  >
+                </div>
+
+                <div class="mt-3" *ngIf="processing.requiredDatasets?.length">
+                  <h6 class="mt-4 mb-1 border-bottom mx-1 row justify-content-start">
+                    {{ 'general.services.processed_datasets' | translate }}
+                  </h6>
+                  <nb-accordion class="shadow-none">
+                    <nb-accordion-item class="my-1" *ngFor="let dataset of processing.requiredDatasets; let i = index" [attr.data-index]="i">
+                      <nb-accordion-item-header class="h-auto">
+                        <div class="h6">{{ dataset }}</div>
+                      </nb-accordion-item-header>
+                      <nb-accordion-item-body>
+                        <span class="subtitle-2">{{ 'general.services.data_concepts' | translate }}: </span>
+                        <div
+                          class="mx-1 my-1 py-2 badge badge-primary border border-info"
+                          *ngFor="let concept of data.datasetsMap.get(dataset); let i = index"
+                          [attr.data-index]="i"
+                        >
+                          <i>{{ concept }}</i>
+                        </div>
+                      </nb-accordion-item-body>
+                    </nb-accordion-item>
+                  </nb-accordion>
+                </div>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+        </nb-tab>
+        <nb-tab [responsive]="true" tabTitle="{{ 'general.consents.datacontroller' | translate }}">
+          <table class="table table-bordered table-hover">
+            <tbody>
+              <tr>
+                <th scope="row" class="bg-light border-primary">{{ 'general.consents.name' | translate }}</th>
+                <td class="border-primary">{{ data.dataController.piiController }}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="bg-light border-primary">{{ 'general.consents.onbehalf' | translate }}</th>
+                <td class="border-primary">{{ data.dataController.onBehalf }}</td>
+              </tr>
+
+              <tr>
+                <th scope="row" class="bg-light border-primary">{{ 'general.consents.organization' | translate }}</th>
+                <td class="border-primary">{{ data.dataController.org }}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="bg-light border-primary">{{ 'general.consents.contact' | translate }}</th>
+                <td class="border-primary">{{ data.dataController.contact }}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="bg-light border-primary">{{ 'general.consents.address' | translate }}</th>
+                <td class="border-primary">{{ data.dataController.address }}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="bg-light border-primary">{{ 'general.consents.email' | translate }}</th>
+                <td class="border-primary">{{ data.dataController.email }}</td>
+              </tr>
+              <tr>
+                <th scope="row" class="bg-light border-primary">{{ 'general.consents.phone' | translate }}</th>
+                <td class="border-primary">{{ data.dataController.phone }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </nb-tab>
+      </nb-tabset> -->
+    </nb-card-body>
+
+    <nb-card-footer>
+      <div class="row justify-content-center">
+        <button
+          nbButton
+          class="mx-4"
+          shape="rectangle"
+          size="large"
+          status="primary"
           [routerLink]="['/pages/services/service-editor', { serviceId: data.serviceId, readOnly: true }]"
-          (click)="ref.close()">
+          (click)="ref.close()"
+        >
           <i class="material-icons">info</i>&nbsp;{{ 'general.services.view_editor' | translate }}
         </button>
         <button nbButton class="mx-4" ghost shape="rectangle" size="large" status="primary" (click)="ref.close()">
@@ -86,3 +322,4 @@
     </nb-card-footer>
   </nb-card>
 </ng-template>
+<!--[routerLink]="['/pages/services/service-editor', { serviceId: data.serviceId, readOnly: true }]" -->

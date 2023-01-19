@@ -19,7 +19,12 @@ export class AvailableServicesService {
   }
 
   getServices(): Promise<ServiceModel[]> {
-    return this.http.get<ServiceModel[]>(`${this.serviceRegistryUrl}/api/v2/services`).toPromise();
+    try {
+      return this.http.get<ServiceModel[]>(`${this.serviceRegistryUrl}/api/v2/services`).toPromise();
+    }
+    catch (error) {
+      console.log("No services found ", error)
+    }
   }
 
   getServicesCount(): Promise<ServicesCount> {
@@ -47,7 +52,7 @@ export class AvailableServicesService {
   }
 
   getService(serviceId: string): Promise<ServiceModel> {
-    return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/json?identifier=${serviceId}`).toPromise(); 
+    return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/json?identifier=${serviceId}`).toPromise();
   }
 
   getJsonldService(serviceId: string): Promise<Record<string, unknown>> {

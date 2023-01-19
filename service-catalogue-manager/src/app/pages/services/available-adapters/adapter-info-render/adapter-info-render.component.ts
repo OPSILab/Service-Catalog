@@ -18,7 +18,6 @@ show: any;
 
 
   async ngOnInit(): Promise<void> {
-    console.log("adapterInfoRender.component.ts.ngOnInit()")
     //TODO this.logs = await this.availableAdaptersService.getAdapterLogs(this.value.adapterId)
 
   }

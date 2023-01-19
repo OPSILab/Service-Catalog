@@ -39,7 +39,8 @@
       "connectors": "Connettori",
       "registry": "Registro Servizi",
       "account": "Account",
-      "adapters": "Adattatori"
+      "adapters": "Adattatori",
+      "connectors_adapters": "CONNETTORI e ADATTATORI"
     },
     "consents": {
       "legalbasis": "Base giuridica",
@@ -243,7 +244,8 @@
       "service_deregistered_message": "Servizio {{serviceName}} disabilitato con successo!",
       "delete_service": "Elimina servizio",
       "delete_service_message": "Sei sicuro di eliminare definitivamente il servizio <strong>{{serviceName}}</strong> <strong>?",
-      "service_deleted_message": "Servizio {{serviceName}} eliminato con successo!"
+      "service_deleted_message": "Servizio {{serviceName}} eliminato con successo!",
+      "view_service": "Vedi servizio"
     },
     "editor": {
       "title": "Descrizione servizio, istanze e processamento dati",
@@ -308,7 +310,8 @@
       "connector_deleted_message": "Il connector {{connectorName}} è stato cancellato correttamente!",
       "connector_registered_message": "Il connector {{connectorName}} è stato registrato correttamente!",
       "connector_deregistered_message": "Il connector {{connectorName}} è stato disabilitato correttamente!",
-      "validationErrors": "Ci sono degli errori di validazione nella descrizione del Connector inserita."
+      "validationErrors": "Ci sono degli errori di validazione nella descrizione del Connector inserita.",
+      "logs" : "Log di connettori"
     },
     "logs": {
       "issued": "Data",

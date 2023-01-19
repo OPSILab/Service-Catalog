@@ -1,0 +1,171 @@
+<button nbButton outline aria-label="Name" status="basic" [nbContextMenu]="actions"
+  nbContextMenuTag="service-context-menu{{ value.connectorId }}">
+  <nb-icon icon="settings-2"></nb-icon>
+</button>
+<!-- Register Connector modal ng-template -->
+<ng-template #confirmRegisterDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{ 'general.connectors.register_connector' | translate: { connectorName: value.name } }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="p-5 text-center"
+      [innerHTML]="'general.connectors.register_connector_message' | translate: { connectorName: value.name }"></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="ref.close(true)">
+        {{ 'general.connectors.register' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.close' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!-- DeRegister Connector modal ng-template -->
+<ng-template #confirmDeRegisterDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{'general.connectors.deregister_connector' | translate: {connectorName: value.name} }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="p-5 text-center"
+      [innerHTML]="'general.connectors.deregister_connector_message' | translate: { connectorName: value.name }"></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="ref.close(true)">
+        {{ 'general.connectors.deregister' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.close' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!-- Delete Connector modal ng-template -->
+<ng-template #confirmDeleteDialog let-data let-ref="dialogRef">
+  <style>
+    input {
+      text-align: center;
+      width: 100%;
+    }
+
+    nb-card {
+      text-align: center;
+      min-width: 40rem;
+    }
+
+    nb-card-header {
+      text-align: center;
+    }
+
+    textarea {
+      text-align: center;
+    }
+
+    h3 {
+      text-align: center;
+    }
+
+    h6 {
+      text-align: left;
+      font-weight: normal;
+    }
+
+    input[type="text"] {
+      font-weight: normal;
+      text-align: left;
+    }
+
+    textarea {
+      font-weight: normal;
+      text-align: left;
+    }
+
+    label {
+      text-align: left;
+    }
+
+    .btn-success {
+      margin-left: 1rem;
+    }
+  </style>
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{ 'general.connectors.delete_connector' | translate: {connectorName: value.name} }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="p-5 text-center"
+      [innerHTML]="'general.connectors.delete_connector_message' | translate: {connectorName: value.name}"></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="danger" size="small" (click)="data.callback()">
+        {{ 'general.editor.delete' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<ng-template #addOrEditConnector let-data let-ref="dialogRef">
+  <nb-card class="aci">
+    <nb-card-header class="d-flex align-content-center justify-content-between">
+      <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+      <h3>{{ 'general.connectors.edit' | translate }}</h3>
+      <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="m-2 p-4">
+      <h6>
+        <form>
+          <label for="connectorId">{{ 'general.connectors.connectorId' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="connectorId"
+            [(ngModel)]="value.connectorId" [ngModelOptions]="{standalone: true}" disabled>
+          <br><br>
+          <label for="name">{{ 'general.connectors.name' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
+            [ngModelOptions]="{standalone: true}">
+          <br><br>
+          <label for="description">{{ 'general.connectors.description' | translate }}</label>
+          <br>
+          <textarea nbInput fullWidth fieldSize="medium" placeholder="description" [(ngModel)]="description"
+            [ngModelOptions]="{standalone: true}"></textarea>
+          <br><br>
+          <label for="status">{{ 'general.connectors.status' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="value.status"
+            [ngModelOptions]="{standalone: true}" disabled>
+          <br><br>
+          <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="serviceId" [(ngModel)]="serviceId"
+            [ngModelOptions]="{standalone: true}">
+          <br><br>
+          <label for="url">{{ 'general.connectors.url' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+            [ngModelOptions]="{standalone: true}">
+          <br>
+          <br>
+          <h3>
+            <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="onEditV2(); ref.close()">
+              <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i>
+            </button>
+          </h3>
+        </form>
+      </h6>
+    </nb-card-body>
+    <nb-card-footer *ngIf="selectedFile">
+      <p *ngIf="selectedFile">
+        <b>{{ 'general.editor.selected' | translate }}:&nbsp;</b> <i> {{ selectedFile.name }}</i>
+      </p>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>

@@ -76,6 +76,11 @@ export class PagesComponent implements OnInit, OnDestroy {
         hidden: this.hideServicesMenu,
       },
       {
+        title: 'general.menu.connectors_adapters',
+        group: true,
+        hidden: this.hideServicesMenu,
+      },
+      {
         title: 'general.menu.connectors',
         icon: 'link-2-outline',
         link: '/pages/services/availableConnectors',

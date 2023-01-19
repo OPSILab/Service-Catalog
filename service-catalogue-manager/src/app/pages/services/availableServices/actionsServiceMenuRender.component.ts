@@ -153,8 +153,6 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe))
       .pipe(filter(({ tag }) => tag === 'service-context-menu' + this.value.identifier))
       .subscribe((event) => {
-        console.log(event);
-
         switch (event.item.data) {
           case 'edit':
             this.onEdit(this.value.identifier);
@@ -173,9 +171,6 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
             break;
           case 'export':
             this.saveAsFile();
-            break;
-          default://G: is it useful?
-            console.log("default");
             break;
         }
       });

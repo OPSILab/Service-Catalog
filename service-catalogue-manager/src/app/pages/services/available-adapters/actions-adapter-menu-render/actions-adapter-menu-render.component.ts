@@ -126,7 +126,6 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
     private loginService: LoginService
   ) { }
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("actionsAdapterMenuRender.component.ts.ngOnChanges")
     this.updateResult.emit(this.value.id);
   }
 
@@ -135,26 +134,20 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
   }
 
   ngOnInit(): void {
-    console.log("actionAdapterMenuRender.component.ts.ngOnInit()")
     this.actions = this.translatedActionLabels();
     this.menuService
       .onItemClick()
       .pipe(takeUntil(this.unsubscribe))
       .pipe(filter(({ tag }) => tag === 'service-context-menu' + this.value.adapterId))
       .subscribe((event) => {
-        console.log(event);
-        console.log("pre-switch")
         switch (event.item.data) {
           case 'edit':
             this.onEdit();
-            console.log("edit");
             break;
           case 'delete':
-            console.log("delete");
             this.openDeleteFromRegistryDialog();
             break;
           case 'register':
-            console.log("register");
             this.openRegisterDialog();
             break;
           case 'deregister':
@@ -163,15 +156,11 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
           case 'edit service':
             this.onEditService(this.value.adapterId);
             break;
-          default:
-            console.log("default");
-            break;
         }
       });
   }
 
   async ngOnUpdate(): Promise<void> {
-    console.log("actionAdapterMenuRender.component.ts.ngOnUpdate()")
     //TODO this.value = await this.availableAdaptersService.getAdapter(this.value.adapterId);
     this.updateResult.emit(this.value);
     this.ngOnInit()
@@ -217,19 +206,15 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
   }
 
   async onEdit() {
-    console.log("onedit called")
     AddAdapterComponent.formType = 'edit';
     this.dialogService.open(AddAdapterComponent).onClose.subscribe((confirm) => {
       if (confirm) void this.updateResult.emit(this.value.id);
     });
     this.updateResult.emit(this.value.id);
-    console.log("onedit finished")
-    console.log(this.value)
     this.ngOnInit()
   }
 
   onEditService(serviceId: string): void {
-    console.log("onEdit")
     void this.router.navigate(['/pages/services/service-editor', { serviceId: serviceId }]);
   }
 
@@ -265,7 +250,6 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
 
   onRegisterAdapter = async (): Promise<void> => {
     try {
-      console.log("register")
       // this.value.status = this.value.status == "active" ? "inactive" : "active";
       //this.value = await this.availableAdaptersService.registerAdapter(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_registered_message', { adapterName: this.value.adapterId }), '');
@@ -281,7 +265,6 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
 
   onDeRegisterAdapter = async (): Promise<void> => {
     try {
-      console.log("deregister")
       //this.value.status = this.value.status == "active" ? "inactive" : "active";
       //this.value = await this.availableAdaptersService.deregisterAdapter(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_deregistered_message', { adapterName: this.value.adapterId }), '');

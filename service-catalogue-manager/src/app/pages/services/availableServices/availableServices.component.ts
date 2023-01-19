@@ -57,12 +57,12 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   }
 
 
- 
+
 
   async ngOnInit(): Promise<void> {
     try {
       this.availableServices = await this.availableServicesService.getServices();
-      void this.source.load( 
+      void this.source.load(
         this.availableServices.map((availableServiceDescr) => {
           /* Get Localized Human readable description of the Service, default en */
           // availableServiceDescr.hasInfo.description= this.getLocalizedDescription(availableServiceDescr);
@@ -79,6 +79,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
       );
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+
       if (error.error.statusCode === '401') {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
         // this.router.navigate(['/login']);
@@ -150,10 +151,10 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
         title: this.spatialLabel,
         type: 'text',
         width: '25%',
-        
+
         valuePrepareFunction: (cell, row: AvailableServiceRow) => row.spatial,
       },
-      
+
       description: {
         title: this.descriptionLabel,
         editor: {
@@ -170,7 +171,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
         width: '5%',
         type: 'text',
         valuePrepareFunction: (cell, row: AvailableServiceRow) => row.status,
-      }, 
+      },
       details: {
         title: this.detailsLabel,
         filter: false,
@@ -180,7 +181,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
         valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
         renderComponent: ServiceInfoRenderComponent,
       },
-      
+
       actions: {
         title: this.actionsLabel,
         sort: false,

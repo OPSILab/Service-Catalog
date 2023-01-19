@@ -116,15 +116,10 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 		String serviceIdentifier = request.getRequestURI().split(request.getContextPath() + "/api/v2/services/")[1];
 
-		System.out.println(identifier);
-		System.out.println(serviceIdentifier);
-
 		if (StringUtils.isBlank(serviceIdentifier))
 			throw new IllegalArgumentException("Illegal Service Identifier in input");
 
 		String decodedServiceIdentifier = java.net.URLDecoder.decode(identifier, StandardCharsets.UTF_8);
-
-		System.out.println(decodedServiceIdentifier);
 
 		if (serviceIdentifier.startsWith("jsonld"))
 			return getServiceByIdJsonLd(decodedServiceIdentifier);

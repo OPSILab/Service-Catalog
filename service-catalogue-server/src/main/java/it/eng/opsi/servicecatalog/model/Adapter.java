@@ -161,7 +161,6 @@ public class Adapter {
         super();
         try {
             this.adapterId = adapterId;
-            System.out.println(adapterRepo.findByadapterId(adapterId));
             if (adapterRepo.findByadapterId(adapterId).adapterId == adapterId)
                 throw new Error("connectorId already exists");
         } catch (Error e) {

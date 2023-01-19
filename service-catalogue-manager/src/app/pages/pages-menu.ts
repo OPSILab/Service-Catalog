@@ -31,6 +31,10 @@ export const MENU_ITEMS: NbMenuItem[] = [
     link: '/pages/services/service-editor',
   },
   {
+    title: 'general.menu.connectors_adapters',
+    group: true,
+  },
+  {
     title: 'general.menu.connectors',
     icon: 'link-2-outline',
     link: '/pages/services/availableConnectors',

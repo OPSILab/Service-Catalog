@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-import { AfterContentInit, ChangeDetectorRef,ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { JSONEditor } from '@json-editor/json-editor/dist/jsoneditor.js';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
@@ -20,6 +20,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppConfig, System } from '../../../model/appConfig';
 import { ServiceModel } from '../../../model/services/serviceModel';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
+import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 
 @Component({
@@ -60,7 +61,9 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
     private configService: NgxConfigureService,
     private errorDialogService: ErrorDialogService,
     private translateService: TranslateService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private router: Router
+
   ) {
     this.config = this.configService.config as AppConfig;
     this.systemConfig = this.config.system;
@@ -80,18 +83,25 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.serviceId = this.route.snapshot.params['serviceId'] as string;
-    this.readOnly = <boolean>this.route.snapshot.params['readOnly'];
-    sessionStorage.removeItem('isTouched');
-    if (this.serviceId) {
-      this.serviceData = await this.availablesServicesService.getService(this.serviceId);
-      this.serviceName= this.serviceData.title
-    } else {
-      this.isNew = true;
-    }
+    console.log(this, "ngOnInit()")
+    try {
+      this.serviceId = this.route.snapshot.params['serviceId'] as string;
+      this.readOnly = <boolean>this.route.snapshot.params['readOnly'];
+      sessionStorage.removeItem('isTouched');
+      if (this.serviceId) {
+        this.serviceData = await this.availablesServicesService.getService(this.serviceId);
+        this.serviceName = this.serviceData.title
+      } else {
+        this.isNew = true;
+      }
 
-    this.initializeEditor(this.serviceData);
-    // this.loading = true;
+      this.initializeEditor(this.serviceData);
+      // this.loading = true;
+    }
+    catch (error) {
+      this.router.navigate(['/services'])
+      this.errorDialogService.openErrorDialog(error);
+    }
   }
 
   ngOnDestroy(): void {
@@ -100,7 +110,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   readSessionStorageValue(key: string): string {
-      return sessionStorage.getItem(key);
+    return sessionStorage.getItem(key);
   }
 
   initializeEditor(serviceData: ServiceModel): void {
