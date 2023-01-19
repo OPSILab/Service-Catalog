@@ -26,7 +26,7 @@ export class ConnectorInfoRenderComponent implements OnInit {
   @ViewChild('availableServiceInfoModal', { static: true }) serviceInfoModalRef: TemplateRef<unknown>;
 
   logs: ConnectorEntryLog[];
-  service: ServiceModel;
+  service: AvailableServiceRow;
   public settings: Record<string, unknown>;
   private date: Date;
   private message: String;
@@ -37,7 +37,6 @@ export class ConnectorInfoRenderComponent implements OnInit {
     private errorDialogService: ErrorDialogService,
     private availableServicesService: AvailableServicesService,
     private translate: TranslateService,
-    //private serviceInfo: ServiceInfoRenderComponent,
     private modalService: NbDialogService,
     private translateService: TranslateService,
     private availableConnectorsService: AvailableConnectorsService,
@@ -54,7 +53,6 @@ export class ConnectorInfoRenderComponent implements OnInit {
     catch (error) {
       if (error.status==404) console.log("Error during services load:\nSome service with serviceId set in connector descriptions dont't exist")
     }
-
   }
 
   showConnectorInfoModal(): void {
@@ -90,7 +88,7 @@ export class ConnectorInfoRenderComponent implements OnInit {
           channel: this.service.hasInfo.hasChannel,
           language: this.service.hasInfo.language,
           location: this.service.hasInfo.spatial,
-          //locale: this.service.locale,
+          locale: this.service.locale,
           competentAuthority: this.service.hasInfo.hasCompetentAuthority,
         },
         hasScroll: true,
@@ -122,22 +120,8 @@ export class ConnectorInfoRenderComponent implements OnInit {
     );
   }
 
-  viewService() {//: Record<string, unknown> {
+  viewService() {
     this.dialogService.open(ServiceInfoRenderComponent).onClose.subscribe(() => { });
-    /*return "null" /*{
-
-      details: {
-        title: this.value.name,
-        filter: false,
-        sort: false,
-        width: '5%',
-        type: 'custom',
-        valuePrepareFunction: async (cell, row: AvailableServiceRow) => await this.availableServicesService.getService(this.value.serviceId),
-        renderComponent: ServiceInfoRenderComponent,
-      }
-
-    }*/
-    //this.modalService.open(this.serviceInfo({serviceId: this.value.serviceId})).onClose.subscribe(() => { })
   }
 
   loadTableSettings(): Record<string, unknown> {

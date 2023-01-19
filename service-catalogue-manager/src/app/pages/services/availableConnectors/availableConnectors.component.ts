@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 import { LocalDataSource } from 'ng2-smart-table';
 import { AvailableConnectorsService } from './availableConnectors.service';
 import { ConnectorInfoRenderComponent } from './connectorInfoRender.component';
