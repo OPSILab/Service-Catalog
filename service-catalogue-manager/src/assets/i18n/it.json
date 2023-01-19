@@ -298,6 +298,7 @@
       "connectorId": "Connector ID",
       "name": "Nome",
       "connector_added_message": "E' stato aggiunto un nuovo connector",
+      "connector_edited_message": "Il connettore è stato modificato",
       "register": "Registra",
       "delete": "Cancella",
       "register_connector_message": "Sicuro di voler attivare il connector <strong>{{connectorName}}</strong><br>Una volta registrato, non potrai modificarlo se non dopo averlo disabilitato.",

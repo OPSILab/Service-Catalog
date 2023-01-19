@@ -1,4 +1,4 @@
-import { Component, Input, Output, OnInit, OnChanges, TemplateRef, EventEmitter, OnDestroy, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, Input, Output, OnInit, TemplateRef, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -14,17 +14,19 @@ import {
 } from '@nebular/theme';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { AvailableConnectorsService } from './availableConnectors.service';
-import { DialogAddNewPromptComponent } from './addConnector/dialog-add-new-prompt.component';
 
 import { LoginService } from '../../../auth/login/login.service';
 import { ConnectorStatusEnum } from '../../../model/services/connector';
 import { ConnectorEntry } from '../../../model/connector/connectorEntry';
+import { AvailableServiceRow } from '../availableServices/availableServices.component';
+import { AvailableServicesService } from '../availableServices/availableServices.service';
+import { ErrorDialogConnectorService } from '../../error-dialog/error-dialog-connector.service';
 @Component({
   selector: 'actionsConnectorMenuRender',
-  templateUrl:'actionsConnectorMenuRender.component.html', //``,
+  templateUrl: 'actionsConnectorMenuRender.component.html', //``,
   styleUrls: ['actionsConnectorMenuRender.component.scss'],
 })
-export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, OnChanges {
+export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
 
   @Input() value: ConnectorEntry;
   @Output() updateResult = new EventEmitter<unknown>();
@@ -36,6 +38,8 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
   serviceId
   url
   ref
+  dialogRef
+  service: AvailableServiceRow;
 
   private unsubscribe: Subject<void> = new Subject();
   actions: NbMenuItem[];
@@ -44,10 +48,14 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
   @ViewChild('confirmRegisterDialog', { static: false }) confirmRegisterDialog: TemplateRef<unknown>;
   @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
   @ViewChild('addOrEditConnector', { static: false }) addOrEditConnector: TemplateRef<unknown>;
+  @ViewChild('availableServiceInfoModal', { static: true }) serviceInfoModalRef: TemplateRef<unknown>;
 
   constructor(
+    private errorService: ErrorDialogConnectorService,
     private availableConnectorsService: AvailableConnectorsService,
+    private availableServicesService: AvailableServicesService,
     private menuService: NbMenuService,
+    private modalService: NbDialogService,
     private router: Router,
     private translate: TranslateService,
     private errorDialogService: ErrorDialogService,
@@ -57,19 +65,19 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
     private loginService: LoginService,
     private availableConnectorService: AvailableConnectorsService,
   ) { }
-  ngOnChanges(changes: SimpleChanges): void {
-    this.updateResult.emit(this.value.id);
-  }
 
   get registered(): boolean {
     return this.value.status == ConnectorStatusEnum.Active ? true : false;
   }
 
-  ngOnChange() {
-    this.updateResult.emit(this.value.id);
-  }
-
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    if (this.ref) this.ref.close()
+    try {
+      if (this.value.serviceId) this.service = await this.availableServicesService.getService(this.value.serviceId)
+    }
+    catch (error) {
+      console.log(error)
+    }
     this.actions = this.translatedActionLabels();
     this.menuService
       .onItemClick()
@@ -78,7 +86,6 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
       .subscribe((event) => {
         switch (event.item.data) {
           case 'edit':
-            //this.onEdit();
             this.openAddEditConnector();
             break;
           case 'delete':
@@ -90,30 +97,62 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
           case 'deregister':
             this.openDeRegisterDialog();
             break;
-          case 'edit service':
-            this.onEditService(this.value.serviceId);
+          case 'view service':
+            this.showServiceInfoModal();
             break;
         }
       });
   }
 
-  async ngOnUpdate(): Promise<void> {
-    console.log("actionConnectorMenuRender.component.ts.ngOnUpdate()")
-    this.value = await this.availableConnectorsService.getConnector(this.value.connectorId);
-    this.updateResult.emit(this.value);
-    this.ngOnInit()
+  showServiceInfoModal(): void {
+    if (this.service) {
+      this.dialogRef = this.modalService.open(this.serviceInfoModalRef, {
+        context: {
+          modalHeader: this.service.title,
+          description: this.service.hasInfo.description.description,
+          sector: this.service.hasInfo.sector,
+          event: this.service.hasInfo.isGroupedBy,
+          thematicArea: this.service.hasInfo.thematicArea,
+          serviceId: this.service.identifier,
+          serviceUri: this.service.identifier,
+          publicService: this.service.isPublicService,
+          iconUrl: this.service.serviceIconUrl !== '' ? this.service.serviceIconUrl : 'favicon.png',
+          provider: this.service.hasServiceInstance.serviceProvider.name,
+          processings: this.service.isPersonalDataHandling,
+          channel: this.service.hasInfo.hasChannel,
+          language: this.service.hasInfo.language,
+          location: this.service.hasInfo.spatial,
+          locale: this.service.locale,
+          competentAuthority: this.service.hasInfo.hasCompetentAuthority,
+        },
+        hasScroll: true,
+      });
+    }
+    else this.errorDialogService.openErrorDialog({
+      error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+        {
+          "path": "root.serviceId",
+          "property": "minLength",
+          "message": "No service with id < " + this.value.serviceId + " > does exists",
+          "errorcount": 1
+        }
+      ]
+    });
   }
 
   cancel(): void {
-    console.log(this.ref.Subscriber.closed=true)
+    if (this.ref) this.ref.close()
+    this.ref.Subscriber.closed = true
   }
 
   ngOnDestroy(): void {
+    if (this.ref) this.ref.closed = true
     this.unsubscribe.next();
     this.unsubscribe.complete();
   }
 
   translatedActionLabels(): NbMenuItem[] {
+    if (this.ref) this.ref.closed = true
     if (this.registered) {
       return [
         {
@@ -121,8 +160,8 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
           data: 'deregister',
         },
         {
-          title: this.translate.instant('general.connectors.editService') as string,
-          data: 'edit service',
+          title: this.translate.instant('general.services.view_service') as string,
+          data: 'view service',
         },
       ];
     }
@@ -162,12 +201,71 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
     ];
   }
 
-  onEdit(){
-    let name = this.name, description = this.description, status = this.value.status, connectorId = this.value.connectorId, serviceId = this.serviceId, url = this.url;
-    this.availableConnectorService.updateConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry, connectorId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
-    this.updateResult.emit(this.value.id);
-    this.updateResult.emit(this.value);
-    this.ngOnInit()
+  async onEdit() {
+    try {
+      let name = this.name, description = this.description, status = this.value.status, connectorId = this.value.connectorId, serviceId = this.serviceId, url = this.url;
+      await this.availableConnectorService.updateConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry, connectorId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
+      this.updateResult.emit(this.value);
+      this.showToast('primary', this.translate.instant('general.connectors.connector_edited_message'), '');
+    }
+    catch (error) {
+      let errors: Object[] = []
+
+      if (!this.value.connectorId) errors.push({
+        "path": "root.connectorId",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.name) errors.push({
+        "path": "root.name",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.description) errors.push({
+        "path": "root.description",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.url) errors.push({
+        "path": "root.url",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+
+      console.log("error:", "\n", error)
+      if (error.message == "Connector ID must be set") {
+        this.errorService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+            {
+              "path": "root.connectorId",
+              "property": "minLength",
+              "message": "Value required",
+              "errorcount": 1
+            }
+          ]
+        });
+      }
+      else if (error.status && error.status == 400) {
+        if (error.error.status == "Connector already exists")
+          this.errorService.openErrorDialog({
+            error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+              {
+                "path": "root.connectorId",
+                "property": "minLength",
+                "message": "A connector with connector ID < " + this.value.connectorId + " > already exists",
+                "errorcount": 1
+              }
+            ]
+          });
+        else this.errorService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
+        });
+      }
+    }
   }
 
   onEditService(serviceId: string): void {
@@ -192,7 +290,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
   }
 
   openAddEditConnector(): void {
-    this.ref=this.dialogService
+    this.ref = this.dialogService
       .open(this.addOrEditConnector, {
         hasScroll: false,
         context: {
@@ -217,7 +315,6 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
 
   onRegisterConnector = async (): Promise<void> => {
     try {
-      console.log("register")
       this.value.status = this.value.status == "active" ? "inactive" : "active";
       this.value = await this.availableConnectorsService.registerConnector(this.value);
       this.showToast('primary', this.translate.instant('general.connectors.connector_registered_message', { connectorName: this.value.name }), '');

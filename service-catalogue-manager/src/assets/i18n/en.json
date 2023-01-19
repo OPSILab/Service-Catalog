@@ -304,6 +304,7 @@
       "connectorId": "Connector ID",
       "name": "Name",
       "connector_added_message": "A new connector was added",
+      "connector_edited_message": "Connector was edited",
       "register": "Register",
       "delete": "Delete",
       "register_connector_message": "Are you sure to register and activate the connector <strong>{{connectorName}}</strong><br>Once registered, you will not be able to edit it until you disabled it first.",

@@ -102,16 +102,76 @@ export class DialogAddNewPromptComponent implements OnInit {
     }
   }
 
-  onEdit() {
-    let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url;
-    this.availableConnectorService.updateConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry, connectorId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
-    this.ref.close({ content: this.json, format: this.selectedItem });
-    this.editedValue.emit(this.value);
+  async onEdit() {
+    try {
+      let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url;
+      await this.availableConnectorService.updateConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry, connectorId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
+      this.ref.close({ content: this.json, format: this.selectedItem });
+      this.editedValue.emit(this.value);
+      this.showToast('primary', this.translate.instant('general.connectors.connector_edited_message'), '');
+    }
+    catch (error) {
+      let errors: Object[] = []
+
+      if (!this.connectorId) errors.push({
+        "path": "root.connectorId",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.name) errors.push({
+        "path": "root.name",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.description) errors.push({
+        "path": "root.description",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.url) errors.push({
+        "path": "root.url",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+
+      console.log("error:", "\n", error)
+      if (error.message == "Connector ID must be set") {
+        this.errorService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+            {
+              "path": "root.connectorId",
+              "property": "minLength",
+              "message": "Value required",
+              "errorcount": 1
+            }
+          ]
+        });
+      }
+      else if (error.status && error.status == 400) {
+        if (error.error.status == "Connector already exists")
+          this.errorService.openErrorDialog({
+            error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+              {
+                "path": "root.connectorId",
+                "property": "minLength",
+                "message": "A connector with connector ID < " + this.connectorId + " > already exists",
+                "errorcount": 1
+              }
+            ]
+          });
+        else this.errorService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
+        });
+      }
+    }
   }
 
   async onSubmit() {
     try {
-      console.log("dialog-add-new-prompt.component.ts.onSubmit() ", this.value);
       let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url;
       if (connectorId == '' || connectorId == null) {
         console.log("dialog-add-new-prompt.component.ts.onSubmit(): Connector ID must be set");
@@ -150,7 +210,7 @@ export class DialogAddNewPromptComponent implements OnInit {
         "errorcount": 1
       })
 
-      console.log("error:", "\n", error.error.status)
+      console.log("error:", "\n", error)
       if (error.message == "Connector ID must be set") {
         this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
