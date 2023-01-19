@@ -75,7 +75,7 @@
     <nb-card-footer>
       <div class="row justify-content-center">
         <div *ngIf="value.serviceId else elseBlock ">
-          <button nbButton class="mx-4" shape="rectangle" size="large" status="primary" (click)="showServiceInfoModal()">
+          <button nbButton class="mx-4" shape="rectangle" size="large" status="primary" [routerLink]="['/pages/services/service-editor', { serviceId: data.serviceId, readOnly: true }]" (click)="ref.close()">
             <i class="material-icons">info</i>&nbsp;{{ 'general.services.view_service' | translate }}
           </button>
           <button nbButton class="mx-4" ghost shape="rectangle" size="large" status="primary" (click)="ref.close()">

@@ -71,13 +71,11 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
+    this.name=this.value.name
+    this.description=this.value.description
+    this.url=this.value.url
+    this.serviceId=this.value.serviceId
     if (this.ref) this.ref.close()
-    try {
-      if (this.value.serviceId) this.service = await this.availableServicesService.getService(this.value.serviceId)
-    }
-    catch (error) {
-      console.log(error)
-    }
     this.actions = this.translatedActionLabels();
     this.menuService
       .onItemClick()
@@ -98,7 +96,8 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
             this.openDeRegisterDialog();
             break;
           case 'view service':
-            this.showServiceInfoModal();
+            //this.showServiceInfoModal();
+            this.router.navigate(['/pages/services/service-editor', { serviceId: this.value.serviceId, readOnly: true }]);
             break;
         }
       });
