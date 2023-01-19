@@ -68,8 +68,8 @@ export class DialogAddNewPromptComponent implements OnInit {
 
   onFileChanged(event: Event): void {
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      this.editedValue.emit(this.value.id);
+      this.editedValue.emit(this.value);
       this.selectedFile = (<HTMLInputElement>event.target).files[0];
       const fileReader = new FileReader();
       fileReader.readAsText(this.selectedFile, 'UTF-8');
@@ -92,7 +92,6 @@ export class DialogAddNewPromptComponent implements OnInit {
 
   confirm() {
     try {
-      console.log("dialog-add-new-prompt.component.ts.confirm()", this.value)
       if (DialogAddNewPromptComponent.formType == 'edit')
         this.onEdit()
       else
@@ -164,8 +163,6 @@ export class DialogAddNewPromptComponent implements OnInit {
           ]
         });
       }
-      //if (error.status&&error.status==400){
-
       else if (error.status && error.status == 400) {
         if (error.error.status == "Connector already exists")
           this.errorService.openErrorDialog({
@@ -173,7 +170,7 @@ export class DialogAddNewPromptComponent implements OnInit {
               {
                 "path": "root.connectorId",
                 "property": "minLength",
-                "message": "A connector with connector ID < "+this.connectorId+" > already exists",
+                "message": "A connector with connector ID < " + this.connectorId + " > already exists",
                 "errorcount": 1
               }
             ]
@@ -181,7 +178,6 @@ export class DialogAddNewPromptComponent implements OnInit {
         else this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
         });
-        //}
       }
     }
   }

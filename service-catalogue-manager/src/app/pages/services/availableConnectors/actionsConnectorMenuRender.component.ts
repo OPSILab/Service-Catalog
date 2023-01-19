@@ -1,4 +1,3 @@
-import { Description } from './../../../model/services/description';
 import { Component, Input, Output, OnInit, OnChanges, TemplateRef, EventEmitter, OnDestroy, ViewChild, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
@@ -163,7 +162,15 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
     ];
   }
 
-  async onEdit() {
+  onEdit(){
+    let name = this.name, description = this.description, status = this.value.status, connectorId = this.value.connectorId, serviceId = this.serviceId, url = this.url;
+    this.availableConnectorService.updateConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry, connectorId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
+    this.updateResult.emit(this.value.id);
+    this.updateResult.emit(this.value);
+    this.ngOnInit()
+  }
+
+  async onEdit_old() {
     DialogAddNewPromptComponent.formType = 'edit';
     this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((confirm) => {
       if (confirm) void this.updateResult.emit(this.value.id);
@@ -193,13 +200,6 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
       });
   }
 
-  onEditV2(){
-    let name = this.name, description = this.description, status = this.value.status, connectorId = this.value.connectorId, serviceId = this.serviceId, url = this.url;
-    this.availableConnectorService.updateConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry, connectorId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
-    //this.ref.close({ content: this.json, format: this.selectedItem });
-    //this.editedValue.emit(this.value);
-    this.updateResult.emit(this.value.id);
-  }
   openAddEditConnector(): void {
     this.ref=this.dialogService
       .open(this.addOrEditConnector, {
@@ -208,7 +208,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
           serviceName: this.value.name,
         },
       })
-      .onClose.subscribe()//(confirm) => {if (true) void this.onEditV2();});
+      .onClose.subscribe()
   }
 
   openDeRegisterDialog(): void {
@@ -232,10 +232,8 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
       this.showToast('primary', this.translate.instant('general.connectors.connector_registered_message', { connectorName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (error.error.statusCode === '401') {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
-        // this.router.navigate(['/login']);
       } else this.errorDialogService.openErrorDialog(error);
     }
   };
@@ -247,10 +245,8 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
       this.showToast('primary', this.translate.instant('general.connectors.connector_deregistered_message', { connectorName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (error.error.statusCode === '401') {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
-        // this.router.navigate(['/login']);
       } else this.errorDialogService.openErrorDialog(error);
     }
   };
@@ -270,10 +266,8 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
             ref.close();
             this.updateResult.emit(this.value.id);
           } catch (error) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             if (error.error.statusCode === '401') {
               void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
-              // this.router.navigate(['/login']);
             } else this.errorDialogService.openErrorDialog(error);
           }
         },
