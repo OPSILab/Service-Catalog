@@ -170,15 +170,6 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy, O
     this.ngOnInit()
   }
 
-  async onEdit_old() {
-    DialogAddNewPromptComponent.formType = 'edit';
-    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe((confirm) => {
-      if (confirm) void this.updateResult.emit(this.value.id);
-    });
-    this.updateResult.emit(this.value.id);
-    this.ngOnInit()
-  }
-
   onEditService(serviceId: string): void {
     void this.router.navigate(['/pages/services/service-editor', { serviceId: serviceId }]);
   }
