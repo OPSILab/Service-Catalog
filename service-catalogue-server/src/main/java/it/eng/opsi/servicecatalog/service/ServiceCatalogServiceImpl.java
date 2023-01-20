@@ -210,6 +210,25 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		return serviceModelRepo.findByServicebyIds(
 				ids.stream().map(p -> java.net.URLDecoder.decode(p, StandardCharsets.UTF_8)).toArray());
 	}
+	
+	@Override
+	public List<ServiceModel> getServicesbyLocation(String location) throws ServiceNotFoundException {
+		return serviceModelRepo.findByServiceLocation(
+				location);
+	}
+	
+	@Override
+	public List<ServiceModel> getServicesbyKeyword(String keyword) throws ServiceNotFoundException {
+		return serviceModelRepo.findByServiceKeyword(
+				keyword);
+	}
+	
+	@Override
+	public List<ServiceModel> getServicesbyTitle(String title) throws ServiceNotFoundException {
+		
+		return serviceModelRepo.findByServiceName(
+				title);
+	}
 
 	@Override
 	public List<ServiceModel> getServicesIsPersonaDataHandling() throws ServiceNotFoundException {
@@ -218,6 +237,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public Long getServicesIsPersonaDataHandlingCount() {
+		// TODO Auto-generated method stub
 		return serviceModelRepo.countServicesIsPersonalDataHandling();
 	}
 

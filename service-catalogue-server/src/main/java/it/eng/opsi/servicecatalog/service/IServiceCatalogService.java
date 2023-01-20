@@ -104,6 +104,12 @@ public interface IServiceCatalogService {
 
         public abstract AdapterLog createAdapterLog(@Valid AdapterLog adapterLog);
 
+  public abstract List<ServiceModel> getServicesbyLocation(String location) throws ServiceNotFoundException;
+
+  public abstract List<ServiceModel> getServicesbyKeyword(String keyword) throws ServiceNotFoundException;
+  
+  public abstract List<ServiceModel> getServicesbyTitle(String title) throws ServiceNotFoundException;
+
         public abstract List<Adapter> getAdapterbytype(String type);
 
 }
