@@ -55,13 +55,18 @@ public class Adapter {
     @NotNull
     private String status;
 
+    enum Type {
+        MODEL,
+        DATA
+    }
+
     @JsonProperty("type")
     @Valid
     @NotNull
-    private String type;// TODO enum
+    private Type type;// TODO enum
 
     public Adapter(AdapterRepository adapterRepo, String adapterId, String url, String name, String description,
-            String status, String type) {
+            String status, Type type) {
         this.adapterRepo = adapterRepo;
         this.adapterId = adapterId;
         this.url = url;
@@ -111,11 +116,11 @@ public class Adapter {
         this.status = status;
     }
 
-    public String getType() {
+    public Type getType() {
         return this.type;
     }
 
-    public void setType(String type) {
+    public void setType(Type type) {
         this.type = type;
     }
 
@@ -144,7 +149,7 @@ public class Adapter {
         return this;
     }
 
-    public Adapter type(String type) {
+    public Adapter type(Type type) {
         setType(type);
         return this;
     }
