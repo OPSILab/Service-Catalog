@@ -62,8 +62,8 @@ public class Adapter {
 
     @JsonProperty("type")
     @Valid
-    @NotNull
-    private Type type;// TODO enum
+    // @NotNull
+    private Type type;
 
     public Adapter(AdapterRepository adapterRepo, String adapterId, String url, String name, String description,
             String status, Type type) {

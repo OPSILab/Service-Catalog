@@ -135,13 +135,13 @@ export class AddAdapterComponent implements OnInit {
         "property": "minLength",
         "message": "Value required",
         "errorcount": 1
-      })
+      })/*
       if (!this.type) errors.push({
         "path": "root.type",
         "property": "minLength",
         "message": "Value required",
         "errorcount": 1
-      })
+      })*/
 
       console.log("error:", "\n", error)
       if (error.message == "Adapter ID must be set") {
@@ -213,13 +213,13 @@ export class AddAdapterComponent implements OnInit {
         "property": "minLength",
         "message": "Value required",
         "errorcount": 1
-      })
+      })/*
       if (!this.type) errors.push({
         "path": "root.type",
         "property": "minLength",
         "message": "Value required",
         "errorcount": 1
-      })
+      })*/
 
       console.log("error:", "\n", error)
       if (error.message == "Adapter ID must be set") {
