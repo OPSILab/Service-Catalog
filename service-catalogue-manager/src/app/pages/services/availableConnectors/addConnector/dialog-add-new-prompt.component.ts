@@ -50,12 +50,14 @@ export class DialogAddNewPromptComponent implements OnInit {
     try {
       this.inputItemFormControl = new FormControl();
       this.textareaItemFormControl = new FormControl();
-      this.name = this.value.name
-      this.description = this.value.description
-      this.status = this.value.status
-      this.connectorId = this.value.connectorId
-      this.serviceId = this.value.serviceId
-      this.url = this.value.url
+      if (this.value){
+        if (this.value.name ) this.name = this.value.name
+        if (this.value.description )this.description = this.value.description
+        if (this.value.status )this.status = this.value.status
+        if (this.value.connectorId )this.connectorId = this.value.connectorId
+        if (this.value.serviceId )this.serviceId = this.value.serviceId
+        if (this.value.url )this.url = this.value.url
+      }
     }
     catch (error) {
       if (error.message == "Cannot read properties of undefined (reading 'name')")

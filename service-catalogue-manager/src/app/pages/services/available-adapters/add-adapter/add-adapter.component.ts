@@ -52,7 +52,7 @@ export class AddAdapterComponent implements OnInit {
     try {
       this.inputItemFormControl = new FormControl();
       this.textareaItemFormControl = new FormControl();
-      this.adapterId = this.value.adapterId
+      if (this.value && this.value.adapterId) this.adapterId = this.value.adapterId
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
@@ -136,6 +136,12 @@ export class AddAdapterComponent implements OnInit {
         "message": "Value required",
         "errorcount": 1
       })
+      if (!this.type) errors.push({
+        "path": "root.type",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
 
       console.log("error:", "\n", error)
       if (error.message == "Adapter ID must be set") {
@@ -169,14 +175,14 @@ export class AddAdapterComponent implements OnInit {
     }
   }
 
-  onSubmit() {
+  async onSubmit() {
     try {
       let name = this.name, description = this.description, status = this.status, adapterId = this.adapterId, type = this.type, url = this.url;
       if (adapterId == '' || adapterId == null) {
         console.log("dialog-add-new-prompt.component.ts.onSubmit(): Adapter ID must be set");
         throw new Error("Adapter ID must be set");
       }
-      this.availableAdapterService.saveAdapter((({ name, description, status, adapterId, type, url } as unknown)) as AdapterEntry);
+      await this.availableAdapterService.saveAdapter((({ name, description, status, adapterId, type, url } as unknown)) as AdapterEntry);
       this.ref.close();
       this.editedValue.emit(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
@@ -204,6 +210,12 @@ export class AddAdapterComponent implements OnInit {
       })
       if (!this.url) errors.push({
         "path": "root.url",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.type) errors.push({
+        "path": "root.type",
         "property": "minLength",
         "message": "Value required",
         "errorcount": 1

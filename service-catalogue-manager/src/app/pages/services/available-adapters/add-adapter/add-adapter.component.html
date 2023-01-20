@@ -36,8 +36,12 @@
           <br><br>
         <label for="type">{{ 'general.adapters.type' | translate }}</label>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Model" [(ngModel)]="type"
-          [ngModelOptions]="{standalone: true}">
+        <nb-select fullWidth placeholder="Select adapter type" [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
+          <nb-option-group title="type">
+            <nb-option value="Model">Model</nb-option>
+            <nb-option value="Data">Data</nb-option>
+          </nb-option-group>
+        </nb-select>
           <br><br>
         <label for="url">{{ 'general.adapters.url' | translate }}</label>
         <br>

@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -84,10 +85,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			"Adapter Model" }, responses = {
 					@ApiResponse(description = "Returns the list of all registered Adapter Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/adapters", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<Adapter>> getAdapters()
-	// TODO G:throws AdapterNotFoundException
-	{
-
+	public ResponseEntity<List<Adapter>> getAdapters(@Param("type") String type) throws AdapterNotFoundException {
+		if (type != null)
+			return ResponseEntity.ok(catalogService.getAdapterbytype(type));
 		return ResponseEntity.ok(catalogService.getAdapters());
 	}
 
@@ -113,7 +113,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get all Adapters Logs descriptions.", tags = {
-			"Adapter" }, responses = {
+			"Adapter Model" }, responses = {
 					@ApiResponse(description = "Get all Adapters Logs descriptions.", responseCode = "200") })
 	@GetMapping(value = "/adapters/logs/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AdapterLog>> getAdapterLogs() throws AdapterLogNotFoundException {
@@ -164,7 +164,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Get Adapter description by adapterId.", tags = {
-			"Adapter" }, responses = {
+			"Adapter Model" }, responses = {
 					@ApiResponse(description = "Get Adapter description by adapterId.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/adapters/json", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -199,7 +199,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Get Adapter Logs description by adapterId.", tags = {
-			"Adapter" }, responses = {
+			"Adapter Model" }, responses = {
 					@ApiResponse(description = "Get Adapter Logs description by adapterId.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/adapters/logs", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -358,7 +358,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Create a new adapter log.", tags = {
-			"Adapter" }, responses = {
+			"Adapter Model" }, responses = {
 					@ApiResponse(description = "Create a new adapter.", responseCode = "201") })
 	@Override
 	@PostMapping(value = "/adapters/logs")
@@ -370,15 +370,26 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Create a new adapter.", tags = {
-			"Adapter" }, responses = {
+			"Adapter Model" }, responses = {
 					@ApiResponse(description = "Create a new adapter.", responseCode = "201") })
 	@Override
 	@PostMapping(value = "/adapters")
 	public ResponseEntity<Adapter> createAdapter(@RequestBody @Valid Adapter adapter) {
 
 		Adapter result = new Adapter();
-		result = catalogService.createAdapter(adapter);
+		try {
+			if (catalogService.getAdapterByadapterId(adapter.getAdapterId()) != null && catalogService
+					.getAdapterByadapterId(adapter.getAdapterId()).getAdapterId().equals(adapter
+							.getAdapterId()))
+				throw new Error("adapterId already exists");
+			result = catalogService.createAdapter(adapter);
+		} catch (Error e) {
+			System.out.println(e);
+			result.setStatus("Adapter already exists");
+			return ResponseEntity.badRequest().body(result);
+		}
 		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
+
 	}
 
 	@Operation(summary = "Update Service Model description, by replacing the existing one", tags = {

@@ -290,7 +290,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public Object getAdapterByadapterId(String decodedAdapterAdapterId) {
+	public Adapter getAdapterByadapterId(String decodedAdapterAdapterId) {
 		return adapterRepo.findByadapterId(decodedAdapterAdapterId);
 	}
 
@@ -351,5 +351,10 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public AdapterLog createAdapterLog(@Valid AdapterLog adapterLog) {
 		return adapterLogRepo.save(adapterLog);
+	}
+
+	@Override
+	public List<Adapter> getAdapterbytype(String type) {
+		return adapterRepo.findBytype(type);
 	}
 }
