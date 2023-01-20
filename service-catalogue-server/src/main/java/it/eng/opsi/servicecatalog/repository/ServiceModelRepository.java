@@ -26,10 +26,8 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 	// @Query(value = "{ 'serviceInstance.cert':{$ne:null}}")
 	// public List<ServiceModel> findAllRegisteredServices();
 
-	// @Query(value = "{ name: { $regex : ?0, $options: i}}", fields = "{
-	// 'serviceDescriptionSignature' : ?1, 'serviceInstance.cert' : ?2}")
-	// public Optional<ServiceModel> findByServiceName(String serviceName, Boolean
-	// withSignature, Boolean withCertificate);
+	 @Query(value = "{ 'title': { $regex : ?0, $options: i}}")
+	 public List<ServiceModel> findByServiceName(String serviceName);
 
 	// @Query(value = "{ identifier: ?0}")
 	// public Optional<ServiceModel> findByServiceUrl(String serviceUrl);
@@ -44,6 +42,12 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 
 	@Query(value = "{ 'identifier': { $in: ?0}}")
 	public List<ServiceModel> findByServicebyIds(Object[] ids);
+	
+	@Query(value = "{ ?0: { $in: '$hasInfo.spatial'} }")
+	public List<ServiceModel> findByServiceLocation(String spatial);
+	
+	@Query(value = "{ ?0: { $in: '$hasInfo.keyword'} }")
+	public List<ServiceModel> findByServiceKeyword(String keyword);
 
 	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }", count = true)
 	public List<ServiceModel> findServicesIsPersonalDataHandling();

@@ -77,4 +77,13 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<String> getServicesIsPersonalDataHandlingCount();
 
+	public abstract ResponseEntity<List<ServiceModel>> getServiceByLocation(HttpServletRequest request, String location)
+			throws ServiceNotFoundException, IOException;
+
+	public abstract ResponseEntity<List<ServiceModel>> getServiceByKeyword(HttpServletRequest request, String keyword)
+			throws ServiceNotFoundException, IOException;
+
+	public abstract ResponseEntity<List<ServiceModel>> getServiceByTitle(HttpServletRequest request, String title)
+			throws ServiceNotFoundException, IOException;
+
 }

@@ -177,7 +177,44 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getServicesbyIds(identifier));
 
 	}
+	
+	@Override
+	@Operation(summary = "Get the Service Model descriptions by specified Service Location.", description = "Get the Service Model descriptions by specified Service Location.", tags = {
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
+	@GetMapping(value = "/services/specified/location", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ServiceModel>> getServiceByLocation(HttpServletRequest request,
+			@RequestParam("location") String location) throws ServiceNotFoundException, IOException {
 
+		return ResponseEntity.ok(catalogService.getServicesbyLocation(location));
+
+	}
+	
+	@Override
+	@Operation(summary = "Get the Service Model descriptions by specified Service Keyword.", description = "Get the Service Model descriptions by specified Service Keyword.", tags = {
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
+	@GetMapping(value = "/services/specified/keyword", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ServiceModel>> getServiceByKeyword(HttpServletRequest request,
+			@RequestParam("keyword") String keyword) throws ServiceNotFoundException, IOException {
+
+		return ResponseEntity.ok(catalogService.getServicesbyKeyword(keyword));
+
+	}
+	
+	@Override
+	@Operation(summary = "Get the Service Model descriptions by specified Service Title.", description = "Get the Service Model descriptions by specified Service Title.", tags = {
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
+	@GetMapping(value = "/services/specified/title", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<ServiceModel>> getServiceByTitle(HttpServletRequest request,
+			@RequestParam("title") String title) throws ServiceNotFoundException, IOException {
+
+		return ResponseEntity.ok(catalogService.getServicesbyTitle(title));
+
+	}
+	
+	
 	@Override
 	@Operation(summary = "Get the Service Model descriptions is handling personal data", description = "Get the Service Model descriptions is handling personal data.", tags = {
 			"Service Model" }, responses = {

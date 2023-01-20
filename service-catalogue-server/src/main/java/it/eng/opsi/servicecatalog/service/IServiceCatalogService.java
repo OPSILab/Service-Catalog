@@ -80,4 +80,10 @@ public interface IServiceCatalogService {
   public abstract ConnectorLog deleteConnectorLog(String decodedConnectorConnectorId)
       throws ConnectorLogNotFoundException;
 
+  public abstract List<ServiceModel> getServicesbyLocation(String location) throws ServiceNotFoundException;
+
+  public abstract List<ServiceModel> getServicesbyKeyword(String keyword) throws ServiceNotFoundException;
+  
+  public abstract List<ServiceModel> getServicesbyTitle(String title) throws ServiceNotFoundException;
+
 }
