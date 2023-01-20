@@ -26,4 +26,6 @@ public interface AdapterRepository extends MongoRepository<Adapter, String>, Ada
 			" {$group:{'_id':'_','publicAdapters':{$sum:{$cond:['$isPublicAdapter',1,0]}},'privateAdapters':{$sum:{$cond:['$isPublicAdapter',0,1]}}}}",
 			"{$project:{'_id':0,'publicAdapters':1,'privateAdapters':1,'total':{$sum:['$publicAdapters','$privateAdapters']}}}" })
 	public HashMap<String, Object> getTotalCount();
+
+	public List<Adapter> findBytype(String type);
 }

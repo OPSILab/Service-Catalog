@@ -29,7 +29,7 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<List<ServiceModel>> getServices() throws ServiceNotFoundException;
 
-	public abstract ResponseEntity<List<Adapter>> getAdapters() throws AdapterNotFoundException;
+	public abstract ResponseEntity<List<Adapter>> getAdapters(String type) throws AdapterNotFoundException;
 
 	public abstract ResponseEntity<List<ConnectorLog>> getConnectorLogs() throws ConnectorLogNotFoundException;
 

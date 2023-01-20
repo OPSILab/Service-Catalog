@@ -89,7 +89,7 @@ public interface IServiceCatalogService {
         public abstract ConnectorLog deleteConnectorLog(String decodedConnectorConnectorId)
                         throws ConnectorLogNotFoundException;
 
-        public abstract Object getAdapterByadapterId(String decodedAdapterAdapterId);
+        public abstract Adapter getAdapterByadapterId(String decodedAdapterAdapterId);
 
         public abstract HashMap<String, Object> getAdaptersCount();
 
@@ -103,5 +103,7 @@ public interface IServiceCatalogService {
         public abstract Object deleteAdapterLog(String decodedAdapterAdapterId);
 
         public abstract AdapterLog createAdapterLog(@Valid AdapterLog adapterLog);
+
+        public abstract List<Adapter> getAdapterbytype(String type);
 
 }
