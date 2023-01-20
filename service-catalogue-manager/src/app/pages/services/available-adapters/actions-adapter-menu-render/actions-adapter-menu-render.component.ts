@@ -17,94 +17,28 @@ import { AvailableAdaptersService } from '.././available-adapters.service';
 import { AddAdapterComponent } from '.././add-adapter/add-adapter.component';
 
 import { LoginService } from '../../../../auth/login/login.service';
-//import { AdapterStatusEnum } from '../../../../model/services/adapter';
+import { AdapterStatusEnum } from '../../../../model/services/adapter';
 import { AdapterEntry } from '../../../../model/adapter/adapterEntry';
 
 @Component({
   selector: 'actions-adapter-menu-render',
-  template: `
-  <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.adapterId }}" >
-  <nb-icon icon="settings-2" ></nb-icon>
-</button>
-<!-- Register Adapter modal ng-template -->
-<ng-template #confirmRegisterDialog let-data let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header class="d-flex justify-content-between">
-      <h5>{{ 'general.adapters.register_adapter' | translate: { adapterName: value.name } }}</h5>
-      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
-        <i class="material-icons">close</i>
-      </button>
-    </nb-card-header>
-    <nb-card-body
-      class="p-5 text-center"
-      [innerHTML]="'general.adapters.register_adapter_message' | translate: { adapterName: value.name }"
-    ></nb-card-body>
-    <nb-card-footer class="d-flex justify-content-center">
-      <button nbButton status="primary" size="small" (click)="ref.close(true)">
-        {{ 'general.adapters.register' | translate }}
-      </button>
-      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
-        {{ 'general.close' | translate }}
-      </button>
-    </nb-card-footer>
-  </nb-card>
-</ng-template>
-<!-- DeRegister Adapter modal ng-template -->
-<ng-template #confirmDeRegisterDialog let-data let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header class="d-flex justify-content-between">
-      <h5>{{'general.adapters.deregister_adapter' | translate: {adapterName: value.name} }}</h5>
-      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
-        <i class="material-icons">close</i>
-      </button>
-    </nb-card-header>
-    <nb-card-body
-      class="p-5 text-center"
-      [innerHTML]="'general.adapters.deregister_adapter_message' | translate: { adapterName: value.name }"
-    ></nb-card-body>
-    <nb-card-footer class="d-flex justify-content-center">
-      <button nbButton status="primary" size="small" (click)="ref.close(true)">
-        {{ 'general.adapters.deregister' | translate }}
-      </button>
-      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
-        {{ 'general.close' | translate }}
-      </button>
-    </nb-card-footer>
-  </nb-card>
-</ng-template>
-<!-- Delete Adapter modal ng-template -->
-<ng-template #confirmDeleteDialog let-data let-ref="dialogRef">
-  <nb-card>
-    <nb-card-header class="d-flex justify-content-between">
-      <h5>{{ 'general.adapters.delete_adapter' | translate: {adapterName: value.name} }}</h5>
-      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
-        <i class="material-icons">close</i>
-      </button>
-    </nb-card-header>
-    <nb-card-body
-      class="p-5 text-center"
-      [innerHTML]="'general.adapters.delete_adapter_message' | translate: {adapterName: value.name}"
-    ></nb-card-body>
-    <nb-card-footer class="d-flex justify-content-center">
-      <button nbButton status="danger" size="small" (click)="data.callback()">
-        {{ 'general.editor.delete' | translate }}
-      </button>
-      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
-        {{ 'general.cancel' | translate }}
-      </button>
-    </nb-card-footer>
-  </nb-card>
-</ng-template>
-`,
-  styleUrls: ['./actions-adapter-menu-render.component.scss']
+  templateUrl: 'actions-adapter-menu-render.component.html',
+  styleUrls: ['actions-adapter-menu-render.component.scss']
 
 })
-export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnChanges {
+export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
 
   @Input() value: AdapterEntry;
   @Output() updateResult = new EventEmitter<unknown>();
   @Input() editedValue: AdapterEntry;
   @Output() outValue = new EventEmitter<unknown>();
+  name
+  description
+  status
+  type
+  url
+  ref
+  dialogRef
 
   private unsubscribe: Subject<void> = new Subject();
   actions: NbMenuItem[];
@@ -112,6 +46,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
   @ViewChild('confirmDeleteDialog', { static: false }) confirmDeleteDialogTemplate: TemplateRef<unknown>;
   @ViewChild('confirmRegisterDialog', { static: false }) confirmRegisterDialog: TemplateRef<unknown>;
   @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
+  @ViewChild('addOrEditAdapter', { static: false }) addOrEditAdapter: TemplateRef<unknown>;
   //@ViewChild('adapter',{ static: false }) addAdapter: AddAdapterComponent;
 
   constructor(
@@ -125,15 +60,16 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
     private translateService: TranslateService,
     private loginService: LoginService
   ) { }
-  ngOnChanges(changes: SimpleChanges): void {
-    this.updateResult.emit(this.value.id);
-  }
 
-  ngOnChange() {
-    this.updateResult.emit(this.value.id);
+  get registered(): boolean {
+    return this.value.status == AdapterStatusEnum.Active ? true : false;
   }
 
   ngOnInit(): void {
+    this.name=this.value.name
+    this.description=this.value.description
+    this.url=this.value.url
+    this.type=this.value.type
     this.actions = this.translatedActionLabels();
     this.menuService
       .onItemClick()
@@ -142,7 +78,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
       .subscribe((event) => {
         switch (event.item.data) {
           case 'edit':
-            this.onEdit();
+            this.openAddEditAdapter();
             break;
           case 'delete':
             this.openDeleteFromRegistryDialog();
@@ -153,17 +89,19 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
           case 'deregister':
             this.openDeRegisterDialog();
             break;
-          case 'edit service':
-            this.onEditService(this.value.adapterId);
-            break;
         }
       });
   }
 
-  async ngOnUpdate(): Promise<void> {
-    //TODO this.value = await this.availableAdaptersService.getAdapter(this.value.adapterId);
-    this.updateResult.emit(this.value);
-    this.ngOnInit()
+  openAddEditAdapter(): void {
+    this.ref = this.dialogService
+      .open(this.addOrEditAdapter, {
+        hasScroll: false,
+        context: {
+          serviceName: this.value.name,
+        },
+      })
+      .onClose.subscribe()
   }
 
   ngOnDestroy(): void {
@@ -172,50 +110,102 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
   }
 
   translatedActionLabels(): NbMenuItem[] {
-    /* if (this.registered) {
-       return [
-         {
-           title: this.translate.instant('general.adapters.deregister') as string,
-           data: 'deregister',
-         },
-         {
-           title: this.translate.instant('general.adapters.editService') as string,
-           data: 'edit service',
-         },
-       ];
-     } else {*/
-    return [
-      {
-        title: this.translate.instant('general.adapters.edit') as string,
-        data: 'edit',
-      },
-      {
-        title: this.translate.instant('general.adapters.register') as string,
-        data: 'register',
-      },
-      {
-        title: this.translate.instant('general.adapters.delete') as string,
-        data: 'delete',
-      },
-      {
-        title: this.translate.instant('general.adapters.editService') as string,
-        data: 'edit service',
-      },
-    ];
-    //}
+    if (this.registered) {
+      return [
+        {
+          title: this.translate.instant('general.adapters.deregister') as string,
+          data: 'deregister',
+        }
+      ];
+    } else {
+      return [
+        {
+          title: this.translate.instant('general.adapters.edit') as string,
+          data: 'edit',
+        },
+        {
+          title: this.translate.instant('general.adapters.register') as string,
+          data: 'register',
+        },
+        {
+          title: this.translate.instant('general.adapters.delete') as string,
+          data: 'delete',
+        }
+      ];
+    }
   }
 
   async onEdit() {
-    AddAdapterComponent.formType = 'edit';
-    this.dialogService.open(AddAdapterComponent).onClose.subscribe((confirm) => {
-      if (confirm) void this.updateResult.emit(this.value.id);
-    });
-    this.updateResult.emit(this.value.id);
-    this.ngOnInit()
-  }
+    try {
+      let name = this.name, description = this.description, status = this.value.status, adapterId = this.value.adapterId, url = this.url, type = this.type;
+      await this.availableAdaptersService.updateAdapter((({ name, description, status, adapterId, type, url } as unknown)) as AdapterEntry, adapterId);//as unknown)) as AdapterEntry were VisualStudioCode tips
+      this.updateResult.emit(this.value);
+      this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
+    }
+    catch (error) {
+      let errors: Object[] = []
 
-  onEditService(serviceId: string): void {
-    void this.router.navigate(['/pages/services/service-editor', { serviceId: serviceId }]);
+      if (!this.value.adapterId) errors.push({
+        "path": "root.adapterId",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.name) errors.push({
+        "path": "root.name",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.description) errors.push({
+        "path": "root.description",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.url) errors.push({
+        "path": "root.url",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+
+      console.log("error:", "\n", error)
+      if (error.message == "Adapter ID must be set") {
+        this.errorDialogService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+            {
+              "path": "root.adapterId",
+              "property": "minLength",
+              "message": "Value required",
+              "errorcount": 1
+            }
+          ]
+        });
+      }
+      else if (error.status && error.status == 400) {
+        if (error.error.status == "Adapter already exists")
+          this.errorDialogService.openErrorDialog({
+            error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+              {
+                "path": "root.adapterId",
+                "property": "minLength",
+                "message": "A adapter with adapter ID < " + this.value.adapterId + " > already exists",
+                "errorcount": 1
+              }
+            ]
+          });
+        else {
+          //console.log("error:<\n", error, ">\n")
+          this.errorDialogService.openErrorDialog({
+            error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
+          });
+          if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+          else if (error.message) console.log("message:<\n", error.message, ">\n")
+          else if (error.error) console.log("error.error:<\n", error.error, ">\n")
+        }
+      }
+    }
   }
 
   viewConsents(serviceId: string): void {
@@ -250,30 +240,26 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
 
   onRegisterAdapter = async (): Promise<void> => {
     try {
-      // this.value.status = this.value.status == "active" ? "inactive" : "active";
-      //this.value = await this.availableAdaptersService.registerAdapter(this.value);
+      this.value.status = this.value.status == "active" ? "inactive" : "active";
+      this.value = await this.availableAdaptersService.registerAdapter(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_registered_message', { adapterName: this.value.adapterId }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (error.error.statusCode === '401') {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
-        // this.router.navigate(['/login']);
       } else this.errorDialogService.openErrorDialog(error);
     }
   };
 
   onDeRegisterAdapter = async (): Promise<void> => {
     try {
-      //this.value.status = this.value.status == "active" ? "inactive" : "active";
-      //this.value = await this.availableAdaptersService.deregisterAdapter(this.value);
+      this.value.status = this.value.status == "active" ? "inactive" : "active";
+      this.value = await this.availableAdaptersService.deregisterAdapter(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_deregistered_message', { adapterName: this.value.adapterId }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (error.error.statusCode === '401') {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
-        // this.router.navigate(['/login']);
       } else this.errorDialogService.openErrorDialog(error);
     }
   };
@@ -284,7 +270,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
         serviceName: this.value.adapterId,
         callback: async () => {
           try {
-            //TODO await this.availableAdaptersService.deleteAdapter(this.value.adapterId);
+            await this.availableAdaptersService.deleteAdapter(this.value.adapterId);
             this.showToast(
               'primary',
               this.translateService.instant('general.adapters.adapter_deleted_message', { adapterName: this.value.adapterId }),
@@ -293,10 +279,8 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy, OnC
             ref.close();
             this.updateResult.emit(this.value.id);
           } catch (error) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             if (error.error.statusCode === '401') {
               void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
-              // this.router.navigate(['/login']);
             } else this.errorDialogService.openErrorDialog(error);
           }
         },

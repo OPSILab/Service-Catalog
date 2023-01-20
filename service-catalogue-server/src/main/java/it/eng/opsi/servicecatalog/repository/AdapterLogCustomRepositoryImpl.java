@@ -8,24 +8,24 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-import it.eng.opsi.servicecatalog.model.Adapter;
+import it.eng.opsi.servicecatalog.model.AdapterLog;
 
-public class AdapterCustomRepositoryImpl implements AdapterCustomRepository {
+public class AdapterLogCustomRepositoryImpl implements AdapterLogCustomRepository {
 
 	@Autowired
 	MongoTemplate template;
 
-	public Optional<Adapter> updateAdapter(String adapterId, Adapter adapter) {
+	public Optional<AdapterLog> updateAdapterLog(String adapterId, AdapterLog adapterLog) {
 
-		Adapter updatedAdapter = template.findAndReplace(query(where("adapterId").is(adapterId)),
-				adapter);
+		AdapterLog updatedAdapterLog = template.findAndReplace(query(where("adapterId").is(adapterId)),
+				adapterLog);
 
-		return Optional.ofNullable(updatedAdapter);
+		return Optional.ofNullable(updatedAdapterLog);
 
 	}
 
 	@Override
-	public Adapter deleteAdapter(String adapterId) {
+	public AdapterLog deleteAdapterLog(String adapterId) {
 
 		template.findAllAndRemove(query(where("adapterId").is(adapterId)), adapterId);
 		return null;

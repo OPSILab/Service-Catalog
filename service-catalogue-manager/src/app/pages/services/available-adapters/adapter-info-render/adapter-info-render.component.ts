@@ -4,32 +4,46 @@ import { TranslateService } from '@ngx-translate/core';
 import { AdapterEntry } from '../../../../model/adapter/adapterEntry';
 import { AdapterEntryLog } from '../../../../model/adapter/adapterEntryLog';
 import { AvailableAdaptersService } from '.././available-adapters.service';
+import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
 @Component({
   selector: 'adapter-info-render',
   templateUrl: './adapter-info-render.component.html',
   styleUrls: ['./adapter-info-render.component.css']
 })
 export class AdapterInfoRenderComponent implements OnInit {
-show: any;
+  show: any;
+  logs: AdapterEntryLog[];
 
-  constructor(private translate: TranslateService, private modalService: NbDialogService, private translateService: TranslateService, private availableAdaptersService: AvailableAdaptersService,) {
+
+  constructor(
+    private errorDialogService: ErrorDialogService,
+    private translate: TranslateService,
+    private modalService: NbDialogService,
+    private translateService: TranslateService,
+    private availableAdaptersService: AvailableAdaptersService,
+    private dialogService: NbDialogService
+  ) {
     this.settings = this.loadTableSettings();
   }
 
 
   async ngOnInit(): Promise<void> {
-    //TODO this.logs = await this.availableAdaptersService.getAdapterLogs(this.value.adapterId)
 
   }
   @Input() value: AdapterEntry;
   @ViewChild('availableAdapterInfoModal', { static: true }) adapterInfoModalRef: TemplateRef<unknown>;
 
-  logs: AdapterEntryLog[]
   public settings: Record<string, unknown>;
   private date: Date;
   private message: String;
 
-  showAdapterInfoModal(): void {
+  async showAdapterInfoModal(): Promise<void> {
+    try {
+      this.logs = await this.availableAdaptersService.getAdapterLogs(this.value.adapterId)
+    }
+    catch (error) {
+      console.log("Error:\n\n", error)
+    }
     this.modalService.open(this.adapterInfoModalRef, {
       context: {
         modalHeader: this.value.name,

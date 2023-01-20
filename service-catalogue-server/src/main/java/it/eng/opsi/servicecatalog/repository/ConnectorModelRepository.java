@@ -18,7 +18,7 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 	public Long deleteConnectorModelByconnectorId(String connectorId);
 
 	@Aggregation(pipeline = {
-			" {$group:{'_id':'_','publicConnectors':{$sum:{$cond:['$isPublicService',1,0]}},'privateConnectors':{$sum:{$cond:['$isPublicService',0,1]}}}}",
+			" {$group:{'_id':'_','publicConnectors':{$sum:{$cond:['$isPublicConnector',1,0]}},'privateConnectors':{$sum:{$cond:['$isPublicConnector',0,1]}}}}",
 			"{$project:{'_id':0,'publicConnectors':1,'privateConnectors':1,'total':{$sum:['$publicConnectors','$privateConnectors']}}}" })
 	public HashMap<String, Object> getTotalCount();
 

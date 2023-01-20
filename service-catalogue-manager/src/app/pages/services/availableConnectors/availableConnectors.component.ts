@@ -70,7 +70,9 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
       this.availableConnectors = await this.availableConnectorsService.getConnectors();
       void this.source.load(this.availableConnectors);
     } catch (error) {
-      console.log(error)
+      console.log("error:<\n", error, ">\n")
+      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
   }
 
@@ -89,7 +91,10 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
       this.ngOnInit()
     }
     catch (error) {
-      console.log("error in addNew", error)
+      console.log("error in addNew")
+      console.log("error:<\n", error, ">\n")
+      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      else if (error.message) console.log("message:<\n", error.message, ">\n")
       this.errorService.openErrorDialog(error);
     }
   }

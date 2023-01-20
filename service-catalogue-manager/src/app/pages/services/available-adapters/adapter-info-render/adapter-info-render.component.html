@@ -1,4 +1,4 @@
-<button nbButton ghost shape="rectangle" size="small" status="primary" (click) = showAdapterInfoModal()>
+<button nbButton ghost shape="rectangle" size="small" status="primary" (click)=showAdapterInfoModal()>
   <i class="material-icons">info</i>
 </button>
 
@@ -62,9 +62,9 @@
         </div>
       </div>
       <nb-accordion>
-        <nb-accordion-item expanded = false>
+        <nb-accordion-item expanded=false>
           <nb-accordion-item-header>
-            Logs
+            {{ 'general.adapters.logs' | translate }}
           </nb-accordion-item-header>
           <nb-accordion-item-body>
             <ng2-smart-table [settings]="settings" [source]="logs"> </ng2-smart-table>
@@ -73,18 +73,11 @@
       </nb-accordion>
     </nb-card-body>
     <nb-card-footer>
-      <!--
       <div class="row justify-content-center">
-        <button nbButton class="mx-4" shape="rectangle" size="large" status="primary"
-          [routerLink]="['/pages/services/service-editor', { serviceId: value.serviceId, readOnly: true }]"
-          (click)="ref.close()">
-          <i class="material-icons">info</i>&nbsp;{{ 'general.services.view_editor' | translate }}
-        </button>
         <button nbButton class="mx-4" ghost shape="rectangle" size="large" status="primary" (click)="ref.close()">
           {{ 'general.close' | translate }}
         </button>
       </div>
-      -->
     </nb-card-footer>
   </nb-card>
 </ng-template>

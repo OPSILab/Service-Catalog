@@ -36,12 +36,17 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import it.eng.opsi.servicecatalog.exception.ConnectorLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotEditableException;
+import it.eng.opsi.servicecatalog.exception.AdapterLogNotEditableException;
+import it.eng.opsi.servicecatalog.exception.AdapterLogNotFoundException;
+import it.eng.opsi.servicecatalog.exception.AdapterNotEditableException;
+import it.eng.opsi.servicecatalog.exception.AdapterNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorLogNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
+import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
@@ -107,6 +112,16 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
+	@Operation(summary = "Get all Adapters Logs descriptions.", tags = {
+			"Adapter" }, responses = {
+					@ApiResponse(description = "Get all Adapters Logs descriptions.", responseCode = "200") })
+	@GetMapping(value = "/adapters/logs/all", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AdapterLog>> getAdapterLogs() throws AdapterLogNotFoundException {
+
+		return ResponseEntity.ok(catalogService.getAdapterLogs());
+	}
+
+	@Override
 	@Operation(summary = "Get the Service Model description by Service Id.", description = "Get the Service Model description by Service Id.", tags = {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Returns the requested Service Model description.", responseCode = "200") })
@@ -148,6 +163,23 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getConnectorByconnectorId(decodedConnectorConnectorId));
 	}
 
+	@Operation(summary = "Get Adapter description by adapterId.", tags = {
+			"Adapter" }, responses = {
+					@ApiResponse(description = "Get Adapter description by adapterId.", responseCode = "200") })
+	@Override
+	@GetMapping(value = "/adapters/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getAdapter(@RequestParam("adapterId") String adapterId)
+			throws AdapterNotFoundException, AdapterNotEditableException {
+
+		if (StringUtils.isBlank(adapterId))
+			throw new IllegalArgumentException("Illegal adapterId in input");
+
+		String decodedAdapterAdapterId = java.net.URLDecoder.decode(adapterId,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.getAdapterByadapterId(decodedAdapterAdapterId));
+	}
+
 	@Operation(summary = "Get Connector Logs description by connectorId.", tags = {
 			"Connector" }, responses = {
 					@ApiResponse(description = "Get Connector Logs description by connectorId.", responseCode = "200") })
@@ -164,6 +196,24 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				StandardCharsets.UTF_8);
 
 		return ResponseEntity.ok(catalogService.getConnectorLogsByconnectorId(decodedConnectorConnectorId));
+	}
+
+	@Operation(summary = "Get Adapter Logs description by adapterId.", tags = {
+			"Adapter" }, responses = {
+					@ApiResponse(description = "Get Adapter Logs description by adapterId.", responseCode = "200") })
+	@Override
+	@GetMapping(value = "/adapters/logs", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<AdapterLog>> getAdapterLogsByadapterId(
+			@RequestParam("adapterId") String adapterId)
+			throws AdapterLogNotFoundException, AdapterLogNotEditableException {
+
+		if (StringUtils.isBlank(adapterId))
+			throw new IllegalArgumentException("Illegal adapter id in input");
+
+		String decodedAdapterAdapterId = java.net.URLDecoder.decode(adapterId,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.getAdapterLogsByadapterId(decodedAdapterAdapterId));
 	}
 
 	@Override
@@ -254,6 +304,15 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getConnectorsCount());
 	}
 
+	@Override
+	@Operation(summary = "Get the count of the registered Adapter descriptions (total, public and private services).", tags = {
+			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
+	@GetMapping(value = "/adapters/count", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HashMap<String, Object>> getAdaptersCount() {
+
+		return ResponseEntity.ok(catalogService.getAdaptersCount());
+	}
+
 	@Operation(summary = "Create a new Service Model description.", tags = { "Service Model" }, responses = {
 			@ApiResponse(description = "Returns 201 Created with the created Service Model.", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceModel.class))) })
 	@Override
@@ -298,6 +357,30 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
 	}
 
+	@Operation(summary = "Create a new adapter log.", tags = {
+			"Adapter" }, responses = {
+					@ApiResponse(description = "Create a new adapter.", responseCode = "201") })
+	@Override
+	@PostMapping(value = "/adapters/logs")
+	public ResponseEntity<AdapterLog> createAdapterLog(@RequestBody @Valid AdapterLog adapterLog) {
+
+		AdapterLog result = new AdapterLog();
+		result = catalogService.createAdapterLog(adapterLog);
+		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
+	}
+
+	@Operation(summary = "Create a new adapter.", tags = {
+			"Adapter" }, responses = {
+					@ApiResponse(description = "Create a new adapter.", responseCode = "201") })
+	@Override
+	@PostMapping(value = "/adapters")
+	public ResponseEntity<Adapter> createAdapter(@RequestBody @Valid Adapter adapter) {
+
+		Adapter result = new Adapter();
+		result = catalogService.createAdapter(adapter);
+		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
+	}
+
 	@Operation(summary = "Update Service Model description, by replacing the existing one", tags = {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Returns the Model Service Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceModel.class))) })
@@ -336,6 +419,26 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 		return ResponseEntity.ok(catalogService.updateConnector(
 				decodedConnectorConnectorId, connector));
+	}
+
+	@Operation(summary = "Update Adapter Model description, by replacing the existing one", tags = {
+			"Adapter Model" }, responses = {
+					@ApiResponse(description = "Returns the Adapter Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Adapter.class))) })
+	@Override
+	@PutMapping(value = "/adapters", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Adapter> updateAdapter(
+			@RequestParam("adapterId") String adapterId,
+			@RequestBody @Valid Adapter adapter)
+			throws AdapterNotFoundException, AdapterNotEditableException {
+
+		if (StringUtils.isBlank(adapterId))
+			throw new IllegalArgumentException("Illegal adapterid in input");
+
+		String decodedAdapterAdapterId = java.net.URLDecoder.decode(adapterId,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.updateAdapter(
+				decodedAdapterAdapterId, adapter));
 	}
 
 	@Operation(summary = "Delete Service Model description by Service Id.", tags = { "Service Model" }, responses = {
@@ -379,6 +482,25 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
+	@Operation(summary = "Delete Adapter Model description by AdapterId.", tags = {
+			"Adapter Model" }, responses = {
+					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
+	@Override
+	@DeleteMapping(value = "/adapters")
+	public ResponseEntity<Object> deleteAdapter(@RequestParam("adapterId") String adapterId)
+			throws AdapterNotFoundException {
+
+		if (StringUtils.isBlank(adapterId))
+			throw new IllegalArgumentException("Illegal AdapterId in input");
+
+		String decodedAdapterAdapterId = java.net.URLDecoder.decode(adapterId, StandardCharsets.UTF_8);
+
+		catalogService.deleteAdapter(decodedAdapterAdapterId);
+
+		return ResponseEntity.noContent().build();
+
+	}
+
 	@Operation(summary = "Delete Connector Log description by connectorId.", tags = {
 			"Connector Model" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
@@ -393,6 +515,25 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		String decodedConnectorConnectorId = java.net.URLDecoder.decode(connectorId, StandardCharsets.UTF_8);
 
 		catalogService.deleteConnectorLog(decodedConnectorConnectorId);
+
+		return ResponseEntity.noContent().build();
+
+	}
+
+	@Operation(summary = "Delete Adapter Log description by adapterId.", tags = {
+			"Adapter Model" }, responses = {
+					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
+	@Override
+	@DeleteMapping(value = "/adapters/logs")
+	public ResponseEntity<Object> deleteAdapterLog(@RequestParam("adapterId") String adapterId)
+			throws AdapterLogNotFoundException {
+
+		if (StringUtils.isBlank(adapterId))
+			throw new IllegalArgumentException("Illegal adapterId in input");
+
+		String decodedAdapterAdapterId = java.net.URLDecoder.decode(adapterId, StandardCharsets.UTF_8);
+
+		catalogService.deleteAdapterLog(decodedAdapterAdapterId);
 
 		return ResponseEntity.noContent().build();
 

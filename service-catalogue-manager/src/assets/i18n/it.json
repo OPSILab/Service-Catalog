@@ -330,7 +330,21 @@
       "type": "Tipo",
       "add": "Aggiungi adattatore",
       "confirm": "Conferma",
-      "edit": "Modifica"
+      "edit": "Modifica",
+      "register": "Registra",
+      "delete": "Cencella",
+      "register_adapter": "Registrazione dell'adattatore",
+      "register_adapter_message": "Sei sicuro di registrare e attivare l'adattatore <strong>{{adapterName}}</strong><br>Una volta registrato, non sarai in grado di modificarlo fino a quando non lo avrai prima disabilitato.",
+      "adapter_registered_message": "L'adattatore {{adapterName}} è stato registrato correttamente!",
+      "adapter_deregistered_message": "L'adattatore {{adapterName}} è stato disabilitato correttamente!",
+      "deregister": "Disabilita",
+      "deregister_adapter": "Disabilita adattatore",
+      "deregister_adapter_message": "Sei sicuro di voler disabilitare l'adattatore <strong>{{adapterName}}</strong>?\n",
+      "delete_adapter_message": "Sei sicuro di eliminare definitivamente l'adattatore <strong>{{adapterName}}</strong>?\n",
+      "delete_adapter": "Cancella adattatori",
+      "logs":"Log di adattatori",
+      "adapter_added_message": "E' stato aggiunto un nuovo adattatore",
+      "adapter_edited_message": "L'adattatore è stato modificato"
     }
   },
   "login": {
