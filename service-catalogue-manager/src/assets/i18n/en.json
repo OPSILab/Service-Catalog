@@ -336,7 +336,22 @@
       "type": "Type",
       "add": "Add adapter",
       "confirm": "Confirm",
-      "edit":"Edit adapter"
+      "edit":"Edit adapter",
+      "register": "Register",
+      "delete": "Delete",
+      "register_adapter": "Adapter Registration",
+      "register_adapter_message": "Are you sure to register and activate the adapter <strong>{{adapterName}}</strong><br>Once registered, you will not be able to edit it until you disabled it first.",
+      "adapter_deleted_message": "Adapter {{adapterName}} deleted successfully!",
+      "adapter_registered_message": "Adapter {{adapterName}} registered successfully!",
+      "adapter_deregistered_message": "Adapter {{adapterName}} disabled successfully!",
+      "deregister": "Disable",
+      "deregister_adapter": "Disable adapter",
+      "deregister_adapter_message": "Are you sure you want to disable adapter <strong>{{adapterName}}</strong>?\n",
+      "delete_adapter_message": "Are you sure to delete permanently the adapter <strong>{{adapterName}}</strong>?\n",
+      "delete_adapter": "Delete adapter",
+      "logs":"Adapter logs",
+      "adapter_added_message": "A new adapter was added",
+      "adapter_edited_message": "Adapter was edited"
     }
   },
   "login": {

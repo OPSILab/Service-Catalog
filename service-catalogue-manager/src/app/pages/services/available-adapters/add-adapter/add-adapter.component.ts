@@ -8,6 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { AdapterEntry } from '../../../../model/adapter/adapterEntry'
 import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { ErrorDialogAdapterService } from '../../../error-dialog/error-dialog-adapter.service';
 //TODO import { ErrorDialogAdapterService } from '../../../error-dialog/error-dialog-adapter.service';
 
 
@@ -23,12 +24,12 @@ export class AddAdapterComponent implements OnInit {
   http: HttpClient;
   configService: NgxConfigureService;
   inputItemNgModel;
-  adapterId: string = "adapterId"
-  name: string = "name"
-  description: string = "description"
+  adapterId: string
+  name: string
+  description: string
   status: string = "inactive"
-  type: string = "Model"//TODO enum
-  url: string = "https://www.adapter.com"
+  type: string//TODO enum
+  url: string
   textareaItemNgModel;
   inputItemFormControl;
   textareaItemFormControl;
@@ -39,7 +40,7 @@ export class AddAdapterComponent implements OnInit {
 
 
   constructor(protected ref: NbDialogRef<AddAdapterComponent>, private toastrService: NbToastrService,
-    //TODO private errorService: ErrorDialogAdapterService,
+    private errorService: ErrorDialogAdapterService,
     private availableAdapterService: AvailableAdaptersService, private translate: TranslateService) {
   }
 
@@ -54,7 +55,9 @@ export class AddAdapterComponent implements OnInit {
       this.adapterId = this.value.adapterId
     }
     catch (error) {
-      console.log("Error", error)
+      console.log("error:<\n", error, ">\n")
+      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
 
   }
@@ -72,16 +75,22 @@ export class AddAdapterComponent implements OnInit {
         try {
           this.json = JSON.parse(fileReader.result as string) as Record<string, unknown>;
         } catch (error) {
-          //TODOthis.errorService.openErrorDialog(error);
+          this.errorService.openErrorDialog(error);
+          console.log("error:<\n", error, ">\n")
+          if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+          else if (error.message) console.log("message:<\n", error.message, ">\n")
           this.ref.close();
         }
       };
 
       fileReader.onerror = (error) => {
-        //TODOthis.errorService.openErrorDialog(error);
+        this.errorService.openErrorDialog(error);
       };
     } catch (error) {
-      //TODOthis.errorService.openErrorDialog(error);
+      console.log("error:<\n", error, ">\n")
+      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      else if (error.message) console.log("message:<\n", error.message, ">\n")
+      this.errorService.openErrorDialog(error);
     }
   }
 
@@ -92,36 +101,143 @@ export class AddAdapterComponent implements OnInit {
       this.onSubmit()
   }
 
-  onEdit() {
-    let adapterId = this.adapterId;
-    //TODO this.availableAdapterService.updateAdapter((({ name, description, status, adapterId, serviceId, url } as unknown)) as AdapterEntry, adapterId);//as unknown)) as AdapterEntry were VisualStudioCode tips
-    this.ref.close({ content: this.json, format: this.selectedItem });
-    this.editedValue.emit(this.value);
+  async onEdit() {
+    try {
+      let name = this.name, description = this.description, status = this.status, adapterId = this.adapterId, type = this.type, url = this.url;
+      await this.availableAdapterService.updateAdapter((({ name, description, status, adapterId, type, url } as unknown)) as AdapterEntry, adapterId);//as unknown)) as AdapterEntry were VisualStudioCode tips
+      this.ref.close({ content: this.json, format: this.selectedItem });
+      this.editedValue.emit(this.value);
+      this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
+    }
+    catch (error) {
+      let errors: Object[] = []
+
+      if (!this.adapterId) errors.push({
+        "path": "root.adapterId",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.name) errors.push({
+        "path": "root.name",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.description) errors.push({
+        "path": "root.description",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.url) errors.push({
+        "path": "root.url",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+
+      console.log("error:", "\n", error)
+      if (error.message == "Adapter ID must be set") {
+        this.errorService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+            {
+              "path": "root.adapterId",
+              "property": "minLength",
+              "message": "Value required",
+              "errorcount": 1
+            }
+          ]
+        });
+      }
+      else if (error.status && error.status == 400) {
+        if (error.error.status == "Adapter already exists")
+          this.errorService.openErrorDialog({
+            error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+              {
+                "path": "root.adapterId",
+                "property": "minLength",
+                "message": "A adapter with adapter ID < " + this.adapterId + " > already exists",
+                "errorcount": 1
+              }
+            ]
+          });
+        else this.errorService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
+        });
+      }
+    }
   }
 
   onSubmit() {
     try {
-      let adapterId = this.adapterId;
+      let name = this.name, description = this.description, status = this.status, adapterId = this.adapterId, type = this.type, url = this.url;
       if (adapterId == '' || adapterId == null) {
         console.log("dialog-add-new-prompt.component.ts.onSubmit(): Adapter ID must be set");
         throw new Error("Adapter ID must be set");
       }
-      //TODO this.availableAdapterService.saveAdapter((({ name, description, status, adapterId, serviceId, url } as unknown)) as AdapterEntry);
+      this.availableAdapterService.saveAdapter((({ name, description, status, adapterId, type, url } as unknown)) as AdapterEntry);
       this.ref.close();
       this.editedValue.emit(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
     }
     catch (error) {
+      let errors: Object[] = []
 
-      console.log(error)
-      /*TODO this.errorService.openErrorDialog({ error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
-        {
-            "path": "root.adapterId",
-            "property": "minLength",
-            "message": "Value required",
-            "errorcount": 1
-        }
-    ] });*/
+      if (!this.adapterId) errors.push({
+        "path": "root.adapterId",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.name) errors.push({
+        "path": "root.name",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.description) errors.push({
+        "path": "root.description",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.url) errors.push({
+        "path": "root.url",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+
+      console.log("error:", "\n", error)
+      if (error.message == "Adapter ID must be set") {
+        this.errorService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+            {
+              "path": "root.adapterId",
+              "property": "minLength",
+              "message": "Value required",
+              "errorcount": 1
+            }
+          ]
+        });
+      }
+      else if (error.status && error.status == 400) {
+        if (error.error.status == "Adapter already exists")
+          this.errorService.openErrorDialog({
+            error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+              {
+                "path": "root.adapterId",
+                "property": "minLength",
+                "message": "A adapter with adapter ID < " + this.adapterId + " > already exists",
+                "errorcount": 1
+              }
+            ]
+          });
+        else this.errorService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
+        });
+      }
     }
   }
 

@@ -58,7 +58,13 @@ export class DialogAddNewPromptComponent implements OnInit {
       this.url = this.value.url
     }
     catch (error) {
-      console.log("Error", error)
+      if (error.message == "Cannot read properties of undefined (reading 'name')")
+        console.log("Add-form mode")
+      else {
+        console.log("error:<\n", error, ">\n")
+        if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+        else if (error.message) console.log("message:<\n", error.message, ">\n")
+      }
     }
   }
 
@@ -86,6 +92,9 @@ export class DialogAddNewPromptComponent implements OnInit {
         this.errorService.openErrorDialog(error);
       };
     } catch (error) {
+      console.log("error:<\n", error, ">\n")
+      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      else if (error.message) console.log("message:<\n", error.message, ">\n")
       this.errorService.openErrorDialog(error);
     }
   }
@@ -98,7 +107,9 @@ export class DialogAddNewPromptComponent implements OnInit {
         this.onSubmit()
     }
     catch (error) {
-      console.log(error)
+      console.log("error:<\n", error, ">\n")
+      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
   }
 

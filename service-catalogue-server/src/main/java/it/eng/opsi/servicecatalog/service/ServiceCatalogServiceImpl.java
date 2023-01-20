@@ -14,6 +14,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.stereotype.Service;
 
+import it.eng.opsi.servicecatalog.exception.AdapterLogNotFoundException;
+import it.eng.opsi.servicecatalog.exception.AdapterNotEditableException;
+import it.eng.opsi.servicecatalog.exception.AdapterNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotFoundException;
@@ -23,10 +26,12 @@ import it.eng.opsi.servicecatalog.jsonld.Serializer;
 import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
+import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.model.ServiceModel.ServiceDescriptionStatus;
 import it.eng.opsi.servicecatalog.repository.ServiceModelRepository;
+import it.eng.opsi.servicecatalog.repository.AdapterLogRepository;
 import it.eng.opsi.servicecatalog.repository.AdapterRepository;
 import it.eng.opsi.servicecatalog.repository.ConnectorLogRepository;
 import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
@@ -50,6 +55,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Autowired
 	private ConnectorLogRepository connectorLogRepo;
+
+	@Autowired
+	private AdapterLogRepository adapterLogRepo;
 
 	@Autowired
 	private AdapterRepository adapterRepo;
@@ -193,13 +201,11 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public List<HashMap<String, Object>> getCountByLocation() {
-		// TODO Auto-generated method stub
 		return serviceModelRepo.getCountByLocation();
 	}
 
 	@Override
 	public List<ServiceModel> getServicesbyIds(List<String> ids) throws ServiceNotFoundException {
-		// TODO Auto-generated method stub
 
 		return serviceModelRepo.findByServicebyIds(
 				ids.stream().map(p -> java.net.URLDecoder.decode(p, StandardCharsets.UTF_8)).toArray());
@@ -207,13 +213,11 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public List<ServiceModel> getServicesIsPersonaDataHandling() throws ServiceNotFoundException {
-		// TODO Auto-generated method stub
 		return serviceModelRepo.findServicesIsPersonalDataHandling();
 	}
 
 	@Override
 	public Long getServicesIsPersonaDataHandlingCount() {
-		// TODO Auto-generated method stub
 		return serviceModelRepo.countServicesIsPersonalDataHandling();
 	}
 
@@ -263,5 +267,69 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		return adapterRepo.findAll();
 
+	}
+
+	@Override
+	public Object getAdapterByadapterId(String decodedAdapterAdapterId) {
+		return adapterRepo.findByadapterId(decodedAdapterAdapterId);
+	}
+
+	@Override
+	public HashMap<String, Object> getAdaptersCount() {
+		return adapterRepo.getTotalCount();
+	}
+
+	@Override
+	public Adapter updateAdapter(String adapterId, @Valid Adapter adapter)
+			throws AdapterNotFoundException, AdapterNotEditableException {
+		if (StringUtils.isBlank(adapter.getAdapterId()))
+			adapter.setAdapterId(uriBasePath + adapter.getAdapterId());
+
+		if (!adapterId.equals(adapter.getAdapterId()))
+			throw new AdapterNotEditableException("AdapterId in the path and the one in the body mismatch.");
+
+		return adapterRepo.updateAdapter(adapterId, adapter).orElseThrow(
+				() -> new AdapterNotFoundException("No Adapter description found for Adapter Id: " + adapterId));
+	}
+
+	@Override
+	public Object deleteAdapter(String decodedAdapterAdapterId) throws AdapterNotFoundException {
+		if (adapterRepo.deleteAdapterByadapterId(decodedAdapterAdapterId) == 0L)
+			throw new AdapterNotFoundException(
+					"No Adapter description found for Adapter Id: " + decodedAdapterAdapterId);
+
+		return adapterRepo.deleteAdapter(decodedAdapterAdapterId);
+	}
+
+	@Override
+	public Adapter createAdapter(@Valid Adapter adapter) {
+		return adapterRepo.save(adapter);
+
+	}
+
+	@Override
+	public List<AdapterLog> getAdapterLogs() throws AdapterLogNotFoundException {
+		return adapterLogRepo.findAll();
+	}
+
+	@Override
+	public List<AdapterLog> getAdapterLogsByadapterId(String decodedAdapterAdapterId)
+			throws AdapterLogNotFoundException {
+		return adapterLogRepo.findByadapterId(decodedAdapterAdapterId);
+	}
+
+	@Override
+	public Object deleteAdapterLog(String decodedAdapterAdapterId) {
+		if (adapterLogRepo.deleteAdapterLogByadapterId(decodedAdapterAdapterId) == 0L)
+			throw new AdapterLogNotFoundException(
+					"No Adapter log found for Adapter Id: " + decodedAdapterAdapterId);
+
+		return adapterLogRepo.deleteAdapterLog(decodedAdapterAdapterId);
+
+	}
+
+	@Override
+	public AdapterLog createAdapterLog(@Valid AdapterLog adapterLog) {
+		return adapterLogRepo.save(adapterLog);
 	}
 }

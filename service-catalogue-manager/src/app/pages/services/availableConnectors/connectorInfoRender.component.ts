@@ -1,17 +1,14 @@
 import { OnInit } from '@angular/core';
-//details: i (info) button
 import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { ConnectorEntry } from '../../../model/connector/connectorEntry';
 import { ConnectorEntryLog } from '../../../model/connector/connectorEntryLog';
 import { Dataset } from '../../../model/services/dataset';
-import { ServiceModel } from '../../../model/services/serviceModel';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { AvailableServiceRow } from '../availableServices/availableServices.component';
 import { AvailableServicesService } from '../availableServices/availableServices.service';
 import { ServiceInfoRenderComponent } from '../availableServices/serviceInfoRender.component';
-import { DialogAddNewPromptComponent } from './addConnector/dialog-add-new-prompt.component';
 import { AvailableConnectorsService } from './availableConnectors.service';
 
 
@@ -46,6 +43,10 @@ export class ConnectorInfoRenderComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+
+  }
+
+  async showConnectorInfoModal(): Promise<void> {
     try {
       this.logs = await this.availableConnectorsService.getConnectorLogs(this.value.connectorId)
       if (this.value.serviceId) this.service = await this.availableServicesService.getService(this.value.serviceId)
@@ -53,9 +54,6 @@ export class ConnectorInfoRenderComponent implements OnInit {
     catch (error) {
       if (error.status==404) console.log("Error during services load:\nSome service with serviceId set in connector descriptions dont't exist")
     }
-  }
-
-  showConnectorInfoModal(): void {
     this.dialogRef = this.modalService.open(this.connectorInfoModalRef, {
       context: {
         modalHeader: this.value.name,
@@ -66,43 +64,6 @@ export class ConnectorInfoRenderComponent implements OnInit {
         connectorUrl: this.value.url,
       },
       hasScroll: true,
-    });
-  }
-
-  showServiceInfoModal(): void {
-    this.dialogRef.close()
-    if (this.service) {
-      this.dialogRef = this.modalService.open(this.serviceInfoModalRef, {
-        context: {
-          modalHeader: this.service.title,
-          description: this.service.hasInfo.description.description,
-          sector: this.service.hasInfo.sector,
-          event: this.service.hasInfo.isGroupedBy,
-          thematicArea: this.service.hasInfo.thematicArea,
-          serviceId: this.service.identifier,
-          serviceUri: this.service.identifier,
-          publicService: this.service.isPublicService,
-          iconUrl: this.service.serviceIconUrl !== '' ? this.service.serviceIconUrl : 'favicon.png',
-          provider: this.service.hasServiceInstance.serviceProvider.name,
-          processings: this.service.isPersonalDataHandling,
-          channel: this.service.hasInfo.hasChannel,
-          language: this.service.hasInfo.language,
-          location: this.service.hasInfo.spatial,
-          locale: this.service.locale,
-          competentAuthority: this.service.hasInfo.hasCompetentAuthority,
-        },
-        hasScroll: true,
-      });
-    }
-    else this.errorDialogService.openErrorDialog({
-      error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
-        {
-          "path": "root.serviceId",
-          "property": "minLength",
-          "message": "No service with id < "+this.value.serviceId+" > does exists",
-          "errorcount": 1
-        }
-      ]
     });
   }
 

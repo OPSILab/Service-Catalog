@@ -73,7 +73,9 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
       this.availableAdapters = await this.availableAdaptersService.getAdapters();
       void this.source.load(this.availableAdapters);
     } catch (error) {
-      console.log(error)
+      console.log("error:<\n", error, ">\n")
+      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
   }
 
@@ -92,7 +94,9 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
       this.ngOnInit()
     }
     catch (error) {
-      console.log(error)
+      console.log("error:<\n", error, ">\n")
+      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      else if (error.message) console.log("message:<\n", error.message, ">\n")
       this.errorService.openErrorDialog(error);
     }
   }

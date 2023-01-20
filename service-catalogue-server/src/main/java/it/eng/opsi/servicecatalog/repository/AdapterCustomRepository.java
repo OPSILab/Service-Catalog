@@ -6,7 +6,7 @@ import it.eng.opsi.servicecatalog.model.Adapter;
 
 public interface AdapterCustomRepository {
 
-	public Optional<Adapter> updateAdapter(String connectorId, Adapter adapter);
+	public Optional<Adapter> updateAdapter(String adapterId, Adapter adapter);
 
-	public Adapter deleteAdapter(String connectorId);
+	public Adapter deleteAdapter(String adapterId);
 }
