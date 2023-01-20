@@ -136,6 +136,12 @@ export class AddAdapterComponent implements OnInit {
         "message": "Value required",
         "errorcount": 1
       })
+      if (!this.type) errors.push({
+        "path": "root.type",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
 
       console.log("error:", "\n", error)
       if (error.message == "Adapter ID must be set") {
@@ -204,6 +210,12 @@ export class AddAdapterComponent implements OnInit {
       })
       if (!this.url) errors.push({
         "path": "root.url",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.type) errors.push({
+        "path": "root.type",
         "property": "minLength",
         "message": "Value required",
         "errorcount": 1
