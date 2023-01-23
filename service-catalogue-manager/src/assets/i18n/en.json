@@ -252,16 +252,18 @@
       "delete_service": "Delete service",
       "delete_service_message": "Are you sure to delete permanently the service <strong>{{serviceName}}</strong>?\n",
       "service_deleted_message": "Service {{serviceName}} deleted successfully!",
-      "view_service": "See service"
+      "view_service": "View service"
     },
     "editor": {
       "title": "Service Description, instances and personal data handling",
-      "update": "Update",
+      "save": "Save",
       "import": "Import",
+      "update": "Update",
       "export": "Export",
       "select_file": "Select a local JSON file to import",
       "browse": "Browse",
       "upload": "Upload",
+      "cancel": "Cancel",
       "delete": "Delete",
       "selected": "Selected",
       "enter_filename": "Enter Filename and export format",
@@ -276,7 +278,8 @@
       "overwrite": "OVERWRITE",
       "validationErrors": "There are validation errors in the Service description.",
       "path": "Path",
-      "publish": "Publish"
+      "publish": "Publish",
+      "show_error_details":"Show error details"
     },
     "connectors": {
       "connector": "Connector",
@@ -318,25 +321,25 @@
       "connector_registered_message": "Connector {{connectorName}} registered successfully!",
       "connector_deregistered_message": "Connector {{connectorName}} disabled successfully!",
       "validationErrors": "There are validation errors in the Connector description.",
-      "logs" : "Connector logs"
+      "logs": "Connector logs"
     },
     "logs": {
       "issued": "Date",
       "message": "Message"
     },
-    "adapters":{
-      "adapter" : "Adapter",
-      "actions" : "Actions",
+    "adapters": {
+      "adapter": "Adapter",
+      "actions": "Actions",
       "description": "Description",
       "details": "Details",
       "status": "Status",
       "name": "Name",
-      "adapterId" : "Adapter ID",
+      "adapterId": "Adapter ID",
       "url": "Url",
       "type": "Type",
       "add": "Add adapter",
       "confirm": "Confirm",
-      "edit":"Edit adapter",
+      "edit": "Edit adapter",
       "register": "Register",
       "delete": "Delete",
       "register_adapter": "Adapter Registration",
@@ -349,7 +352,7 @@
       "deregister_adapter_message": "Are you sure you want to disable adapter <strong>{{adapterName}}</strong>?\n",
       "delete_adapter_message": "Are you sure to delete permanently the adapter <strong>{{adapterName}}</strong>?\n",
       "delete_adapter": "Delete adapter",
-      "logs":"Adapter logs",
+      "logs": "Adapter logs",
       "adapter_added_message": "A new adapter was added",
       "adapter_edited_message": "Adapter was edited"
     }
@@ -364,6 +367,14 @@
     "keycloak_idm_link": "Sign in with Keycloak IdM",
     "login_with_eidas": "Login with eIDAS",
     "login_with_eidas_description": "The eIDAS regulation is the legislative basis for electronic interactions between businesses, citizens and public authorities.",
-    "eidas_link": "Sign in with a digital identity from another European Country"
+    "eidas_link": "Sign in with a digital identity from another European Country",
+    "loginPopup": {
+      "authorize_new_account_data": "Do you authorize us to use your personal data to create a new CaPe account?",
+      "new_account_use_data": "Cape will use your Email, First and Last Name, for more information see our ",
+      "authorize_and_create": "Authorize and Create",
+      "do_not_authorize_and_cancel": "Do not authorize and cancel",
+      "error_message": "An error occurred contacting CaPe!",
+      "no_cape_account": "Sorry! No Cape account associated with your email!"
+    }
   }
 }

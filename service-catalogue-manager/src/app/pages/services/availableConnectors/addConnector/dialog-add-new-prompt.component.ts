@@ -1,3 +1,4 @@
+import { ServiceModel } from './../../../../model/services/serviceModel';
 import { FormControl } from '@angular/forms';
 import { NbComponentStatus, NbDialogRef, NbGlobalPhysicalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { AvailableConnectorsService } from '../availableConnectors.service'
@@ -7,6 +8,7 @@ import { ConnectorEntry } from '../../../../model/connector/connectorEntry'
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorDialogConnectorService } from '../../../error-dialog/error-dialog-connector.service';
+import { AvailableServicesService } from '../../availableServices/availableServices.service';
 
 @Component({
   selector: 'ngx-dialog-import-prompt',
@@ -35,21 +37,23 @@ export class DialogAddNewPromptComponent implements OnInit {
   json: Record<string, unknown>;
   selectedItem = 'Json';
   static formType: string = 'edit';
+  services:ServiceModel[]
 
 
   constructor(protected ref: NbDialogRef<DialogAddNewPromptComponent>, private toastrService: NbToastrService,
     private errorService: ErrorDialogConnectorService,
-    private availableConnectorService: AvailableConnectorsService, private translate: TranslateService) {
+    private availableConnectorService: AvailableConnectorsService, private availableServiceService: AvailableServicesService, private translate: TranslateService) {
   }
 
   cancel(): void {
     this.ref.close();
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     try {
       this.inputItemFormControl = new FormControl();
       this.textareaItemFormControl = new FormControl();
+      this.services = await this.availableServiceService.getServices();
       if (this.value){
         if (this.value.name ) this.name = this.value.name
         if (this.value.description )this.description = this.value.description

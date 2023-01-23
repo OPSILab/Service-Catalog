@@ -16,12 +16,39 @@ import { LoginService } from '../../auth/login/login.service';
         <ng-container *ngIf="error.error && error.error !== 'EDITOR_VALIDATION_ERROR'; then genericError; else validationError"> </ng-container>
 
         <ng-template #genericError>
-          <div class="row p-1">{{ error.message }}</div>
-          <div class="row justify-content-center p-1">{{ error.error.message }}</div>
-          <div class="row p-1 mt-1 justify-content-center">
-            <strong>Status: {{ error.status }}</strong>
-          </div>
-        </ng-template>
+        <div class="row p-1">{{ error.error.message }}</div>
+        <br>
+        <nb-reveal-card>
+          <nb-card-front>
+            <nb-card>
+              <nb-card-body>
+                {{ 'general.editor.show_error_details' | translate }}
+              </nb-card-body>
+          </nb-card>
+        </nb-card-front>
+        <nb-card-back>
+          <nb-card>
+            <nb-card-body>
+             {{ error.message }}
+            </nb-card-body>
+          </nb-card>
+        </nb-card-back>
+
+      </nb-reveal-card>
+<!--
+          <nb-accordion>
+            <nb-accordion-item>
+              <nb-accordion-item-header>
+              {{ 'general.editor.show_error_details' | translate }}
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <div class="row justify-content-center p-1">{{ error.message }}</div>
+                <strong>Status: {{ error.status }}</strong>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+-->
+</ng-template>
 
         <ng-template #validationError>
           <div class="row p-1 justify-content-center">{{ 'general.editor.validationErrors' | translate }}</div>
@@ -51,7 +78,7 @@ import { LoginService } from '../../auth/login/login.service';
 export class ErrorDialogComponent {
   public error;
 
-  constructor(public ref: NbDialogRef<unknown>, private _location: Location, private loginService: LoginService) {}
+  constructor(public ref: NbDialogRef<unknown>, private _location: Location, private loginService: LoginService) { }
 
   closeModal(error: { [key: string]: { cause?: string } }): void {
     if (error.error?.cause === 'it.eng.opsi.cape.exception.AuditLogNotFoundException' || error.status === 0 || error.status === 401)

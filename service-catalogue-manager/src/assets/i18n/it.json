@@ -198,6 +198,11 @@
       "no_type": "Type not provided"
     },
     "services": {
+      "authority": "Autorità competente",
+      "location": "Luogo",
+      "channels": "Canali",
+      "sector": "Settori",
+      "event": "Eventi",
       "view_editor": "Vedi altre info",
       "add_new": "Aggiungi nuovo",
       "all": "all",
@@ -236,6 +241,8 @@
       "deregister": "Disabilita",
       "delete": "Rimuovi",
       "consents": "Vedi consensi",
+      "publish": "Pubblica",
+      "connector": "Vedi connettore",
       "register_service": "Registrazione servizio",
       "register_service_message": "Sei sicuro di registrare il servizio <strong>{{serviceName}}</strong>?<br><div class=\"mt-2\">Una volta registrato il servizio sarà attivo e visibile e non potrai più modificarlo fino a quando non lo disabiliti.</div>",
       "service_registered_message": "Servizio {{serviceName}} registrato con successo!",
@@ -270,7 +277,9 @@
       "confirm_overwrite": "Il Servizio {{name}} è già esistente, vuoi sovrascriverlo?",
       "overwrite": "SOVRASCRIVI",
       "validationErrors": "Ci sono degli errori di validazione nella descrizione del Servizio inserita.",
-      "path": "Posizione"
+      "path": "Posizione",
+      "publish": "Pubblica",
+      "show_error_details":"Show error details"
     },
     "connectors": {
       "connector": "Connector",
@@ -312,7 +321,7 @@
       "connector_registered_message": "Il connector {{connectorName}} è stato registrato correttamente!",
       "connector_deregistered_message": "Il connector {{connectorName}} è stato disabilitato correttamente!",
       "validationErrors": "Ci sono degli errori di validazione nella descrizione del Connector inserita.",
-      "logs" : "Log di connettori"
+      "logs": "Log di connettori"
     },
     "logs": {
       "issued": "Data",
@@ -323,9 +332,9 @@
       "actions": "Azioni",
       "description": "Descrizione",
       "details": "Dettagli",
-      "status":"Stato",
+      "status": "Stato",
       "name": "Nome",
-      "adapterId" : "ID adattatore",
+      "adapterId": "ID adattatore",
       "url": "Endpoint",
       "type": "Tipo",
       "add": "Aggiungi adattatore",
@@ -335,6 +344,7 @@
       "delete": "Cencella",
       "register_adapter": "Registrazione dell'adattatore",
       "register_adapter_message": "Sei sicuro di registrare e attivare l'adattatore <strong>{{adapterName}}</strong><br>Una volta registrato, non sarai in grado di modificarlo fino a quando non lo avrai prima disabilitato.",
+      "adapter_deleted_message": "L'adattatore {{adapterName}} è stato eliminato correttamente!",
       "adapter_registered_message": "L'adattatore {{adapterName}} è stato registrato correttamente!",
       "adapter_deregistered_message": "L'adattatore {{adapterName}} è stato disabilitato correttamente!",
       "deregister": "Disabilita",
@@ -342,7 +352,7 @@
       "deregister_adapter_message": "Sei sicuro di voler disabilitare l'adattatore <strong>{{adapterName}}</strong>?\n",
       "delete_adapter_message": "Sei sicuro di eliminare definitivamente l'adattatore <strong>{{adapterName}}</strong>?\n",
       "delete_adapter": "Cancella adattatori",
-      "logs":"Log di adattatori",
+      "logs": "Log di adattatori",
       "adapter_added_message": "E' stato aggiunto un nuovo adattatore",
       "adapter_edited_message": "L'adattatore è stato modificato"
     }

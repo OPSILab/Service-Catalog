@@ -21,6 +21,7 @@ import { ConnectorEntry } from '../../../model/connector/connectorEntry';
 import { AvailableServiceRow } from '../availableServices/availableServices.component';
 import { AvailableServicesService } from '../availableServices/availableServices.service';
 import { ErrorDialogConnectorService } from '../../error-dialog/error-dialog-connector.service';
+import { ServiceModel } from '../../../model/services/serviceModel';
 @Component({
   selector: 'actionsConnectorMenuRender',
   templateUrl: 'actionsConnectorMenuRender.component.html', //``,
@@ -40,6 +41,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   ref
   dialogRef
   service: AvailableServiceRow;
+  services: ServiceModel[]
 
   private unsubscribe: Subject<void> = new Subject();
   actions: NbMenuItem[];
@@ -71,10 +73,10 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.name=this.value.name
-    this.description=this.value.description
-    this.url=this.value.url
-    this.serviceId=this.value.serviceId
+    this.name = this.value.name
+    this.description = this.value.description
+    this.url = this.value.url
+    this.serviceId = this.value.serviceId
     if (this.ref) this.ref.close()
     this.actions = this.translatedActionLabels();
     this.menuService
@@ -153,16 +155,25 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   translatedActionLabels(): NbMenuItem[] {
     if (this.ref) this.ref.closed = true
     if (this.registered) {
-      return [
-        {
-          title: this.translate.instant('general.connectors.deregister') as string,
-          data: 'deregister',
-        },
-        {
-          title: this.translate.instant('general.services.view_service') as string,
-          data: 'view service',
-        },
-      ];
+      if (this.value.serviceId) {
+        return [
+          {
+            title: this.translate.instant('general.connectors.deregister') as string,
+            data: 'deregister',
+          },
+          {
+            title: this.translate.instant('general.services.view_service') as string,
+            data: 'view service',
+          },
+        ];
+      }
+      else
+        return [
+          {
+            title: this.translate.instant('general.connectors.deregister') as string,
+            data: 'deregister',
+          }
+        ]
     }
     if (this.value.serviceId) {
       return [
@@ -288,7 +299,8 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       });
   }
 
-  openAddEditConnector(): void {
+  async openAddEditConnector(): Promise<void> {
+    this.services = await this.availableServicesService.getServices();
     this.ref = this.dialogService
       .open(this.addOrEditConnector, {
         hasScroll: false,

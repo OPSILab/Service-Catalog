@@ -145,8 +145,12 @@
           <br><br>
           <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>
           <br>
-          <input type="text" nbInput fullWidth fieldSize="small" placeholder="serviceId" [(ngModel)]="serviceId"
-            [ngModelOptions]="{standalone: true}">
+          <nb-select fullWidth placeholder="Select service to connect with" [(ngModel)]="serviceId"
+          [ngModelOptions]="{standalone: true}">
+          <nb-option-group title="serviceId" >
+              <nb-option *ngFor="let service of services" value = {{service.identifier}}>{{service.title}}</nb-option>
+          </nb-option-group>
+        </nb-select>
           <br><br>
           <label for="url">{{ 'general.connectors.url' | translate }}</label>
           <br>

@@ -100,6 +100,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
     }
     catch (error) {
       this.router.navigate(['/services'])
+      console.log(error)
       this.errorDialogService.openErrorDialog(error);
     }
   }

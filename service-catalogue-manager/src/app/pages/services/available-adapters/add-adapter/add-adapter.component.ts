@@ -9,8 +9,6 @@ import { AdapterEntry } from '../../../../model/adapter/adapterEntry'
 import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorDialogAdapterService } from '../../../error-dialog/error-dialog-adapter.service';
-//TODO import { ErrorDialogAdapterService } from '../../../error-dialog/error-dialog-adapter.service';
-
 
 @Component({
   selector: 'add-adapter',
@@ -28,7 +26,7 @@ export class AddAdapterComponent implements OnInit {
   name: string
   description: string
   status: string = "inactive"
-  type: string//TODO enum
+  type: string
   url: string
   textareaItemNgModel;
   inputItemFormControl;
