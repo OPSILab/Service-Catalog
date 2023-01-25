@@ -2,20 +2,18 @@
 package it.eng.opsi.servicecatalog.model;
 
 import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
-        "accessURL",
-        "endpointInformation",
-        "endpointDocumentation",
-        "path"
+    "accessURL",
+    "endpointInformation",
+    "endpointDocumentation",
+    "path"
 })
-public class ConnectorEndpoint {
+public class Endpoint {
 
     /**
      * 
@@ -54,7 +52,7 @@ public class ConnectorEndpoint {
      * No args constructor for use in serialization
      * 
      */
-    public ConnectorEndpoint() {
+    public Endpoint() {
     }
 
     /**
@@ -64,8 +62,7 @@ public class ConnectorEndpoint {
      * @param endpointDocumentation
      * @param endpointInformation
      */
-    // @JsonCreator // G
-    public ConnectorEndpoint(String accessURL, String endpointInformation, String endpointDocumentation, String path) {
+    public Endpoint(String accessURL, String endpointInformation, String endpointDocumentation, String path) {
         super();
         this.accessURL = accessURL;
         this.endpointInformation = endpointInformation;
@@ -156,26 +153,25 @@ public class ConnectorEndpoint {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(ConnectorEndpoint.class.getName()).append('@')
-                .append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append(Endpoint.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
         sb.append("accessURL");
         sb.append('=');
-        sb.append(((this.accessURL == null) ? "<null>" : this.accessURL));
+        sb.append(((this.accessURL == null)?"<null>":this.accessURL));
         sb.append(',');
         sb.append("endpointInformation");
         sb.append('=');
-        sb.append(((this.endpointInformation == null) ? "<null>" : this.endpointInformation));
+        sb.append(((this.endpointInformation == null)?"<null>":this.endpointInformation));
         sb.append(',');
         sb.append("endpointDocumentation");
         sb.append('=');
-        sb.append(((this.endpointDocumentation == null) ? "<null>" : this.endpointDocumentation));
+        sb.append(((this.endpointDocumentation == null)?"<null>":this.endpointDocumentation));
         sb.append(',');
         sb.append("path");
         sb.append('=');
-        sb.append(((this.path == null) ? "<null>" : this.path));
+        sb.append(((this.path == null)?"<null>":this.path));
         sb.append(',');
-        if (sb.charAt((sb.length() - 1)) == ',') {
-            sb.setCharAt((sb.length() - 1), ']');
+        if (sb.charAt((sb.length()- 1)) == ',') {
+            sb.setCharAt((sb.length()- 1), ']');
         } else {
             sb.append(']');
         }
@@ -185,10 +181,10 @@ public class ConnectorEndpoint {
     @Override
     public int hashCode() {
         int result = 1;
-        result = ((result * 31) + ((this.path == null) ? 0 : this.path.hashCode()));
-        result = ((result * 31) + ((this.accessURL == null) ? 0 : this.accessURL.hashCode()));
-        result = ((result * 31) + ((this.endpointInformation == null) ? 0 : this.endpointInformation.hashCode()));
-        result = ((result * 31) + ((this.endpointDocumentation == null) ? 0 : this.endpointDocumentation.hashCode()));
+        result = ((result* 31)+((this.path == null)? 0 :this.path.hashCode()));
+        result = ((result* 31)+((this.accessURL == null)? 0 :this.accessURL.hashCode()));
+        result = ((result* 31)+((this.endpointInformation == null)? 0 :this.endpointInformation.hashCode()));
+        result = ((result* 31)+((this.endpointDocumentation == null)? 0 :this.endpointDocumentation.hashCode()));
         return result;
     }
 
@@ -197,17 +193,11 @@ public class ConnectorEndpoint {
         if (other == this) {
             return true;
         }
-        if ((other instanceof ConnectorEndpoint) == false) {
+        if ((other instanceof Endpoint) == false) {
             return false;
         }
-        ConnectorEndpoint rhs = ((ConnectorEndpoint) other);
-        return (((((this.path == rhs.path) || ((this.path != null) && this.path.equals(rhs.path)))
-                && ((this.accessURL == rhs.accessURL)
-                        || ((this.accessURL != null) && this.accessURL.equals(rhs.accessURL))))
-                && ((this.endpointInformation == rhs.endpointInformation) || ((this.endpointInformation != null)
-                        && this.endpointInformation.equals(rhs.endpointInformation))))
-                && ((this.endpointDocumentation == rhs.endpointDocumentation) || ((this.endpointDocumentation != null)
-                        && this.endpointDocumentation.equals(rhs.endpointDocumentation))));
+        Endpoint rhs = ((Endpoint) other);
+        return (((((this.path == rhs.path)||((this.path!= null)&&this.path.equals(rhs.path)))&&((this.accessURL == rhs.accessURL)||((this.accessURL!= null)&&this.accessURL.equals(rhs.accessURL))))&&((this.endpointInformation == rhs.endpointInformation)||((this.endpointInformation!= null)&&this.endpointInformation.equals(rhs.endpointInformation))))&&((this.endpointDocumentation == rhs.endpointDocumentation)||((this.endpointDocumentation!= null)&&this.endpointDocumentation.equals(rhs.endpointDocumentation))));
     }
 
 }

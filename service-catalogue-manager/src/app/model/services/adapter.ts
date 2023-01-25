@@ -9,12 +9,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { ConnectorEndpoint } from './connectorEndpoint';
-import { PublicKey } from './publicKey';
+
 
 export interface Adapter {
-  //connectorEndpoint: ConnectorEndpoint;
-  //publicKey: PublicKey;
   name: String;
   description: String;
   status: String;
