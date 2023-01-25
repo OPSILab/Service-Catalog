@@ -3,7 +3,7 @@
   "title": "Service Instance",
   "description": "Technical, Service Provider and Data Controller Descriptions of actual instance where service is deployed.",
   "format": "categories",
-  "required": ["serviceProvider", "serviceUrls", "connector", "dataset", "dataController"],
+  "required": ["serviceProvider", "serviceUrls", "endpointConnector", "dataset", "dataController"],
   "properties": {
     "serviceProvider": {
       "type": "object",
@@ -63,14 +63,16 @@
         }
       }
     },
-    "connector": {
+    "endpointConnector": {
       "type": "object",
-      "title": "Service Connector",
-      "description": "Service Connector",
+      "title": "Endpoint Connector",
+      "description": "Endpoint Connector",
+      "basicCategoryTitle": "Connector",
+      "format": "categories",
       "properties": {
-        "connectorEndpoint": {
+        "endpoint": {
           "type": "object",
-          "title": "Connector Endpoint",
+          "title": "Endpoint",
           "properties": {
             "accessURL": {
               "type": "string",
@@ -79,13 +81,13 @@
             },
             "endpointInformation": {
               "type": "string",
-              "title": "Access URL",
+              "title": "Description",
               "description": "Endpoint description"
             },
             "endpointDocumentation": {
               "type": "string",
               "title": "Endpoint documentation",
-              "description": "URI reference to a documentation of the endpoint, e.g., reference to an OpenAPI-based documentation."
+              "description": "IRI reference to a documentation of the endpoint, e.g., reference to an OpenAPI-based documentation."
             },
             "path": {
               "type": "string",
@@ -94,22 +96,10 @@
             }
           }
         },
-        "publicKey": {
-          "type": "object",
-          "title": "Connector Public Key",
-          "description": "Connector Public Key",
-          "properties": {
-            "keyType": {
-              "type": "string"
-            },
-            "keyValue": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          },
-          "required": ["keyType", "keyValue"]
+        "connectorId": {
+          "type": "string",
+          "title": "Connector Id",
+          "description": "Id of registered connector instance associated to the service endpoint"
         }
       }
     },

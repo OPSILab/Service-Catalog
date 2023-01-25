@@ -113,7 +113,43 @@
 					            }  
 		        		}
 				      }
-				 },			
+				 },
+				 
+				 "hasCost":{
+		     		 "type": "array",
+		     		 "items":{
+		        		"type": "object",
+		       			"properties":{
+					          "identifier": {
+					            "type": "string"
+					            },
+					          "code": {
+					            "type": "string"
+					            }, 
+					          "hasCost": {
+					            "type": "string"
+					            },  
+					          "description": {
+					            "type": "object",
+					            "properties": {
+						           "locale": {
+							         "type": "string"
+						           },
+						           "description": {
+							         "type": "string"
+						           }
+					            },
+								"required": [
+									"locale",
+									"description"
+								]
+								},   
+					          "ifAccessedThrough": {
+					            "type": "string"
+					            }  
+		        		}
+				      }
+				 },				
 				
 				"processingTime": {
 					"type": "string"
@@ -198,8 +234,16 @@
 								}
 							},
 							"page": {
-								"type": "string",
-								"title": "Related Documentation"
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							},
+							"conformsTo": {
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
 							}
 						}
 					}
@@ -300,6 +344,8 @@
 				"type",
 				"language",
 				"description",
+				"isDescribedAt",
+				"hasCost",
 				"processingTime",
 				"isGroupedBy",
 				"hasCompetentAuthority",
@@ -361,10 +407,10 @@
 						"jurisdiction"
 					]
 				},
-				"connector": {
+				"endpointConnector": {
 					"type": "object",
 					"properties": {
-						"connectorEndpoint": {
+						"endpoint": {
 							"type": "object",
 							"properties": {
 								"accessURL": {
@@ -387,28 +433,13 @@
 								"path"
 							]
 						},
-						"publicKey": {
-							"type": "object",
-							"properties": {
-								"keyType": {
-									"type": "string"
-								},
-								"keyValue": {
-									"type": "array",
-									"items": {
-										"type": "string"
-									}
-								}
-							},
-							"required": [
-								"keyType",
-								"keyValue"
-							]
+						"connectorId": {
+							"type": "string"
 						}
 					},
 					"required": [
-						"connectorEndpoint",
-						"publicKey"
+						"endpoint",
+						"connectorId"
 					]
 				},
 				"dataset": {
@@ -525,6 +556,9 @@
 											"type": "string"
 										},
 										"type": {
+											"type": "string"
+										},
+										"inputType": {
 											"type": "string"
 										},
 										"required": {

@@ -104,7 +104,7 @@
     "processingTime": {
       "type": "string",
       "title": "Processing Time",
-      "description": "The (estimated) time needed for executing a Public Service. The actual information is provided using the ISO8601 syntax for durations."
+      "description": "The (estimated) time needed for executing a Public Service. The actual information is provided using the ISO8601 syntax for durations: P(n)Y(n)M(n)DT(n)H(n)M(n)S)."
     },
     "isGroupedBy": {
       "$ref": "./event.json"
@@ -200,8 +200,24 @@
             "$ref": "./locale.json"
           },
           "page": {
-            "type": "string",
-            "title": "Related Documentation"
+            "title": "Related Documentation",
+            "type": "array",
+            "format": "tabs",
+            "items": {
+              "type": "string",
+              "title": "Documentation",
+              "description": "Input documentation"
+            }
+          },
+          "conformsTo": {
+            "title": "Conforms to",
+            "type": "array",
+            "format": "tabs",
+            "items": {
+              "type": "string",
+              "title": "Dataset",
+              "description": "id/uri of input characterization/dataset "
+            }
           }
         }
       }
@@ -317,6 +333,63 @@
             "title": "Opening Hours restriction",
             "description": "the opening hours restriction of a channel"
           }
+        }
+      }
+    },
+    "hasCost": {
+      "type": "array",
+      "title": "Cost",
+      "format": "tabs",
+      "items": {
+        "type": "object",
+        "title": "Cost",
+        "headerTemplate": "{{ self.code }}",
+        "properties": {
+          "identifier": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string",
+            "title": "Currency Code",
+            "description": "Currency Code",
+            "enum": ["EUR", "BGN", "CZK", "DKK", "HUF", "PLN", "RON", "SEK", "CHF", "TRY", "NOK"]
+          },
+          "hasCost":{
+             "type": "string"
+          },
+          "ifAccessedThrough": {
+            "type": "string",
+                "description": "Cost if acccessed through the specific channel",
+                "watch": {
+                  "possible_channels": "root.hasInfo.hasChannel"
+                },
+                "enumSource": [
+                  {
+                    "source": "possible_channels",
+                    "value": "{{item.type}}"
+                  }
+                ]
+          },
+          "description": {
+            "type": "object",
+            "properties": {
+              "locale": {
+                "type": "string",
+                "description": "Language used in textual description, in ISO 639-1 format.",
+                "enumSource": "possible_langs",
+                "watch": {
+                  "possible_langs": "root.hasInfo.language"
+                }
+              },
+              "description": {
+                "type": "string",
+                "description": "Textual description of the Distribution in specified language.",
+                "format": "textarea"
+              }
+            },
+            "required": ["locale", "description"]
+          }
+
         }
       }
     }

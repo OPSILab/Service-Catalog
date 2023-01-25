@@ -30,7 +30,7 @@ public class Dataset {
     @JsonProperty("description")
     @Valid
     @NotNull
-    private List<Description__3> description = new ArrayList<Description__3>();
+    private List<Description__4> description = new ArrayList<Description__4>();
     /**
      * 
      * (Required)
@@ -83,7 +83,7 @@ public class Dataset {
      * @param datasetSchema
      * @param distribution
      */
-    public Dataset(String identifier, List<Description__3> description, DatasetSchema datasetSchema, String dataStructureSpecification, List<Distribution> distribution, List<DataMapping> dataMapping) {
+    public Dataset(String identifier, List<Description__4> description, DatasetSchema datasetSchema, String dataStructureSpecification, List<Distribution> distribution, List<DataMapping> dataMapping) {
         super();
         this.identifier = identifier;
         this.description = description;
@@ -109,7 +109,7 @@ public class Dataset {
      * 
      */
     @JsonProperty("description")
-    public List<Description__3> getDescription() {
+    public List<Description__4> getDescription() {
         return description;
     }
 
@@ -119,7 +119,7 @@ public class Dataset {
      * 
      */
     @JsonProperty("description")
-    public void setDescription(List<Description__3> description) {
+    public void setDescription(List<Description__4> description) {
         this.description = description;
     }
 

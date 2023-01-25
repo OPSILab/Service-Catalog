@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
+
+
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("PublicService")
@@ -28,6 +30,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
     "language",
     "description",
     "isDescribedAt",
+    "hasCost",
     "processingTime",
     "isGroupedBy",
     "hasCompetentAuthority",
@@ -56,7 +59,7 @@ public class HasInfo {
      * (Required)
      * 
      */
-    @JsonProperty("title")
+	@JsonProperty("title")
     @NotNull
     private String title;
     /**
@@ -121,9 +124,24 @@ public class HasInfo {
     @Valid
     @NotNull
     private Description description;
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @JsonProperty("isDescribedAt")
     @Valid
+    @NotNull
     private List<IsDescribedAt> isDescribedAt = new ArrayList<IsDescribedAt>();
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("hasCost")
+    @Valid
+    @NotNull
+    private List<HasCost> hasCost = new ArrayList<HasCost>();
     /**
      * 
      * (Required)
@@ -217,6 +235,7 @@ public class HasInfo {
      * 
      * @param identifier
      * @param hasContactPoint
+     * @param hasCost
      * @param hasChannel
      * @param hasCompetentAuthority
      * @param description
@@ -235,7 +254,7 @@ public class HasInfo {
      * @param isDescribedAt
      * @param requires
      */
-    public HasInfo(String identifier, String title, String status, List<String> keyword, List<String> sector, List<String> thematicArea, List<String> type, List<String> language, Description description, List<IsDescribedAt> isDescribedAt, String processingTime, List<String> isGroupedBy, HasCompetentAuthority hasCompetentAuthority, List<String> requires, String spatial, List<HasInput> hasInput, List<Produce> produces, HasContactPoint hasContactPoint, List<HasChannel> hasChannel) {
+    public HasInfo(String identifier, String title, String status, List<String> keyword, List<String> sector, List<String> thematicArea, List<String> type, List<String> language, Description description, List<IsDescribedAt> isDescribedAt, List<HasCost> hasCost, String processingTime, List<String> isGroupedBy, HasCompetentAuthority hasCompetentAuthority, List<String> requires, String spatial, List<HasInput> hasInput, List<Produce> produces, HasContactPoint hasContactPoint, List<HasChannel> hasChannel) {
         super();
         this.identifier = identifier;
         this.title = title;
@@ -247,6 +266,7 @@ public class HasInfo {
         this.language = language;
         this.description = description;
         this.isDescribedAt = isDescribedAt;
+        this.hasCost = hasCost;
         this.processingTime = processingTime;
         this.isGroupedBy = isGroupedBy;
         this.hasCompetentAuthority = hasCompetentAuthority;
@@ -442,14 +462,44 @@ public class HasInfo {
         this.description = description;
     }
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @JsonProperty("isDescribedAt")
     public List<IsDescribedAt> getIsDescribedAt() {
         return isDescribedAt;
     }
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
     @JsonProperty("isDescribedAt")
     public void setIsDescribedAt(List<IsDescribedAt> isDescribedAt) {
         this.isDescribedAt = isDescribedAt;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("hasCost")
+    public List<HasCost> getHasCost() {
+        return hasCost;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("hasCost")
+    public void setHasCost(List<HasCost> hasCost) {
+        this.hasCost = hasCost;
     }
 
     /**
@@ -680,6 +730,10 @@ public class HasInfo {
         sb.append('=');
         sb.append(((this.isDescribedAt == null)?"<null>":this.isDescribedAt));
         sb.append(',');
+        sb.append("hasCost");
+        sb.append('=');
+        sb.append(((this.hasCost == null)?"<null>":this.hasCost));
+        sb.append(',');
         sb.append("processingTime");
         sb.append('=');
         sb.append(((this.processingTime == null)?"<null>":this.processingTime));
@@ -729,6 +783,7 @@ public class HasInfo {
         int result = 1;
         result = ((result* 31)+((this.identifier == null)? 0 :this.identifier.hashCode()));
         result = ((result* 31)+((this.hasContactPoint == null)? 0 :this.hasContactPoint.hashCode()));
+        result = ((result* 31)+((this.hasCost == null)? 0 :this.hasCost.hashCode()));
         result = ((result* 31)+((this.hasChannel == null)? 0 :this.hasChannel.hashCode()));
         result = ((result* 31)+((this.hasCompetentAuthority == null)? 0 :this.hasCompetentAuthority.hashCode()));
         result = ((result* 31)+((this.description == null)? 0 :this.description.hashCode()));
@@ -758,7 +813,7 @@ public class HasInfo {
             return false;
         }
         HasInfo rhs = ((HasInfo) other);
-        return ((((((((((((((((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.hasContactPoint == rhs.hasContactPoint)||((this.hasContactPoint!= null)&&this.hasContactPoint.equals(rhs.hasContactPoint))))&&((this.hasChannel == rhs.hasChannel)||((this.hasChannel!= null)&&this.hasChannel.equals(rhs.hasChannel))))&&((this.hasCompetentAuthority == rhs.hasCompetentAuthority)||((this.hasCompetentAuthority!= null)&&this.hasCompetentAuthority.equals(rhs.hasCompetentAuthority))))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.language == rhs.language)||((this.language!= null)&&this.language.equals(rhs.language))))&&((this.isGroupedBy == rhs.isGroupedBy)||((this.isGroupedBy!= null)&&this.isGroupedBy.equals(rhs.isGroupedBy))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.processingTime == rhs.processingTime)||((this.processingTime!= null)&&this.processingTime.equals(rhs.processingTime))))&&((this.produces == rhs.produces)||((this.produces!= null)&&this.produces.equals(rhs.produces))))&&((this.keyword == rhs.keyword)||((this.keyword!= null)&&this.keyword.equals(rhs.keyword))))&&((this.spatial == rhs.spatial)||((this.spatial!= null)&&this.spatial.equals(rhs.spatial))))&&((this.hasInput == rhs.hasInput)||((this.hasInput!= null)&&this.hasInput.equals(rhs.hasInput))))&&((this.sector == rhs.sector)||((this.sector!= null)&&this.sector.equals(rhs.sector))))&&((this.thematicArea == rhs.thematicArea)||((this.thematicArea!= null)&&this.thematicArea.equals(rhs.thematicArea))))&&((this.status == rhs.status)||((this.status!= null)&&this.status.equals(rhs.status))))&&((this.isDescribedAt == rhs.isDescribedAt)||((this.isDescribedAt!= null)&&this.isDescribedAt.equals(rhs.isDescribedAt))))&&((this.requires == rhs.requires)||((this.requires!= null)&&this.requires.equals(rhs.requires))));
+        return (((((((((((((((((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.hasContactPoint == rhs.hasContactPoint)||((this.hasContactPoint!= null)&&this.hasContactPoint.equals(rhs.hasContactPoint))))&&((this.hasCost == rhs.hasCost)||((this.hasCost!= null)&&this.hasCost.equals(rhs.hasCost))))&&((this.hasChannel == rhs.hasChannel)||((this.hasChannel!= null)&&this.hasChannel.equals(rhs.hasChannel))))&&((this.hasCompetentAuthority == rhs.hasCompetentAuthority)||((this.hasCompetentAuthority!= null)&&this.hasCompetentAuthority.equals(rhs.hasCompetentAuthority))))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.language == rhs.language)||((this.language!= null)&&this.language.equals(rhs.language))))&&((this.isGroupedBy == rhs.isGroupedBy)||((this.isGroupedBy!= null)&&this.isGroupedBy.equals(rhs.isGroupedBy))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.processingTime == rhs.processingTime)||((this.processingTime!= null)&&this.processingTime.equals(rhs.processingTime))))&&((this.produces == rhs.produces)||((this.produces!= null)&&this.produces.equals(rhs.produces))))&&((this.keyword == rhs.keyword)||((this.keyword!= null)&&this.keyword.equals(rhs.keyword))))&&((this.spatial == rhs.spatial)||((this.spatial!= null)&&this.spatial.equals(rhs.spatial))))&&((this.hasInput == rhs.hasInput)||((this.hasInput!= null)&&this.hasInput.equals(rhs.hasInput))))&&((this.sector == rhs.sector)||((this.sector!= null)&&this.sector.equals(rhs.sector))))&&((this.thematicArea == rhs.thematicArea)||((this.thematicArea!= null)&&this.thematicArea.equals(rhs.thematicArea))))&&((this.status == rhs.status)||((this.status!= null)&&this.status.equals(rhs.status))))&&((this.isDescribedAt == rhs.isDescribedAt)||((this.isDescribedAt!= null)&&this.isDescribedAt.equals(rhs.isDescribedAt))))&&((this.requires == rhs.requires)||((this.requires!= null)&&this.requires.equals(rhs.requires))));
     }
 
 }

@@ -189,6 +189,21 @@
               },
               "default": "text"
             },
+
+            "inputType": {
+              "type": "string",
+              "description": "Type of input Data: text, files, dropdown list, ect",
+              "title": "Type",
+              "format": "select2",
+              "enum": ["input text", "file", "select", "text area"],
+              "options": {
+                "enum_titles": ["input text", "file", "select", "text area"],
+                "input_width": "85px",
+                "grid_columns": 12
+              },
+              "default": "input text"
+            },
+
             "required": {
               "type": "boolean",
               "title": "Required",
