@@ -15,7 +15,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "description",
     "type",
     "language",
-    "page"
+    "page",
+    "conformsTo"
 })
 public class HasInput {
 
@@ -31,21 +32,19 @@ public class HasInput {
     private String title;
     @JsonProperty("description")
     @Valid
-    private Description__1 description;
+    private Description__2 description;
     @JsonProperty("type")
     @Valid
     private List<String> type = new ArrayList<String>();
     @JsonProperty("language")
     @Valid
     private List<String> language = new ArrayList<String>();
-    /**
-     * Related Documentation
-     * <p>
-     * 
-     * 
-     */
     @JsonProperty("page")
-    private String page;
+    @Valid
+    private List<String> page = new ArrayList<String>();
+    @JsonProperty("conformsTo")
+    @Valid
+    private List<String> conformsTo = new ArrayList<String>();
 
     /**
      * No args constructor for use in serialization
@@ -60,10 +59,11 @@ public class HasInput {
      * @param description
      * @param language
      * @param page
+     * @param conformsTo
      * @param title
      * @param type
      */
-    public HasInput(String identifier, String title, Description__1 description, List<String> type, List<String> language, String page) {
+    public HasInput(String identifier, String title, Description__2 description, List<String> type, List<String> language, List<String> page, List<String> conformsTo) {
         super();
         this.identifier = identifier;
         this.title = title;
@@ -71,6 +71,7 @@ public class HasInput {
         this.type = type;
         this.language = language;
         this.page = page;
+        this.conformsTo = conformsTo;
     }
 
     @JsonProperty("identifier")
@@ -106,12 +107,12 @@ public class HasInput {
     }
 
     @JsonProperty("description")
-    public Description__1 getDescription() {
+    public Description__2 getDescription() {
         return description;
     }
 
     @JsonProperty("description")
-    public void setDescription(Description__1 description) {
+    public void setDescription(Description__2 description) {
         this.description = description;
     }
 
@@ -135,26 +136,24 @@ public class HasInput {
         this.language = language;
     }
 
-    /**
-     * Related Documentation
-     * <p>
-     * 
-     * 
-     */
     @JsonProperty("page")
-    public String getPage() {
+    public List<String> getPage() {
         return page;
     }
 
-    /**
-     * Related Documentation
-     * <p>
-     * 
-     * 
-     */
     @JsonProperty("page")
-    public void setPage(String page) {
+    public void setPage(List<String> page) {
         this.page = page;
+    }
+
+    @JsonProperty("conformsTo")
+    public List<String> getConformsTo() {
+        return conformsTo;
+    }
+
+    @JsonProperty("conformsTo")
+    public void setConformsTo(List<String> conformsTo) {
+        this.conformsTo = conformsTo;
     }
 
     @Override
@@ -185,6 +184,10 @@ public class HasInput {
         sb.append('=');
         sb.append(((this.page == null)?"<null>":this.page));
         sb.append(',');
+        sb.append("conformsTo");
+        sb.append('=');
+        sb.append(((this.conformsTo == null)?"<null>":this.conformsTo));
+        sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
         } else {
@@ -200,6 +203,7 @@ public class HasInput {
         result = ((result* 31)+((this.description == null)? 0 :this.description.hashCode()));
         result = ((result* 31)+((this.language == null)? 0 :this.language.hashCode()));
         result = ((result* 31)+((this.page == null)? 0 :this.page.hashCode()));
+        result = ((result* 31)+((this.conformsTo == null)? 0 :this.conformsTo.hashCode()));
         result = ((result* 31)+((this.title == null)? 0 :this.title.hashCode()));
         result = ((result* 31)+((this.type == null)? 0 :this.type.hashCode()));
         return result;
@@ -214,7 +218,7 @@ public class HasInput {
             return false;
         }
         HasInput rhs = ((HasInput) other);
-        return (((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.language == rhs.language)||((this.language!= null)&&this.language.equals(rhs.language))))&&((this.page == rhs.page)||((this.page!= null)&&this.page.equals(rhs.page))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))));
+        return ((((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.language == rhs.language)||((this.language!= null)&&this.language.equals(rhs.language))))&&((this.page == rhs.page)||((this.page!= null)&&this.page.equals(rhs.page))))&&((this.conformsTo == rhs.conformsTo)||((this.conformsTo!= null)&&this.conformsTo.equals(rhs.conformsTo))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))));
     }
 
 }

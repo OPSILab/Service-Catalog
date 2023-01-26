@@ -18,6 +18,6 @@ export interface HasInput {
     description?: Description1;
     type?: Array<string>;
     language?: Array<string>;
-    page?: string;
+    page?: Array<string>;
 }
 

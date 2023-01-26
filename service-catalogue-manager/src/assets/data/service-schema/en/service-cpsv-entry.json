@@ -33,14 +33,10 @@
       "title": "Keyword",
       "description": "Keyword tags related to textual description.",
       "uniqueItems": true,
-      "format": "select",
-      "options": {
-        "tags": true
-      },
-      "items": {
+      "format":"tabs",
+       "items": {
         "type": "string",
-        "title": "Tag",
-        "id": "arr_item"
+        "title": "Keyword"        
       }
     },
 
@@ -151,11 +147,13 @@
     "hasInput": {
       "title": "Input",
       "type": "array",
-      "format": "tabs",
+      "format": "categories",
       "description": "A specific Public Service may require the presence of certain pieces of Evidence in order to be delivered",
       "items": {
         "type": "object",
         "title": "Input",
+        "basicCategoryTitle": "Info",
+        "format": "categories",
         "properties": {
           "identifier": {
             "type": "string",
@@ -216,7 +214,16 @@
             "items": {
               "type": "string",
               "title": "Dataset",
-              "description": "id/uri of input characterization/dataset "
+              "description": "id/uri of input characterization/dataset ",
+              "watch": {
+                "possible_datasets": "root.hasServiceInstance.dataset"
+              },
+              "enumSource": [
+                {
+                  "source": "possible_datasets",
+                  "value": "{{item.identifier}}"
+                }
+              ]
             }
           }
         }
@@ -225,11 +232,13 @@
     "produces": {
       "title": "Output",
       "type": "array",
-      "format": "tabs",
+      "format": "categories",
       "description": "describing the actual result of executing a given Public Service. Outputs can be any resource, for instance a document, artefact or anything else being produced as a result of executing the Public Service",
       "items": {
         "type": "object",
         "title": "Output",
+        "basicCategoryTitle": "Info",
+        "format": "categories",
         "options": {
           "collapsed": false
         },
@@ -354,21 +363,21 @@
             "description": "Currency Code",
             "enum": ["EUR", "BGN", "CZK", "DKK", "HUF", "PLN", "RON", "SEK", "CHF", "TRY", "NOK"]
           },
-          "hasCost":{
-             "type": "string"
+          "hasCost": {
+            "type": "string"
           },
           "ifAccessedThrough": {
             "type": "string",
-                "description": "Cost if acccessed through the specific channel",
-                "watch": {
-                  "possible_channels": "root.hasInfo.hasChannel"
-                },
-                "enumSource": [
-                  {
-                    "source": "possible_channels",
-                    "value": "{{item.type}}"
-                  }
-                ]
+            "description": "Cost if acccessed through the specific channel",
+            "watch": {
+              "possible_channels": "root.hasInfo.hasChannel"
+            },
+            "enumSource": [
+              {
+                "source": "possible_channels",
+                "value": "{{item.type}}"
+              }
+            ]
           },
           "description": {
             "type": "object",
@@ -389,7 +398,6 @@
             },
             "required": ["locale", "description"]
           }
-
         }
       }
     }
