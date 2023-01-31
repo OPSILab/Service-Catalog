@@ -145,6 +145,24 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			return ResponseEntity.ok(catalogService.getServiceById(decodedServiceIdentifier));
 
 	}
+	
+	@Operation(summary = "Get Service Cost  by serviceId.", tags = {
+	"Service Model" }, responses = {
+			@ApiResponse(description = "Get Service Cost  by serviceId.", responseCode = "200") })
+	@Override
+	@GetMapping(value = "/service/cost", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getServiceCost(@RequestParam("serviceId") String serviceId)
+		throws ServiceNotFoundException, IOException {
+	
+	if (StringUtils.isBlank(serviceId))
+		throw new IllegalArgumentException("Illegal connectorId in input");
+	
+	String decodedServiceIdentifier = java.net.URLDecoder.decode(serviceId,
+			StandardCharsets.UTF_8);
+	
+	return ResponseEntity.ok(catalogService.getCostByServiceId(decodedServiceIdentifier));
+	}
+	
 
 	@Operation(summary = "Get Connector description by connectorId.", tags = {
 			"Connector Model" }, responses = {
@@ -276,6 +294,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getServicesIsPersonaDataHandling());
 
 	}
+	
+	
 
 	@Override
 	@Operation(summary = "Get the count of the  Service Model descriptions is personal data handling.", tags = {

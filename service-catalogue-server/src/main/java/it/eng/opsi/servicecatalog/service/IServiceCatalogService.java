@@ -23,6 +23,8 @@ import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
+import it.eng.opsi.servicecatalog.model.HasCost;
+
 
 public interface IServiceCatalogService {
 
@@ -111,5 +113,7 @@ public interface IServiceCatalogService {
   public abstract List<ServiceModel> getServicesbyTitle(String title) throws ServiceNotFoundException;
 
         public abstract List<Adapter> getAdapterbytype(String type);
+
+		public abstract List<HasCost> getCostByServiceId(String decodedServiceIdentifier);
 
 }

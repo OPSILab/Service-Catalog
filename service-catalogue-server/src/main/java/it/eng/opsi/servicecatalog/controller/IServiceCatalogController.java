@@ -110,4 +110,6 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<List<ServiceModel>> getServiceByTitle(HttpServletRequest request, String title)
 			throws ServiceNotFoundException, IOException;
 
+	public abstract ResponseEntity<?> getServiceCost(String serviceId) throws ServiceNotFoundException, IOException;
+
 }

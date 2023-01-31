@@ -29,6 +29,7 @@ import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
+import it.eng.opsi.servicecatalog.model.HasCost;
 import it.eng.opsi.servicecatalog.model.ServiceModel.ServiceDescriptionStatus;
 import it.eng.opsi.servicecatalog.repository.ServiceModelRepository;
 import it.eng.opsi.servicecatalog.repository.AdapterLogRepository;
@@ -356,5 +357,11 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public List<Adapter> getAdapterbytype(String type) {
 		return adapterRepo.findBytype(type);
+	}
+
+	@Override
+	public List<HasCost> getCostByServiceId(String decodedServiceIdentifier) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
