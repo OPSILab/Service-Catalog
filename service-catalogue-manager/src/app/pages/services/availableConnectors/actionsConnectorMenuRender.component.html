@@ -146,11 +146,12 @@
           <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>
           <br>
           <nb-select fullWidth placeholder="Select service to connect with" [(ngModel)]="serviceId"
-          [ngModelOptions]="{standalone: true}">
-          <nb-option-group title="serviceId" >
-              <nb-option *ngFor="let service of services" value = {{service.identifier}}>{{service.title}}</nb-option>
-          </nb-option-group>
-        </nb-select>
+            [ngModelOptions]="{standalone: true}">
+            <nb-option-group title="serviceId">
+              <nb-option *ngFor="let service of services" value={{service.identifier}}>{{service.title}}</nb-option>
+              <nb-option value = null> &nbsp; </nb-option>
+            </nb-option-group>
+          </nb-select>
           <br><br>
           <label for="url">{{ 'general.connectors.url' | translate }}</label>
           <br>
@@ -205,68 +206,69 @@
             </div>
           </div>
 
-        <div class="row justify-content-center">
-          <div class="col-sm py-1">
-            <div class="accent">
-              <i><b>{{ 'general.services.authority' | translate }}:</b> {{ data.competentAuthority.prefLabel }}</i>
-            </div>
-          </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-sm py-1">
-            <div class="accent">
-              <i><b>{{ 'general.services.location' | translate }}:</b> {{ data.location }}</i>
-            </div>
-          </div>
-        </div>
-        <div class="row justify-content-around">
-          <div class="col-sm py-1">
-            <div class="accent">
-              <i>
-                <b>{{ 'general.services.channels' | translate }}: </b>
-              </i>
-              <div class="mx-1 p-1 badge badge-primary" *ngFor="let channel of data.channel; let i = index"
-                [attr.data-index]="i">
-                <i>{{ channel.type }}</i>
+          <div class="row justify-content-center">
+            <div class="col-sm py-1">
+              <div class="accent">
+                <i><b>{{ 'general.services.authority' | translate }}:</b> {{ data.competentAuthority.prefLabel }}</i>
               </div>
             </div>
           </div>
-        </div>
-        <div class="row justify-content-around">
-          <div class="col-sm py-1">
-            <div class="accent">
-              <i>
-                <b>{{ 'general.services.sector' | translate }}: </b>
-              </i>
-              <div class="mx-1 p-1 badge badge-warning" *ngFor="let sector of data.sector; let i = index"
-                [attr.data-index]="i">
-                <i>{{ sector }}</i>
+          <div class="row justify-content-center">
+            <div class="col-sm py-1">
+              <div class="accent">
+                <i><b>{{ 'general.services.location' | translate }}:</b> {{ data.location }}</i>
               </div>
             </div>
           </div>
-        </div>
-        <div class="row justify-content-around">
-          <div class="col-sm py-1">
-            <div class="accent">
-              <i>
-                <b>{{ 'general.services.event' | translate }}: </b>
-              </i>
-              <div class="mx-1 p-1 badge badge-success" *ngFor="let event of data.event; let i = index"
-                [attr.data-index]="i">
-                <i>{{ event }}</i>
+          <div class="row justify-content-around">
+            <div class="col-sm py-1">
+              <div class="accent">
+                <i>
+                  <b>{{ 'general.services.channels' | translate }}: </b>
+                </i>
+                <div class="mx-1 p-1 badge badge-primary" *ngFor="let channel of data.channel; let i = index"
+                  [attr.data-index]="i">
+                  <i>{{ channel.type }}</i>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="row justify-content-center">
-          <div class="col-sm py-1">
-            <div class="">
-              <i><b>{{ 'general.services.link' | translate }}: </b>
-                <a href="{{ data.serviceUri }}" target="_blank"><nb-icon icon="external-link-outline"></nb-icon></a></i>
+          <div class="row justify-content-around">
+            <div class="col-sm py-1">
+              <div class="accent">
+                <i>
+                  <b>{{ 'general.services.sector' | translate }}: </b>
+                </i>
+                <div class="mx-1 p-1 badge badge-warning" *ngFor="let sector of data.sector; let i = index"
+                  [attr.data-index]="i">
+                  <i>{{ sector }}</i>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </h6>
+          <div class="row justify-content-around">
+            <div class="col-sm py-1">
+              <div class="accent">
+                <i>
+                  <b>{{ 'general.services.event' | translate }}: </b>
+                </i>
+                <div class="mx-1 p-1 badge badge-success" *ngFor="let event of data.event; let i = index"
+                  [attr.data-index]="i">
+                  <i>{{ event }}</i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center">
+            <div class="col-sm py-1">
+              <div class="">
+                <i><b>{{ 'general.services.link' | translate }}: </b>
+                  <a href="{{ data.serviceUri }}" target="_blank"><nb-icon
+                      icon="external-link-outline"></nb-icon></a></i>
+              </div>
+            </div>
+          </div>
+        </h6>
       </nb-card-body>
       <nb-card-footer>
         <div class="row justify-content-center">
