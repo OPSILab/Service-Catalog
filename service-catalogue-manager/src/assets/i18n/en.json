@@ -355,7 +355,8 @@
       "delete_adapter": "Delete adapter",
       "logs": "Adapter logs",
       "adapter_added_message": "A new adapter was added",
-      "adapter_edited_message": "Adapter was edited"
+      "adapter_edited_message": "Adapter was edited",
+      "validationErrors": "There are validation errors in the Adapter description."
     }
   },
   "login": {

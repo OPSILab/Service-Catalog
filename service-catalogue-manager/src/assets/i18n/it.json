@@ -355,7 +355,8 @@
       "delete_adapter": "Cancella adattatori",
       "logs": "Log di adattatori",
       "adapter_added_message": "E' stato aggiunto un nuovo adattatore",
-      "adapter_edited_message": "L'adattatore è stato modificato"
+      "adapter_edited_message": "L'adattatore è stato modificato",
+      "validationErrors": "There are validation errors in the Adapter description."
     }
   },
   "login": {
