@@ -34,8 +34,6 @@ export class AddAdapterComponent implements OnInit {
   selectedFile: File;
   json: Record<string, unknown>;
   selectedItem = 'Json';
-  static formType: string = 'edit';
-
 
   constructor(protected ref: NbDialogRef<AddAdapterComponent>, private toastrService: NbToastrService,
     private errorService: ErrorDialogAdapterService,
@@ -58,10 +56,6 @@ export class AddAdapterComponent implements OnInit {
       else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
 
-  }
-
-  getFormType(): string {
-    return AddAdapterComponent.formType
   }
 
   onFileChanged(event: Event): void {
@@ -93,10 +87,14 @@ export class AddAdapterComponent implements OnInit {
   }
 
   confirm() {
-    if (AddAdapterComponent.formType == 'edit')
-      this.onEdit()
-    else
+    try {
       this.onSubmit()
+    }
+    catch (error) {
+      console.log("error:<\n", error, ">\n")
+      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      else if (error.message) console.log("message:<\n", error.message, ">\n")
+    }
   }
 
   async onEdit() {

@@ -86,7 +86,6 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
 
   async addNew(): Promise<void> {
     try {
-      AddAdapterComponent.formType = 'add';
       this.dialogService.open(AddAdapterComponent).onClose.subscribe(() => {
         void console.log("confirm ok", this.ngOnInit());
       });
@@ -99,12 +98,6 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
       else if (error.message) console.log("message:<\n", error.message, ">\n")
       this.errorService.openErrorDialog(error);
     }
-  }
-
-  onEdit(): void {
-    this.dialogService.open(AddAdapterComponent).onClose.subscribe(() => { }
-    );
-    this.ngOnInit()
   }
 
   loadTableSettings(): Record<string, unknown> {

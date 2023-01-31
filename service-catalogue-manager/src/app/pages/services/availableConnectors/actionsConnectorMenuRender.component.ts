@@ -49,7 +49,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   @ViewChild('confirmDeleteDialog', { static: false }) confirmDeleteDialogTemplate: TemplateRef<unknown>;
   @ViewChild('confirmRegisterDialog', { static: false }) confirmRegisterDialog: TemplateRef<unknown>;
   @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
-  @ViewChild('addOrEditConnector', { static: false }) addOrEditConnector: TemplateRef<unknown>;
+  @ViewChild('editConnector', { static: false }) editConnector: TemplateRef<unknown>;
   @ViewChild('availableServiceInfoModal', { static: true }) serviceInfoModalRef: TemplateRef<unknown>;
 
   constructor(
@@ -86,7 +86,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       .subscribe((event) => {
         switch (event.item.data) {
           case 'edit':
-            this.openAddEditConnector();
+            this.openEditConnector();
             break;
           case 'delete':
             this.openDeleteFromRegistryDialog();
@@ -299,10 +299,10 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       });
   }
 
-  async openAddEditConnector(): Promise<void> {
+  async openEditConnector(): Promise<void> {
     this.services = await this.availableServicesService.getServices();
     this.ref = this.dialogService
-      .open(this.addOrEditConnector, {
+      .open(this.editConnector, {
         hasScroll: false,
         context: {
           serviceName: this.value.name,

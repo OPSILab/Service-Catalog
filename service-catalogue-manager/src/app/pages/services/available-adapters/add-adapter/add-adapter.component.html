@@ -1,12 +1,9 @@
 <nb-card>
   <nb-card-header class="d-flex align-content-center justify-content-between">
     <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
-    <div *ngIf="getFormType()=='add'; else elseBlock">
+    <div>
       <h3>{{ 'general.adapters.add' | translate }}</h3>
     </div>
-    <ng-template #elseBlock>
-      <h3>{{ 'general.adapters.edit' | translate }}</h3>
-    </ng-template>
     <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
       <i class="material-icons">close</i>
     </button>
@@ -57,9 +54,4 @@
       </form>
     </h6>
   </nb-card-body>
-  <nb-card-footer *ngIf="selectedFile">
-    <p *ngIf="selectedFile">
-      <b>{{ 'general.editor.selected' | translate }}:&nbsp;</b> <i> {{ selectedFile.name }}</i>
-    </p>
-  </nb-card-footer>
 </nb-card>

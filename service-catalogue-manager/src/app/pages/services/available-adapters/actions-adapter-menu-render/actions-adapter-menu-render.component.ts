@@ -46,7 +46,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   @ViewChild('confirmDeleteDialog', { static: false }) confirmDeleteDialogTemplate: TemplateRef<unknown>;
   @ViewChild('confirmRegisterDialog', { static: false }) confirmRegisterDialog: TemplateRef<unknown>;
   @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
-  @ViewChild('addOrEditAdapter', { static: false }) addOrEditAdapter: TemplateRef<unknown>;
+  @ViewChild('editAdapter', { static: false }) editAdapter: TemplateRef<unknown>;
   //@ViewChild('adapter',{ static: false }) addAdapter: AddAdapterComponent;
 
   constructor(
@@ -78,7 +78,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
       .subscribe((event) => {
         switch (event.item.data) {
           case 'edit':
-            this.openAddEditAdapter();
+            this.openEditAdapter();
             break;
           case 'delete':
             this.openDeleteFromRegistryDialog();
@@ -93,9 +93,9 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
       });
   }
 
-  openAddEditAdapter(): void {
+  openEditAdapter(): void {
     this.ref = this.dialogService
-      .open(this.addOrEditAdapter, {
+      .open(this.editAdapter, {
         hasScroll: false,
         context: {
           serviceName: this.value.name,
