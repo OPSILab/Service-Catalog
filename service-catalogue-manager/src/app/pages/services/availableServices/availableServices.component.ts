@@ -34,7 +34,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   private actionsLabel: string;
   private detailsLabel: string;
   private statusLabel: string;
-  private spatialLabel: string
+  private spatialLabel: string;
+  private keywords: string;
 
   public settings: Record<string, unknown>;
   private locale: string;
@@ -129,6 +130,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     this.detailsLabel = this.translate.instant('general.services.details') as string;
     this.statusLabel = this.translate.instant('general.services.status') as string;
     this.spatialLabel = this.translate.instant('general.services.location') as string;
+    this.keywords = this.translate.instant('general.services.keywords') as string;
 
     return {
       mode: 'external',
@@ -147,54 +149,58 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
           width: '25%',
           valuePrepareFunction: (cell, row: AvailableServiceRow) => row.title,
         },
-      spatial: {
-        title: this.spatialLabel,
-        type: 'text',
-        width: '25%',
-
-        valuePrepareFunction: (cell, row: AvailableServiceRow) => row.spatial,
-      },
-
-      description: {
-        title: this.descriptionLabel,
-        editor: {
-          type: 'textarea',
+        spatial: {
+          title: this.spatialLabel,
+          type: 'text',
+          width: '25%',
+          valuePrepareFunction: (cell, row: AvailableServiceRow) => row.spatial,
         },
-        width: '65%',
-        filter: false,
-        valuePrepareFunction: (cell, row: AvailableServiceRow) => row.hasInfo.description.description,
-      },
-      status: {
-        title: this.statusLabel,
-        sort: false,
-        filter: false,
-        width: '5%',
-        type: 'text',
-        valuePrepareFunction: (cell, row: AvailableServiceRow) => row.status,
-      },
-      details: {
-        title: this.detailsLabel,
-        filter: false,
-        sort: false,
-        width: '5%',
-        type: 'custom',
-        valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
-        renderComponent: ServiceInfoRenderComponent,
-      },
-
-      actions: {
-        title: this.actionsLabel,
-        sort: false,
-        width: '5%',
-        filter: false,
-        type: 'custom',
-        valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
-        renderComponent: ActionsServiceMenuRenderComponent,
-        onComponentInitFunction: (instance) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
-          instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe((updatedServiceData: unknown) => this.ngOnInit());
+        keywords: {
+          title: this.keywords,
+          type: 'text',
+          width: '25%',
+          valuePrepareFunction: (cell, row: AvailableServiceRow) => row.hasInfo.keyword,
         },
-      },
+        description: {
+          title: this.descriptionLabel,
+          editor: {
+            type: 'textarea',
+          },
+          width: '65%',
+          filter: false,
+          valuePrepareFunction: (cell, row: AvailableServiceRow) => row.hasInfo.description.description,
+        },
+        status: {
+          title: this.statusLabel,
+          sort: false,
+          filter: false,
+          width: '5%',
+          type: 'text',
+          valuePrepareFunction: (cell, row: AvailableServiceRow) => row.status,
+        },
+        details: {
+          title: this.detailsLabel,
+          filter: false,
+          sort: false,
+          width: '5%',
+          type: 'custom',
+          valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
+          renderComponent: ServiceInfoRenderComponent,
+        },
+
+        actions: {
+          title: this.actionsLabel,
+          sort: false,
+          width: '5%',
+          filter: false,
+          type: 'custom',
+          valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
+          renderComponent: ActionsServiceMenuRenderComponent,
+          onComponentInitFunction: (instance) => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
+            instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe((updatedServiceData: unknown) => this.ngOnInit());
+          },
+        },
       },
     };
   }

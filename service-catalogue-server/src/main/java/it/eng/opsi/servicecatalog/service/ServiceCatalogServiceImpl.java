@@ -2,6 +2,7 @@ package it.eng.opsi.servicecatalog.service;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -211,22 +212,22 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		return serviceModelRepo.findByServicebyIds(
 				ids.stream().map(p -> java.net.URLDecoder.decode(p, StandardCharsets.UTF_8)).toArray());
 	}
-	
+
 	@Override
 	public List<ServiceModel> getServicesbyLocation(String location) throws ServiceNotFoundException {
 		return serviceModelRepo.findByServiceLocation(
 				location);
 	}
-	
+
 	@Override
 	public List<ServiceModel> getServicesbyKeyword(String keyword) throws ServiceNotFoundException {
 		return serviceModelRepo.findByServiceKeyword(
 				keyword);
 	}
-	
+
 	@Override
 	public List<ServiceModel> getServicesbyTitle(String title) throws ServiceNotFoundException {
-		
+
 		return serviceModelRepo.findByServiceName(
 				title);
 	}
@@ -361,7 +362,26 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public List<HasCost> getCostByServiceId(String decodedServiceIdentifier) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return serviceModelRepo.findByIdentifier(decodedServiceIdentifier).get().getHasInfo()
+				.getHasCost();
+
+	}
+
+	@Override
+	public List<ServiceModel> getServices(String name, String location, String[] keywords) {
+		List<ServiceModel> services = new ArrayList<ServiceModel>();
+		if (name != null)
+			services.addAll(serviceModelRepo.findByServiceName(name));
+		if (location != null)
+			services.addAll(serviceModelRepo.findByServiceLocation(location));
+		if (keywords != null)
+			services.addAll(serviceModelRepo.findByServiceKeywords(keywords));
+		return services;
+	}
+
+	@Override
+	public String getTimeByServiceId(String decodedServiceIdentifier) {
+		return serviceModelRepo.findByIdentifier(decodedServiceIdentifier).get().getHasInfo().getProcessingTime();
 	}
 }
