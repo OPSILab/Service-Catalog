@@ -279,7 +279,8 @@
       "validationErrors": "There are validation errors in the Service description.",
       "path": "Path",
       "publish": "Publish",
-      "show_error_details":"Show error details"
+      "show_error_details":"Show error details",
+      "hide_error_details":"Hide error details"
     },
     "connectors": {
       "connector": "Connector",
@@ -354,7 +355,8 @@
       "delete_adapter": "Delete adapter",
       "logs": "Adapter logs",
       "adapter_added_message": "A new adapter was added",
-      "adapter_edited_message": "Adapter was edited"
+      "adapter_edited_message": "Adapter was edited",
+      "validationErrors": "There are validation errors in the Adapter description."
     }
   },
   "login": {

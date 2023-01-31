@@ -6,7 +6,8 @@ import { NbDialogService } from '@nebular/theme';
 export class ErrorDialogService {
   constructor(private modalService: NbDialogService) {}
 
-  openErrorDialog(error: unknown): void {
+  openErrorDialog(error): void {
+    console.log(error)
     this.modalService.open(ErrorDialogComponent, {
       context: {
         error: error,
