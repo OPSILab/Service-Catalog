@@ -12,7 +12,9 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Service;
 
 import it.eng.opsi.servicecatalog.exception.AdapterLogNotFoundException;
@@ -48,6 +50,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Autowired
 	private Serializer jsonldSerializer;
+
+	@Autowired
+	MongoTemplate mongoTemplate;
 
 	@Value("${uriBasePath}")
 	private String uriBasePath;
@@ -237,9 +242,10 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public List<ServiceModel> getServicesbyKeyword(String keyword) throws ServiceNotFoundException {
-		return serviceModelRepo.findByServiceKeyword(
-				keyword);
+	public List<ServiceModel> getServicesbyKeywords(String keywords) throws ServiceNotFoundException {
+		List<String> keywordsList = new ArrayList<String>();
+		keywordsList.add(keywords);
+		return serviceModelRepo.findByServiceKeywords(keywords.split(","));
 	}
 
 	@Override
@@ -386,14 +392,14 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public List<ServiceModel> getServices(String name, String location, String[] keywords) {
+	public List<ServiceModel> getServices(String name, String location, String keywords) {
 		List<ServiceModel> services = new ArrayList<ServiceModel>();
 		if (name != null)
 			services.addAll(serviceModelRepo.findByServiceName(name));
 		if (location != null)
 			services.addAll(serviceModelRepo.findByServiceLocation(location));
 		if (keywords != null)
-			services.addAll(serviceModelRepo.findByServiceKeywords(keywords));
+			services.addAll(this.getServicesbyKeywords(keywords));
 		return services;
 	}
 

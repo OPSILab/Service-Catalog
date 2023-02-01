@@ -149,18 +149,19 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
           width: '25%',
           valuePrepareFunction: (cell, row: AvailableServiceRow) => row.title,
         },
+
         spatial: {
           title: this.spatialLabel,
           type: 'text',
           width: '25%',
           valuePrepareFunction: (cell, row: AvailableServiceRow) => row.spatial,
-        },
+        },/*
         keywords: {
           title: this.keywords,
           type: 'text',
           width: '25%',
           valuePrepareFunction: (cell, row: AvailableServiceRow) => row.hasInfo.keyword,
-        },
+        },*/
         description: {
           title: this.descriptionLabel,
           editor: {

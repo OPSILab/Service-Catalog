@@ -71,7 +71,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 					@ApiResponse(description = "Returns the list of all registered Service Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ServiceModel>> getServices(@Param("name") String name,
-			@Param("location") String location, @Param("keywords") String[] keywords) throws ServiceNotFoundException {
+			@Param("location") String location, @Param("keywords") String keywords) throws ServiceNotFoundException {
 		if (name != null || location != null || keywords != null) {
 			return ResponseEntity.ok(catalogService.getServices(name, location, keywords));
 		}
@@ -273,14 +273,14 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the Service Model descriptions by specified Service Keyword.", description = "Get the Service Model descriptions by specified Service Keyword.", tags = {
+	@Operation(summary = "Get the Service Model descriptions by specified Service Keywords.", description = "Get the Service Model descriptions by specified Service Keywords.", tags = {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/keyword", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ServiceModel>> getServiceByKeyword(HttpServletRequest request,
-			@RequestParam("keyword") String keyword) throws ServiceNotFoundException, IOException {
+	public ResponseEntity<List<ServiceModel>> getServiceByKeywords(HttpServletRequest request,
+			@RequestParam("keywords") String keywords) throws ServiceNotFoundException, IOException {
 
-		return ResponseEntity.ok(catalogService.getServicesbyKeyword(keyword));
+		return ResponseEntity.ok(catalogService.getServicesbyKeywords(keywords));
 
 	}
 
@@ -665,5 +665,4 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 		return ResponseEntity.ok(catalogService.getCountByLocation());
 	}
-
 }

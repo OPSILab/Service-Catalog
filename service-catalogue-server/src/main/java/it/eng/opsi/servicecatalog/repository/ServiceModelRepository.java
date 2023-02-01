@@ -46,11 +46,13 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 	@Query(value = "{ ?0: { $in: '$hasInfo.spatial'} }")
 	public List<ServiceModel> findByServiceLocation(String spatial);
 
-	@Query(value = "{ ?0: { $in: '$hasInfo.keyword'} }")
-	public List<ServiceModel> findByServiceKeywords(String[] keywords);
-
-	@Query(value = "{ ?0: { $in: '$hasInfo.keyword'} }")
-	public List<ServiceModel> findByServiceKeyword(String keyword);
+	/*
+	 * @Query(value = "{ ?0: { $in: '$hasInfo.keyword'} }")
+	 * public List<ServiceModel> findByServiceKeywords(List<String> keywords);
+	 * 
+	 * @Query(value = "{ ?0: { $in: '$hasInfo.keyword'} }")
+	 * public List<ServiceModel> findByServiceKeyword(String keyword);
+	 */
 
 	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }", count = true)
 	public List<ServiceModel> findServicesIsPersonalDataHandling();

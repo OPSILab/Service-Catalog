@@ -3,6 +3,8 @@ package it.eng.opsi.servicecatalog.repository;
 import static org.springframework.data.mongodb.core.query.Criteria.where;
 import static org.springframework.data.mongodb.core.query.Query.query;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,15 @@ public class ServiceModelCustomRepositoryImpl implements ServiceModelCustomRepos
 
 		return Optional.ofNullable(updatedService);
 
+	}
+
+	@Override
+	public List<ServiceModel> findByServiceKeywords(String[] keywords) {
+
+		List<ServiceModel> services = new ArrayList<ServiceModel>();
+		for (String keyword : keywords)
+			services.addAll(template.find(query(where("hasInfo.keyword").is(keyword)), ServiceModel.class));
+		return services;
 	}
 
 }

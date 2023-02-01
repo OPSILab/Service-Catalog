@@ -107,7 +107,7 @@ public interface IServiceCatalogService {
 
       public abstract List<ServiceModel> getServicesbyLocation(String location) throws ServiceNotFoundException;
 
-      public abstract List<ServiceModel> getServicesbyKeyword(String keyword) throws ServiceNotFoundException;
+      public abstract List<ServiceModel> getServicesbyKeywords(String keywords) throws ServiceNotFoundException;
 
       public abstract List<ServiceModel> getServicesbyTitle(String title) throws ServiceNotFoundException;
 
@@ -115,7 +115,7 @@ public interface IServiceCatalogService {
 
       public abstract List<HasCost> getCostByServiceId(String decodedServiceIdentifier);
 
-      public abstract List<ServiceModel> getServices(String name, String location, String[] keywords);
+      public abstract List<ServiceModel> getServices(String name, String location, String keywords);
 
       public abstract Object getTimeByServiceId(String decodedServiceIdentifier);
 
