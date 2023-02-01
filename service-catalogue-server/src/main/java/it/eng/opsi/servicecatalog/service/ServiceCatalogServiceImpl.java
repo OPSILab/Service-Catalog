@@ -25,11 +25,14 @@ import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.jsonld.Serializer;
 import it.eng.opsi.servicecatalog.model.HasInfo;
+import it.eng.opsi.servicecatalog.model.HasServiceInstance;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
+import it.eng.opsi.servicecatalog.model.Endpoint;
+import it.eng.opsi.servicecatalog.model.EndpointConnector;
 import it.eng.opsi.servicecatalog.model.HasCost;
 import it.eng.opsi.servicecatalog.model.ServiceModel.ServiceDescriptionStatus;
 import it.eng.opsi.servicecatalog.repository.ServiceModelRepository;
@@ -104,8 +107,19 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	public Connector createConnector(Connector connector) {
-
+		if (connector.getServiceId() != null)
+			this.assignConnector(connector);
 		return connectorModelRepo.save(connector);
+	}
+
+	public void assignConnector(Connector connector) {
+		ServiceModel service = this.getServiceById(connector.getServiceId());
+		HasServiceInstance serviceInstance = new HasServiceInstance();
+		EndpointConnector endpointConnector = new EndpointConnector();
+		endpointConnector.setConnectorId(connector.getConnectorId());
+		serviceInstance.setEndpointConnector(endpointConnector);
+		service.setHasServiceInstance(serviceInstance);
+		this.updateService(connector.getServiceId(), service);
 	}
 
 	@Override
@@ -134,6 +148,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		if (!connectorId.equals(connector.getConnectorId()))
 			throw new ServiceNotEditableException("ConnectorId in the path and the one in the body mismatch.");
+
+		if (connector.getServiceId() != null)
+			this.assignConnector(connector);
 
 		return connectorModelRepo.updateConnector(connectorId, connector).orElseThrow(
 				() -> new ServiceNotFoundException("No Connector description found for Service Id: " + connectorId));
