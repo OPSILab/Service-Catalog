@@ -25,6 +25,7 @@ import {
   NbTabsetModule,
   NbCheckboxModule,
   NbRadioModule,
+  NbTagModule,
 } from '@nebular/theme';
 import { ActionsServiceMenuRenderComponent } from './availableServices/actionsServiceMenuRender.component';
 import { ActionsConnectorMenuRenderComponent } from './availableConnectors/actionsConnectorMenuRender.component';
@@ -36,6 +37,7 @@ import { AvailableAdaptersComponent } from './available-adapters/available-adapt
 import { AddAdapterComponent } from './available-adapters/add-adapter/add-adapter.component';
 import { ActionsAdapterMenuRenderComponent } from './available-adapters/actions-adapter-menu-render/actions-adapter-menu-render.component';
 import { AdapterInfoRenderComponent } from './available-adapters/adapter-info-render/adapter-info-render.component';
+import { CustomKeywordRenderComponent } from './availableServices/custom-keyword-render.component';
 
 @NgModule({
   imports: [
@@ -52,6 +54,7 @@ import { AdapterInfoRenderComponent } from './available-adapters/adapter-info-re
     NbContextMenuModule,
     NbInputModule,
     NbCheckboxModule,
+    NbTagModule,
     NbRadioModule,
     NbTabsetModule,
     TranslateModule.forChild({}),
@@ -74,6 +77,7 @@ import { AdapterInfoRenderComponent } from './available-adapters/adapter-info-re
     AvailableAdaptersComponent,
     ActionsAdapterMenuRenderComponent,
     AdapterInfoRenderComponent,
+    CustomKeywordRenderComponent
   ],
   providers: [AvailableServicesService, AvailableConnectorsService],
   entryComponents: [

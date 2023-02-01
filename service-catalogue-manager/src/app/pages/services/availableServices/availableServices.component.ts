@@ -14,13 +14,13 @@ import { AppConfig } from '../../../model/appConfig';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { LoginService } from '../../../auth/login/login.service';
-import { Description } from '../../../model/services/description';
-import { Description2 } from '../../../model/services/description2';
-import { IsPersonalDataHandling } from '../../../model/services/isPersonalDataHandling';
+import { CustomKeywordRenderComponent } from './custom-keyword-render.component';
 
 export interface AvailableServiceRow extends ServiceModel {
   locale?: string;
   spatial?: string;
+  description?: string;
+  keywords?: string[];
 }
 
 @Component({
@@ -73,7 +73,9 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
           return {
             ...availableServiceDescr,
             locale: this.locale,
-            spatial: availableServiceDescr.hasInfo.spatial
+            spatial: availableServiceDescr.hasInfo.spatial,
+            description: availableServiceDescr.hasInfo.description.description,
+            keywords:availableServiceDescr.hasInfo.keyword,
           } as AvailableServiceRow;
         })
       );
@@ -144,15 +146,13 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
         title: {
           title: this.serviceLabel,
           type: 'text',
-          width: '25%',
+          width: '15%',
           valuePrepareFunction: (cell, row: AvailableServiceRow) => row.title,
         },
       spatial: {
         title: this.spatialLabel,
         type: 'text',
-        width: '25%',
-
-        valuePrepareFunction: (cell, row: AvailableServiceRow) => row.spatial,
+        width: '15%',
       },
 
       description: {
@@ -160,10 +160,17 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
         editor: {
           type: 'textarea',
         },
-        width: '65%',
-        filter: false,
-        valuePrepareFunction: (cell, row: AvailableServiceRow) => row.hasInfo.description.description,
+        width: '55%',
       },
+      keywords: {
+        title: "Keywords",
+        type: 'custom',
+        width: '5%',
+        valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
+        renderComponent: CustomKeywordRenderComponent,
+      
+      },
+
       status: {
         title: this.statusLabel,
         sort: false,
