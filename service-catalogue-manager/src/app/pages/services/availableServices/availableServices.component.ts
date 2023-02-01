@@ -34,7 +34,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   private actionsLabel: string;
   private detailsLabel: string;
   private statusLabel: string;
-  private spatialLabel: string
+  private spatialLabel: string;
+  private keywords: string;
 
   public settings: Record<string, unknown>;
   private locale: string;
@@ -131,6 +132,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     this.detailsLabel = this.translate.instant('general.services.details') as string;
     this.statusLabel = this.translate.instant('general.services.status') as string;
     this.spatialLabel = this.translate.instant('general.services.location') as string;
+    this.keywords = this.translate.instant('general.services.keywords') as string;
 
     return {
       mode: 'external',
@@ -189,19 +191,19 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
         renderComponent: ServiceInfoRenderComponent,
       },
 
-      actions: {
-        title: this.actionsLabel,
-        sort: false,
-        width: '5%',
-        filter: false,
-        type: 'custom',
-        valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
-        renderComponent: ActionsServiceMenuRenderComponent,
-        onComponentInitFunction: (instance) => {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
-          instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe((updatedServiceData: unknown) => this.ngOnInit());
+        actions: {
+          title: this.actionsLabel,
+          sort: false,
+          width: '5%',
+          filter: false,
+          type: 'custom',
+          valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
+          renderComponent: ActionsServiceMenuRenderComponent,
+          onComponentInitFunction: (instance) => {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
+            instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe((updatedServiceData: unknown) => this.ngOnInit());
+          },
         },
-      },
       },
     };
   }

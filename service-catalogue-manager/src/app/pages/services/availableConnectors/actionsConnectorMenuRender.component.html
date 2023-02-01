@@ -111,7 +111,7 @@
     </nb-card-footer>
   </nb-card>
 </ng-template>
-<ng-template #addOrEditConnector let-data let-ref="dialogRef">
+<ng-template #editConnector let-data let-ref="dialogRef">
   <nb-card class="aci">
     <nb-card-header class="d-flex align-content-center justify-content-between">
       <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
@@ -168,11 +168,6 @@
         </form>
       </h6>
     </nb-card-body>
-    <nb-card-footer *ngIf="selectedFile">
-      <p *ngIf="selectedFile">
-        <b>{{ 'general.editor.selected' | translate }}:&nbsp;</b> <i> {{ selectedFile.name }}</i>
-      </p>
-    </nb-card-footer>
   </nb-card>
 </ng-template>
 

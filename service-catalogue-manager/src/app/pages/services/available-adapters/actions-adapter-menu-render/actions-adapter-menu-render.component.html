@@ -65,7 +65,7 @@
     </nb-card-footer>
   </nb-card>
 </ng-template>
-<ng-template #addOrEditAdapter let-data let-ref="dialogRef">
+<ng-template #editAdapter let-data let-ref="dialogRef">
   <style>
     input {
       text-align: center;
@@ -167,10 +167,5 @@
         </form>
       </h6>
     </nb-card-body>
-    <nb-card-footer *ngIf="selectedFile">
-      <p *ngIf="selectedFile">
-        <b>{{ 'general.editor.selected' | translate }}:&nbsp;</b> <i> {{ selectedFile.name }}</i>
-      </p>
-    </nb-card-footer>
   </nb-card>
 </ng-template>

@@ -36,8 +36,7 @@ export class DialogAddNewPromptComponent implements OnInit {
   selectedFile: File;
   json: Record<string, unknown>;
   selectedItem = 'Json';
-  static formType: string = 'edit';
-  services:ServiceModel[]
+  services: ServiceModel[]
 
 
   constructor(protected ref: NbDialogRef<DialogAddNewPromptComponent>, private toastrService: NbToastrService,
@@ -54,13 +53,13 @@ export class DialogAddNewPromptComponent implements OnInit {
       this.inputItemFormControl = new FormControl();
       this.textareaItemFormControl = new FormControl();
       this.services = await this.availableServiceService.getServices();
-      if (this.value){
-        if (this.value.name ) this.name = this.value.name
-        if (this.value.description )this.description = this.value.description
-        if (this.value.status )this.status = this.value.status
-        if (this.value.connectorId )this.connectorId = this.value.connectorId
-        if (this.value.serviceId )this.serviceId = this.value.serviceId
-        if (this.value.url )this.url = this.value.url
+      if (this.value) {
+        if (this.value.name) this.name = this.value.name
+        if (this.value.description) this.description = this.value.description
+        if (this.value.status) this.status = this.value.status
+        if (this.value.connectorId) this.connectorId = this.value.connectorId
+        if (this.value.serviceId) this.serviceId = this.value.serviceId
+        if (this.value.url) this.url = this.value.url
       }
     }
     catch (error) {
@@ -72,10 +71,6 @@ export class DialogAddNewPromptComponent implements OnInit {
         else if (error.message) console.log("message:<\n", error.message, ">\n")
       }
     }
-  }
-
-  getFormType(): string {
-    return DialogAddNewPromptComponent.formType
   }
 
   onFileChanged(event: Event): void {
@@ -107,10 +102,7 @@ export class DialogAddNewPromptComponent implements OnInit {
 
   confirm() {
     try {
-      if (DialogAddNewPromptComponent.formType == 'edit')
-        this.onEdit()
-      else
-        this.onSubmit()
+      this.onSubmit()
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")

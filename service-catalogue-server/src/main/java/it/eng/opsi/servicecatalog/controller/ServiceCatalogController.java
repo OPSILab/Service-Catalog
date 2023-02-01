@@ -12,21 +12,17 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.github.andrewoma.dexx.collection.internal.adapter.Adapters;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.Operation;
@@ -51,7 +47,6 @@ import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
-import it.eng.opsi.servicecatalog.service.ServiceCatalogServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @OpenAPIDefinition(info = @Info(title = "Service Catalog API", description = "Service Catalog APIs used to manage CRUD for Service Model descriptions.", version = "1.0"), tags = {
@@ -75,8 +70,11 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Returns the list of all registered Service Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ServiceModel>> getServices() throws ServiceNotFoundException {
-
+	public ResponseEntity<List<ServiceModel>> getServices(@Param("name") String name,
+			@Param("location") String location, @Param("keywords") String keywords) throws ServiceNotFoundException {
+		if (name != null || location != null || keywords != null) {
+			return ResponseEntity.ok(catalogService.getServices(name, location, keywords));
+		}
 		return ResponseEntity.ok(catalogService.getServices());
 	}
 
@@ -145,24 +143,40 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			return ResponseEntity.ok(catalogService.getServiceById(decodedServiceIdentifier));
 
 	}
-	
+
 	@Operation(summary = "Get Service Cost  by serviceId.", tags = {
-	"Service Model" }, responses = {
-			@ApiResponse(description = "Get Service Cost  by serviceId.", responseCode = "200") })
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Get Service Cost  by serviceId.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/service/cost", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceCost(@RequestParam("serviceId") String serviceId)
-		throws ServiceNotFoundException, IOException {
-	
-	if (StringUtils.isBlank(serviceId))
-		throw new IllegalArgumentException("Illegal connectorId in input");
-	
-	String decodedServiceIdentifier = java.net.URLDecoder.decode(serviceId,
-			StandardCharsets.UTF_8);
-	
-	return ResponseEntity.ok(catalogService.getCostByServiceId(decodedServiceIdentifier));
+			throws ServiceNotFoundException, IOException {
+
+		if (StringUtils.isBlank(serviceId))
+			throw new IllegalArgumentException("Illegal connectorId in input");
+
+		String decodedServiceIdentifier = java.net.URLDecoder.decode(serviceId,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.getCostByServiceId(decodedServiceIdentifier));
 	}
-	
+
+	@Operation(summary = "Get Service time  by serviceId.", tags = {
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Get Service Time  by serviceId.", responseCode = "200") })
+	@Override
+	@GetMapping(value = "/service/time", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getServiceTime(@RequestParam("serviceId") String serviceId)
+			throws ServiceNotFoundException, IOException {
+
+		if (StringUtils.isBlank(serviceId))
+			throw new IllegalArgumentException("Illegal connectorId in input");
+
+		String decodedServiceIdentifier = java.net.URLDecoder.decode(serviceId,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.getTimeByServiceId(decodedServiceIdentifier));
+	}
 
 	@Operation(summary = "Get Connector description by connectorId.", tags = {
 			"Connector Model" }, responses = {
@@ -245,7 +259,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getServicesbyIds(identifier));
 
 	}
-	
+
 	@Override
 	@Operation(summary = "Get the Service Model descriptions by specified Service Location.", description = "Get the Service Model descriptions by specified Service Location.", tags = {
 			"Service Model" }, responses = {
@@ -257,19 +271,19 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getServicesbyLocation(location));
 
 	}
-	
+
 	@Override
-	@Operation(summary = "Get the Service Model descriptions by specified Service Keyword.", description = "Get the Service Model descriptions by specified Service Keyword.", tags = {
+	@Operation(summary = "Get the Service Model descriptions by specified Service Keywords.", description = "Get the Service Model descriptions by specified Service Keywords.", tags = {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/keyword", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ServiceModel>> getServiceByKeyword(HttpServletRequest request,
-			@RequestParam("keyword") String keyword) throws ServiceNotFoundException, IOException {
+	public ResponseEntity<List<ServiceModel>> getServiceByKeywords(HttpServletRequest request,
+			@RequestParam("keywords") String keywords) throws ServiceNotFoundException, IOException {
 
-		return ResponseEntity.ok(catalogService.getServicesbyKeyword(keyword));
+		return ResponseEntity.ok(catalogService.getServicesbyKeywords(keywords));
 
 	}
-	
+
 	@Override
 	@Operation(summary = "Get the Service Model descriptions by specified Service Title.", description = "Get the Service Model descriptions by specified Service Title.", tags = {
 			"Service Model" }, responses = {
@@ -281,8 +295,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getServicesbyTitle(title));
 
 	}
-	
-	
+
 	@Override
 	@Operation(summary = "Get the Service Model descriptions is handling personal data", description = "Get the Service Model descriptions is handling personal data.", tags = {
 			"Service Model" }, responses = {
@@ -294,8 +307,6 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getServicesIsPersonaDataHandling());
 
 	}
-	
-	
 
 	@Override
 	@Operation(summary = "Get the count of the  Service Model descriptions is personal data handling.", tags = {
@@ -654,5 +665,4 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 		return ResponseEntity.ok(catalogService.getCountByLocation());
 	}
-
 }

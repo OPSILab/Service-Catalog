@@ -2,6 +2,7 @@ package it.eng.opsi.servicecatalog.service;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -11,7 +12,9 @@ import javax.validation.Valid;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Service;
 
 import it.eng.opsi.servicecatalog.exception.AdapterLogNotFoundException;
@@ -24,11 +27,14 @@ import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.jsonld.Serializer;
 import it.eng.opsi.servicecatalog.model.HasInfo;
+import it.eng.opsi.servicecatalog.model.HasServiceInstance;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
+import it.eng.opsi.servicecatalog.model.Endpoint;
+import it.eng.opsi.servicecatalog.model.EndpointConnector;
 import it.eng.opsi.servicecatalog.model.HasCost;
 import it.eng.opsi.servicecatalog.model.ServiceModel.ServiceDescriptionStatus;
 import it.eng.opsi.servicecatalog.repository.ServiceModelRepository;
@@ -44,6 +50,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Autowired
 	private Serializer jsonldSerializer;
+
+	@Autowired
+	MongoTemplate mongoTemplate;
 
 	@Value("${uriBasePath}")
 	private String uriBasePath;
@@ -103,8 +112,19 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	public Connector createConnector(Connector connector) {
-
+		if (connector.getServiceId() != null)
+			this.assignConnector(connector);
 		return connectorModelRepo.save(connector);
+	}
+
+	public void assignConnector(Connector connector) {
+		ServiceModel service = this.getServiceById(connector.getServiceId());
+		HasServiceInstance serviceInstance = new HasServiceInstance();
+		EndpointConnector endpointConnector = new EndpointConnector();
+		endpointConnector.setConnectorId(connector.getConnectorId());
+		serviceInstance.setEndpointConnector(endpointConnector);
+		service.setHasServiceInstance(serviceInstance);
+		this.updateService(connector.getServiceId(), service);
 	}
 
 	@Override
@@ -133,6 +153,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		if (!connectorId.equals(connector.getConnectorId()))
 			throw new ServiceNotEditableException("ConnectorId in the path and the one in the body mismatch.");
+
+		if (connector.getServiceId() != null)
+			this.assignConnector(connector);
 
 		return connectorModelRepo.updateConnector(connectorId, connector).orElseThrow(
 				() -> new ServiceNotFoundException("No Connector description found for Service Id: " + connectorId));
@@ -211,22 +234,23 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		return serviceModelRepo.findByServicebyIds(
 				ids.stream().map(p -> java.net.URLDecoder.decode(p, StandardCharsets.UTF_8)).toArray());
 	}
-	
+
 	@Override
 	public List<ServiceModel> getServicesbyLocation(String location) throws ServiceNotFoundException {
 		return serviceModelRepo.findByServiceLocation(
 				location);
 	}
-	
+
 	@Override
-	public List<ServiceModel> getServicesbyKeyword(String keyword) throws ServiceNotFoundException {
-		return serviceModelRepo.findByServiceKeyword(
-				keyword);
+	public List<ServiceModel> getServicesbyKeywords(String keywords) throws ServiceNotFoundException {
+		List<String> keywordsList = new ArrayList<String>();
+		keywordsList.add(keywords);
+		return serviceModelRepo.findByServiceKeywords(keywords.split(","));
 	}
-	
+
 	@Override
 	public List<ServiceModel> getServicesbyTitle(String title) throws ServiceNotFoundException {
-		
+
 		return serviceModelRepo.findByServiceName(
 				title);
 	}
@@ -361,7 +385,26 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public List<HasCost> getCostByServiceId(String decodedServiceIdentifier) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return serviceModelRepo.findByIdentifier(decodedServiceIdentifier).get().getHasInfo()
+				.getHasCost();
+
+	}
+
+	@Override
+	public List<ServiceModel> getServices(String name, String location, String keywords) {
+		List<ServiceModel> services = new ArrayList<ServiceModel>();
+		if (name != null)
+			services.addAll(serviceModelRepo.findByServiceName(name));
+		if (location != null)
+			services.addAll(serviceModelRepo.findByServiceLocation(location));
+		if (keywords != null)
+			services.addAll(this.getServicesbyKeywords(keywords));
+		return services;
+	}
+
+	@Override
+	public String getTimeByServiceId(String decodedServiceIdentifier) {
+		return serviceModelRepo.findByIdentifier(decodedServiceIdentifier).get().getHasInfo().getProcessingTime();
 	}
 }

@@ -27,7 +27,8 @@ import it.eng.opsi.servicecatalog.model.ConnectorLog;
 
 public interface IServiceCatalogController {
 
-	public abstract ResponseEntity<List<ServiceModel>> getServices() throws ServiceNotFoundException;
+	public abstract ResponseEntity<List<ServiceModel>> getServices(String name, String location, String keywords)
+			throws ServiceNotFoundException;
 
 	public abstract ResponseEntity<List<Adapter>> getAdapters(String type) throws AdapterNotFoundException;
 
@@ -104,12 +105,15 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<List<ServiceModel>> getServiceByLocation(HttpServletRequest request, String location)
 			throws ServiceNotFoundException, IOException;
 
-	public abstract ResponseEntity<List<ServiceModel>> getServiceByKeyword(HttpServletRequest request, String keyword)
+	public abstract ResponseEntity<List<ServiceModel>> getServiceByKeywords(HttpServletRequest request,
+			String keywords)
 			throws ServiceNotFoundException, IOException;
 
 	public abstract ResponseEntity<List<ServiceModel>> getServiceByTitle(HttpServletRequest request, String title)
 			throws ServiceNotFoundException, IOException;
 
 	public abstract ResponseEntity<?> getServiceCost(String serviceId) throws ServiceNotFoundException, IOException;
+
+	public abstract ResponseEntity<?> getServiceTime(String serviceId) throws ServiceNotFoundException, IOException;
 
 }

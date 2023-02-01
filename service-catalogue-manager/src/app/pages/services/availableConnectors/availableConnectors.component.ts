@@ -83,7 +83,6 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
 
   async addNew(): Promise<void> {
     try {
-      DialogAddNewPromptComponent.formType = 'add';
       this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe(() => {
         void console.log("confirm ok", this.ngOnInit());
       });
@@ -97,12 +96,6 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
       else if (error.message) console.log("message:<\n", error.message, ">\n")
       this.errorService.openErrorDialog(error);
     }
-  }
-
-  onEdit(): void {
-    this.dialogService.open(DialogAddNewPromptComponent).onClose.subscribe(() => { }
-    );
-    this.ngOnInit()
   }
 
   loadTableSettings(): Record<string, unknown> {
