@@ -125,11 +125,17 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 				&& service.getHasServiceInstance().getEndpointConnector().getConnectorId() != null
 				&& this.getConnectorByserviceId(connector.getServiceId()) != null)
 			this.removeAssignConnectorFromConnectorCollection(this.getConnectorByserviceId(connector.getServiceId()));
-		HasServiceInstance serviceInstance = new HasServiceInstance();
-		EndpointConnector endpointConnector = new EndpointConnector();
-		endpointConnector.setConnectorId(connector.getConnectorId());
-		serviceInstance.setEndpointConnector(endpointConnector);
-		service.setHasServiceInstance(serviceInstance);
+
+		/*
+		 * HasServiceInstance serviceInstance = new HasServiceInstance();
+		 * EndpointConnector endpointConnector = new EndpointConnector();
+		 * endpointConnector.setConnectorId(connector.getConnectorId());
+		 * serviceInstance.setEndpointConnector(endpointConnector);
+		 * service.setHasServiceInstance(serviceInstance);
+		 */
+
+		service.getHasServiceInstance().getEndpointConnector().setConnectorId(connector.getConnectorId());
+
 		this.updateService(connector.getServiceId(), service);
 	}
 
@@ -175,11 +181,11 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		if (!connectorId.equals(connector.getConnectorId()))
 			throw new ServiceNotEditableException("ConnectorId in the path and the one in the body mismatch.");
 
-		if (connector.getServiceId() != "" && connector.getServiceId() != null)
-			this.assignConnector(connector);
-		else
+		if (connector.getServiceId() != "" && connector.getServiceId() != null) {
 			for (ServiceModel service : serviceModelRepo.findByConnectorID(connectorId))
 				this.removeAssignConnector(service.getIdentifier());
+			this.assignConnector(connector);
+		}
 
 		/*
 		 * if (this.getConnectorByconnectorId(connectorId).getServiceId() != ""
