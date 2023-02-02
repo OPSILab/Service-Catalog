@@ -19,6 +19,7 @@ import { LoginService } from '../../../auth/login/login.service';
 import { ServiceModelStatusEnum } from '../../../model/services/serviceModel';
 import { DialogExportPromptComponent } from '../service-editor/dialog-export-prompt/dialog-export-prompt.component';
 import * as transformJSON from 'json-to-json-transformer/lib/transformJSON.js';
+import { ThisReceiver } from '@angular/compiler';
 @Component({
   template: `
     <button nbButton outline status="basic" [nbContextMenu]="actions" nbContextMenuTag="service-context-menu{{ value.identifier }}">
@@ -330,7 +331,9 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
      //console.log(newObj);
      //TO-DO service registry invocation
      // this.value = (await this.availableServicesService.registerService(this.value.identifier)) as AvailableServiceRow;
-      this.showToast('primary', this.translate.instant('general.services.service_registered_message', { serviceName: this.value.title }), '');
+     this.value.status=ServiceModelStatusEnum.Completed;
+     await this.availableServicesService.registerService(this.value, this.value.identifier); 
+     this.showToast('primary', this.translate.instant('general.services.service_registered_message', { serviceName: this.value.title }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -343,7 +346,8 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
 
   onDeRegisterService = async (): Promise<void> => {
     try {
-      await this.availableServicesService.deregisterService(this.value.identifier);
+      this.value.status=ServiceModelStatusEnum.UnderDevelopment;
+      await this.availableServicesService.deregisterService(this.value, this.value.identifier);
 
       this.showToast('primary', this.translate.instant('general.services.service_deregistered_message', { serviceName: this.value.title }), '');
       //this.value.hasServiceInstance.connector.publicKey = null;//G: property publickey does not exists on type connector anymore
