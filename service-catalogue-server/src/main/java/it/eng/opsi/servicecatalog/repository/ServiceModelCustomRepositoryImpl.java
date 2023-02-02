@@ -42,4 +42,13 @@ public class ServiceModelCustomRepositoryImpl implements ServiceModelCustomRepos
 				ServiceModel.class));
 		return services;
 	}
+
+	@Override
+	public List<ServiceModel> findByServiceLocation(String spatial) {
+
+		List<ServiceModel> services = new ArrayList<ServiceModel>();
+		services.addAll(template.find(query(where("hasInfo.spatial").is(spatial)),
+				ServiceModel.class));
+		return services;
+	}
 }
