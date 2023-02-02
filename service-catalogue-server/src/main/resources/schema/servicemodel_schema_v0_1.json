@@ -305,6 +305,9 @@
 						},
 						"hoursAvailable": {
 							"type": "string"
+						},
+						"url": {
+							"type": "string"
 						}
 					}
 				},
@@ -324,6 +327,12 @@
 							},
 							"hoursAvailable": {
 								"type": "string"
+							},
+							"hasInput": {
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
 							}
 						},
 						"required": [

@@ -1,17 +1,23 @@
 
 package it.eng.opsi.servicecatalog.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "identifier",
     "type",
     "openingHours",
-    "hoursAvailable"
+    "hoursAvailable",
+    "hasInput"
 })
 public class HasChannel {
 
@@ -41,6 +47,9 @@ public class HasChannel {
     private String openingHours;
     @JsonProperty("hoursAvailable")
     private String hoursAvailable;
+    @JsonProperty("hasInput")
+    @Valid
+    private List<String> hasInput = new ArrayList<String>();
 
     /**
      * No args constructor for use in serialization
@@ -55,13 +64,15 @@ public class HasChannel {
      * @param hoursAvailable
      * @param openingHours
      * @param type
+     * @param hasInput
      */
-    public HasChannel(String identifier, String type, String openingHours, String hoursAvailable) {
+    public HasChannel(String identifier, String type, String openingHours, String hoursAvailable, List<String> hasInput) {
         super();
         this.identifier = identifier;
         this.type = type;
         this.openingHours = openingHours;
         this.hoursAvailable = hoursAvailable;
+        this.hasInput = hasInput;
     }
 
     /**
@@ -134,6 +145,16 @@ public class HasChannel {
         this.hoursAvailable = hoursAvailable;
     }
 
+    @JsonProperty("hasInput")
+    public List<String> getHasInput() {
+        return hasInput;
+    }
+
+    @JsonProperty("hasInput")
+    public void setHasInput(List<String> hasInput) {
+        this.hasInput = hasInput;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -154,6 +175,10 @@ public class HasChannel {
         sb.append('=');
         sb.append(((this.hoursAvailable == null)?"<null>":this.hoursAvailable));
         sb.append(',');
+        sb.append("hasInput");
+        sb.append('=');
+        sb.append(((this.hasInput == null)?"<null>":this.hasInput));
+        sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
         } else {
@@ -169,6 +194,7 @@ public class HasChannel {
         result = ((result* 31)+((this.hoursAvailable == null)? 0 :this.hoursAvailable.hashCode()));
         result = ((result* 31)+((this.openingHours == null)? 0 :this.openingHours.hashCode()));
         result = ((result* 31)+((this.type == null)? 0 :this.type.hashCode()));
+        result = ((result* 31)+((this.hasInput == null)? 0 :this.hasInput.hashCode()));
         return result;
     }
 
@@ -181,7 +207,7 @@ public class HasChannel {
             return false;
         }
         HasChannel rhs = ((HasChannel) other);
-        return (((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.hoursAvailable == rhs.hoursAvailable)||((this.hoursAvailable!= null)&&this.hoursAvailable.equals(rhs.hoursAvailable))))&&((this.openingHours == rhs.openingHours)||((this.openingHours!= null)&&this.openingHours.equals(rhs.openingHours))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))));
+        return ((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.hoursAvailable == rhs.hoursAvailable)||((this.hoursAvailable!= null)&&this.hoursAvailable.equals(rhs.hoursAvailable))))&&((this.openingHours == rhs.openingHours)||((this.openingHours!= null)&&this.openingHours.equals(rhs.openingHours))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.hasInput == rhs.hasInput)||((this.hasInput!= null)&&this.hasInput.equals(rhs.hasInput))));
     }
 
 }

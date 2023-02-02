@@ -18,5 +18,6 @@ export interface HasContactPoint {
     identifier?: string;
     openingHours?: string;
     hoursAvailable?: string;
+    url?:string;
 }
 

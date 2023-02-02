@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "email",
@@ -12,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "telephone",
     "identifier",
     "openingHours",
-    "hoursAvailable"
+    "hoursAvailable",
+    "url"
 })
 public class HasContactPoint {
 
@@ -28,6 +30,8 @@ public class HasContactPoint {
     private String openingHours;
     @JsonProperty("hoursAvailable")
     private String hoursAvailable;
+    @JsonProperty("url")
+    private String url;
 
     /**
      * No args constructor for use in serialization
@@ -44,8 +48,9 @@ public class HasContactPoint {
      * @param telephone
      * @param openingHours
      * @param email
+     * @param url
      */
-    public HasContactPoint(String email, String faxNumber, String telephone, String identifier, String openingHours, String hoursAvailable) {
+    public HasContactPoint(String email, String faxNumber, String telephone, String identifier, String openingHours, String hoursAvailable, String url) {
         super();
         this.email = email;
         this.faxNumber = faxNumber;
@@ -53,6 +58,7 @@ public class HasContactPoint {
         this.identifier = identifier;
         this.openingHours = openingHours;
         this.hoursAvailable = hoursAvailable;
+        this.url = url;
     }
 
     @JsonProperty("email")
@@ -115,6 +121,16 @@ public class HasContactPoint {
         this.hoursAvailable = hoursAvailable;
     }
 
+    @JsonProperty("url")
+    public String getUrl() {
+        return url;
+    }
+
+    @JsonProperty("url")
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -143,6 +159,10 @@ public class HasContactPoint {
         sb.append('=');
         sb.append(((this.hoursAvailable == null)?"<null>":this.hoursAvailable));
         sb.append(',');
+        sb.append("url");
+        sb.append('=');
+        sb.append(((this.url == null)?"<null>":this.url));
+        sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
         } else {
@@ -160,6 +180,7 @@ public class HasContactPoint {
         result = ((result* 31)+((this.telephone == null)? 0 :this.telephone.hashCode()));
         result = ((result* 31)+((this.openingHours == null)? 0 :this.openingHours.hashCode()));
         result = ((result* 31)+((this.email == null)? 0 :this.email.hashCode()));
+        result = ((result* 31)+((this.url == null)? 0 :this.url.hashCode()));
         return result;
     }
 
@@ -172,7 +193,7 @@ public class HasContactPoint {
             return false;
         }
         HasContactPoint rhs = ((HasContactPoint) other);
-        return (((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.faxNumber == rhs.faxNumber)||((this.faxNumber!= null)&&this.faxNumber.equals(rhs.faxNumber))))&&((this.hoursAvailable == rhs.hoursAvailable)||((this.hoursAvailable!= null)&&this.hoursAvailable.equals(rhs.hoursAvailable))))&&((this.telephone == rhs.telephone)||((this.telephone!= null)&&this.telephone.equals(rhs.telephone))))&&((this.openingHours == rhs.openingHours)||((this.openingHours!= null)&&this.openingHours.equals(rhs.openingHours))))&&((this.email == rhs.email)||((this.email!= null)&&this.email.equals(rhs.email))));
+        return ((((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.faxNumber == rhs.faxNumber)||((this.faxNumber!= null)&&this.faxNumber.equals(rhs.faxNumber))))&&((this.hoursAvailable == rhs.hoursAvailable)||((this.hoursAvailable!= null)&&this.hoursAvailable.equals(rhs.hoursAvailable))))&&((this.telephone == rhs.telephone)||((this.telephone!= null)&&this.telephone.equals(rhs.telephone))))&&((this.openingHours == rhs.openingHours)||((this.openingHours!= null)&&this.openingHours.equals(rhs.openingHours))))&&((this.email == rhs.email)||((this.email!= null)&&this.email.equals(rhs.email))))&&((this.url == rhs.url)||((this.url!= null)&&this.url.equals(rhs.url))));
     }
 
 }

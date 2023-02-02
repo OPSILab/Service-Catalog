@@ -298,6 +298,9 @@
         "telephone": {
           "type": "string"
         },
+        "url": {
+          "type": "string"
+        },
         "identifier": {
           "type": "string"
         },
@@ -341,6 +344,25 @@
             "type": "string",
             "title": "Opening Hours restriction",
             "description": "the opening hours restriction of a channel"
+          },
+          "hasInput": {
+            "title": "Has Input",
+            "type": "array",
+            "format": "tabs",
+            "items": {
+              "type": "string",
+              "title": "Input",
+              "description": "id/uri of registered input ",
+              "watch": {
+                "possible_inputs": "root.hasInfo.hasInput"
+              },
+              "enumSource": [
+                {
+                  "source": "possible_inputs",
+                  "value": "{{item.identifier}}"
+                }
+              ]
+            }
           }
         }
       }

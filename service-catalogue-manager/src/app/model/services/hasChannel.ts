@@ -16,5 +16,6 @@ export interface HasChannel {
     type: string;
     openingHours: string;
     hoursAvailable?: string;
+    hasInput?:string[];
 }
 
