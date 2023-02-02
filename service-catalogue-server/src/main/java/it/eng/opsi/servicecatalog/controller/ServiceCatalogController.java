@@ -149,7 +149,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Get Service Cost  by serviceId.", responseCode = "200") })
 	@Override
-	@GetMapping(value = "/service/cost", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/services/cost", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceCost(@RequestParam("serviceId") String serviceId)
 			throws ServiceNotFoundException, IOException {
 
@@ -166,7 +166,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Get Service Time  by serviceId.", responseCode = "200") })
 	@Override
-	@GetMapping(value = "/service/time", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/services/time", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceTime(@RequestParam("serviceId") String serviceId)
 			throws ServiceNotFoundException, IOException {
 
