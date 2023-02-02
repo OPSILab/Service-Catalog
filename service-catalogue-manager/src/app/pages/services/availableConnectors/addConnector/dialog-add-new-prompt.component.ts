@@ -29,7 +29,7 @@ export class DialogAddNewPromptComponent implements OnInit {
   url: string;
   status: string = "inactive";
   connectorId: string;
-  serviceId: string;
+  serviceId: string// = "";
   textareaItemNgModel;
   inputItemFormControl;
   textareaItemFormControl;

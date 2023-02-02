@@ -41,6 +41,8 @@ public interface IServiceCatalogService {
 
       public abstract Connector getConnectorByconnectorId(String connectorId) throws ConnectorNotFoundException;
 
+      public abstract Connector getConnectorByserviceId(String connectorId) throws ConnectorNotFoundException;
+
       public abstract HasInfo getHasInfoById(String serviceId) throws ServiceNotFoundException;
 
       public abstract String getHasInfoByIdJsonLd(String serviceId) throws ServiceNotFoundException, IOException;
@@ -107,7 +109,7 @@ public interface IServiceCatalogService {
 
       public abstract List<ServiceModel> getServicesbyLocation(String location) throws ServiceNotFoundException;
 
-      public abstract List<ServiceModel> getServicesbyKeywords(String keywords) throws ServiceNotFoundException;
+      public abstract List<ServiceModel> getServicesbyKeywords(String[] keywords) throws ServiceNotFoundException;
 
       public abstract List<ServiceModel> getServicesbyTitle(String title) throws ServiceNotFoundException;
 
@@ -115,7 +117,7 @@ public interface IServiceCatalogService {
 
       public abstract List<HasCost> getCostByServiceId(String decodedServiceIdentifier);
 
-      public abstract List<ServiceModel> getServices(String name, String location, String keywords);
+      public abstract List<ServiceModel> getServices(String name, String location, String[] keywords);
 
       public abstract Object getTimeByServiceId(String decodedServiceIdentifier);
 

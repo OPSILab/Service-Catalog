@@ -112,13 +112,18 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	public Connector createConnector(Connector connector) {
-		if (connector.getServiceId() != null)
+		System.out.println(connector.getServiceId());
+		if (connector.getServiceId() != "" && connector.getServiceId() != null)
 			this.assignConnector(connector);
+
 		return connectorModelRepo.save(connector);
 	}
 
 	public void assignConnector(Connector connector) {
 		ServiceModel service = this.getServiceById(connector.getServiceId());
+		if (service.getHasServiceInstance().getEndpointConnector().getConnectorId() != ""
+				&& service.getHasServiceInstance().getEndpointConnector().getConnectorId() != null)
+			this.removeAssignConnectorFromConnectorCollection(this.getConnectorByserviceId(connector.getServiceId()));
 		HasServiceInstance serviceInstance = new HasServiceInstance();
 		EndpointConnector endpointConnector = new EndpointConnector();
 		endpointConnector.setConnectorId(connector.getConnectorId());
@@ -144,6 +149,22 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	}
 
+	public void removeAssignConnectorFromConnectorCollection(Connector connectorOld) {
+		Connector connector = connectorOld;
+		connector.setServiceId("");
+		this.updateConnector(connector.getConnectorId(), connector);
+	}
+
+	public void removeAssignConnector(String serviceId) {
+		ServiceModel service = this.getServiceById(serviceId);
+		HasServiceInstance serviceInstance = new HasServiceInstance();
+		EndpointConnector endpointConnector = new EndpointConnector();
+		endpointConnector.setConnectorId("");
+		serviceInstance.setEndpointConnector(endpointConnector);
+		service.setHasServiceInstance(serviceInstance);
+		this.updateService(serviceId, service);
+	}
+
 	@Override
 	public Connector updateConnector(String connectorId, Connector connector)
 			throws ConnectorNotFoundException, ConnectorNotEditableException {
@@ -154,13 +175,14 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		if (!connectorId.equals(connector.getConnectorId()))
 			throw new ServiceNotEditableException("ConnectorId in the path and the one in the body mismatch.");
 
-		if (connector.getServiceId() != null)
+		if (connector.getServiceId() != "" && connector.getServiceId() != null)
 			this.assignConnector(connector);
+		else if (this.getConnectorByconnectorId(connectorId).getServiceId() != ""
+				&& this.getConnectorByconnectorId(connectorId).getServiceId() != null)
+			this.removeAssignConnector(this.getConnectorByconnectorId(connectorId).getServiceId());
 
 		return connectorModelRepo.updateConnector(connectorId, connector).orElseThrow(
 				() -> new ServiceNotFoundException("No Connector description found for Service Id: " + connectorId));
-
-		// G
 	}
 
 	@Override
@@ -242,10 +264,14 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public List<ServiceModel> getServicesbyKeywords(String keywords) throws ServiceNotFoundException {
-		List<String> keywordsList = new ArrayList<String>();
-		keywordsList.add(keywords);
-		return serviceModelRepo.findByServiceKeywords(keywords.split(","));
+	public List<ServiceModel> getServicesbyKeywords(String[] keywords) throws ServiceNotFoundException {
+
+		/*
+		 * List<String> keywordsList = new ArrayList<String>();
+		 * keywordsList.add(keywords);
+		 * return serviceModelRepo.findByServiceKeywords(keywords.split(","));
+		 */
+		return serviceModelRepo.findByServiceKeywords(keywords);
 	}
 
 	@Override
@@ -276,6 +302,12 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	public Connector getConnectorByconnectorId(String connectorId) throws ConnectorNotFoundException {
 
 		return connectorModelRepo.findByconnectorId(connectorId);
+	}
+
+	@Override
+	public Connector getConnectorByserviceId(String serviceId) throws ConnectorNotFoundException {
+
+		return connectorModelRepo.findByserviceId(serviceId);
 	}
 
 	@Override
@@ -392,7 +424,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public List<ServiceModel> getServices(String name, String location, String keywords) {
+	public List<ServiceModel> getServices(String name, String location, String[] keywords) {
 		List<ServiceModel> services = new ArrayList<ServiceModel>();
 		if (name != null)
 			services.addAll(serviceModelRepo.findByServiceName(name));
