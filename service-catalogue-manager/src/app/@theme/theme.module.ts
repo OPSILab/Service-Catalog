@@ -22,7 +22,9 @@ import { DEFAULT_THEME } from './styles/theme.default';
 import { ACROSS_THEME } from './styles/theme.across';
 import { CORPORATE_THEME } from './styles/theme.corporate';
 import { DARK_THEME } from './styles/theme.dark';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { createTranslateLoader } from '../app.module';
+import { HttpClient } from '@angular/common/http';
 
 const NB_MODULES = [
   NbLayoutModule,
@@ -49,7 +51,15 @@ const COMPONENTS = [
 const PIPES = [CapitalizePipe, PluralPipe, RoundPipe, TimingPipe, NumberWithCommasPipe];
 
 @NgModule({
-  imports: [CommonModule, ...NB_MODULES, TranslateModule.forChild({})],
+  imports: [CommonModule, ...NB_MODULES, 
+    
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
+    })],
   exports: [CommonModule, ...PIPES, ...COMPONENTS],
   declarations: [...COMPONENTS, ...PIPES],
 })

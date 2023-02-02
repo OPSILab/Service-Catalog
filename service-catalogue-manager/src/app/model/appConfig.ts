@@ -25,4 +25,5 @@ export interface Auth {
 
 export interface I18n {
   locale: string;
+  languages: string[];
 }

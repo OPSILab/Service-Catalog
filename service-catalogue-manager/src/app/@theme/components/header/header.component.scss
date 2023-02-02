@@ -6,6 +6,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
+  border:none;
 
 
   .logo-container {
@@ -20,6 +21,8 @@
     align-content: center;
   }
 
+  
+
   nb-user {
     cursor: pointer;
   }
@@ -30,6 +33,10 @@
 
   ::ng-deep nb-search button {
     padding: 0 !important;
+  }
+
+  .lang-select{
+    border:none;
   }
 
   .header-container {
@@ -75,7 +82,9 @@
   }
 
   @include media-breakpoint-down(is) {
-    nb-select,
+    nb-select {
+      display: none;
+     }
     .direction-switcher {
       display: none;
     }

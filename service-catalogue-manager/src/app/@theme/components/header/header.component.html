@@ -5,25 +5,24 @@
     </a>
     <a class="logo" href="#" (click)="navigateHome()"><img src="assets\images\app\across-logo.png" style="height: 64px" /></a>
   </div>
-  <!--<nb-select [selected]="currentTheme" (selectedChange)="changeTheme($event)" status="primary">
-    <nb-option *ngFor="let theme of themes" [value]="theme.value"> {{ theme.name }}</nb-option>
-  </nb-select>-->
-  <!--<ngx-layout-direction-switcher class="direction-switcher"></ngx-layout-direction-switcher>-->
-</div>
+ </div>
 
 <div class="header-container">
+ 
+    <!-- <nb-icon nbPrefix icon="globe-outline"></nb-icon> -->
+    <nb-select placeholder="Language" (selectedChange)="changeLang($event)" [selected]="userLanguage" status="primary">
+      <nb-option *ngFor="let lang of languages" [value]="lang.lan" class="d-flex flex-row align-items-center lang-select">
+        <nb-user size="small"
+         [name]="lang.lan | uppercase"
+         [picture]="lang.picture"
+         showTitle="false">
+        </nb-user>
+      </nb-option>
+    </nb-select>
+ 
   <nb-actions size="small">
-    <!--
-    <nb-action class="control-item">
-      <nb-search type="rotate-layout"></nb-search>
-      </nb-action>
-          -->
-    <!--<nb-action class="control-item" icon="email-outline" badgeText="1"
-                 badgeStatus="danger" badgePosition="bottom right">
-
-    </nb-action>-->
-
-    <nb-action class="control-item" icon="bell-outline" badgeText="1" badgeStatus="warning" badgePosition="bottom right"></nb-action>
+    
+    <!--<nb-action class="control-item" icon="bell-outline" badgeText="1" badgeStatus="warning" badgePosition="bottom right"></nb-action>-->
     <nb-action class="user-action">
       <nb-user
         [nbContextMenu]="loggedUserMenu"
