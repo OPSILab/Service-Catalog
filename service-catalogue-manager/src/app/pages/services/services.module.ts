@@ -29,15 +29,14 @@ import {
 } from '@nebular/theme';
 import { ActionsServiceMenuRenderComponent } from './availableServices/actionsServiceMenuRender.component';
 import { ActionsConnectorMenuRenderComponent } from './availableConnectors/actionsConnectorMenuRender.component';
-//import { FormsModule } from '@angular/forms';
 import { AvailableConnectorsService } from './availableConnectors/availableConnectors.service';
-
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { AvailableAdaptersComponent } from './available-adapters/available-adapters.component';
 import { AddAdapterComponent } from './available-adapters/add-adapter/add-adapter.component';
 import { ActionsAdapterMenuRenderComponent } from './available-adapters/actions-adapter-menu-render/actions-adapter-menu-render.component';
 import { AdapterInfoRenderComponent } from './available-adapters/adapter-info-render/adapter-info-render.component';
 import { CustomKeywordRenderComponent } from './availableServices/custom-keyword-render.component';
+import { CustomStatusRenderComponent } from './availableServices/custom-status-render.component';
 
 @NgModule({
   imports: [
@@ -77,7 +76,8 @@ import { CustomKeywordRenderComponent } from './availableServices/custom-keyword
     AvailableAdaptersComponent,
     ActionsAdapterMenuRenderComponent,
     AdapterInfoRenderComponent,
-    CustomKeywordRenderComponent
+    CustomKeywordRenderComponent,
+    CustomStatusRenderComponent,
   ],
   providers: [AvailableServicesService, AvailableConnectorsService],
   entryComponents: [

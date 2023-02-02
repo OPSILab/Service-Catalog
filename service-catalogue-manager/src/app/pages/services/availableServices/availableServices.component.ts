@@ -15,6 +15,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { LoginService } from '../../../auth/login/login.service';
 import { CustomKeywordRenderComponent } from './custom-keyword-render.component';
+import { CustomStatusRenderComponent } from './custom-status-render.component';
+
+
 
 export interface AvailableServiceRow extends ServiceModel {
   locale?: string;
@@ -98,27 +101,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
       });
   }
 
-  /* private getLocalizedPurposesDescription(availableServiceDescr: ServiceModel): IsPersonalDataHandling[] {
-    return availableServiceDescr.isPersonalDataHandling.map((IsPersonalDataHandling) => {
-      return {
-        ...IsPersonalDataHandling,
-        description: IsPersonalDataHandling.description.reduce((filtered: Description2[], description: Description2) => {
-          if (this.locale !== 'en' && description.locale === this.locale) filtered = [description, ...filtered];
-          else if (description.locale === 'en') filtered = [...filtered, description];
-          return filtered;
-        }, []),
-      };
-    });
-  }*/
-
-  /*private getLocalizedDescription(availableServiceDescr: ServiceModel): Description[] {
-    return availableServiceDescr.hasInfo.description.reduce((filtered: Description[], description: Description) => {
-      if (this.locale !== 'en' && description.locale === this.locale) filtered = [description, ...filtered];
-      else if (description.locale === 'en') filtered = [...filtered, description];
-      return filtered;
-    }, []);
-  }*/
-
+ 
   ngOnDestroy(): void {
     console.log('ngOnDestroy');
     this.unsubscribe.next();
@@ -178,8 +161,9 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
         sort: false,
         filter: false,
         width: '5%',
-        type: 'text',
+        type: 'custom',
         valuePrepareFunction: (cell, row: AvailableServiceRow) => row.status,
+        renderComponent: CustomStatusRenderComponent,
       },
       details: {
         title: this.detailsLabel,
