@@ -11,4 +11,6 @@ public interface ServiceModelCustomRepository {
 
 	public List<ServiceModel> findByServiceKeywords(String[] keywords);
 
+	public List<ServiceModel> findByConnectorID(String connectorId);
+
 }

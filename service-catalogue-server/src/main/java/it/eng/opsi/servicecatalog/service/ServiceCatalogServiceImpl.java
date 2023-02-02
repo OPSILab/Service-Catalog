@@ -122,7 +122,8 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	public void assignConnector(Connector connector) {
 		ServiceModel service = this.getServiceById(connector.getServiceId());
 		if (service.getHasServiceInstance().getEndpointConnector().getConnectorId() != ""
-				&& service.getHasServiceInstance().getEndpointConnector().getConnectorId() != null)
+				&& service.getHasServiceInstance().getEndpointConnector().getConnectorId() != null
+				&& this.getConnectorByserviceId(connector.getServiceId()) != null)
 			this.removeAssignConnectorFromConnectorCollection(this.getConnectorByserviceId(connector.getServiceId()));
 		HasServiceInstance serviceInstance = new HasServiceInstance();
 		EndpointConnector endpointConnector = new EndpointConnector();
@@ -149,8 +150,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	}
 
-	public void removeAssignConnectorFromConnectorCollection(Connector connectorOld) {
-		Connector connector = connectorOld;
+	public void removeAssignConnectorFromConnectorCollection(Connector connector) {
 		connector.setServiceId("");
 		this.updateConnector(connector.getConnectorId(), connector);
 	}
@@ -177,9 +177,16 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		if (connector.getServiceId() != "" && connector.getServiceId() != null)
 			this.assignConnector(connector);
-		else if (this.getConnectorByconnectorId(connectorId).getServiceId() != ""
-				&& this.getConnectorByconnectorId(connectorId).getServiceId() != null)
-			this.removeAssignConnector(this.getConnectorByconnectorId(connectorId).getServiceId());
+		else
+			for (ServiceModel service : serviceModelRepo.findByConnectorID(connectorId))
+				this.removeAssignConnector(service.getIdentifier());
+
+		/*
+		 * if (this.getConnectorByconnectorId(connectorId).getServiceId() != ""
+		 * && this.getConnectorByconnectorId(connectorId).getServiceId() != null)
+		 * this.removeAssignConnector(this.getConnectorByconnectorId(connectorId).
+		 * getServiceId());
+		 */
 
 		return connectorModelRepo.updateConnector(connectorId, connector).orElseThrow(
 				() -> new ServiceNotFoundException("No Connector description found for Service Id: " + connectorId));

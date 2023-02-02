@@ -34,4 +34,12 @@ public class ServiceModelCustomRepositoryImpl implements ServiceModelCustomRepos
 		return services;
 	}
 
+	@Override
+	public List<ServiceModel> findByConnectorID(String connectorId) {
+
+		List<ServiceModel> services = new ArrayList<ServiceModel>();
+		services.addAll(template.find(query(where("hasServiceInstance.endpointConnector.connectorId").is(connectorId)),
+				ServiceModel.class));
+		return services;
+	}
 }
