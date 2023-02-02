@@ -181,11 +181,10 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		if (!connectorId.equals(connector.getConnectorId()))
 			throw new ServiceNotEditableException("ConnectorId in the path and the one in the body mismatch.");
 
-		if (connector.getServiceId() != "" && connector.getServiceId() != null) {
-			for (ServiceModel service : serviceModelRepo.findByConnectorID(connectorId))
-				this.removeAssignConnector(service.getIdentifier());
+		for (ServiceModel service : serviceModelRepo.findByConnectorID(connectorId))
+			this.removeAssignConnector(service.getIdentifier());
+		if (connector.getServiceId() != "" && connector.getServiceId() != null)
 			this.assignConnector(connector);
-		}
 
 		/*
 		 * if (this.getConnectorByconnectorId(connectorId).getServiceId() != ""

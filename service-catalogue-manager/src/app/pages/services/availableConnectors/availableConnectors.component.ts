@@ -87,7 +87,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
         void console.log("confirm ok", this.ngOnInit());
       });
       this.updateResult.emit(this.value);
-      this.ngOnInit()
+      //this.ngOnInit()
     }
     catch (error) {
       console.log("error in addNew")
