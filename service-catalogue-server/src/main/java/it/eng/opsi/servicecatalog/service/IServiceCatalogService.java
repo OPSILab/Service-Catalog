@@ -41,6 +41,8 @@ public interface IServiceCatalogService {
 
       public abstract Connector getConnectorByconnectorId(String connectorId) throws ConnectorNotFoundException;
 
+      public abstract Connector getConnectorByserviceId(String connectorId) throws ConnectorNotFoundException;
+
       public abstract HasInfo getHasInfoById(String serviceId) throws ServiceNotFoundException;
 
       public abstract String getHasInfoByIdJsonLd(String serviceId) throws ServiceNotFoundException, IOException;

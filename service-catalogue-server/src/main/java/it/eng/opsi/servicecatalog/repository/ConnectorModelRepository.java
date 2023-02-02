@@ -12,6 +12,8 @@ public interface ConnectorModelRepository extends MongoRepository<Connector, Str
 
 	public Connector findByconnectorId(String connectorId);
 
+	public Connector findByserviceId(String connectorId);
+
 	@Query(value = "{ 'connectorId': { $in: ?0}}")
 	public List<Connector> findConnectorByconnectorIds(Object[] ids);
 
