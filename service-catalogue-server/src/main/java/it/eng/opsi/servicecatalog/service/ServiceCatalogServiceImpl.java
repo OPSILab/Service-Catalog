@@ -264,10 +264,14 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public List<ServiceModel> getServicesbyKeywords(String keywords) throws ServiceNotFoundException {
-		List<String> keywordsList = new ArrayList<String>();
-		keywordsList.add(keywords);
-		return serviceModelRepo.findByServiceKeywords(keywords.split(","));
+	public List<ServiceModel> getServicesbyKeywords(String[] keywords) throws ServiceNotFoundException {
+
+		/*
+		 * List<String> keywordsList = new ArrayList<String>();
+		 * keywordsList.add(keywords);
+		 * return serviceModelRepo.findByServiceKeywords(keywords.split(","));
+		 */
+		return serviceModelRepo.findByServiceKeywords(keywords);
 	}
 
 	@Override
@@ -420,7 +424,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public List<ServiceModel> getServices(String name, String location, String keywords) {
+	public List<ServiceModel> getServices(String name, String location, String[] keywords) {
 		List<ServiceModel> services = new ArrayList<ServiceModel>();
 		if (name != null)
 			services.addAll(serviceModelRepo.findByServiceName(name));

@@ -70,8 +70,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			"Service Model" }, responses = {
 					@ApiResponse(description = "Returns the list of all registered Service Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ServiceModel>> getServices(@Param("name") String name,
-			@Param("location") String location, @Param("keywords") String keywords) throws ServiceNotFoundException {
+	public ResponseEntity<List<ServiceModel>> getServices(@RequestParam(required = false) String name,
+			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords)
+			throws ServiceNotFoundException {
 		if (name != null || location != null || keywords != null) {
 			return ResponseEntity.ok(catalogService.getServices(name, location, keywords));
 		}
@@ -278,7 +279,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/keyword", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ServiceModel>> getServiceByKeywords(HttpServletRequest request,
-			@RequestParam("keywords") String keywords) throws ServiceNotFoundException, IOException {
+			@RequestParam("keywords") String[] keywords) throws ServiceNotFoundException, IOException {
 
 		return ResponseEntity.ok(catalogService.getServicesbyKeywords(keywords));
 
