@@ -67,7 +67,7 @@ export class DialogAddNewPromptComponent implements OnInit {
         console.log("Add-form mode")
       else {
         console.log("error:<\n", error, ">\n")
-        if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+        if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
         else if (error.message) console.log("message:<\n", error.message, ">\n")
       }
     }
@@ -94,7 +94,7 @@ export class DialogAddNewPromptComponent implements OnInit {
       };
     } catch (error) {
       console.log("error:<\n", error, ">\n")
-      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
       else if (error.message) console.log("message:<\n", error.message, ">\n")
       this.errorService.openErrorDialog(error);
     }
@@ -106,7 +106,7 @@ export class DialogAddNewPromptComponent implements OnInit {
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
-      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
       else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
   }
