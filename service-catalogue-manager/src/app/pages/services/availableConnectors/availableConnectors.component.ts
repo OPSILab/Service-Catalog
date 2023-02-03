@@ -12,6 +12,7 @@ import { DialogAddNewPromptComponent } from './addConnector/dialog-add-new-promp
 import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
+import { ConnectorStatusRenderComponent } from './custom-status-render.component';
 
 @Component({
   selector: 'available-connectors-smart-table',
@@ -139,7 +140,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
           type: 'custom',
           valuePrepareFunction: (cell, row: ConnectorEntry) => row,
           renderComponent: ConnectorInfoRenderComponent,
-        },
+        },/*
         status: {
           title: this.statusLabel,
           filter: false,
@@ -147,6 +148,15 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
           width: '5%',
           type: 'text',
           valuePrepareFunction: (cell, row: ConnectorEntry) => row.status,
+        },*/
+        status: {
+          title: this.statusLabel,
+          sort: false,
+          filter: false,
+          width: '5%',
+          type: 'custom',
+          valuePrepareFunction: (cell, row: ConnectorEntry) => row.status,
+          renderComponent: ConnectorStatusRenderComponent,
         },
         actions: {
           title: this.actionsLabel,
