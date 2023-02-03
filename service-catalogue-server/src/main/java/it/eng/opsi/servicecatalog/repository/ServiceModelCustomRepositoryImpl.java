@@ -27,21 +27,23 @@ public class ServiceModelCustomRepositoryImpl implements ServiceModelCustomRepos
 
 	}
 
-	@Override
-	public List<ServiceModel> findByServiceKeywords(String[] keywords) {
-
-		List<ServiceModel> services = new ArrayList<ServiceModel>();
-		for (String keyword : keywords)
-			services.addAll(template.find(query(where("hasInfo.keyword").is(keyword)),
-					ServiceModel.class));
-
-		Set<ServiceModel> hashSetTemp = new HashSet<ServiceModel>();
-		hashSetTemp.addAll(services);
-		services.clear();
-		services.addAll(hashSetTemp);
-
-		return services;
-	}
+	/*
+	 * @Override
+	 * public List<ServiceModel> findByServiceKeywords(String[] keywords) {
+	 * 
+	 * List<ServiceModel> services = new ArrayList<ServiceModel>();
+	 * for (String keyword : keywords)
+	 * services.addAll(template.find(query(where("hasInfo.keyword").is(keyword)),
+	 * ServiceModel.class));
+	 * 
+	 * Set<ServiceModel> hashSetTemp = new HashSet<ServiceModel>();
+	 * hashSetTemp.addAll(services);
+	 * services.clear();
+	 * services.addAll(hashSetTemp);
+	 * 
+	 * return services;
+	 * }
+	 */
 
 	@Override
 	public List<ServiceModel> findByConnectorID(String connectorId) {

@@ -280,12 +280,13 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public List<ServiceModel> getServicesbyKeywords(String[] keywords) throws ServiceNotFoundException {
 
-		/*
-		 * List<String> keywordsList = new ArrayList<String>();
-		 * keywordsList.add(keywords);
-		 * return serviceModelRepo.findByServiceKeywords(keywords.split(","));
-		 */
-		return serviceModelRepo.findByServiceKeywords(keywords);
+		List<ServiceModel> services = new ArrayList<ServiceModel>();
+		for (String keyword : keywords)
+			services.addAll(serviceModelRepo.findByServiceKeywords(keyword));
+
+		return services;
+
+		// return serviceModelRepo.findByServiceKeywords(keywords);
 	}
 
 	@Override
@@ -437,21 +438,81 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	}
 
+	public List<ServiceModel> duplicatesClear(List<ServiceModel> list) {
+		List<ServiceModel> servicesClear = new ArrayList<ServiceModel>();
+		Set<ServiceModel> hashSetTemp = new HashSet<ServiceModel>();
+		hashSetTemp.addAll(list);
+		servicesClear.addAll(hashSetTemp);
+		return servicesClear;
+	}
+
 	@Override
 	public List<ServiceModel> getServices(String name, String location, String[] keywords) {
 		List<ServiceModel> services = new ArrayList<ServiceModel>();
+		List<ServiceModel> servicesByName = new ArrayList<ServiceModel>();
+		List<ServiceModel> servicesByKeyword = new ArrayList<ServiceModel>();
+		List<ServiceModel> servicesByLocation = new ArrayList<ServiceModel>();
 		if (name != null)
-			services.addAll(serviceModelRepo.findByServiceName(name));
+			if (!serviceModelRepo.findByServiceName(name).isEmpty()) {
+				servicesByName.addAll(serviceModelRepo.findByServiceName(name));
+			} else {
+				// services.clear();
+				return services;
+			}
 		if (location != null)
-			services.addAll(serviceModelRepo.findByServiceLocation(location));
+			if (!serviceModelRepo.findByServiceLocation(location).isEmpty()) {
+				servicesByLocation.addAll(serviceModelRepo.findByServiceLocation(location));
+			} else {
+				// services.clear();
+				return services;
+			}
 		if (keywords != null)
-			services.addAll(this.getServicesbyKeywords(keywords));
+			if (!this.getServicesbyKeywords(keywords).isEmpty()) {
+				servicesByKeyword.addAll(this.getServicesbyKeywords(keywords));
+			} else {
+				// services.clear();
+				return services;
+			}
 
-		Set<ServiceModel> hashSetTemp = new HashSet<ServiceModel>();
-		hashSetTemp.addAll(services);
-		services.clear();
-		services.addAll(hashSetTemp);
+		System.out.println(servicesByName.size());// DEBUG
 
+		// servicesByName = this.duplicatesClear(servicesByName);
+		// servicesByLocation = this.duplicatesClear(servicesByLocation);
+		// servicesByKeyword = this.duplicatesClear(servicesByKeyword);
+
+		if (name != null) {
+			System.out.println("name!=null");// DEBUG
+			for (ServiceModel serviceByName : servicesByName) {
+				if (location != null && keywords != null) {
+					if (servicesByLocation.contains(serviceByName) && servicesByKeyword.contains(serviceByName))
+						services.add(serviceByName);
+				} else if (location != null) {
+					if (servicesByLocation.contains(serviceByName))
+						services.add(serviceByName);
+				} else if (keywords != null) {
+					if (servicesByKeyword.contains(serviceByName))
+						services.add(serviceByName);
+				} else
+					return this.duplicatesClear(servicesByName);
+			}
+			return this.duplicatesClear(services);
+		}
+
+		else if (location != null) {
+			for (ServiceModel serviceByLocation : servicesByLocation) {
+				if (keywords != null) {
+					if (servicesByKeyword.contains(serviceByLocation))
+						services.add(serviceByLocation);
+				} else
+					return this.duplicatesClear(servicesByLocation);
+			}
+		}
+
+		else if (keywords != null) {
+			return this.duplicatesClear(servicesByKeyword);
+		}
+
+		System.out.println(services.size());// DEBUG
 		return services;
 	}
 
