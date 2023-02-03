@@ -165,11 +165,16 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	public void removeAssignConnector(String serviceId) {
 		ServiceModel service = this.getServiceById(serviceId);
-		HasServiceInstance serviceInstance = new HasServiceInstance();
-		EndpointConnector endpointConnector = new EndpointConnector();
-		endpointConnector.setConnectorId("");
-		serviceInstance.setEndpointConnector(endpointConnector);
-		service.setHasServiceInstance(serviceInstance);
+
+		/*
+		 * HasServiceInstance serviceInstance = new HasServiceInstance();
+		 * EndpointConnector endpointConnector = new EndpointConnector();
+		 * endpointConnector.setConnectorId("");
+		 * serviceInstance.setEndpointConnector(endpointConnector);
+		 * service.setHasServiceInstance(serviceInstance);
+		 */
+
+		service.getHasServiceInstance().getEndpointConnector().setConnectorId("");
 		this.updateService(serviceId, service);
 	}
 
