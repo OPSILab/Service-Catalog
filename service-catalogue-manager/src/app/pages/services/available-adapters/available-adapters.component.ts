@@ -15,6 +15,7 @@ import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angu
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
 import { ConnectorStatusRenderComponent } from '../availableConnectors/custom-status-render.component';
+import { LoginService } from '../../../auth/login/login.service';
 
 @Component({
   selector: 'available-adapters-smart-table',
@@ -49,6 +50,7 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
   errorService: ErrorDialogService;
 
   constructor(
+    private loginService: LoginService,
     private availableAdaptersService: AvailableAdaptersService,
     private translate: TranslateService,
     private configService: NgxConfigureService,
@@ -97,6 +99,10 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
       console.log("error:<\n", error, ">\n")
       if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
       else if (error.message) console.log("message:<\n", error.message, ">\n")
+
+      if (error.statusCode === '401') {
+        void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
+      }
       this.errorService.openErrorDialog(error);
     }
   }
