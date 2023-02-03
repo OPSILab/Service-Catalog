@@ -456,32 +456,22 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			if (!serviceModelRepo.findByServiceName(name).isEmpty()) {
 				servicesByName.addAll(serviceModelRepo.findByServiceName(name));
 			} else {
-				// services.clear();
 				return services;
 			}
 		if (location != null)
 			if (!serviceModelRepo.findByServiceLocation(location).isEmpty()) {
 				servicesByLocation.addAll(serviceModelRepo.findByServiceLocation(location));
 			} else {
-				// services.clear();
 				return services;
 			}
 		if (keywords != null)
 			if (!this.getServicesbyKeywords(keywords).isEmpty()) {
 				servicesByKeyword.addAll(this.getServicesbyKeywords(keywords));
 			} else {
-				// services.clear();
 				return services;
 			}
 
-		System.out.println(servicesByName.size());// DEBUG
-
-		// servicesByName = this.duplicatesClear(servicesByName);
-		// servicesByLocation = this.duplicatesClear(servicesByLocation);
-		// servicesByKeyword = this.duplicatesClear(servicesByKeyword);
-
 		if (name != null) {
-			System.out.println("name!=null");// DEBUG
 			for (ServiceModel serviceByName : servicesByName) {
 				if (location != null && keywords != null) {
 					if (servicesByLocation.contains(serviceByName) && servicesByKeyword.contains(serviceByName))
@@ -512,7 +502,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			return this.duplicatesClear(servicesByKeyword);
 		}
 
-		System.out.println(services.size());// DEBUG
 		return services;
 	}
 
