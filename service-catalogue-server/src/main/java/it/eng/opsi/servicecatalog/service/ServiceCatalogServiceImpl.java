@@ -4,8 +4,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -444,6 +446,12 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			services.addAll(serviceModelRepo.findByServiceLocation(location));
 		if (keywords != null)
 			services.addAll(this.getServicesbyKeywords(keywords));
+
+		Set<ServiceModel> hashSetTemp = new HashSet<ServiceModel>();
+		hashSetTemp.addAll(services);
+		services.clear();
+		services.addAll(hashSetTemp);
+
 		return services;
 	}
 
