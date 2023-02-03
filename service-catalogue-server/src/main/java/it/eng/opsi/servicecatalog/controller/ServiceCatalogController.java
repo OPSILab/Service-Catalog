@@ -15,6 +15,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.ResponseEntity.BodyBuilder;
+import org.springframework.http.ResponseEntity.HeadersBuilder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -160,6 +162,10 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				StandardCharsets.UTF_8);
 
 		return ResponseEntity.ok(catalogService.getCostByServiceId(decodedServiceIdentifier));
+	}
+
+	public HeadersBuilder<?> NotFound() {
+		return ResponseEntity.notFound();
 	}
 
 	@Operation(summary = "Get Service time  by serviceId.", tags = {

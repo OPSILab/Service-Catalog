@@ -433,7 +433,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public List<HasCost> getCostByServiceId(String decodedServiceIdentifier) {
 
-		return serviceModelRepo.findByIdentifier(decodedServiceIdentifier).get().getHasInfo()
+		return serviceModelRepo.findByIdentifier(decodedServiceIdentifier).orElseThrow(
+				() -> new ServiceNotFoundException("No Service found with Service Id: " + decodedServiceIdentifier))
+				.getHasInfo()
 				.getHasCost();
 
 	}
@@ -507,6 +509,11 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public String getTimeByServiceId(String decodedServiceIdentifier) {
-		return serviceModelRepo.findByIdentifier(decodedServiceIdentifier).get().getHasInfo().getProcessingTime();
+		// System.out.println("getTimeByServiceId");
+		// System.out.println(serviceModelRepo.findByIdentifier(decodedServiceIdentifier));//
+		// DEBUG
+		return serviceModelRepo.findByIdentifier(decodedServiceIdentifier).orElseThrow(
+				() -> new ServiceNotFoundException("No Service found with Service Id: " + decodedServiceIdentifier))
+				.getHasInfo().getProcessingTime();
 	}
 }
