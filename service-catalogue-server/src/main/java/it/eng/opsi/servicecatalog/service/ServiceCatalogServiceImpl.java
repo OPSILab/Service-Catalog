@@ -509,9 +509,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public String getTimeByServiceId(String decodedServiceIdentifier) {
-		// System.out.println("getTimeByServiceId");
-		// System.out.println(serviceModelRepo.findByIdentifier(decodedServiceIdentifier));//
-		// DEBUG
+
 		return serviceModelRepo.findByIdentifier(decodedServiceIdentifier).orElseThrow(
 				() -> new ServiceNotFoundException("No Service found with Service Id: " + decodedServiceIdentifier))
 				.getHasInfo().getProcessingTime();
