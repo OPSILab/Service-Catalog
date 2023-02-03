@@ -2,33 +2,35 @@
 
 @include nb-install-component() {
   nb-reveal-card {
-    //height: 500px;
+    height: 500px;
     width: 500px;
   }
 
   nb-card-front {
-    //height: 500px;
+    height: 500px;
   }
 
   nb-card-header {
-    //height: 500px;
+    //height: 100px;
+    height: 50px;
     font-size: 20px;
   }
 
   nb-card {
-    height: 300px;
-  }
-
-  nb-card-body {
     height: 500px;
   }
 
+  nb-card-body {
+    height: 300px;
+  }
+
   nb-card-footer {
-    //height: 500px;
+    height: 50px;
+    //height: 100px;
   }
 
   nb-card-back {
-    height: 200px;
+    height: 500px;
   }
 
   button {

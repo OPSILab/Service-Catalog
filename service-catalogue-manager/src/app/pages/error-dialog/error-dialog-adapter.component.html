@@ -13,10 +13,11 @@
         <ng-template #genericError>
           {{error.statusText}}
           {{error.header}}
-          {{error.error.message}}
+          {{error.message}}
+          <!--{{error.error.message}}-->
         </ng-template>
         <ng-template #validationError>
-          <div class="row p-1 justify-content-center">{{ 'general.adapter.validationErrors' | translate }}</div>
+          <div class="row p-1 justify-content-center">{{ 'general.adapters.validationErrors' | translate }}</div>
         </ng-template>
       </nb-card-body>
       <nb-card-footer>
@@ -41,7 +42,7 @@
         <ng-template #genericErrorDetails>
           {{error.statusText}}
           {{error.header}}
-          {{error.message}}
+          {{error.error.message}}
         </ng-template>
         <ng-template #validationErrorDetails>
           <div class="row p-3">
