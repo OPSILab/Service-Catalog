@@ -14,6 +14,7 @@ import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
+import { ConnectorStatusRenderComponent } from '../availableConnectors/custom-status-render.component';
 
 @Component({
   selector: 'available-adapters-smart-table',
@@ -145,11 +146,12 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
         },
         status: {
           title: this.statusLabel,
-          filter: false,
           sort: false,
+          filter: false,
           width: '5%',
-          type: 'text',
+          type: 'custom',
           valuePrepareFunction: (cell, row: AdapterEntry) => row.status,
+          renderComponent: ConnectorStatusRenderComponent,
         },
         actions: {
           title: this.actionsLabel,
