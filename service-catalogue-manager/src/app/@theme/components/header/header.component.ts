@@ -43,7 +43,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'across';
 
-  loggedUserMenu = [{ title: 'Account', link: 'pages/account' }];
+ // loggedUserMenu = [{ title: 'Account', link: 'pages/account' }];
+  loggedUserMenu = [];
   userMenu = [{ title: 'Log in', link: '/login' }];
 
   public languages=[];

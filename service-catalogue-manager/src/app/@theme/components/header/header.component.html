@@ -10,7 +10,7 @@
 <div class="header-container">
  
     <!-- <nb-icon nbPrefix icon="globe-outline"></nb-icon> -->
-    <nb-select placeholder="Language" (selectedChange)="changeLang($event)" [selected]="userLanguage" status="primary">
+    <nb-select size="tiny" placeholder="Language" (selectedChange)="changeLang($event)" [selected]="userLanguage" status="primary">
       <nb-option *ngFor="let lang of languages" [value]="lang.lan" class="d-flex flex-row align-items-center lang-select">
         <nb-user size="small"
          [name]="lang.lan | uppercase"
