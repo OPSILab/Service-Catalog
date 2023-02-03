@@ -9,9 +9,9 @@ public interface ServiceModelCustomRepository {
 
 	public Optional<ServiceModel> updateService(String serviceId, ServiceModel service);
 
-	public List<ServiceModel> findByServiceKeywords(String[] keywords);
+	// public List<ServiceModel> findByServiceKeywords(String[] keywords);
 
-	public List<ServiceModel> findByServiceLocation(String spatial);
+	// public List<ServiceModel> findByServiceLocation(String spatial);
 
 	public List<ServiceModel> findByConnectorID(String connectorId);
 
