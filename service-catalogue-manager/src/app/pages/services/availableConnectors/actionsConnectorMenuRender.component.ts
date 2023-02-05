@@ -73,36 +73,44 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.name = this.value.name
-    this.description = this.value.description
-    this.url = this.value.url
-    this.serviceId = this.value.serviceId
-    if (this.ref) this.ref.close()
-    this.actions = this.translatedActionLabels();
-    this.menuService
-      .onItemClick()
-      .pipe(takeUntil(this.unsubscribe))
-      .pipe(filter(({ tag }) => tag === 'service-context-menu' + this.value.connectorId))
-      .subscribe((event) => {
-        switch (event.item.data) {
-          case 'edit':
-            this.openEditConnector();
-            break;
-          case 'delete':
-            this.openDeleteFromRegistryDialog();
-            break;
-          case 'register':
-            this.openRegisterDialog();
-            break;
-          case 'deregister':
-            this.openDeRegisterDialog();
-            break;
-          case 'view service':
-            //this.showServiceInfoModal();
-            this.router.navigate(['/pages/services/service-editor', { serviceId: this.value.serviceId, readOnly: true }]);
-            break;
-        }
-      });
+    try {
+      this.name = this.value.name
+      this.description = this.value.description
+      this.url = this.value.url
+      this.serviceId = this.value.serviceId
+      if (this.ref) this.ref.close()
+      this.actions = this.translatedActionLabels();
+      this.menuService
+        .onItemClick()
+        .pipe(takeUntil(this.unsubscribe))
+        .pipe(filter(({ tag }) => tag === 'service-context-menu' + this.value.connectorId))
+        .subscribe((event) => {
+          switch (event.item.data) {
+            case 'edit':
+              this.openEditConnector();
+              break;
+            case 'delete':
+              this.openDeleteFromRegistryDialog();
+              break;
+            case 'register':
+              this.openRegisterDialog();
+              break;
+            case 'deregister':
+              this.openDeRegisterDialog();
+              break;
+            case 'view service':
+              //this.showServiceInfoModal();
+              this.router.navigate(['/pages/services/service-editor', { serviceId: this.value.serviceId, readOnly: true }]);
+              break;
+          }
+        });
+    }
+    catch (error) {
+      if (error.statusCode === '401'||error.status==401)  {
+        void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error));
+      }
+    }
+
   }
 
   showServiceInfoModal(): void {
@@ -331,7 +339,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.connectors.connector_registered_message', { connectorName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.statusCode === '401') {
+      if (error.statusCode === '401'||error.status==401)  {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -344,7 +352,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.connectors.connector_deregistered_message', { connectorName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.statusCode === '401') {
+      if (error.statusCode === '401'||error.status==401)  {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -365,7 +373,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
             ref.close();
             this.updateResult.emit(this.value.id);
           } catch (error) {
-            if (error.statusCode === '401') {
+            if (error.statusCode === '401'||error.status==401)  {
               void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
             } else this.errorDialogService.openErrorDialog(error);
           }

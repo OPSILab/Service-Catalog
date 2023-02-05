@@ -86,8 +86,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 
-      if (error.statusCode === '401') {
-        void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
+      if (error.statusCode === '401'||error.status==401)  {
+        void this.loginService.logout().catch((error) => console.log(error));
         // this.router.navigate(['/login']);
       } else this.errorDialogService.openErrorDialog(error);
     }

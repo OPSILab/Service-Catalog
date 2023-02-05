@@ -245,7 +245,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.adapters.adapter_registered_message', { adapterName: this.value.adapterId }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.statusCode === '401') {
+      if (error.statusCode === '401'||error.status==401)  {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -258,7 +258,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.adapters.adapter_deregistered_message', { adapterName: this.value.adapterId }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.statusCode === '401') {
+      if (error.statusCode === '401'||error.status==401)  {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -279,7 +279,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
             ref.close();
             this.updateResult.emit(this.value.id);
           } catch (error) {
-            if (error.statusCode === '401') {
+            if (error.statusCode === '401'||error.status==401)  {
               void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
             } else this.errorDialogService.openErrorDialog(error);
           }
