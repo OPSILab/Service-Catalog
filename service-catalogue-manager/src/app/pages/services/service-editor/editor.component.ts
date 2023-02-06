@@ -83,7 +83,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    console.log(this, "ngOnInit()")
+    
     try {
       this.serviceId = this.route.snapshot.params['serviceId'] as string;
       this.readOnly = <boolean>this.route.snapshot.params['readOnly'];
@@ -97,6 +97,10 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
 
       this.initializeEditor(this.serviceData);
       // this.loading = true;
+
+      
+
+
     }
     catch (error) {
       this.router.navigate(['/services'])
@@ -126,11 +130,58 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       no_additional_properties: true,
       disable_properties: true,
       prompt_before_delete: true,
-      required_by_default: true
+      required_by_default: true,
+      autocomplete:true
+      
     });
+
+    
+
+
+     //End test autocomplete 
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     this.editor = editor;
+
+//test autocomplete
+this.editor.callbacks = { 
+  "autocomplete": {
+    // This is callback functions for the "autocomplete" editor
+    // In the schema you refer to the callback function by key
+    // Note: 1st parameter in callback is ALWAYS a reference to the current editor.
+    // So you need to add a variable to the callback to hold this (like the
+    // "jseditor_editor" variable in the examples below.)
+    
+    // Setup for Wikipedia lookup
+    "search_services": function search(editor, input) {
+      var url = 'https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srsearch=' + encodeURI(input);
+
+      return new Promise(function (resolve) {
+        if (input.length < 3) {
+          return resolve([]);
+        }
+
+        fetch(url).then(function (response) {
+          return response.json();
+        }).then(function (data) {
+          resolve(data.query.search);
+        });
+      });
+    },
+    "getResultValue_services": function getResultValue(editor, result) {
+      return result.title;
+    },
+    "renderResult_services": function(editor, result, props) {
+      return ['<li ' + props + '>',
+        '<div class="wiki-title">' + result.title + '</div>',
+        '<div class="wiki-snippet"><small>' + result.snippet + '<small></div>',
+        '</li>'].join('');
+    }
+   
+    
+  }
+};
+
     let isFirstChange = true;
     // Hook up the validation indicator to update its status whenever the editor changes
     editor.on('change', function () {
@@ -191,8 +242,18 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
         editor.getEditor('root.identifier').disable();
         editor.getEditor('root.hasInfo.identifier').disable();
       }
+
+     
+
     });
+
+     
+
+   
+
   }
+
+  
 
   closeSpinner(): void {
     console.log('closing');

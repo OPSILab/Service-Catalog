@@ -147,9 +147,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
-	@Operation(summary = "Get Service Cost  by serviceId.", tags = {
+	@Operation(summary = "Get Service Cost  by serviceId. ", tags = {
 			"Service Model" }, responses = {
-					@ApiResponse(description = "Get Service Cost  by serviceId.", responseCode = "200") })
+					@ApiResponse(description = "Get Service Cost records  by serviceId.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/services/cost", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceCost(@RequestParam("serviceId") String serviceId)
@@ -170,7 +170,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Operation(summary = "Get Service time  by serviceId.", tags = {
 			"Service Model" }, responses = {
-					@ApiResponse(description = "Get Service Time  by serviceId.", responseCode = "200") })
+					@ApiResponse(description = "The (estimated) time needed for executing a Public Service using the ISO8601 syntax for durations: P(n)Y(n)M(n)DT(n)H(n)M(n)S).", 
+							responseCode = "200") })
 	@Override
 	@GetMapping(value = "/services/time", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceTime(@RequestParam("serviceId") String serviceId)

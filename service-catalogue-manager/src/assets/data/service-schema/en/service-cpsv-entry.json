@@ -138,7 +138,17 @@
       "items": {
         "type": "string",
         "title": "Service",
-        "description": "Service Catalogue Id or URI"
+        "format": "autocomplete",
+        "description": "Service Catalogue Id or URI", 
+        "options": {
+          "grid_columns": 6,
+          "autocomplete": {
+            "search": "search_services",
+            "getResultValue": "getResultValue_services",
+            "renderResult": "renderResult_services",
+            "autoSelect": true
+          }
+        }
       }
     },
     "spatial": {
