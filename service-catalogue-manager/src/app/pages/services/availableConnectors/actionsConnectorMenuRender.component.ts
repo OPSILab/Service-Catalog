@@ -331,7 +331,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.connectors.connector_registered_message', { connectorName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.error.statusCode === '401') {
+      if (error.statusCode === '401') {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -344,7 +344,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.connectors.connector_deregistered_message', { connectorName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.error.statusCode === '401') {
+      if (error.statusCode === '401') {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -365,7 +365,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
             ref.close();
             this.updateResult.emit(this.value.id);
           } catch (error) {
-            if (error.error.statusCode === '401') {
+            if (error.statusCode === '401') {
               void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
             } else this.errorDialogService.openErrorDialog(error);
           }
