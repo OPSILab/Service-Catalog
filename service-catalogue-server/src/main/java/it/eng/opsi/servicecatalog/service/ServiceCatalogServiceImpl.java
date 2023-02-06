@@ -114,7 +114,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	public Connector createConnector(Connector connector) {
-		System.out.println(connector.getServiceId());
 		if (connector.getServiceId() != "" && connector.getServiceId() != null)
 			this.assignConnector(connector);
 
@@ -127,14 +126,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 				&& service.getHasServiceInstance().getEndpointConnector().getConnectorId() != null
 				&& this.getConnectorByserviceId(connector.getServiceId()) != null)
 			this.removeAssignConnectorFromConnectorCollection(this.getConnectorByserviceId(connector.getServiceId()));
-
-		/*
-		 * HasServiceInstance serviceInstance = new HasServiceInstance();
-		 * EndpointConnector endpointConnector = new EndpointConnector();
-		 * endpointConnector.setConnectorId(connector.getConnectorId());
-		 * serviceInstance.setEndpointConnector(endpointConnector);
-		 * service.setHasServiceInstance(serviceInstance);
-		 */
 
 		service.getHasServiceInstance().getEndpointConnector().setConnectorId(connector.getConnectorId());
 
@@ -165,11 +156,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	public void removeAssignConnector(String serviceId) {
 		ServiceModel service = this.getServiceById(serviceId);
-		HasServiceInstance serviceInstance = new HasServiceInstance();
-		EndpointConnector endpointConnector = new EndpointConnector();
-		endpointConnector.setConnectorId("");
-		serviceInstance.setEndpointConnector(endpointConnector);
-		service.setHasServiceInstance(serviceInstance);
+		service.getHasServiceInstance().getEndpointConnector().setConnectorId("");
 		this.updateService(serviceId, service);
 	}
 
@@ -187,13 +174,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			this.removeAssignConnector(service.getIdentifier());
 		if (connector.getServiceId() != "" && connector.getServiceId() != null)
 			this.assignConnector(connector);
-
-		/*
-		 * if (this.getConnectorByconnectorId(connectorId).getServiceId() != ""
-		 * && this.getConnectorByconnectorId(connectorId).getServiceId() != null)
-		 * this.removeAssignConnector(this.getConnectorByconnectorId(connectorId).
-		 * getServiceId());
-		 */
 
 		return connectorModelRepo.updateConnector(connectorId, connector).orElseThrow(
 				() -> new ServiceNotFoundException("No Connector description found for Service Id: " + connectorId));
@@ -285,8 +265,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			services.addAll(serviceModelRepo.findByServiceKeywords(keyword));
 
 		return services;
-
-		// return serviceModelRepo.findByServiceKeywords(keywords);
 	}
 
 	@Override

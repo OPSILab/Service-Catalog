@@ -1,6 +1,4 @@
-import { ConnectorEntry } from '../../../model/connector/connectorEntry';
 import { Component, Input, OnInit } from '@angular/core';
-import { AvailableServiceRow } from '../availableServices/availableServices.component';
 
 @Component({
   template: `
@@ -21,10 +19,9 @@ import { AvailableServiceRow } from '../availableServices/availableServices.comp
 export class ConnectorStatusRenderComponent implements OnInit {
   active: boolean = false;
 
-  @Input() value: ConnectorEntry;
+  @Input() value: String;
 
   ngOnInit() {
-    console.log ("this.value.status == active", this.value)
-    this.active = this.value.status == "active";
+    this.active = this.value == "active";
   }
 }

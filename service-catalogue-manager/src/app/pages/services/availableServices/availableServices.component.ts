@@ -86,8 +86,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 
-      if (error.error.statusCode === '401') {
-        void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
+      if (error.statusCode === '401'||error.status==401)  {
+        void this.loginService.logout().catch((error) => console.log(error));
         // this.router.navigate(['/login']);
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -101,7 +101,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
       });
   }
 
- 
+
   ngOnDestroy(): void {
     console.log('ngOnDestroy');
     this.unsubscribe.next();
@@ -153,7 +153,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
         width: '5%',
         valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
         renderComponent: CustomKeywordRenderComponent,
-      
+
       },
 
       status: {

@@ -332,12 +332,12 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
      //TO-DO service registry invocation
      // this.value = (await this.availableServicesService.registerService(this.value.identifier)) as AvailableServiceRow;
      this.value.status=ServiceModelStatusEnum.Completed;
-     await this.availableServicesService.registerService(this.value, this.value.identifier); 
+     await this.availableServicesService.registerService(this.value, this.value.identifier);
      this.showToast('primary', this.translate.instant('general.services.service_registered_message', { serviceName: this.value.title }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (error.error.statusCode === '401') {
+      if (error.statusCode === '401'||error.status==401)  {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
         // this.router.navigate(['/login']);
       } else this.errorDialogService.openErrorDialog(error);
@@ -354,7 +354,7 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
       this.updateResult.emit(this.value);
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (error.error.statusCode === '401') {
+      if (error.statusCode === '401'||error.status==401)  {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
         // this.router.navigate(['/login']);
       } else this.errorDialogService.openErrorDialog(error);
@@ -377,7 +377,7 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
             this.updateResult.emit(this.value.identifier);
           } catch (error) {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            if (error.error.statusCode === '401') {
+            if (error.statusCode === '401'||error.status==401)  {
               void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
               // this.router.navigate(['/login']);
             } else this.errorDialogService.openErrorDialog(error);

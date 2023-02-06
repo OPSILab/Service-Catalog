@@ -14,6 +14,8 @@ import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
+import { ConnectorStatusRenderComponent } from '../availableConnectors/custom-status-render.component';
+import { LoginService } from '../../../auth/login/login.service';
 
 @Component({
   selector: 'available-adapters-smart-table',
@@ -48,6 +50,7 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
   errorService: ErrorDialogService;
 
   constructor(
+    private loginService: LoginService,
     private availableAdaptersService: AvailableAdaptersService,
     private translate: TranslateService,
     private configService: NgxConfigureService,
@@ -74,8 +77,11 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
       void this.source.load(this.availableAdapters);
     } catch (error) {
       console.log("error:<\n", error, ">\n")
-      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      else if (error.message) console.log("message:<\n", error.message, ">\n")
+      if (error.statusCode === '401'||error.status==401)  {
+        void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
+      }
+      //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      //else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
   }
 
@@ -94,8 +100,12 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
-      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      else if (error.message) console.log("message:<\n", error.message, ">\n")
+      //if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      //else if (error.message) console.log("message:<\n", error.message, ">\n")
+
+      if (error.statusCode === '401'||error.status==401)  {
+        void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
+      }
       this.errorService.openErrorDialog(error);
     }
   }
@@ -145,11 +155,12 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
         },
         status: {
           title: this.statusLabel,
-          filter: false,
           sort: false,
+          filter: false,
           width: '5%',
-          type: 'text',
+          type: 'custom',
           valuePrepareFunction: (cell, row: AdapterEntry) => row.status,
+          renderComponent: ConnectorStatusRenderComponent,
         },
         actions: {
           title: this.actionsLabel,

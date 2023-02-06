@@ -35,30 +35,8 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 	@Query(value = "{ 'hasInfo.spatial': { $regex : ?0, $options: i}}")
 	public List<ServiceModel> findByServiceLocation(String spatial);
 
-	// @Query(value = "{ identifier: ?0}")
-	// public Optional<ServiceModel> findByServiceUrl(String serviceUrl);
-
-	// @Query(value = "{ 'serviceInstance.serviceProvider.businessId': ?0}")
-	// public List<ServiceModel> findByServiceProviderBusinessId(String businessId);
-
-	// @Query(value = "{ $and:[{ 'serviceInstance.serviceProvider.businessId': ?0},
-	// { 'serviceInstance.cert':{$ne:null}}]}")
-	// public List<ServiceModel>
-	// findRegisteredServicesByServiceProviderBusinessId(String businessId);
-
 	@Query(value = "{ 'identifier': { $in: ?0}}")
 	public List<ServiceModel> findByServicebyIds(Object[] ids);
-	/*
-	 * @Query(value = "{ ?0: { $in: '$hasInfo.spatial'} }")
-	 * public List<ServiceModel> findByServiceLocation(String spatial);
-	 * 
-	 * 
-	 * @Query(value = "{ ?0: { $in: '$hasInfo.keyword'} }")
-	 * public List<ServiceModel> findByServiceKeywords(List<String> keywords);
-	 * 
-	 * @Query(value = "{ ?0: { $in: '$hasInfo.keyword'} }")
-	 * public List<ServiceModel> findByServiceKeyword(String keyword);
-	 */
 
 	@Query(value = "{ 'isPersonalDataHandling': { $exists: true, $not: {$size: 0} } }", count = true)
 	public List<ServiceModel> findServicesIsPersonalDataHandling();

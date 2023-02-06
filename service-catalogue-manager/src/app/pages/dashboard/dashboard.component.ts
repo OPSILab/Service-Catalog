@@ -103,7 +103,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       ];
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (error.statusCode === '401') {
+      if (error.statusCode === '401'||error.status==401)  {
         this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
         // this.router.navigate(['/login']);
       } else console.log(error)//this.errorDialogService.openErrorDialog(error);

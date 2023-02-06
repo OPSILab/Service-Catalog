@@ -52,8 +52,8 @@ export class AddAdapterComponent implements OnInit {
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
-      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      else if (error.message) console.log("message:<\n", error.message, ">\n")
+      //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      //else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
 
   }
@@ -69,8 +69,8 @@ export class AddAdapterComponent implements OnInit {
         } catch (error) {
           this.errorService.openErrorDialog(error);
           console.log("error:<\n", error, ">\n")
-          if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-          else if (error.message) console.log("message:<\n", error.message, ">\n")
+          //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+          //else if (error.message) console.log("message:<\n", error.message, ">\n")
           this.ref.close();
         }
       };
@@ -79,9 +79,9 @@ export class AddAdapterComponent implements OnInit {
         this.errorService.openErrorDialog(error);
       };
     } catch (error) {
-      console.log("error:<\n", error, ">\n")
-      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      else if (error.message) console.log("message:<\n", error.message, ">\n")
+      //console.log("error:<\n", error, ">\n")
+      //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      //else if (error.message) console.log("message:<\n", error.message, ">\n")
       this.errorService.openErrorDialog(error);
     }
   }
@@ -92,8 +92,8 @@ export class AddAdapterComponent implements OnInit {
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
-      if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      else if (error.message) console.log("message:<\n", error.message, ">\n")
+      //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
+      //else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
   }
 
