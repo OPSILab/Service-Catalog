@@ -40,7 +40,7 @@
     "@angular/router": "11.2.12",
     "@fortawesome/fontawesome-svg-core": "1.2.35",
     "@json-editor/json-editor": "2.8.0",
-    "@trevoreyre/autocomplete": "2.3.0",
+    "@trevoreyre/autocomplete-js": "2.4.1",
     "@nebular/auth": "7.0.0",
     "@nebular/date-fns": "7.0.0",
     "@nebular/eva-icons": "7.0.0",

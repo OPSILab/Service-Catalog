@@ -41,7 +41,7 @@
               "node_modules/jquery/dist/jquery.js",
               "node_modules/select2/dist/js/select2.js",
               "node_modules/bootstrap/dist/js/bootstrap.js",
-              "node_modules/@trevoreyre/autocomplete/dist/autocomplete.min.js"
+              "node_modules/@trevoreyre/autocomplete-js/dist/autocomplete.min.js"
             ]
           },
           "configurations": {

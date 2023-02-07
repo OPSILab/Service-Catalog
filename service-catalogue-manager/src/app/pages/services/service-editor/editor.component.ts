@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { AfterContentInit, ChangeDetectorRef, ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { JSONEditor } from '@json-editor/json-editor/dist/nonmin/jsoneditor.js';
+import { JSONEditor } from '@json-editor/json-editor/dist/jsoneditor.js';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import * as $ from 'jquery';
@@ -178,8 +178,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
       required_by_default: true,
     });
 
-    console.log(editor);
-
+    
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     this.editor = editor;
 
