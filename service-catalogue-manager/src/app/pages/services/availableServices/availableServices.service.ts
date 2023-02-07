@@ -81,4 +81,8 @@ export class AvailableServicesService {
   deleteService(serviceId: string): Promise<ServiceModel> {
     return this.http.delete<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${serviceId}`).toPromise();
   }
+
+  findService(name: string): Promise<ServiceModel> {
+    return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/specified/title?title=${name}`).toPromise();
+  }
 }

@@ -134,10 +134,11 @@
     "requires": {
       "title": "Requires",
       "type": "array",
-      "format": "tabs",
+      "format":"tabs",
       "items": {
         "type": "string",
-        "title": "Service",
+        "title":"Service",
+        "headerTemplate": "{{ self}}",
         "format": "autocomplete",
         "description": "Service Catalogue Id or URI", 
         "options": {
@@ -146,7 +147,7 @@
             "search": "search_services",
             "getResultValue": "getResultValue_services",
             "renderResult": "renderResult_services",
-            "autoSelect": true
+            "autoSelect": false
           }
         }
       }

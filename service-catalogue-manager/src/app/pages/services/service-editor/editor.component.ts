@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { AfterContentInit, ChangeDetectorRef, ChangeDetectionStrategy, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { JSONEditor } from '@json-editor/json-editor/dist/jsoneditor.js';
+import { JSONEditor } from '@json-editor/json-editor/dist/nonmin/jsoneditor.js';
 import { Inject } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 import * as $ from 'jquery';
@@ -21,7 +21,6 @@ import { AppConfig, System } from '../../../model/appConfig';
 import { ServiceModel } from '../../../model/services/serviceModel';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-
 
 @Component({
   selector: 'ngx-spinner-color',
@@ -63,7 +62,6 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
     private translateService: TranslateService,
     private cdr: ChangeDetectorRef,
     private router: Router
-
   ) {
     this.config = this.configService.config as AppConfig;
     this.systemConfig = this.config.system;
@@ -83,28 +81,22 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    
     try {
       this.serviceId = this.route.snapshot.params['serviceId'] as string;
       this.readOnly = <boolean>this.route.snapshot.params['readOnly'];
       sessionStorage.removeItem('isTouched');
       if (this.serviceId) {
         this.serviceData = await this.availablesServicesService.getService(this.serviceId);
-        this.serviceName = this.serviceData.title
+        this.serviceName = this.serviceData.title;
       } else {
         this.isNew = true;
       }
 
       this.initializeEditor(this.serviceData);
       // this.loading = true;
-
-      
-
-
-    }
-    catch (error) {
-      this.router.navigate(['/services'])
-      console.log(error)
+    } catch (error) {
+      this.router.navigate(['/services']);
+      console.log(error);
       this.errorDialogService.openErrorDialog(error);
     }
   }
@@ -120,6 +112,39 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
 
   initializeEditor(serviceData: ServiceModel): void {
     const elem = this.document.getElementById('editor');
+    var serviceService = this.availablesServicesService;
+
+    JSONEditor.defaults.callbacks = {
+      autocomplete: {
+        search_services: function search(editor, input) {
+          return new Promise(function (resolve) {
+            if (input.length < 3) {
+              return resolve([]);
+            }
+
+            serviceService
+              .findService(input)
+              .then(function (response) {
+                return response;
+              })
+              .then(function (data) {
+                resolve(data);
+              });
+          });
+        },
+        getResultValue_services: function getResultValue(editor, result) {
+          return result.title;
+        },
+        renderResult_services: function (editor, result, props) {
+          return [
+            '<li ' + props + '>',
+            '<div class="wiki-title">' + result.title + '</div>',
+            '<div class="wiki-snippet"><small>[' + result.hasInfo.spatial + '] ' + result.hasInfo.description.description + '<small></div>',
+            '</li>',
+          ].join('');
+        },
+      },
+    };
 
     const editor = new JSONEditor(elem, {
       ajax: true,
@@ -131,56 +156,12 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       disable_properties: true,
       prompt_before_delete: true,
       required_by_default: true,
-      autocomplete:true
-      
     });
 
-    
-
-
-     //End test autocomplete 
+    console.log(editor);
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     this.editor = editor;
-
-//test autocomplete
-this.editor.callbacks = { 
-  "autocomplete": {
-    // This is callback functions for the "autocomplete" editor
-    // In the schema you refer to the callback function by key
-    // Note: 1st parameter in callback is ALWAYS a reference to the current editor.
-    // So you need to add a variable to the callback to hold this (like the
-    // "jseditor_editor" variable in the examples below.)
-    
-    // Setup for Wikipedia lookup
-    "search_services": function search(editor, input) {
-      var url = 'https://en.wikipedia.org/w/api.php?action=query&list=search&format=json&origin=*&srsearch=' + encodeURI(input);
-
-      return new Promise(function (resolve) {
-        if (input.length < 3) {
-          return resolve([]);
-        }
-
-        fetch(url).then(function (response) {
-          return response.json();
-        }).then(function (data) {
-          resolve(data.query.search);
-        });
-      });
-    },
-    "getResultValue_services": function getResultValue(editor, result) {
-      return result.title;
-    },
-    "renderResult_services": function(editor, result, props) {
-      return ['<li ' + props + '>',
-        '<div class="wiki-title">' + result.title + '</div>',
-        '<div class="wiki-snippet"><small>' + result.snippet + '<small></div>',
-        '</li>'].join('');
-    }
-   
-    
-  }
-};
 
     let isFirstChange = true;
     // Hook up the validation indicator to update its status whenever the editor changes
@@ -242,18 +223,8 @@ this.editor.callbacks = {
         editor.getEditor('root.identifier').disable();
         editor.getEditor('root.hasInfo.identifier').disable();
       }
-
-     
-
     });
-
-     
-
-   
-
   }
-
-  
 
   closeSpinner(): void {
     console.log('closing');
