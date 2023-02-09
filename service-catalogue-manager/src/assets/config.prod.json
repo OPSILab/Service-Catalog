@@ -18,6 +18,7 @@
     }
   },
   "i18n": {
-    "locale": "en"
+    "locale": "en",
+    "languages": ["it","en","de","gr","lv"]
   }
 }

@@ -150,10 +150,9 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
     // Custom validators must return an array of errors or an empty array if valid
 JSONEditor.defaults.custom_validators.push((schema, value, path) => {
   const errors = [];
-  if (path==="root.hasInfo.processingTime") {
+  if (path==="root.hasInfo.processingTime" &&  value.trim() !== "" ) {
 
-    
-    
+        console.log("VAlue:"+value); 
     if (!/^P(?=\d+[YMWD])(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d+[HMS])(\d+H)?(\d+M)?(\d+S)?)?$/.test(value)) {
       // Errors must be an object with `path`, `property`, and `message`
       errors.push({
