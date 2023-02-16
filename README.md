@@ -15,7 +15,7 @@ The catalogue enables the storage and publishing of service by providing general
 Service Catalogue is an open source software developed by
 [Engineering Ingegneria Informatica SpA](http://www.eng.it) inside the EU founded project [ACROSS](https://across-h2020.eu/).
 
-| :books: [Documentation](https://) | :whale: [Docker Hub](https://hub.docker.com/u/capesuite)|
+| :books: [Documentation](https://service-catalogue.readthedocs.io/) | :whale: [Docker Hub](https://hub.docker.com/u/capesuite)|
 |---|---|
 
 # Table of Contents
@@ -87,7 +87,8 @@ The instruction to install Service Catalogue modules can be found at the corresp
 The User Guide for Service Catalogue Manager can be found at the corresponding [usage](./docs/usage/index.md) section
 
 ## API
-
+The Service Catalogue APIs Introduction can be found at the corresponding section of
+[API](./docs/api/index.md).
 
 
 
