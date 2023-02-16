@@ -193,7 +193,7 @@
             "inputType": {
               "type": "string",
               "description": "Type of input Data: text, files, dropdown list, ect",
-              "title": "Type",
+              "title": "Input Type",
               "format": "select2",
               "enum": ["input text", "file", "select", "text area"],
               "options": {
@@ -210,7 +210,7 @@
               "description": "If the property is mandatory when used in a dataset."
             }
           },
-          "required": ["property", "conceptId", "name", "type", "required"]
+          "required": ["property", "name", "type", "required"]
         }
       }
     }

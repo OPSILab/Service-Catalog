@@ -169,10 +169,19 @@
 					<!-- <goal>generate</goal> -->
 					<!-- </goals> -->
 					<!-- </execution> -->
+					
+					
+        <execution>
+            <phase>integration-test</phase>
+            <goals>
+                <goal>generate</goal>
+            </goals>
+        </execution>
+    
 
 				</executions>
 				<configuration>
-					<apiDocsUrl>http://localhost:8086/service-catalog/api-docs</apiDocsUrl>
+					<apiDocsUrl>http://localhost:8086/service-catalogue/api-docs</apiDocsUrl>
 					<outputFileName>openapi.yaml</outputFileName>
 					<!-- <outputDir>/home/springdoc/maven-output</outputDir> -->
 				</configuration>
