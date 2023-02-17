@@ -8,7 +8,7 @@ markdown_extensions: [toc,fenced_code]
 use_directory_urls: true
 theme: readthedocs
 
-pages:
+nav:
   - 'Home': 'index.md' 
   - 'Introduction': 'introduction.md'
   - 'Installation Manual': 'install/index.md'
