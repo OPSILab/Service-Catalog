@@ -14,8 +14,6 @@ nav:
   - 'Installation Manual': 'install/index.md'
   - 'User Guide':
      - 'Service Catalogue Manager': 'usage/index.md'
-     - 'How to describe a service': 'usage/service-model-howto.md'
+     - 'How to describe a service': 'usage/service-description-howto.md'
   - 'API Documentation' : 'api/index.md'
-  - 'Service Model Documentation': 'model/index.md'
-
-
+  - 'Service Model Documentation': 'model/service-model.md'

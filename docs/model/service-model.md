@@ -1,4 +1,4 @@
-# Annex I - ACROSS Service Model 
+# Service Catalogue Model 
 
 ## Introduction
 
@@ -68,7 +68,7 @@ Property                   | Type           | Description
   hasServiceInstance |         Object(1..1)|    Object describing Service information  section.
   isPersonalDataHandling |     Object(1..n)|    Object describing Personal data                                     handling.
   hasUsageRule |               Object(1..n)|    Object describing Service usage Rules.
-  -----------------------------------------------------------------------------------
+
 
 ## Service Information section
 
