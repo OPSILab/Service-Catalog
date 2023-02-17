@@ -10,16 +10,12 @@ theme: readthedocs
 
 pages:
   - 'Home': 'index.md' 
-  - 'Architecture Overview': 'architecture/architecture.md'
-  - 'Installation & Administration Manual':
-      - 'Introduction': 'admin/index.md'
-      - 'Installation overview': 'admin/installation.md'
-      - 'Install with WARs packages': 'admin/install_war.md'
-      - 'Install with Docker': 'admin/install_docker.md'
-      - 'Sanity Checks': 'admin/sanitychecks.md'
-      - 'Platform Management': 'admin/administration_gui.md'
-      - 'Scraping Guide': 'admin/scraping.md'
+  - 'Introduction': 'introduction.md'
+  - 'Installation Manual': 'install/index.md'
   - 'User Guide':
-      - 'Introduction': 'user/index.md'
-      - 'How to use Idra': 'user/enduser.md'
+     - 'Service Catalogue Manager': 'usage/index.md'
+      - 'How to describe a service': 'usage/service-model-howto.md'
+  - 'API Documentation' : 'api/index.md'
+  - 'Service Model Documentation': 'model/index.md'
+
 
