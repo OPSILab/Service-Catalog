@@ -6,7 +6,7 @@
   "options": {
     "grid_columns": 12
   },
-  "minLength": 1,
+  
   "enumSource": [
     {
       "source": [
