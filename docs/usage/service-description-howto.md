@@ -102,9 +102,13 @@ particular the specification (**Conforms to** tab) of Dataset defined in
 
 ![](howto13.png)
 
+In tab **Cost** the user can provide information about the cost of provision and in case for which selected channel.
+
+![](cost.png)
+
 ## Service Instance
 
-The **Service Instace** tab collects all information on the specific
+The **Service Instance** tab collects all information on the specific
 service instance invocable at the endpoint filled in the "Endpoint"
 section
 
@@ -136,7 +140,7 @@ services:
 
 -   *Service Instance-\>Service Data Description-\>Data Mapping section*
 
-![](howto16.png)
+![](howto14.png)
 
 Endpoint properties:
 
