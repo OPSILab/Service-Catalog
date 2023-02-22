@@ -272,7 +272,7 @@
             "description": "Language used in description.",
             "enumSource": "possible_langs",
             "watch": {
-              "possible_langs": "root.language"
+              "possible_langs": "root.hasInfo.language"
             }
           },
           "title": {
