@@ -98,7 +98,7 @@ export class DialogImportPromptComponent implements OnInit {
     if (this.extension=="csv") this.service = await this.http.post<ServiceModel>(this.adaptersActive[0].url, {
       "sourceDataType": "csv",
       "sourceData": this.file,//0b11111111
-      "mapPathIn": "examples\\serviceModelMap.json",
+      "mapPathIn": "examples\\5. ServiceModelMap.json",
       "dataModelIn": "ServiceModel",
       "csvDelimiter": ";"
     }).toPromise();//TODO continue this
@@ -108,6 +108,6 @@ export class DialogImportPromptComponent implements OnInit {
       "dataModelIn": "ServiceModel"
     }).toPromise())*/
     //this.ref.close({ content: this.file, format: this.extension });
-    this.ref.close({ content: this.service, format: this.extension });
+    this.ref.close({ content: this.service[0], format: this.extension });
   }
 }
