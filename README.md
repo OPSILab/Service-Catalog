@@ -2,6 +2,7 @@
 
 [![License badge](https://img.shields.io/github/license/OPSILab/Idra.svg)](https://opensource.org/licenses/AGPL-3.0)
 [![Docker Pulls](https://img.shields.io/docker/pulls/capesuite/service-catalog)](https://hub.docker.com/r/capesuite/service-catalog)
+[![Documentation badge](https://img.shields.io/readthedocs/cape-suite)](https://service-catalogue.readthedocs.io/)
 
 
 Service Catalogue provides all functionality to register, model, map and publish and manage all the information needed to support the uses of service (public&private) according to the following three points of view:
