@@ -183,3 +183,246 @@ following values are used:
 -   Required: true/false
 
 -   Concept: (if personal data)personal data concept
+
+
+## JSON Example
+
+Below an json example of service description with almost example properties described in the previous section. You can copy it and paste it in the **Service Editor** page:
+
+![](service-copy-paste.png)
+
+or save as file and import as described  in the *service import* section [here](index.md)
+
+```
+{
+  "title": "Service Catalogue Info",
+  "identifier": "https://service-catalogue-manager-dev.k8s.across-h2020.eu/service-catalogue-manager",
+  "issued": "",
+  "createdByUserId": "service.manager",
+  "versionInfo": "1.0",
+  "serviceIconUrl": "",
+  "status": "UnderDevelopment",
+  "isPublicService": true,
+  "hasInfo": {
+    "identifier": "https://service-catalogue-manager-dev.k8s.across-h2020.eu/service-catalogue-manager",
+    "title": "Service Catalogue Info",
+    "status": "UnderDevelopment",
+    "keyword": [
+      "Services",
+      "Catalogue"
+    ],
+    "sector": [
+      "S - Other services activities"
+    ],
+    "thematicArea": [
+      "other"
+    ],
+    "type": [
+      "other"
+    ],
+    "language": [
+      "en",
+      "de",
+      "el",
+      "it",
+      "lv"
+    ],
+    "description": {
+      "locale": "en",
+      "description": "Service Catalogue provides search and manage functionalities for public and private services"
+    },
+    "isDescribedAt": [
+      {
+        "identifier": "1",
+        "name": "Online documentation",
+        "landingPage": "https://service-catalogue.readthedocs.io/"
+      }
+    ],
+    "processingTime": "P1W",
+    "isGroupedBy": [],
+    "hasCompetentAuthority": {
+      "identifier": "eng",
+      "title": "Engineering S.p.A",
+      "hasAddress": "",
+      "prefLabel": "",
+      "spatial": "ITA-Italy"
+    },
+    "requires": [],
+    "spatial": "ESP-Spain",
+    "hasInput": [
+      {
+        "identifier": "ServiceInput",
+        "title": "Service Description",
+        "description": {
+          "locale": "en",
+          "description": "Service Description as defined in Service Catalogue schema"
+        },
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": [
+          "ServiceModel"
+        ]
+      }
+    ],
+    "produces": [],
+    "hasContactPoint": {
+      "email": "emailToContact@across.eu",
+      "faxNumber": "",
+      "telephone": "",
+      "url": "",
+      "identifier": "",
+      "openingHours": "",
+      "hoursAvailable": ""
+    },
+    "hasChannel": [
+      {
+        "identifier": "get",
+        "type": "RESTService",
+        "openingHours": "",
+        "hoursAvailable": "",
+        "hasInput": [
+          "ServiceInput"
+        ]
+      }
+    ],
+    "hasCost": [
+      {
+        "identifier": "rest_cost",
+        "code": "EUR",
+        "hasCost": "1",
+        "ifAccessedThrough": "RESTService",
+        "description": {
+          "locale": "en",
+          "description": "cost per api call"
+        }
+      }
+    ]
+  },
+  "hasServiceInstance": {
+    "serviceProvider": {
+      "businessId": "ENG",
+      "name": "Engineering II",
+      "hasAddress": "",
+      "postalcode": "",
+      "city": "",
+      "state": "",
+      "country": "",
+      "email": "",
+      "telephone": "",
+      "jurisdiction": ""
+    },
+    "endpointConnector": {
+      "endpoint": {
+        "accessURL": "https://service-catalogue-server-dev.k8s.across-h2020.eu/service-catalogue",
+        "endpointInformation": "Service Catalogue endpoint to get&search",
+        "endpointDocumentation": "https://service-catalogue-server-dev.k8s.across-h2020.eu/service-catalogue/swagger-ui/index.html?configUrl=/service-catalogue/api-docs/swagger-config",
+        "path": "/api/v2/services [GET, content-type: application/json]"
+      },
+      "connectorId": ""
+    },
+    "dataset": [
+      {
+        "identifier": "ServiceModel",
+        "description": [],
+        "datasetSchema": {
+          "context": "",
+          "type": "",
+          "id": ""
+        },
+        "dataStructureSpecification": "",
+        "distribution": [],
+        "dataMapping": []
+      },
+      {
+        "identifier": "PD1",
+        "description": [
+          {
+            "locale": "en",
+            "description": "Personal data included in the Service Model ( contacts email, ect)",
+            "keywords": []
+          }
+        ],
+        "datasetSchema": {
+          "context": "",
+          "type": "",
+          "id": ""
+        },
+        "dataStructureSpecification": "",
+        "distribution": [],
+        "dataMapping": [
+          {
+            "property": "email",
+            "conceptId": "personal_email",
+            "name": "Email",
+            "type": "text",
+            "inputType": "input text",
+            "required": false
+          },
+          {
+            "property": "address",
+            "conceptId": "previous_address_street",
+            "name": "Street Address 1",
+            "type": "text",
+            "inputType": "input text",
+            "required": false
+          }
+        ]
+      }
+    ],
+    "serviceUrls": {
+      "libraryDomain": "",
+      "loginUri": "",
+      "linkingRedirectUri": "",
+      "objectionUri": "",
+      "notificationUri": ""
+    },
+    "dataController": {
+      "piiController": "",
+      "organizationName": "",
+      "hasContact": "",
+      "hasAddress": "",
+      "email": "",
+      "telephone": "",
+      "operatorName": ""
+    }
+  },
+  "hasUsageRule": [],
+  "isPersonalDataHandling": [
+    {
+      "purposeId": "SP1",
+      "purposeName": "Service Notification and contact",
+      "legalBasis": "Contract",
+      "purposeCategory": "ServiceProvision",
+      "hasSector": [],
+      "hasContext": [],
+      "processingCategories": [
+        "Collect"
+      ],
+      "description": [],
+      "hasPersonalDataCategory": [
+        "EmailAddress",
+        "PhysicalAddress"
+      ],
+      "requiredDatasets": [
+        "PD1"
+      ],
+      "storage": {
+        "location": "Controller servers",
+        "duration": "Business practices"
+      },
+      "recipients": [],
+      "shareWith": [],
+      "obligations": [],
+      "policyRef": "",
+      "collectionMethod": "",
+      "collectionOperator": "",
+      "termination": ""
+    }
+  ]
+}
+
+
+```
