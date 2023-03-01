@@ -17,6 +17,11 @@
       "authRealm": "Cape"
     }
   },
+  "data_model_mapper" : {
+    "default_mapper_url":"http://localhost:5000/api/map",
+    "default_mapper_name" : "ServiceModelMap.json",
+    "default_data_model" : "ServiceModel"
+  },
   "i18n": {
     "locale": "en",
     "languages": ["it","en","de","gr","lv"]
