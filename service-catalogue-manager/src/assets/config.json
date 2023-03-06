@@ -20,7 +20,9 @@
   "data_model_mapper" : {
     "default_mapper_url":"http://localhost:5000/api/map",
     "default_mapper_name" : "ServiceModelMap.json",
-    "default_data_model" : "ServiceModel"
+    "default_data_model_name" : "ServiceModel",
+    "default_data_model_ID" : "service_1",
+    "default_map_ID" : "map_1"
   },
   "i18n": {
     "locale": "en",
