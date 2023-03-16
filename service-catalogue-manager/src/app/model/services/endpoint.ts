@@ -16,5 +16,7 @@ export interface Endpoint {
     endpointInformation: string;
     endpointDocumentation: string;
     path: string;
+    async:boolean;
+    callback?:string;
 }
 

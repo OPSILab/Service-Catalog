@@ -433,13 +433,20 @@
 								},
 								"path": {
 									"type": "string"
+								},
+								"async": {
+									"type": "boolean"
+								},
+								"calback": {
+									"type": "string"
 								}
 							},
 							"required": [
 								"accessURL",
 								"endpointInformation",
 								"endpointDocumentation",
-								"path"
+								"path",
+								"async"
 							]
 						},
 						"connectorId": {
@@ -867,7 +874,6 @@
 		}
 	},
 	"required": [
-		"serviceId",
 		"title",
 		"identifier",
 		"issued",

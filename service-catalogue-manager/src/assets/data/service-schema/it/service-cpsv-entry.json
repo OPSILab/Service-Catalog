@@ -134,11 +134,22 @@
     "requires": {
       "title": "Requires",
       "type": "array",
-      "format": "tabs",
+      "format":"tabs",
       "items": {
         "type": "string",
-        "title": "Service",
-        "description": "Service Catalogue Id or URI"
+        "title":"Service",
+        "headerTemplate": "{{ self}}",
+        "format": "autocomplete",
+        "description": "Service Catalogue Id or URI", 
+        "options": {
+          "grid_columns": 6,
+          "autocomplete": {
+            "search": "search_services",
+            "getResultValue": "getResultValue_services",
+            "renderResult": "renderResult_services",
+            "autoSelect": false
+          }
+        }
       }
     },
     "spatial": {
@@ -333,7 +344,7 @@
             "type": "string",
             "title": "Type of channel",
             "description": "Type of channel",
-            "enum": ["RESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location"]
+            "enum": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location"]
           },
           "openingHours": {
             "type": "string",

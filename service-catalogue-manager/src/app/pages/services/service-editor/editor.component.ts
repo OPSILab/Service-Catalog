@@ -174,7 +174,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
       no_additional_properties: true,
       disable_properties: true,
       prompt_before_delete: true,
-      required_by_default: true,
+      required_by_default: true, 
     });
 
     
@@ -194,7 +194,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
         const value = JSON.stringify(this.getEditor(path).getValue() as Record<string, unknown>);
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        console.log(`field with path: [${path as string}] changed to [${JSON.stringify(this.getEditor(path).getValue())}]`);
+       // console.log(`field with path: [${path as string}] changed to [${JSON.stringify(this.getEditor(path).getValue())}]`);
 
         if (value !== '"undefined"' && value !== '""') {
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands

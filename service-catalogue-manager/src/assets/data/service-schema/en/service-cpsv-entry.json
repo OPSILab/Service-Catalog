@@ -344,7 +344,7 @@
             "type": "string",
             "title": "Type of channel",
             "description": "Type of channel",
-            "enum": ["RESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location"]
+            "enum": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location"]
           },
           "openingHours": {
             "type": "string",

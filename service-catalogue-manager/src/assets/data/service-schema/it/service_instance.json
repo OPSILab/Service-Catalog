@@ -68,7 +68,7 @@
       "title": "Endpoint Connector",
       "description": "Endpoint Connector",
       "basicCategoryTitle": "Connector",
-      "format": "categories",     
+      "format": "categories",
       "properties": {
         "endpoint": {
           "type": "object",
@@ -93,6 +93,20 @@
               "type": "string",
               "title": "Path",
               "description": "Relative path, topic or queue at which the content is published by the related host."
+            },
+            "async": {
+              "title": "Async",
+              "type": "boolean",
+              "description":"If the endpoint call is async or not",
+              "format": "checkbox",
+              "default": false
+              
+            },
+            "callback": {
+              "type": "string",
+              "title": "Callback",
+              "description": "Callback path if async"
+              
             }
           }
         },
