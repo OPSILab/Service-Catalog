@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "endpointDocumentation",
     "path",
     "async",
-    "calback"
+    "callback"
 })
 public class Endpoint {
 
@@ -57,8 +57,8 @@ public class Endpoint {
     @JsonProperty("async")
     @NotNull
     private Boolean async;
-    @JsonProperty("calback")
-    private String calback;
+    @JsonProperty("callback")
+    private String callback;
 
     /**
      * No args constructor for use in serialization
@@ -73,17 +73,17 @@ public class Endpoint {
      * @param async
      * @param accessURL
      * @param endpointDocumentation
-     * @param calback
+     * @param callback
      * @param endpointInformation
      */
-    public Endpoint(String accessURL, String endpointInformation, String endpointDocumentation, String path, Boolean async, String calback) {
+    public Endpoint(String accessURL, String endpointInformation, String endpointDocumentation, String path, Boolean async, String callback) {
         super();
         this.accessURL = accessURL;
         this.endpointInformation = endpointInformation;
         this.endpointDocumentation = endpointDocumentation;
         this.path = path;
         this.async = async;
-        this.calback = calback;
+        this.callback = callback;
     }
 
     /**
@@ -186,14 +186,14 @@ public class Endpoint {
         this.async = async;
     }
 
-    @JsonProperty("calback")
-    public String getCalback() {
-        return calback;
+    @JsonProperty("callback")
+    public String getCallback() {
+        return callback;
     }
 
-    @JsonProperty("calback")
-    public void setCalback(String calback) {
-        this.calback = calback;
+    @JsonProperty("callback")
+    public void setCallback(String callback) {
+        this.callback = callback;
     }
 
     @Override
@@ -220,9 +220,9 @@ public class Endpoint {
         sb.append('=');
         sb.append(((this.async == null)?"<null>":this.async));
         sb.append(',');
-        sb.append("calback");
+        sb.append("callback");
         sb.append('=');
-        sb.append(((this.calback == null)?"<null>":this.calback));
+        sb.append(((this.callback == null)?"<null>":this.callback));
         sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
@@ -239,7 +239,7 @@ public class Endpoint {
         result = ((result* 31)+((this.async == null)? 0 :this.async.hashCode()));
         result = ((result* 31)+((this.accessURL == null)? 0 :this.accessURL.hashCode()));
         result = ((result* 31)+((this.endpointDocumentation == null)? 0 :this.endpointDocumentation.hashCode()));
-        result = ((result* 31)+((this.calback == null)? 0 :this.calback.hashCode()));
+        result = ((result* 31)+((this.callback == null)? 0 :this.callback.hashCode()));
         result = ((result* 31)+((this.endpointInformation == null)? 0 :this.endpointInformation.hashCode()));
         return result;
     }
@@ -253,7 +253,7 @@ public class Endpoint {
             return false;
         }
         Endpoint rhs = ((Endpoint) other);
-        return (((((((this.path == rhs.path)||((this.path!= null)&&this.path.equals(rhs.path)))&&((this.async == rhs.async)||((this.async!= null)&&this.async.equals(rhs.async))))&&((this.accessURL == rhs.accessURL)||((this.accessURL!= null)&&this.accessURL.equals(rhs.accessURL))))&&((this.endpointDocumentation == rhs.endpointDocumentation)||((this.endpointDocumentation!= null)&&this.endpointDocumentation.equals(rhs.endpointDocumentation))))&&((this.calback == rhs.calback)||((this.calback!= null)&&this.calback.equals(rhs.calback))))&&((this.endpointInformation == rhs.endpointInformation)||((this.endpointInformation!= null)&&this.endpointInformation.equals(rhs.endpointInformation))));
+        return (((((((this.path == rhs.path)||((this.path!= null)&&this.path.equals(rhs.path)))&&((this.async == rhs.async)||((this.async!= null)&&this.async.equals(rhs.async))))&&((this.accessURL == rhs.accessURL)||((this.accessURL!= null)&&this.accessURL.equals(rhs.accessURL))))&&((this.endpointDocumentation == rhs.endpointDocumentation)||((this.endpointDocumentation!= null)&&this.endpointDocumentation.equals(rhs.endpointDocumentation))))&&((this.callback == rhs.callback)||((this.callback!= null)&&this.callback.equals(rhs.callback))))&&((this.endpointInformation == rhs.endpointInformation)||((this.endpointInformation!= null)&&this.endpointInformation.equals(rhs.endpointInformation))));
     }
 
 }

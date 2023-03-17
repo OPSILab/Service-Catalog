@@ -437,7 +437,7 @@
 								"async": {
 									"type": "boolean"
 								},
-								"calback": {
+								"callback": {
 									"type": "string"
 								}
 							},
