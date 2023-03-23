@@ -47,7 +47,8 @@ one year duration)
 alert will inform you.
 
 In **Keyword** tab provide one or more keywords if you want that the
-Services could be filtered/searchable by a set of keywords
+Services could be filtered/searchable by a set of keywords. Local keywords (only for infomation point of view)
+can be added in each description class.
 
 ![](howto4.png)
 

@@ -13,6 +13,7 @@ import { Description4 } from './description4';
 
 
 export interface Distribution { 
+    distributionId:string;
     accessUrl: string;
     description: Array<Description4>;
     format: string;

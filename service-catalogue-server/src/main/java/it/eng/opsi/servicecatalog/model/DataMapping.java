@@ -13,7 +13,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "name",
     "type",
     "inputType",
-    "required"
+    "required",
+    "source"
 })
 public class DataMapping {
 
@@ -59,6 +60,8 @@ public class DataMapping {
     @JsonProperty("required")
     @NotNull
     private Boolean required;
+    @JsonProperty("source")
+    private String source;
 
     /**
      * No args constructor for use in serialization
@@ -73,10 +76,11 @@ public class DataMapping {
      * @param name
      * @param conceptId
      * @param inputType
+     * @param source
      * @param type
      * @param required
      */
-    public DataMapping(String property, String conceptId, String name, String type, String inputType, Boolean required) {
+    public DataMapping(String property, String conceptId, String name, String type, String inputType, Boolean required, String source) {
         super();
         this.property = property;
         this.conceptId = conceptId;
@@ -84,6 +88,7 @@ public class DataMapping {
         this.type = type;
         this.inputType = inputType;
         this.required = required;
+        this.source = source;
     }
 
     /**
@@ -196,6 +201,16 @@ public class DataMapping {
         this.required = required;
     }
 
+    @JsonProperty("source")
+    public String getSource() {
+        return source;
+    }
+
+    @JsonProperty("source")
+    public void setSource(String source) {
+        this.source = source;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -224,6 +239,10 @@ public class DataMapping {
         sb.append('=');
         sb.append(((this.required == null)?"<null>":this.required));
         sb.append(',');
+        sb.append("source");
+        sb.append('=');
+        sb.append(((this.source == null)?"<null>":this.source));
+        sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
         } else {
@@ -239,6 +258,7 @@ public class DataMapping {
         result = ((result* 31)+((this.name == null)? 0 :this.name.hashCode()));
         result = ((result* 31)+((this.conceptId == null)? 0 :this.conceptId.hashCode()));
         result = ((result* 31)+((this.inputType == null)? 0 :this.inputType.hashCode()));
+        result = ((result* 31)+((this.source == null)? 0 :this.source.hashCode()));
         result = ((result* 31)+((this.type == null)? 0 :this.type.hashCode()));
         result = ((result* 31)+((this.required == null)? 0 :this.required.hashCode()));
         return result;
@@ -253,7 +273,7 @@ public class DataMapping {
             return false;
         }
         DataMapping rhs = ((DataMapping) other);
-        return (((((((this.property == rhs.property)||((this.property!= null)&&this.property.equals(rhs.property)))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.conceptId == rhs.conceptId)||((this.conceptId!= null)&&this.conceptId.equals(rhs.conceptId))))&&((this.inputType == rhs.inputType)||((this.inputType!= null)&&this.inputType.equals(rhs.inputType))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.required == rhs.required)||((this.required!= null)&&this.required.equals(rhs.required))));
+        return ((((((((this.property == rhs.property)||((this.property!= null)&&this.property.equals(rhs.property)))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.conceptId == rhs.conceptId)||((this.conceptId!= null)&&this.conceptId.equals(rhs.conceptId))))&&((this.inputType == rhs.inputType)||((this.inputType!= null)&&this.inputType.equals(rhs.inputType))))&&((this.source == rhs.source)||((this.source!= null)&&this.source.equals(rhs.source))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.required == rhs.required)||((this.required!= null)&&this.required.equals(rhs.required))));
     }
 
 }

@@ -1,12 +1,12 @@
 
 package it.eng.opsi.servicecatalog.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.validation.Valid;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-
-import it.eng.opsi.servicecatalog.model.generated.Description__1;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -26,7 +26,7 @@ public class HasCost {
     private String hasCost;
     @JsonProperty("description")
     @Valid
-    private Description__1 description;
+    private List<Description__1> description = new ArrayList<Description__1>();
     @JsonProperty("ifAccessedThrough")
     private String ifAccessedThrough;
 
@@ -45,7 +45,7 @@ public class HasCost {
      * @param hasCost
      * @param description
      */
-    public HasCost(String identifier, String code, String hasCost, Description__1 description, String ifAccessedThrough) {
+    public HasCost(String identifier, String code, String hasCost, List<Description__1> description, String ifAccessedThrough) {
         super();
         this.identifier = identifier;
         this.code = code;
@@ -85,12 +85,12 @@ public class HasCost {
     }
 
     @JsonProperty("description")
-    public Description__1 getDescription() {
+    public List<Description__1> getDescription() {
         return description;
     }
 
     @JsonProperty("description")
-    public void setDescription(Description__1 description) {
+    public void setDescription(List<Description__1> description) {
         this.description = description;
     }
 

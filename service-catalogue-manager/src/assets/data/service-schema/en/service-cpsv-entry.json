@@ -31,7 +31,7 @@
     "keyword": {
       "type": "array",
       "title": "Keyword",
-      "description": "Keyword tags related to textual description.",
+      "description": "Keyword tags",
       "uniqueItems": true,
       "format":"tabs",
        "items": {
@@ -53,28 +53,55 @@
       "$ref": "./locale.json"
     },
     "description": {
-      "type": "object",
+      "type": "array",
       "title": "Description",
-      "headerTemplate": "Locale ({{ self.locale }}) ",
-      "options": {
-        "collapsed": false
-      },
-      "properties": {
-        "locale": {
-          "type": "string",
-          "description": "Language used in textual description, in ISO 639-1 format.",
-          "enumSource": "possible_langs",
-          "watch": {
-            "possible_langs": "root.hasInfo.language"
-          }
+      "description": " Array of localized textual descriptions.",
+      "format": "tabs",
+      "items": {
+        "type": "object",
+        "title": "Locale",
+        "headerTemplate": "Locale ({{ self.locale }}) ",
+        "options": {
+          "collapsed": false
         },
-        "description": {
-          "type": "string",
-          "description": "Textual description of the Distribution in specified language.",
-          "format": "textarea"
+        "properties": {
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "description": "Language used in textual description, in ISO 639-1 format.",
+            "watch": {
+              "possible_langs": "root.hasInfo.language"
+            },
+            "enumSource": "possible_langs"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "description": "Textual description in specified language.",
+            "format": "textarea"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "description": "Title in specified language.",
+            "format": "string"
+          },
+          "keyword": {
+            "type": "array",
+            "title": "Keywords",
+            "description": "Keyword tags related to textual description.",
+            "uniqueItems": true,
+            "format": "select",
+            "options": {
+              "tags": true
+            },
+            "items": {
+              "type": "string",
+              "title": "Tag"
+            }
+          }
         }
-      },
-      "required": ["locale", "description"]
+      }
     },
     "isDescribedAt": {
       "type": "array",
@@ -175,25 +202,39 @@
             "title": "name"
           },
           "description": {
-            "type": "object",
+            "type": "array",
             "title": "Description",
+            "description": " Array of localized textual descriptions.",
+            "format": "tabs",
+            "uniqueItems": true,
+            "items": {
+            "type": "object",
+            "headerTemplate": "Locale ({{ self.locale }}) ",
             "properties": {
               "locale": {
                 "type": "string",
+                "title":"Locale",
                 "description": "Language used in textual description, in ISO 639-1 format.",
                 "enumSource": "possible_langs",
                 "watch": {
                   "possible_langs": "root.hasInfo.language"
                 }
               },
+              "title": {
+                "type": "string",
+                "title":"Title",
+                "description": "Localized Title"
+              },
               "description": {
                 "type": "string",
-                "description": "Textual description of the Distribution in specified language.",
+                "title":"Description",
+                "description": "Textual description in specified language.",
                 "format": "textarea"
               }
             },
             "required": ["locale", "description"]
-          },
+          }
+        },
           "type": {
             "type": "array",
             "title": "Type of Input",
@@ -263,24 +304,40 @@
             "title": "name"
           },
           "description": {
+            "type": "array",
+            "title": "Description",
+            "description": " Array of localized textual descriptions.",
+            "format": "tabs",
+            "uniqueItems": true,
+            "items": {
             "type": "object",
+            "title": "Description",
+            "headerTemplate": "Locale ({{ self.locale }}) ",
             "properties": {
               "locale": {
                 "type": "string",
+                "title":"Locale",
                 "description": "Language used in textual description, in ISO 639-1 format.",
                 "enumSource": "possible_langs",
                 "watch": {
                   "possible_langs": "root.hasInfo.language"
                 }
               },
+              "title": {
+                "type": "string",
+                "title":"Title",
+                "description": "Localized Title"
+              },
               "description": {
                 "type": "string",
-                "description": "Textual description of the Distribution in specified language.",
+                "title":"Description",
+                "description": "Textual description  in specified language.",
                 "format": "textarea"
               }
             },
             "required": ["locale", "description"]
-          },
+          }
+        },
           "type": {
             "type": "array",
             "title": "Type of Output",
@@ -344,7 +401,7 @@
             "type": "string",
             "title": "Type of channel",
             "description": "Type of channel",
-            "enum": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location"]
+            "enum": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location", "Citizen Service Centres"]
           },
           "openingHours": {
             "type": "string",
@@ -413,10 +470,19 @@
             ]
           },
           "description": {
+            "type": "array",
+            "title": "Description",
+            "description": " Array of localized textual descriptions.",
+            "format": "tabs",
+            "uniqueItems": true,
+            "items": {
             "type": "object",
+            "title": "Description",
+            "headerTemplate": "Locale ({{ self.locale }}) ",
             "properties": {
               "locale": {
                 "type": "string",
+                "title":"Locale",
                 "description": "Language used in textual description, in ISO 639-1 format.",
                 "enumSource": "possible_langs",
                 "watch": {
@@ -425,12 +491,13 @@
               },
               "description": {
                 "type": "string",
-                "description": "Textual description of the Distribution in specified language.",
+                "description": "Textual description in specified language.",
                 "format": "textarea"
               }
             },
             "required": ["locale", "description"]
           }
+        }
         }
       }
     }

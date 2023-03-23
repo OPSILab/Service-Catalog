@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy,EventEmitter } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { AvailableServicesService } from './availableServices.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,6 +16,7 @@ import { takeUntil } from 'rxjs/operators';
 import { LoginService } from '../../../auth/login/login.service';
 import { CustomKeywordRenderComponent } from './custom-keyword-render.component';
 import { CustomStatusRenderComponent } from './custom-status-render.component';
+import { Description } from '../../../model/services/description';
 
 
 
@@ -57,19 +58,39 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     private toastrService: NbToastrService
   ) {
     this.settings = this.loadTableSettings();
-    this.locale = (this.configService.config as AppConfig).i18n.locale; // TODO change with user language preferences
+   // this.locale = (this.configService.config as AppConfig).i18n.locale;    // TODO change with user language preferences
+   this.locale=this.translate.currentLang;
+   
+   
   }
 
 
 
 
   async ngOnInit(): Promise<void> {
+
+      this.loadSource();
+      this.translate.onLangChange.subscribe(() =>{
+        this.loadSource();       
+       });   
+  }
+
+  private getLocalizedDescription(availableServiceDescr: ServiceModel): Description[] {
+    return availableServiceDescr.hasInfo.description.reduce((filtered: Description[], description: Description) => {
+      if (this.locale !== 'en' && description.locale === this.locale) filtered = [description, ...filtered];
+      else if (description.locale === 'en') filtered = [...filtered, description];
+      return filtered;
+    }, []);
+  }
+
+  private async loadSource(): Promise<void> {
     try {
+      this.locale=this.translate.currentLang;
       this.availableServices = await this.availableServicesService.getServices();
-      void this.source.load(
+       this.source.load(
         this.availableServices.map((availableServiceDescr) => {
           /* Get Localized Human readable description of the Service, default en */
-          // availableServiceDescr.hasInfo.description= this.getLocalizedDescription(availableServiceDescr);
+           availableServiceDescr.hasInfo.description= this.getLocalizedDescription(availableServiceDescr);
 
           /* Get Localized Purposes descriptions, default en */
           // availableServiceDescr.isPersonalDataHandling = this.getLocalizedPurposesDescription(availableServiceDescr);
@@ -78,11 +99,12 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
             ...availableServiceDescr,
             locale: this.locale,
             spatial: availableServiceDescr.hasInfo.spatial,
-            description: availableServiceDescr.hasInfo.description.description,
+            description: availableServiceDescr.hasInfo.description[0]?.description,
             keywords:availableServiceDescr.hasInfo.keyword,
           } as AvailableServiceRow;
         })
       );
+            
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 
@@ -116,6 +138,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     this.statusLabel = this.translate.instant('general.services.status') as string;
     this.spatialLabel = this.translate.instant('general.services.location') as string;
     this.keywords = this.translate.instant('general.services.keywords') as string;
+
+    
 
     return {
       mode: 'external',

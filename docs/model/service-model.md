@@ -140,7 +140,7 @@ properties belong to ISA² CPSV-AP v2.2.1.
             </td>
             <td width="37%" valign="top">
                 <p>
-                    Object(1..1)
+                    Object(1..N)
                 </p>
             </td>
             <td width="48%" valign="top">
@@ -3979,4 +3979,17 @@ The Class diagram representation described above will imply in pratices the gene
 	]
 }
 
+```
+
+#### Service Model Extension
+
+Some Service Model classes provides some references to controlled vocabularies or to prefixed enumerated list. Each vocabulary or enumerated list can be extended by adding additional "items" in the related /service-schema/(locale)/ files.
+
+```
+"type": {
+            "type": "string",
+            "title": "Type of channel",
+            "description": "Type of channel",
+            "enum": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location", <add here new items>]
+          }
 ```

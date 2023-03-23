@@ -5,9 +5,10 @@
   "format": "tabs",
   "items": {
     "type": "object",
+    "id": "arr_item_d",
     "required": ["identifier", "dataMapping"],
     "title": "Dataset",
-    "description": "Service dataset description  describes the type and structure of the set of  data (personal) processed by the Service. Each dataset will be linked in one or more specific processing base object.",
+    "description": "Service dataset description  describes the type and structure of the set of  data processed by the Service. Each dataset property can be set as personal and linked to a processing class (Personal data handling).",
     "options": {
       "collapsed": false
     },
@@ -21,7 +22,7 @@
       },
       "description": {
         "type": "array",
-        "title": "Textual Description",
+        "title": "Description",
         "description": " Array of localized textual descriptions.",
         "format": "tabs",
         "items": {
@@ -34,6 +35,7 @@
           "properties": {
             "locale": {
               "type": "string",
+              "title": "Locale",
               "description": "Language used in textual description, in ISO 639-1 format.",
               "watch": {
                 "possible_langs": "root.hasInfo.language"
@@ -42,8 +44,15 @@
             },
             "description": {
               "type": "string",
-              "description": "Textual description of the Service in specified language.",
+              "title": "Description",
+              "description": "Textual description in specified language.",
               "format": "textarea"
+            },
+            "title": {
+              "type": "string",
+              "title": "Title",
+              "description": "Title in specified language.",
+              "format": "string"
             },
             "keywords": {
               "type": "array",
@@ -117,6 +126,7 @@
             "title": "Description",
             "description": "Localized description of Distribution.",
             "format": "tabs",
+            "uniqueItems": true,
             "items": {
               "type": "object",
               "title": "Locale",
@@ -154,12 +164,11 @@
         "type": "array",
         "format": "tabs",
         "title": "Data Mapping",
-        "description": "Array of objects describing mapping of each Service specific data with a personal data concept belonging to a controlled vocabulary.",
+        "description": "Array of objects describing mapping of each Service specific data property and (if personal) with a personal data concept belonging to a controlled vocabulary.",
         "items": {
           "type": "object",
           "title": "Field",
-          "id": "arr_item",
-          "headerTemplate": "{{ self.name }}",
+          "headerTemplate": "{{ self.property }}",
           "properties": {
             "property": {
               "type": "string",
@@ -208,6 +217,22 @@
               "type": "boolean",
               "title": "Required",
               "description": "If the property is mandatory when used in a dataset."
+            },
+
+            "source": {
+              "type": "text",
+              "title": "Source",
+              "description": "Reference to one of the Distribution class for possible values in type input (ex. select values)",
+              "watch": {
+                "possible_inputs": "arr_item_d.distribution"
+              },
+              "enumSource": [
+                [""],
+                {
+                  "source": "possible_inputs",
+                  "value": "{{item.distributionId}}"
+                }
+              ]
             }
           },
           "required": ["property", "name", "type", "required"]

@@ -16,7 +16,7 @@ export interface HasCost {
     identifier?: string;
     code?: string;
     hasCost?: string;
-    description?: Description1;
+    description?: Array<Description1>;
     ifAccessedThrough?: string;
 }
 

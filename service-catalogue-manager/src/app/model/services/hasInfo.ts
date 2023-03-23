@@ -28,7 +28,7 @@ export interface HasInfo {
     thematicArea: Array<string>;
     type: Array<string>;
     language: Array<string>;
-    description: Description;
+    description: Array<Description>;
     isDescribedAt: Array<IsDescribedAt>;
     hasCost: Array<HasCost>;
     processingTime: string;

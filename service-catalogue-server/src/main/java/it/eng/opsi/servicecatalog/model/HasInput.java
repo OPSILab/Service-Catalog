@@ -32,7 +32,7 @@ public class HasInput {
     private String title;
     @JsonProperty("description")
     @Valid
-    private Description__2 description;
+    private List<Description__2> description = new ArrayList<Description__2>();
     @JsonProperty("type")
     @Valid
     private List<String> type = new ArrayList<String>();
@@ -63,7 +63,7 @@ public class HasInput {
      * @param title
      * @param type
      */
-    public HasInput(String identifier, String title, Description__2 description, List<String> type, List<String> language, List<String> page, List<String> conformsTo) {
+    public HasInput(String identifier, String title, List<Description__2> description, List<String> type, List<String> language, List<String> page, List<String> conformsTo) {
         super();
         this.identifier = identifier;
         this.title = title;
@@ -107,12 +107,12 @@ public class HasInput {
     }
 
     @JsonProperty("description")
-    public Description__2 getDescription() {
+    public List<Description__2> getDescription() {
         return description;
     }
 
     @JsonProperty("description")
-    public void setDescription(Description__2 description) {
+    public void setDescription(List<Description__2> description) {
         this.description = description;
     }
 

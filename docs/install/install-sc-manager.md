@@ -99,7 +99,7 @@ fields of `config.json` configuration file, located in `dist/assets/` folder.
 ```
 To enable other languages:
 - copy paste and rename src/assets/data/i18n/en.json file with the language label ( e.g. "de") and translate the related properties.
-- copy, paste and rename folder src/assets/data/service-schema/en for translating service model labels
+- copy, paste and rename folder src/assets/data/service-schema/en for translating service model labels, by including or changing "title" for each class property. Each property should include "title" property in order to be translated.
 
 
 #### IDM Configuration for OAuth2 authentication

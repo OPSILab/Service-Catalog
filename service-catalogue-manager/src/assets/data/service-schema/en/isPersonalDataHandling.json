@@ -259,6 +259,7 @@
       "title": "Textual Description",
       "description": " Array of localized textual descriptions.",
       "format": "tabs",
+      "uniqueItems": true,
       "items": {
         "type": "object",
         "title": "Locale",

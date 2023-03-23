@@ -14,5 +14,6 @@
 export interface Description2 { 
     locale: string;
     description: string;
+    title: string;
 }
 

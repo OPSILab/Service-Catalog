@@ -123,7 +123,7 @@ public class HasInfo {
     @JsonProperty("description")
     @Valid
     @NotNull
-    private Description description;
+    private List<Description> description = new ArrayList<Description>();
     /**
      * 
      * (Required)
@@ -254,7 +254,7 @@ public class HasInfo {
      * @param isDescribedAt
      * @param requires
      */
-    public HasInfo(String identifier, String title, String status, List<String> keyword, List<String> sector, List<String> thematicArea, List<String> type, List<String> language, Description description, List<IsDescribedAt> isDescribedAt, List<HasCost> hasCost, String processingTime, List<String> isGroupedBy, HasCompetentAuthority hasCompetentAuthority, List<String> requires, String spatial, List<HasInput> hasInput, List<Produce> produces, HasContactPoint hasContactPoint, List<HasChannel> hasChannel) {
+    public HasInfo(String identifier, String title, String status, List<String> keyword, List<String> sector, List<String> thematicArea, List<String> type, List<String> language, List<Description> description, List<IsDescribedAt> isDescribedAt, List<HasCost> hasCost, String processingTime, List<String> isGroupedBy, HasCompetentAuthority hasCompetentAuthority, List<String> requires, String spatial, List<HasInput> hasInput, List<Produce> produces, HasContactPoint hasContactPoint, List<HasChannel> hasChannel) {
         super();
         this.identifier = identifier;
         this.title = title;
@@ -448,7 +448,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("description")
-    public Description getDescription() {
+    public List<Description> getDescription() {
         return description;
     }
 
@@ -458,7 +458,7 @@ public class HasInfo {
      * 
      */
     @JsonProperty("description")
-    public void setDescription(Description description) {
+    public void setDescription(List<Description> description) {
         this.description = description;
     }
 

@@ -14,6 +14,7 @@
 export interface Description4 { 
     locale: string;
     description: string;
+    title: string;
     keywords: Array<string>;
 }
 

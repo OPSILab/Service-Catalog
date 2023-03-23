@@ -29,7 +29,7 @@ public class Produce {
     private String title;
     @JsonProperty("description")
     @Valid
-    private Description__2 description;
+    private List<Description__3> description = new ArrayList<Description__3>();
     @JsonProperty("type")
     @Valid
     private List<String> type = new ArrayList<String>();
@@ -48,7 +48,7 @@ public class Produce {
      * @param title
      * @param type
      */
-    public Produce(String identifier, String title, Description__2 description, List<String> type) {
+    public Produce(String identifier, String title, List<Description__3> description, List<String> type) {
         super();
         this.identifier = identifier;
         this.title = title;
@@ -89,12 +89,12 @@ public class Produce {
     }
 
     @JsonProperty("description")
-    public Description__2 getDescription() {
+    public List<Description__3> getDescription() {
         return description;
     }
 
     @JsonProperty("description")
-    public void setDescription(Description__2 description) {
+    public void setDescription(List<Description__3> description) {
         this.description = description;
     }
 

@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
     "locale",
     "description",
+    "title",
     "keywords"
 })
 public class Description__4 {
@@ -33,6 +34,8 @@ public class Description__4 {
     @JsonProperty("description")
     @NotNull
     private String description;
+    @JsonProperty("title")
+    private String title;
     /**
      * 
      * (Required)
@@ -55,11 +58,13 @@ public class Description__4 {
      * @param keywords
      * @param description
      * @param locale
+     * @param title
      */
-    public Description__4(String locale, String description, List<String> keywords) {
+    public Description__4(String locale, String description, String title, List<String> keywords) {
         super();
         this.locale = locale;
         this.description = description;
+        this.title = title;
         this.keywords = keywords;
     }
 
@@ -103,6 +108,16 @@ public class Description__4 {
         this.description = description;
     }
 
+    @JsonProperty("title")
+    public String getTitle() {
+        return title;
+    }
+
+    @JsonProperty("title")
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     /**
      * 
      * (Required)
@@ -135,6 +150,10 @@ public class Description__4 {
         sb.append('=');
         sb.append(((this.description == null)?"<null>":this.description));
         sb.append(',');
+        sb.append("title");
+        sb.append('=');
+        sb.append(((this.title == null)?"<null>":this.title));
+        sb.append(',');
         sb.append("keywords");
         sb.append('=');
         sb.append(((this.keywords == null)?"<null>":this.keywords));
@@ -152,6 +171,7 @@ public class Description__4 {
         int result = 1;
         result = ((result* 31)+((this.description == null)? 0 :this.description.hashCode()));
         result = ((result* 31)+((this.locale == null)? 0 :this.locale.hashCode()));
+        result = ((result* 31)+((this.title == null)? 0 :this.title.hashCode()));
         result = ((result* 31)+((this.keywords == null)? 0 :this.keywords.hashCode()));
         return result;
     }
@@ -165,7 +185,7 @@ public class Description__4 {
             return false;
         }
         Description__4 rhs = ((Description__4) other);
-        return ((((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description)))&&((this.locale == rhs.locale)||((this.locale!= null)&&this.locale.equals(rhs.locale))))&&((this.keywords == rhs.keywords)||((this.keywords!= null)&&this.keywords.equals(rhs.keywords))));
+        return (((((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description)))&&((this.locale == rhs.locale)||((this.locale!= null)&&this.locale.equals(rhs.locale))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))))&&((this.keywords == rhs.keywords)||((this.keywords!= null)&&this.keywords.equals(rhs.keywords))));
     }
 
 }

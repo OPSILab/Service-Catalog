@@ -9,13 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Description1 } from './description1';
+import { Description } from './description';
 
 
 export interface HasInput { 
     identifier?: string;
     title?: string;
-    description?: Description1;
+    description?: Array<Description>;
     type?: Array<string>;
     language?: Array<string>;
     page?: Array<string>;

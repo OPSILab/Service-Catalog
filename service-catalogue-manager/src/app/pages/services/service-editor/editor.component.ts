@@ -21,6 +21,7 @@ import { AppConfig, System } from '../../../model/appConfig';
 import { ServiceModel } from '../../../model/services/serviceModel';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { Description } from '../../../model/services/description';
 
 @Component({
   selector: 'ngx-spinner-color',
@@ -110,9 +111,18 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
     return sessionStorage.getItem(key);
   }
 
+  getLocalizedDescription(availableServiceDescr: ServiceModel): Description[] {
+    return availableServiceDescr.hasInfo.description.reduce((filtered: Description[], description: Description) => {
+      if (this.translateService.currentLang !== 'en' && description.locale === this.translateService.currentLang) filtered = [description, ...filtered];
+      else if (description.locale === 'en') filtered = [...filtered, description];
+      return filtered;
+    }, []);
+  }
+
   initializeEditor(serviceData: ServiceModel): void {
     const elem = this.document.getElementById('editor');
     var serviceService = this.availablesServicesService;
+    var locale= this.translateService.currentLang;
 
     JSONEditor.defaults.callbacks = {
       autocomplete: {
@@ -136,10 +146,16 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
           return result.title;
         },
         renderResult_services: function (editor, result, props) {
+          console.log(locale)
+          var description=result.hasInfo.description.reduce((filtered: Description[], description: Description) => {
+            if (locale !== 'en' && description.locale === locale) filtered = [description, ...filtered];
+            else if (description.locale === 'en') filtered = [...filtered, description];
+            return filtered;
+          }, []);
           return [
             '<li ' + props + '>',
             '<div class="wiki-title">' + result.title + '</div>',
-            '<div class="wiki-snippet"><small>[' + result.hasInfo.spatial + '] ' + result.hasInfo.description.description + '<small></div>',
+            '<div class="wiki-snippet"><small>[' + result.hasInfo.spatial + '] ' + description[0]?.description + '<small></div>',
             '</li>',
           ].join('');
         },

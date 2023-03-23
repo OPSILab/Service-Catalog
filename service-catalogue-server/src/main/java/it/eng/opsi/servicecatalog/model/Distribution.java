@@ -11,12 +11,21 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
+    "distributionId",
     "accessUrl",
     "description",
     "format"
 })
 public class Distribution {
 
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("distributionId")
+    @NotNull
+    private String distributionId;
     /**
      * 
      * (Required)
@@ -33,7 +42,7 @@ public class Distribution {
     @JsonProperty("description")
     @Valid
     @NotNull
-    private List<Description__4> description = new ArrayList<Description__4>();
+    private List<Description__5> description = new ArrayList<Description__5>();
     /**
      * 
      * (Required)
@@ -52,15 +61,37 @@ public class Distribution {
 
     /**
      * 
+     * @param distributionId
      * @param accessUrl
      * @param format
      * @param description
      */
-    public Distribution(String accessUrl, List<Description__4> description, String format) {
+    public Distribution(String distributionId, String accessUrl, List<Description__5> description, String format) {
         super();
+        this.distributionId = distributionId;
         this.accessUrl = accessUrl;
         this.description = description;
         this.format = format;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("distributionId")
+    public String getDistributionId() {
+        return distributionId;
+    }
+
+    /**
+     * 
+     * (Required)
+     * 
+     */
+    @JsonProperty("distributionId")
+    public void setDistributionId(String distributionId) {
+        this.distributionId = distributionId;
     }
 
     /**
@@ -89,7 +120,7 @@ public class Distribution {
      * 
      */
     @JsonProperty("description")
-    public List<Description__4> getDescription() {
+    public List<Description__5> getDescription() {
         return description;
     }
 
@@ -99,7 +130,7 @@ public class Distribution {
      * 
      */
     @JsonProperty("description")
-    public void setDescription(List<Description__4> description) {
+    public void setDescription(List<Description__5> description) {
         this.description = description;
     }
 
@@ -127,6 +158,10 @@ public class Distribution {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append(Distribution.class.getName()).append('@').append(Integer.toHexString(System.identityHashCode(this))).append('[');
+        sb.append("distributionId");
+        sb.append('=');
+        sb.append(((this.distributionId == null)?"<null>":this.distributionId));
+        sb.append(',');
         sb.append("accessUrl");
         sb.append('=');
         sb.append(((this.accessUrl == null)?"<null>":this.accessUrl));
@@ -151,6 +186,7 @@ public class Distribution {
     public int hashCode() {
         int result = 1;
         result = ((result* 31)+((this.format == null)? 0 :this.format.hashCode()));
+        result = ((result* 31)+((this.distributionId == null)? 0 :this.distributionId.hashCode()));
         result = ((result* 31)+((this.description == null)? 0 :this.description.hashCode()));
         result = ((result* 31)+((this.accessUrl == null)? 0 :this.accessUrl.hashCode()));
         return result;
@@ -165,7 +201,7 @@ public class Distribution {
             return false;
         }
         Distribution rhs = ((Distribution) other);
-        return ((((this.format == rhs.format)||((this.format!= null)&&this.format.equals(rhs.format)))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.accessUrl == rhs.accessUrl)||((this.accessUrl!= null)&&this.accessUrl.equals(rhs.accessUrl))));
+        return (((((this.format == rhs.format)||((this.format!= null)&&this.format.equals(rhs.format)))&&((this.distributionId == rhs.distributionId)||((this.distributionId!= null)&&this.distributionId.equals(rhs.distributionId))))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.accessUrl == rhs.accessUrl)||((this.accessUrl!= null)&&this.accessUrl.equals(rhs.accessUrl))));
     }
 
 }

@@ -9,13 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Description2 } from './description2';
+import { Description } from './description';
 
 
 export interface Produce { 
     identifier?: string;
     title?: string;
-    description?: Description2;
+    description?: Array<Description>;
     type?: Array<string>;
 }
 

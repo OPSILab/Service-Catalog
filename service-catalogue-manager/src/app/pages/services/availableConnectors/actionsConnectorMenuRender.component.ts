@@ -118,7 +118,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       this.dialogRef = this.modalService.open(this.serviceInfoModalRef, {
         context: {
           modalHeader: this.service.title,
-          description: this.service.hasInfo.description.description,
+          description: this.service.hasInfo.description[0].description,
           sector: this.service.hasInfo.sector,
           event: this.service.hasInfo.isGroupedBy,
           thematicArea: this.service.hasInfo.thematicArea,

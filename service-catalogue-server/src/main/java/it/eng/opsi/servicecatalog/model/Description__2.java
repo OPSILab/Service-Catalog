@@ -1,7 +1,6 @@
 
 package it.eng.opsi.servicecatalog.model;
 
-import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -9,26 +8,17 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
     "locale",
-    "description"
+    "description",
+    "title"
 })
 public class Description__2 {
 
-    /**
-     * 
-     * (Required)
-     * 
-     */
     @JsonProperty("locale")
-    @NotNull
     private String locale;
-    /**
-     * 
-     * (Required)
-     * 
-     */
     @JsonProperty("description")
-    @NotNull
     private String description;
+    @JsonProperty("title")
+    private String title;
 
     /**
      * No args constructor for use in serialization
@@ -41,51 +31,43 @@ public class Description__2 {
      * 
      * @param description
      * @param locale
+     * @param title
      */
-    public Description__2(String locale, String description) {
+    public Description__2(String locale, String description, String title) {
         super();
         this.locale = locale;
         this.description = description;
+        this.title = title;
     }
 
-    /**
-     * 
-     * (Required)
-     * 
-     */
     @JsonProperty("locale")
     public String getLocale() {
         return locale;
     }
 
-    /**
-     * 
-     * (Required)
-     * 
-     */
     @JsonProperty("locale")
     public void setLocale(String locale) {
         this.locale = locale;
     }
 
-    /**
-     * 
-     * (Required)
-     * 
-     */
     @JsonProperty("description")
     public String getDescription() {
         return description;
     }
 
-    /**
-     * 
-     * (Required)
-     * 
-     */
     @JsonProperty("description")
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @JsonProperty("title")
+    public String getTitle() {
+        return title;
+    }
+
+    @JsonProperty("title")
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
@@ -100,6 +82,10 @@ public class Description__2 {
         sb.append('=');
         sb.append(((this.description == null)?"<null>":this.description));
         sb.append(',');
+        sb.append("title");
+        sb.append('=');
+        sb.append(((this.title == null)?"<null>":this.title));
+        sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
         } else {
@@ -111,8 +97,9 @@ public class Description__2 {
     @Override
     public int hashCode() {
         int result = 1;
-        result = ((result* 31)+((this.locale == null)? 0 :this.locale.hashCode()));
         result = ((result* 31)+((this.description == null)? 0 :this.description.hashCode()));
+        result = ((result* 31)+((this.locale == null)? 0 :this.locale.hashCode()));
+        result = ((result* 31)+((this.title == null)? 0 :this.title.hashCode()));
         return result;
     }
 
@@ -125,7 +112,7 @@ public class Description__2 {
             return false;
         }
         Description__2 rhs = ((Description__2) other);
-        return (((this.locale == rhs.locale)||((this.locale!= null)&&this.locale.equals(rhs.locale)))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))));
+        return ((((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description)))&&((this.locale == rhs.locale)||((this.locale!= null)&&this.locale.equals(rhs.locale))))&&((this.title == rhs.title)||((this.title!= null)&&this.title.equals(rhs.title))));
     }
 
 }

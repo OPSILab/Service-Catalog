@@ -1,7 +1,7 @@
 {
   "type": "array",
   "title": "Language",
-  "description": "Languages in which the service is available, in ISO 639-1 format.",
+  "description": "Available languages, in ISO 639-1 format.",
   "format": "select2",
   "uniqueItems": true,
   "items": {
