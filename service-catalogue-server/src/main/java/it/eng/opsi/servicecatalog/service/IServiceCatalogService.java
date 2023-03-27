@@ -121,4 +121,6 @@ public interface IServiceCatalogService {
 
       public abstract Object getTimeByServiceId(String decodedServiceIdentifier);
 
+      public abstract List<ServiceModel> createServices(@Valid List<ServiceModel> services);
+
 }

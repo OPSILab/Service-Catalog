@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.repository.Aggregation;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -77,4 +79,6 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 	@Aggregation(pipeline = { "{$unwind: '$hasInfo.spatial'}", "{'$group':{'_id':'$hasInfo.spatial','count':{$sum:1}}}",
 			"{$project:{'_id':0,'location':'$_id','count':'$count'}}" })
 	public List<HashMap<String, Object>> getCountByLocation();
+
+	// public List<ServiceModel> saveAll(@Valid List<ServiceModel> services);
 }

@@ -170,8 +170,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Operation(summary = "Get Service time  by serviceId.", tags = {
 			"Service Model" }, responses = {
-					@ApiResponse(description = "The (estimated) time needed for executing a Public Service using the ISO8601 syntax for durations: P(n)Y(n)M(n)DT(n)H(n)M(n)S).", 
-							responseCode = "200") })
+					@ApiResponse(description = "The (estimated) time needed for executing a Public Service using the ISO8601 syntax for durations: P(n)Y(n)M(n)DT(n)H(n)M(n)S).", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/services/time", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceTime(@RequestParam("serviceId") String serviceId)
@@ -360,6 +359,17 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 		ServiceModel result = catalogService.createService(service);
 		return ResponseEntity.created(URI.create(uriBasePath + result.getIdentifier().replaceAll("\\s+", "")))
+				.body(result);
+	}
+
+	@Operation(summary = "Create new Service Model descriptions.", tags = { "Service Model" }, responses = {
+			@ApiResponse(description = "Returns 201 Created with the created Service Models.", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceModel.class))) })
+	@Override
+	@PostMapping(value = "/services/many")
+	public ResponseEntity<List<ServiceModel>> createServices(@RequestBody @Valid List<ServiceModel> services) {
+
+		List<ServiceModel> result = catalogService.createServices(services);
+		return ResponseEntity.created(URI.create(uriBasePath))
 				.body(result);
 	}
 

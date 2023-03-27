@@ -492,4 +492,18 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 				() -> new ServiceNotFoundException("No Service found with Service Id: " + decodedServiceIdentifier))
 				.getHasInfo().getProcessingTime();
 	}
+
+	@Override
+	public List<ServiceModel> createServices(@Valid List<ServiceModel> services) {
+
+		for (ServiceModel service : services) {
+			//service.setStatus(ServiceDescriptionStatus.UNDER_DEVELOPMENT);
+			// If identifier is blank, set as the Service Id
+			if (StringUtils.isBlank(service.getIdentifier()))
+				service.setIdentifier(uriBasePath + service.getIdentifier());
+			// log.info("Creating new Service Model");
+		}
+
+		return serviceModelRepo.saveAll(services);
+	}
 }

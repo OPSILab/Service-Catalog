@@ -52,6 +52,8 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<ServiceModel> createService(ServiceModel service);
 
+	public abstract ResponseEntity<List<ServiceModel>> createServices(List<ServiceModel> services);
+
 	public abstract ResponseEntity<Connector> createConnector(Connector connector);
 
 	public abstract ResponseEntity<Adapter> createAdapter(Adapter adapter);
