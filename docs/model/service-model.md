@@ -3990,6 +3990,19 @@ Some Service Model classes provides some references to controlled vocabularies o
             "type": "string",
             "title": "Type of channel",
             "description": "Type of channel",
-            "enum": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location", <add here new items>]
+            "enum": 
+                ["RESTService",
+                "AsyncRESTService",
+                "E-mail", 
+                "Homepage", 
+                "Fax", 
+                "Assistant", 
+                "Telephone", 
+                "Mobile App", 
+                "Digital TV", 
+                "Mail", 
+                "Service Bureau",                                     
+                "Client's Location", 
+                <add here new items>]
           }
 ```

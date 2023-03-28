@@ -147,6 +147,8 @@ Endpoint properties:
 
 -   Access URL- root url of REST endpoint
 
+-   Endpoint documentation url (e.g an openapi doc)
+
 -   Path- Relative path of the specific endpoint \[{METHOD},
     Content-Type:{content-type}\]
 
@@ -160,12 +162,15 @@ Endpoint properties:
             file (Content-Type=application/octet-stream), depending on
             how it has been defined in Service Instance-\>Service Data
             Description-Data Mapping
+  - Asynch - if it is a REST asynchronous call
+  - Callback - any path or url of callback function associated to the asynchronous call
 
 ![](howto17.png)
 
 Create separate datasets by distinguishing personal data and not.
 Personal dataset are used to specify which property requires data
 consent as defined in *Personal Data Handling-\>Required Datasets*
+
 
 ![](howto18.png)
 
@@ -181,9 +186,18 @@ following values are used:
 
     -   File
 
+    -   other options if configured in enumerated list of [**Service Model**](../model/service-model.md)
+
 -   Required: true/false
 
 -   Concept: (if personal data)personal data concept
+
+-   Input Type - input form type ( text input, select, ..)
+
+-   Source - it is possible assign a previously defined *Distribution* class which refers to an external enumerate list of possible values
+
+![](datamapping-distribution.jpg)
+
 
 
 ## JSON Example
@@ -228,10 +242,10 @@ or save as file and import as described  in the *service import* section [here](
       "it",
       "lv"
     ],
-    "description": {
+    "description": [{
       "locale": "en",
       "description": "Service Catalogue provides search and manage functionalities for public and private services"
-    },
+    }],
     "isDescribedAt": [
       {
         "identifier": "1",
@@ -254,10 +268,10 @@ or save as file and import as described  in the *service import* section [here](
       {
         "identifier": "ServiceInput",
         "title": "Service Description",
-        "description": {
+        "description": [{
           "locale": "en",
           "description": "Service Description as defined in Service Catalogue schema"
-        },
+        }],
         "type": [],
         "language": [
           "en"
@@ -295,10 +309,10 @@ or save as file and import as described  in the *service import* section [here](
         "code": "EUR",
         "hasCost": "1",
         "ifAccessedThrough": "RESTService",
-        "description": {
+        "description": [{
           "locale": "en",
           "description": "cost per api call"
-        }
+        }]
       }
     ]
   },
