@@ -166,9 +166,11 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
     // Custom validators must return an array of errors or an empty array if valid
 JSONEditor.defaults.custom_validators.push((schema, value, path) => {
   const errors = [];
-  if (path==="root.hasInfo.processingTime" &&  value.trim() !== "" ) {
+  if (path==="root.hasInfo.processingTime") {
 
-      
+
+
+
     if (!/^P(?=\d+[YMWD])(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d+[HMS])(\d+H)?(\d+M)?(\d+S)?)?$/.test(value)) {
       // Errors must be an object with `path`, `property`, and `message`
       errors.push({
@@ -190,10 +192,10 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
       no_additional_properties: true,
       disable_properties: true,
       prompt_before_delete: true,
-      required_by_default: true, 
+      required_by_default: true,
     });
 
-    
+
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     this.editor = editor;
 
@@ -275,13 +277,16 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
   importAsFile(): void {
     this.dialogService.open(DialogImportPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
       if (result.content) {
+        console.log("result.content\n\n", result.content)
         this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
-
+        console.log("result.format\n", result.format)
         if (result.format == 'Cpsv') {
           this.editor.getEditor('root.hasInfo').setValue(result.content);
           this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());
           this.editor.getEditor('root.title').setValue(this.editor.getEditor('root.hasInfo.title').getValue());
-        } else this.editor.setValue(result.content);
+        }
+        else if (result.format=="csv") this.editor.getEditor('root').setValue(result.content)
+        else this.editor.setValue(result.content);
 
         this.serviceId = result.content['identifier'] as string;
       }
