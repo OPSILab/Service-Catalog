@@ -41,7 +41,11 @@
       "account": "Account",
       "editorpage_title": "Service description",
       "adapters": "Adapters",
-      "connectors_adapters": "CONNECTORS & ADAPTERS"
+      "connectors_adapters": "CONNECTORS & ADAPTERS",
+      "administration": "ADMINISTRATION",
+      "federated_catalogues": "Federated Catalogues",
+      "remote_catalogues":"Remote Catalogues"
+      
     },
     "consents": {
       "legalbasis": "Legal basis",
@@ -113,6 +117,9 @@
       "refresh": "Refresh"
     },
     "account": {
+      "roles":"Your Roles",
+      "report_message":"Message",
+      "report_subject":"Select the topic",      
       "export_data": "Export Data",
       "export_csv": "Export as CSV",
       "export_json": "Export as JSON",
@@ -162,7 +169,7 @@
       "privacy_policy": "Privacy Policy",
       "assistance_and_support": "Assistance and Support",
       "tutorials_and_documentations": "Tutorials and Documentations",
-      "report_the_problem": "Report the Problem",
+      "report_the_problem": "Report a Problem",
       "name_errors_minlength": "First name must be at least 2 characters long.",
       "email_errors_pattern": "Email must be regular.",
       "lastName_errors_minlength": "Last name must be at least 3 characters long.",

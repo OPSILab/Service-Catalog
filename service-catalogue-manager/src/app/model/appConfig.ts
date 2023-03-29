@@ -13,6 +13,8 @@ export interface System {
   editorSchemaPath: string;
   editorSchemaName: string;
   auth: Auth;
+  mailTo:string;
+  docsUrl:string;
 }
 
 export interface Auth {

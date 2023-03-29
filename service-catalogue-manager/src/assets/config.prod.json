@@ -15,10 +15,11 @@
       "disableAuth": "false",
       "authProfile": "oidc",
       "authRealm": "Cape"
-    }
+    },
+    "mailTo":"support@across.eu"
   },
   "i18n": {
     "locale": "en",
-    "languages": ["it","en","de","gr","lv"]
+    "languages": ["it","en","de","el","lv"]
   }
 }

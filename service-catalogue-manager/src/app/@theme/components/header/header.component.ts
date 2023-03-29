@@ -43,8 +43,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   currentTheme = 'across';
 
- // loggedUserMenu = [{ title: 'Account', link: 'pages/account' }];
-  loggedUserMenu = [];
+  loggedUserMenu = [{ title: 'Profile', link: 'pages/account' },{title: 'Help', link: 'pages/account'}];
+  //loggedUserMenu = [];
   userMenu = [{ title: 'Log in', link: '/login' }];
 
   public languages=[];
@@ -110,7 +110,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   changeLang(event){
-    console.log("Language changed: " + event);
     this.translateService.use(event);
   }
 

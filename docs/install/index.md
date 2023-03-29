@@ -90,8 +90,11 @@ In order to get Keycloak ready to be used by Service Catalogue, following steps 
 
  - Install Keycloak, create a realm and at least one user [(see here)](https://www.keycloak.org/getting-started/getting-started-docker).
  - Register a client applications with a name and clientId [(see here)](https://www.keycloak.org/docs/latest/server_admin/#_clients). Be sure to select `public` in the Access Type field.
- - Create  `DATA_CONTROLLER` and `SERVICE_MANAGER` in the  client. [(see here)](https://www.keycloak.org/docs/latest/server_admin/#client-roles).
- - Assign  `SERVICE_MANAGER` as default role. [(see here)](https://www.keycloak.org/docs/latest/server_admin/#_default_roles) and the image below.
+ - Create  `DATA_CONTROLLER`, `SERVICE_MANAGER` and `CATALOGUE_MANAGER`
+ in the  client. [(see here)](https://www.keycloak.org/docs/latest/server_admin/#client-roles).
+ - Assign  `SERVICE_MANAGER` as default role. [(see here)](https://www.keycloak.org/docs/latest/server_admin/#_default_roles).
+
+ - Create a least a user playing the above third roles in order to view all the sections of the  [Service Catalogue Manager Dashboard](../usage/index.md)
 
  - Create for client a Mapper of type User Client Role and set `roles` as Token Claim Name, in order to map client roles to the `roles` field of the generated Access Token. 
 
