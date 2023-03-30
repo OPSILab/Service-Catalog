@@ -11,26 +11,31 @@
   <nb-card-body class="m-2 p-4">
     <h6>
       <form>
-        <label for="adapterId">{{ 'general.adapters.adapterId' | translate }}</label>
+        <label for="adapterId" style="width: 280px;">{{ 'general.adapters.adapterId' | translate }}</label>
+        &nbsp;
+        <label for="name" style="width: 280px;">{{ 'general.adapters.name' | translate }}</label>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="adapterId" [(ngModel)]="adapterId"
+        <input type="text" style="width: 280px;" nbInput fieldSize="small" placeholder="adapterId"
+          [(ngModel)]="adapterId" [ngModelOptions]="{standalone: true}">
+        &nbsp;
+        <input type="text" style="width: 280px;" nbInput fieldSize="small" placeholder="name" [(ngModel)]="name"
           [ngModelOptions]="{standalone: true}">
-          <br><br>
-        <label for="name">{{ 'general.adapters.name' | translate }}</label>
-        <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
-          [ngModelOptions]="{standalone: true}">
-          <br><br>
+        <br><br>
         <label for="description">{{ 'general.adapters.description' | translate }}</label>
         <br>
         <textarea nbInput fullWidth fieldSize="medium" placeholder="description" [(ngModel)]="description"
           [ngModelOptions]="{standalone: true}"></textarea>
-          <br><br>
+        <br><br>
         <label for="status">{{ 'general.adapters.status' | translate }}</label>
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
-            [ngModelOptions]="{standalone: true}" disabled>
-          <br><br>
+          [ngModelOptions]="{standalone: true}" disabled>
+        <br><br>
+        <label for="url">{{ 'general.adapters.url' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+          [ngModelOptions]="{standalone: true}">
+        <br><br>
         <label for="type">{{ 'general.adapters.type' | translate }}</label>
         <br>
         <nb-select fullWidth placeholder="Select adapter type" [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
@@ -39,13 +44,32 @@
             <nb-option value="DATA">Data</nb-option>
           </nb-option-group>
         </nb-select>
-          <br><br>
-        <label for="url">{{ 'general.adapters.url' | translate }}</label>
+        <br><br>
+        <label *ngIf="type=='MODEL'" for="context">{{ 'general.adapters.context' | translate }}</label>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+        <nb-select *ngIf="type=='MODEL'" fullWidth placeholder="Select adapter context" [(ngModel)]="context"
           [ngModelOptions]="{standalone: true}">
+          <nb-option-group title="context">
+            <nb-option value="IMPORT">Import</nb-option>
+            <nb-option value="EXPORT">Export</nb-option>
+          </nb-option-group>
+        </nb-select>
         <br>
         <br>
+        <label *ngIf="type=='MODEL'" for="mapper">{{ 'general.adapters.mapper' | translate }}</label>
+        <br *ngIf="type=='MODEL'">
+        <input *ngIf="type=='MODEL'" type="text" nbInput fullWidth fieldSize="small" placeholder="mapper"
+          [(ngModel)]="mapper" [ngModelOptions]="{standalone: true}">
+        <br *ngIf="type=='MODEL'"><br *ngIf="type=='MODEL'">
+        <label *ngIf="type=='MODEL'" for="adapterModel">{{ 'general.adapters.adapter_model' | translate }}</label>
+        <br *ngIf="type=='MODEL'">
+        <nb-select *ngIf="type=='MODEL'" fullWidth placeholder="Select adapter model" [(ngModel)]="adapterModel"
+          [ngModelOptions]="{standalone: true}">
+          <nb-option-group title="Adapter Model">
+            <nb-option value="ServiceModel">Service Model</nb-option>
+          </nb-option-group>
+        </nb-select>
+        <br *ngIf="type=='MODEL'"><br *ngIf="type=='MODEL'">
         <h3>
           <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>

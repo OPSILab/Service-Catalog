@@ -19,6 +19,7 @@ import { AddAdapterComponent } from '.././add-adapter/add-adapter.component';
 import { LoginService } from '../../../../auth/login/login.service';
 import { AdapterStatusEnum } from '../../../../model/services/adapter';
 import { AdapterEntry } from '../../../../model/adapter/adapterEntry';
+import {ServiceModelSchema } from '../../../../model/services/serviceModelSchema'
 
 @Component({
   selector: 'actions-adapter-menu-render',
@@ -39,6 +40,9 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   url
   ref
   dialogRef
+  context
+  mapper
+  adapterModel
 
   private unsubscribe: Subject<void> = new Subject();
   actions: NbMenuItem[];
@@ -67,9 +71,12 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.name=this.value.name
+    this.context=this.value.context
     this.description=this.value.description
     this.url=this.value.url
     this.type=this.value.type
+    this.mapper=this.value.mapper
+    this.adapterModel=this.value.adapterModel
     this.actions = this.translatedActionLabels();
     this.menuService
       .onItemClick()
@@ -137,8 +144,8 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
 
   async onEdit() {
     try {
-      let name = this.name, description = this.description, status = this.value.status, adapterId = this.value.adapterId, url = this.url, type = this.type;
-      await this.availableAdaptersService.updateAdapter((({ name, description, status, adapterId, type, url } as unknown)) as AdapterEntry, adapterId);//as unknown)) as AdapterEntry were VisualStudioCode tips
+      let name = this.name, description = this.description, status = this.value.status, adapterId = this.value.adapterId, url = this.url, type = this.type, context = this.context, mapper=this.mapper, adapterModel= ServiceModelSchema.schema;
+      await this.availableAdaptersService.updateAdapter((({ name, description, status, adapterId, type, url , context, mapper, adapterModel} as unknown)) as AdapterEntry, adapterId);//as unknown)) as AdapterEntry were VisualStudioCode tips
       this.updateResult.emit(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
     }
@@ -167,6 +174,18 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
         "path": "root.url",
         "property": "minLength",
         "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.type) errors.push({
+        "path": "root.type",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (this.type== "MODEL" && !this.context) errors.push({
+        "path": "root.context",
+        "property": "minLength",
+        "message": "Value required for adapter type model",
         "errorcount": 1
       })
 

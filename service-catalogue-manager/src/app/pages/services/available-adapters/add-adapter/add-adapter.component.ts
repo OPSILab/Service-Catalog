@@ -9,6 +9,7 @@ import { AdapterEntry } from '../../../../model/adapter/adapterEntry'
 import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorDialogAdapterService } from '../../../error-dialog/error-dialog-adapter.service';
+import {ServiceModelSchema } from '../../../../model/services/serviceModelSchema'
 
 @Component({
   selector: 'add-adapter',
@@ -26,8 +27,11 @@ export class AddAdapterComponent implements OnInit {
   name: string
   description: string
   status: string = "inactive"
-  type: string
+  type: string = "MODEL"
+  context: string = "IMPORT"
   url: string
+  mapper: string = "Data model mapper"
+  adapterModel: object = ServiceModelSchema.schema
   textareaItemNgModel;
   inputItemFormControl;
   textareaItemFormControl;
@@ -99,8 +103,8 @@ export class AddAdapterComponent implements OnInit {
 
   async onEdit() {
     try {
-      let name = this.name, description = this.description, status = this.status, adapterId = this.adapterId, type = this.type, url = this.url;
-      await this.availableAdapterService.updateAdapter((({ name, description, status, adapterId, type, url } as unknown)) as AdapterEntry, adapterId);//as unknown)) as AdapterEntry were VisualStudioCode tips
+      let name = this.name, description = this.description, status = this.status, adapterId = this.adapterId, type = this.type, url = this.url, context = this.context, mapper = this.mapper, adapterModel = ServiceModelSchema.schema;
+      await this.availableAdapterService.updateAdapter((({ name, description, status, adapterId, type, url , context, mapper, adapterModel} as unknown)) as AdapterEntry, adapterId);//as unknown)) as AdapterEntry were VisualStudioCode tips
       this.ref.close({ content: this.json, format: this.selectedItem });
       this.editedValue.emit(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
@@ -173,12 +177,12 @@ export class AddAdapterComponent implements OnInit {
 
   async onSubmit() {
     try {
-      let name = this.name, description = this.description, status = this.status, adapterId = this.adapterId, type = this.type, url = this.url;
+      let name = this.name, description = this.description, status = this.status, adapterId = this.adapterId, type = this.type, url = this.url, context=this.context, mapper = this. mapper, adapterModel= ServiceModelSchema.schema;
       if (adapterId == '' || adapterId == null) {
         console.log("dialog-add-new-prompt.component.ts.onSubmit(): Adapter ID must be set");
         throw new Error("Adapter ID must be set");
       }
-      await this.availableAdapterService.saveAdapter((({ name, description, status, adapterId, type, url } as unknown)) as AdapterEntry);
+      await this.availableAdapterService.saveAdapter((({ name, description, status, adapterId, type, url , context, mapper, adapterModel} as unknown)) as AdapterEntry);
       this.ref.close();
       this.editedValue.emit(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
@@ -209,13 +213,19 @@ export class AddAdapterComponent implements OnInit {
         "property": "minLength",
         "message": "Value required",
         "errorcount": 1
-      })/*
+      })
       if (!this.type) errors.push({
         "path": "root.type",
         "property": "minLength",
         "message": "Value required",
         "errorcount": 1
-      })*/
+      })
+      if (this.type== "MODEL" && !this.context) errors.push({
+        "path": "root.context",
+        "property": "minLength",
+        "message": "Value required for adapter type model",
+        "errorcount": 1
+      })
 
       console.log("error:", "\n", error)
       if (error.message == "Adapter ID must be set") {

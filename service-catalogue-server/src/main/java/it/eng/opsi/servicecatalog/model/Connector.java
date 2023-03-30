@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
+import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -21,8 +22,11 @@ import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
         "status",
         "connectorId",
         "serviceId",
+        "adapterId",
         "url"
 })
+
+@Data
 public class Connector {
 
     @Autowired
@@ -61,6 +65,28 @@ public class Connector {
     // NotNull
     private String serviceId;
 
+    @JsonProperty("adapterId")
+    @Valid
+    // NotNull
+    private String adapterId;
+
+    public Connector(String adapterId) {
+        this.adapterId = adapterId;
+    }
+
+    public String getAdapterId() {
+        return this.adapterId;
+    }
+
+    public void setAdapterId(String adapterId) {
+        this.adapterId = adapterId;
+    }
+
+    public Connector adapterId(String adapterId) {
+        setAdapterId(adapterId);
+        return this;
+    }
+
     @JsonProperty("url")
     @Valid
     @NotNull
@@ -78,7 +104,8 @@ public class Connector {
      * @param name
      * @param description
      */
-    public Connector(String name, String description, String status, String connectorId, String serviceId, String url) {
+    public Connector(String name, String description, String status, String connectorId, String serviceId,
+            String adapterId, String url) {
         super();
         this.name = name;
         this.description = description;
@@ -209,28 +236,5 @@ public class Connector {
             sb.append(']');
         }
         return sb.toString();
-    }
-
-    @Override
-    public int hashCode() {
-        int result = 1;
-        result = ((result * 31) + ((this.name == null) ? 0 : this.name.hashCode()));
-        result = ((result * 31) + ((this.description == null) ? 0 : this.description.hashCode()));
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-        if ((other instanceof Connector) == false) {
-            return false;
-        }
-        Connector rhs = ((Connector) other);
-        return (((this.name == rhs.name)
-                || ((this.name != null) && this.name.equals(rhs.name)))
-                && ((this.description == rhs.description)
-                        || ((this.description != null) && this.description.equals(rhs.description))));
     }
 }

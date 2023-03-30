@@ -159,6 +159,17 @@
             [ngModelOptions]="{standalone: true}">
           <br>
           <br>
+          <label for="adapter">{{ 'general.connectors.adapter' | translate }}</label>
+          <br>
+          <nb-select fullWidth placeholder="Select adapter to connect with" [(ngModel)]="adapterId"
+            [ngModelOptions]="{standalone: true}">
+            <nb-option-group title="adapterId">
+              <nb-option value="">--</nb-option>
+              <nb-option *ngFor="let adapter of adaptersTypeModel" value={{adapter.adapterId}}>{{adapter.name}}</nb-option>
+            </nb-option-group>
+          </nb-select>
+          <br>
+          <br>
           <h3>
             <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
               (click)="onEdit(); ref.close()">

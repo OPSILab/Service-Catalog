@@ -424,7 +424,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@Override
 	@PostMapping(value = "/adapters")
 	public ResponseEntity<Adapter> createAdapter(@RequestBody @Valid Adapter adapter) {
-
+		System.out.println(adapter);
 		Adapter result = new Adapter();
 		try {
 			if (catalogService.getAdapterByadapterId(adapter.getAdapterId()) != null && catalogService
