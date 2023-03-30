@@ -100,7 +100,8 @@
               "title": "Tag"
             }
           }
-        }
+        },
+        "required": ["locale", "description","title"]
       }
     },
     "isDescribedAt": {
@@ -232,7 +233,7 @@
                 "format": "textarea"
               }
             },
-            "required": ["locale", "description"]
+            "required": ["locale", "description","title"]
           }
         },
           "type": {
@@ -335,7 +336,7 @@
                 "format": "textarea"
               }
             },
-            "required": ["locale", "description"]
+            "required": ["locale", "description","title"]
           }
         },
           "type": {
