@@ -41,6 +41,11 @@ const routes: Routes = [
         loadChildren: () => import('./account/account.module').then((m) => m.AccountModule),
         canActivate: [AuthGuard],
       },
+      {
+        path: 'dmm',
+        loadChildren: () => import('./data-model-mapper/dmm.module').then((m) => m.DMMModule),
+        canActivate: [AuthGuard],
+      },
 
     ],
   },
