@@ -20,6 +20,8 @@ import { LoginService } from '../../../../auth/login/login.service';
 import { AdapterStatusEnum } from '../../../../model/services/adapter';
 import { AdapterEntry } from '../../../../model/adapter/adapterEntry';
 import {ServiceModelSchema } from '../../../../model/services/serviceModelSchema'
+import { NgxConfigureService } from 'ngx-configure';
+import { AppConfig } from '../../../../model/appConfig';
 
 @Component({
   selector: 'actions-adapter-menu-render',
@@ -43,6 +45,8 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   context
   mapper
   adapterModel
+  adapterId
+  private appConfig: AppConfig;
 
   private unsubscribe: Subject<void> = new Subject();
   actions: NbMenuItem[];
@@ -62,14 +66,21 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
     private toastrService: NbToastrService,
     private dialogService: NbDialogService,
     private translateService: TranslateService,
-    private loginService: LoginService
-  ) { }
+    private loginService: LoginService,
+    private configService: NgxConfigureService
+
+  ) {
+    this.appConfig = this.configService.config as AppConfig
+      this.adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
+      this.mapper = this.appConfig.data_model_mapper.default_map_ID
+   }
 
   get registered(): boolean {
     return this.value.status == AdapterStatusEnum.Active ? true : false;
   }
 
   ngOnInit(): void {
+    this.adapterId=this.value.adapterId
     this.name=this.value.name
     this.context=this.value.context
     this.description=this.value.description

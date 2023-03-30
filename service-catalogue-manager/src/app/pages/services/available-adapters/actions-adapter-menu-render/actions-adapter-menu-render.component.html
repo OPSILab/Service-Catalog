@@ -133,33 +133,32 @@
           <input type="text" style="width: 280px;" nbInput fieldSize="small" placeholder="name" [(ngModel)]="name"
             [ngModelOptions]="{standalone: true}">
           <br><br>
+          <label for="status" style="width: 280px;">{{ 'general.adapters.status' | translate }}</label>
+          &nbsp;
+          <label for="url" style="width: 280px;">{{ 'general.adapters.url' | translate }}</label>
+          <br>
+          <input type="text" style="width: 280px;" nbInput fullWidth fieldSize="small" placeholder="status"
+            [(ngModel)]="status" [ngModelOptions]="{standalone: true}" disabled>
+          &nbsp;
+          <input type="text" style="width: 280px;" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+            [ngModelOptions]="{standalone: true}">
+          <br><br>
           <label for="description">{{ 'general.adapters.description' | translate }}</label>
           <br>
           <textarea nbInput fullWidth fieldSize="medium" placeholder="description" [(ngModel)]="description"
             [ngModelOptions]="{standalone: true}"></textarea>
           <br><br>
-          <label for="status">{{ 'general.adapters.status' | translate }}</label>
-          <br>
-          <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="value.status"
-            [ngModelOptions]="{standalone: true}" disabled>
-          <br><br>
-          <label for="url">{{ 'general.adapters.url' | translate }}</label>
-          <br>
-          <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
-            [ngModelOptions]="{standalone: true}">
-          <br>
-          <br>
           <label for="type">{{ 'general.adapters.type' | translate }}</label>
           <br>
-          <nb-select fullWidth placeholder="Select adapter type" [(ngModel)]="type"
-            [ngModelOptions]="{standalone: true}">
+          <nb-select fullWidth placeholder="Select adapter type" [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
             <nb-option-group title="type">
               <nb-option value="MODEL">Model</nb-option>
               <nb-option value="DATA">Data</nb-option>
             </nb-option-group>
           </nb-select>
           <br><br>
-          <label *ngIf="type=='MODEL'" for="context">{{ 'general.adapters.context' | translate }}</label>
+          <label *ngIf="type=='MODEL'" for="context">{{ 'general.adapters.context' | translate
+            }}</label>
           <br>
           <nb-select *ngIf="type=='MODEL'" fullWidth placeholder="Select adapter context" [(ngModel)]="context"
             [ngModelOptions]="{standalone: true}">
@@ -168,24 +167,20 @@
               <nb-option value="EXPORT">Export</nb-option>
             </nb-option-group>
           </nb-select>
-          <br><br>
-          <label *ngIf="type=='MODEL'" for="mapper">{{ 'general.adapters.mapper' | translate }}</label>
-          <br *ngIf="type=='MODEL'">
-          <input *ngIf="type=='MODEL'" type="text" nbInput fullWidth fieldSize="small" placeholder="mapper"
-            [(ngModel)]="mapper" [ngModelOptions]="{standalone: true}">
-          <br *ngIf="type=='MODEL'"><br *ngIf="type=='MODEL'">
-          <label *ngIf="type=='MODEL'" for="adapterModel">{{ 'general.adapters.adapter_model' | translate }}</label>
-          <br *ngIf="type=='MODEL'">
-          <nb-select *ngIf="type=='MODEL'" fullWidth placeholder="Select adapter model" [(ngModel)]="adapterModel"
-            [ngModelOptions]="{standalone: true}">
-            <nb-option-group title="Adapter Model">
-              <nb-option value="ServiceModel">Service Model</nb-option>
-            </nb-option-group>
-          </nb-select>
-          <br *ngIf="type=='MODEL'"><br *ngIf="type=='MODEL'">
+          <br>
+          <br>
+          <label *ngIf="type=='MODEL'&&context=='IMPORT'" for="mapper">{{ 'general.adapters.mapper' | translate }}</label>
+          <br *ngIf="type=='MODEL'&&context=='IMPORT'">
+          <input *ngIf="type=='MODEL'&&context=='IMPORT'" type="text" nbInput fullWidth fieldSize="small" placeholder="mapper"
+            [(ngModel)]="mapper" [ngModelOptions]="{standalone: true}" disabled>
+          <br *ngIf="type=='MODEL'&&context=='IMPORT'"><br *ngIf="type=='MODEL'&&context=='IMPORT'">
+          <label *ngIf="type=='MODEL'&&context=='IMPORT'" for="adapterModel">{{ 'general.adapters.adapter_model' | translate }}</label>
+          <br *ngIf="type=='MODEL'&&context=='IMPORT'">
+          <input *ngIf="type=='MODEL'&&context=='IMPORT'" type="text" nbInput fullWidth fieldSize="small" placeholder="Service Model"
+            [(ngModel)]="adapterModel" [ngModelOptions]="{standalone: true}" disabled>
+          <br *ngIf="type=='MODEL'&&context=='IMPORT'"><br *ngIf="type=='MODEL'&&context=='IMPORT'">
           <h3>
-            <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
-              (click)="onEdit(); ref.close()">
+            <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
               <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
             </button>
           </h3>

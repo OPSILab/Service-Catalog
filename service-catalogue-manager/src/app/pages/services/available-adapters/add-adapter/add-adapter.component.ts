@@ -10,6 +10,7 @@ import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorDialogAdapterService } from '../../../error-dialog/error-dialog-adapter.service';
 import {ServiceModelSchema } from '../../../../model/services/serviceModelSchema'
+import { AppConfig } from '../../../../model/appConfig';
 
 @Component({
   selector: 'add-adapter',
@@ -21,7 +22,7 @@ export class AddAdapterComponent implements OnInit {
   @Input() value: AdapterEntry;
   @Output() editedValue = new EventEmitter<unknown>();
   http: HttpClient;
-  configService: NgxConfigureService;
+  //configService: NgxConfigureService;
   inputItemNgModel;
   adapterId: string
   name: string
@@ -30,18 +31,23 @@ export class AddAdapterComponent implements OnInit {
   type: string = "MODEL"
   context: string = "IMPORT"
   url: string
-  mapper: string = "Data model mapper"
-  adapterModel: object = ServiceModelSchema.schema
+  mapper: string
+  adapterModel: string
   textareaItemNgModel;
   inputItemFormControl;
   textareaItemFormControl;
   selectedFile: File;
   json: Record<string, unknown>;
   selectedItem = 'Json';
+  private appConfig: AppConfig;
 
   constructor(protected ref: NbDialogRef<AddAdapterComponent>, private toastrService: NbToastrService,
     private errorService: ErrorDialogAdapterService,
-    private availableAdapterService: AvailableAdaptersService, private translate: TranslateService) {
+    private availableAdapterService: AvailableAdaptersService, private translate: TranslateService,
+    private configService: NgxConfigureService) {
+      this.appConfig = this.configService.config as AppConfig
+      this.adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
+      this.mapper = this.appConfig.data_model_mapper.default_map_ID
   }
 
   cancel(): void {

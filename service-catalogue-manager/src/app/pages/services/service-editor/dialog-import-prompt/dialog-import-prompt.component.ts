@@ -8,6 +8,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient } from '@angular/common/http';
 import { ServiceModel } from '../../../../model/services/serviceModel';
 import { Byte } from '@angular/compiler/src/util';
+import { AppConfig } from '../../../../model/appConfig';
+import { NgxConfigureService } from 'ngx-configure';
 
 @Component({
   selector: 'ngx-dialog-import-prompt',
@@ -15,6 +17,7 @@ import { Byte } from '@angular/compiler/src/util';
   styleUrls: ['dialog-import-prompt.component.scss'],
 })
 export class DialogImportPromptComponent implements OnInit {
+  private appConfig: AppConfig;
   selectedFile: File;
   file: String;
   fileOutput: String;
@@ -25,7 +28,11 @@ export class DialogImportPromptComponent implements OnInit {
   adaptersActive: AdapterEntry[];
   extension: String;
 
-  constructor(private http: HttpClient, protected ref: NbDialogRef<DialogImportPromptComponent>, private errorService: ErrorDialogService, private availableAdaptersService: AvailableAdaptersService) { }
+  constructor(private http: HttpClient, protected ref: NbDialogRef<DialogImportPromptComponent>,
+    private errorService: ErrorDialogService, private availableAdaptersService: AvailableAdaptersService,
+    private configService: NgxConfigureService,) {
+    this.appConfig = this.configService.config as AppConfig
+  }
 
   cancel(): void {
     this.ref.close();
@@ -73,10 +80,10 @@ export class DialogImportPromptComponent implements OnInit {
     if (this.extension == "csv") this.service = await this.http.post<ServiceModel>(this.adaptersActive[0].url, {
       "sourceDataType": "csv",
       "sourceData": this.file,
-      "mapPathIn": "5. ServiceModelMap.json",
-      "dataModelIn": "ServiceModel",
+      "mapID": this.appConfig.data_model_mapper.default_map_ID,
+      "dataModelIn": this.appConfig.data_model_mapper.default_data_model_name,
       "csvDelimiter": ";"
-    }).toPromise();//TODO continue this
+    }).toPromise();
     this.ref.close({ content: this.service[0], format: this.extension });
   }
 }
