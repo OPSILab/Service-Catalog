@@ -360,7 +360,8 @@
       "validationErrors": "Ci sono degli errori di validazione nella descrizione dell'adapter inserito.",
       "context" : "Contesto",
       "mapper" : "Mappatore",
-      "adapter_model" : "Modello adapter"
+      "adapter_model" : "Modello adapter",
+      "load_mapper_list": "Carica lista mapper"
     }
   },
   "login": {

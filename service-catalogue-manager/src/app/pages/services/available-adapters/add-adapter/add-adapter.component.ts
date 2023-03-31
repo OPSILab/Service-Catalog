@@ -9,7 +9,7 @@ import { AdapterEntry } from '../../../../model/adapter/adapterEntry'
 import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorDialogAdapterService } from '../../../error-dialog/error-dialog-adapter.service';
-import {ServiceModelSchema } from '../../../../model/services/serviceModelSchema'
+import { ServiceModelSchema } from '../../../../model/services/serviceModelSchema'
 import { AppConfig } from '../../../../model/appConfig';
 
 @Component({
@@ -21,7 +21,7 @@ import { AppConfig } from '../../../../model/appConfig';
 export class AddAdapterComponent implements OnInit {
   @Input() value: AdapterEntry;
   @Output() editedValue = new EventEmitter<unknown>();
-  http: HttpClient;
+  //http: HttpClient;
   //configService: NgxConfigureService;
   inputItemNgModel;
   adapterId: string
@@ -39,22 +39,37 @@ export class AddAdapterComponent implements OnInit {
   selectedFile: File;
   json: Record<string, unknown>;
   selectedItem = 'Json';
+  loaded = false
   private appConfig: AppConfig;
+  mappers
 
-  constructor(protected ref: NbDialogRef<AddAdapterComponent>, private toastrService: NbToastrService,
+  constructor(
+    private http: HttpClient,
+    protected ref: NbDialogRef<AddAdapterComponent>,
+    private toastrService: NbToastrService,
     private errorService: ErrorDialogAdapterService,
-    private availableAdapterService: AvailableAdaptersService, private translate: TranslateService,
-    private configService: NgxConfigureService) {
-      this.appConfig = this.configService.config as AppConfig
-      this.adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
-      this.mapper = this.appConfig.data_model_mapper.default_map_ID
+    private availableAdapterService: AvailableAdaptersService,
+    private translate: TranslateService,
+    private configService: NgxConfigureService
+  ) {
+    this.appConfig = this.configService.config as AppConfig
+    //this.adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
+    //this.mapper = this.appConfig.data_model_mapper.default_map_ID
   }
 
   cancel(): void {
     this.ref.close();
   }
 
+  async loadMappers(): Promise<void> {
+    this.mappers = await this.http.post<any>(this.url, {
+      "getMapperList": true
+    }).toPromise();
+    this.loaded = true
+  }
+
   ngOnInit(): void {
+    this.loaded = false
     try {
       this.inputItemFormControl = new FormControl();
       this.textareaItemFormControl = new FormControl();
@@ -109,8 +124,34 @@ export class AddAdapterComponent implements OnInit {
 
   async onEdit() {
     try {
-      let name = this.name, description = this.description, status = this.status, adapterId = this.adapterId, type = this.type, url = this.url, context = this.context, mapper = this.mapper, adapterModel = ServiceModelSchema.schema;
-      await this.availableAdapterService.updateAdapter((({ name, description, status, adapterId, type, url , context, mapper, adapterModel} as unknown)) as AdapterEntry, adapterId);//as unknown)) as AdapterEntry were VisualStudioCode tips
+
+      let name = this.name,
+        description = this.description,
+        status = this.status,
+        adapterId = this.adapterId,
+        type = this.type,
+        url = this.url,
+        context = this.context,
+        mapper,
+        adapterModel;
+
+      if (type == "MODEL" && context == "IMPORT") {
+        mapper = this.appConfig.data_model_mapper.default_map_ID;
+        adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
+      } else {
+        mapper = this.mapper;
+        adapterModel = this.adapterModel
+      }
+
+      if (adapterId == '' || adapterId == null) {
+        console.log("dialog-add-new-prompt.component.ts.onSubmit(): Adapter ID must be set");
+        throw new Error("Adapter ID must be set");
+      }
+
+      await this.availableAdapterService.saveAdapter(((
+        type == "MODEL" ?
+          { name, description, status, adapterId, type, url, context, mapper, adapterModel } as unknown :
+          { name, description, status, adapterId, type, url, mapper, adapterModel } as unknown)) as AdapterEntry);
       this.ref.close({ content: this.json, format: this.selectedItem });
       this.editedValue.emit(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
@@ -183,12 +224,37 @@ export class AddAdapterComponent implements OnInit {
 
   async onSubmit() {
     try {
-      let name = this.name, description = this.description, status = this.status, adapterId = this.adapterId, type = this.type, url = this.url, context=this.context, mapper = this. mapper, adapterModel= ServiceModelSchema.schema;
+
+      let name = this.name,
+        description = this.description,
+        status = this.status,
+        adapterId = this.adapterId,
+        type = this.type,
+        url = this.url,
+        context = this.context,
+        mapper,
+        adapterModel;
+
+      if (type == "MODEL" && context == "IMPORT") {
+        mapper = this.appConfig.data_model_mapper.default_map_ID;
+        adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
+      } else {
+        mapper = this.mapper;
+        adapterModel = this.adapterModel
+      }
+
       if (adapterId == '' || adapterId == null) {
         console.log("dialog-add-new-prompt.component.ts.onSubmit(): Adapter ID must be set");
         throw new Error("Adapter ID must be set");
       }
-      await this.availableAdapterService.saveAdapter((({ name, description, status, adapterId, type, url , context, mapper, adapterModel} as unknown)) as AdapterEntry);
+
+      await this.availableAdapterService.saveAdapter(((
+        type == "MODEL" ?
+          context == "IMPORT" ?
+          { name, description, status, adapterId, type, url, context, mapper, adapterModel } as unknown :
+          { name, description, status, adapterId, type, url, context, mapper } as unknown :
+          { name, description, status, adapterId, type, url, mapper } as unknown)) as AdapterEntry);
+
       this.ref.close();
       this.editedValue.emit(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
@@ -226,7 +292,7 @@ export class AddAdapterComponent implements OnInit {
         "message": "Value required",
         "errorcount": 1
       })
-      if (this.type== "MODEL" && !this.context) errors.push({
+      if (this.type == "MODEL" && !this.context) errors.push({
         "path": "root.context",
         "property": "minLength",
         "message": "Value required for adapter type model",

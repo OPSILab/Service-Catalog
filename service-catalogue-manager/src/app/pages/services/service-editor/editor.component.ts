@@ -276,8 +276,8 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
 
   importAsFile(): void {
     this.dialogService.open(DialogImportPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
-      if (result.content) {
-        console.log("result.content\n\n", result.content)
+      if (result?.content) {
+        console.log("result.content\n", result.content)
         this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
         console.log("result.format\n", result.format)
         if (result.format == 'Cpsv') {

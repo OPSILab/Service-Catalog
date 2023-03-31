@@ -103,7 +103,6 @@ export class PagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('ngOnDestroy');
     this.unsubscribe.next();
     this.unsubscribe.complete();
   }

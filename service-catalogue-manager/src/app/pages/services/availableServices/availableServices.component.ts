@@ -60,8 +60,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     this.settings = this.loadTableSettings();
    // this.locale = (this.configService.config as AppConfig).i18n.locale;    // TODO change with user language preferences
    this.locale=this.translate.currentLang;
-   
-   
+
+
   }
 
 
@@ -71,8 +71,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
       this.loadSource();
       this.translate.onLangChange.subscribe(() =>{
-        this.loadSource();       
-       });   
+        this.loadSource();
+       });
   }
 
   private getLocalizedDescription(availableServiceDescr: ServiceModel): Description[] {
@@ -104,7 +104,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
           } as AvailableServiceRow;
         })
       );
-            
+
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
 
@@ -125,7 +125,6 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
 
   ngOnDestroy(): void {
-    console.log('ngOnDestroy');
     this.unsubscribe.next();
     this.unsubscribe.complete();
   }
@@ -139,7 +138,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     this.spatialLabel = this.translate.instant('general.services.location') as string;
     this.keywords = this.translate.instant('general.services.keywords') as string;
 
-    
+
 
     return {
       mode: 'external',

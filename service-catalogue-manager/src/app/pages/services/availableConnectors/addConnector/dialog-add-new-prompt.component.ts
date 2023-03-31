@@ -64,7 +64,7 @@ export class DialogAddNewPromptComponent implements OnInit {
         if (adapter.type == "DATA")
           this.adaptersTypeModel.push(adapter)
         else
-          console.log(adapter)
+          console.debug(adapter)
       if (this.value) {
         if (this.value.name) this.name = this.value.name
         if (this.value.description) this.description = this.value.description
@@ -194,12 +194,12 @@ export class DialogAddNewPromptComponent implements OnInit {
 
   async onSubmit() {
     try {
-      let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url;
+      let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url, adapterId = this.adapterId;
       if (connectorId == '' || connectorId == null) {
         console.log("dialog-add-new-prompt.component.ts.onSubmit(): Connector ID must be set");
         throw new Error("Connector ID must be set");
       }
-      await this.availableConnectorService.saveConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry);
+      await this.availableConnectorService.saveConnector((({ name, description, status, connectorId, serviceId, url , adapterId} as unknown)) as ConnectorEntry);
       this.ref.close();
       this.editedValue.emit(this.value);
       this.showToast('primary', this.translate.instant('general.connectors.connector_added_message'), '');

@@ -55,8 +55,16 @@
             <nb-option value="EXPORT">Export</nb-option>
           </nb-option-group>
         </nb-select>
-        <br>
-        <br>
+        <br *ngIf="type=='MODEL'">
+        <br *ngIf="type=='MODEL'">
+        <label *ngIf="loaded" for="mapper">{{ 'general.adapters.mapper' | translate }}</label>
+        <br *ngIf="loaded">
+        <nb-select *ngIf="loaded" fullWidth placeholder="Select Mapper" [(ngModel)]="mapper" [ngModelOptions]="{standalone: true}">
+
+            <nb-option *ngFor="let map of mappers" value = {{map.id}} >{{map.name}}</nb-option>
+        </nb-select>
+        <br *ngIf="type=='MODEL'&&context=='IMPORT' && loaded">
+        <br *ngIf="type=='MODEL'&&context=='IMPORT' && loaded">
         <label *ngIf="type=='MODEL'&&context=='IMPORT'" for="mapper">{{ 'general.adapters.mapper' | translate }}</label>
         <br *ngIf="type=='MODEL'&&context=='IMPORT'">
         <input *ngIf="type=='MODEL'&&context=='IMPORT'" type="text" nbInput fullWidth fieldSize="small" placeholder="mapper"
@@ -68,8 +76,12 @@
           [(ngModel)]="adapterModel" [ngModelOptions]="{standalone: true}" disabled>
         <br *ngIf="type=='MODEL'&&context=='IMPORT'"><br *ngIf="type=='MODEL'&&context=='IMPORT'">
         <h3>
-          <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
+          <button *ngIf="type=='MODEL'&&context=='IMPORT' || loaded" nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
+          </button>
+          &nbsp;
+          <button *ngIf="type!='MODEL'||context!='IMPORT'" nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="loadMappers()">
+            <i class="mx-1">{{ 'general.adapters.load_mapper_list' | translate }}</i>
           </button>
         </h3>
       </form>

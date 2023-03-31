@@ -90,10 +90,10 @@ public class Adapter {
     @JsonProperty("adapterModel")
     @Valid
     // @NotNull
-    private Object adapterModel;
+    private String adapterModel;
 
     public Adapter(AdapterRepository adapterRepo, String adapterId, String url, String name, String description,
-            String status, Type type, Context context, String mapper, Object adapterModel) {
+            String status, Type type, Context context, String mapper, String adapterModel) {
         this.adapterRepo = adapterRepo;
         this.adapterId = adapterId;
         this.url = url;
