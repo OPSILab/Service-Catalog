@@ -7,6 +7,6 @@ export interface AdapterEntry {
 	status,
 	type,
   context
-  mapper
-  adapterModel
+  //mapper
+  //adapterModel
 }

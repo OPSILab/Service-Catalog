@@ -26,6 +26,7 @@ import {
   NbCheckboxModule,
   NbRadioModule,
   NbTagModule,
+  NbAutocompleteModule,
 } from '@nebular/theme';
 import { ActionsServiceMenuRenderComponent } from './availableServices/actionsServiceMenuRender.component';
 import { ActionsConnectorMenuRenderComponent } from './availableConnectors/actionsConnectorMenuRender.component';
@@ -60,7 +61,8 @@ import {ConnectorStatusRenderComponent } from './availableConnectors/custom-stat
     NbTabsetModule,
     TranslateModule.forChild({}),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NbAutocompleteModule
   ],
   declarations: [
     AvailableServicesComponent,

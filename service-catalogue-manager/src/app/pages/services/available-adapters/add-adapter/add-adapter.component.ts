@@ -1,3 +1,4 @@
+import { Observable, of } from 'rxjs';
 import { StatusCardComponent } from './../../../dashboard/status-card/status-card.component';
 import { Description } from './../../../../model/services/description';
 import { FormControl } from '@angular/forms';
@@ -11,14 +12,18 @@ import { TranslateService } from '@ngx-translate/core';
 import { ErrorDialogAdapterService } from '../../../error-dialog/error-dialog-adapter.service';
 import { ServiceModelSchema } from '../../../../model/services/serviceModelSchema'
 import { AppConfig } from '../../../../model/appConfig';
+import { map, startWith, filter } from 'rxjs/operators';
+import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'add-adapter',
   templateUrl: './add-adapter.component.html',
-  styleUrls: ['./add-adapter.component.scss']
+  styleUrls: ['./add-adapter.component.scss']//,
+  //changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class AddAdapterComponent implements OnInit {
+  //[x: string]: any;
   @Input() value: AdapterEntry;
   @Output() editedValue = new EventEmitter<unknown>();
   //http: HttpClient;
@@ -31,8 +36,8 @@ export class AddAdapterComponent implements OnInit {
   type: string = "MODEL"
   context: string = "IMPORT"
   url: string
-  mapper: string
-  adapterModel: string
+  //mapper: string
+  //adapterModel: string
   textareaItemNgModel;
   inputItemFormControl;
   textareaItemFormControl;
@@ -42,6 +47,17 @@ export class AddAdapterComponent implements OnInit {
   loaded = false
   private appConfig: AppConfig;
   mappers
+
+  options: string[];
+  validURL=true
+  //filteredControlOptions$
+  //inputFormControl: FormControl;
+  //filteredOptions$: Observable<string[]>;
+  //options$ : Observable<string[]>
+  //filteredNgModelOptions$: Observable<string[]>;
+  //value
+
+  //@ViewChild('autoInput') input;
 
   constructor(
     private http: HttpClient,
@@ -53,6 +69,7 @@ export class AddAdapterComponent implements OnInit {
     private configService: NgxConfigureService
   ) {
     this.appConfig = this.configService.config as AppConfig
+    //this.options$ = this.options.valueChanges();
     //this.adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
     //this.mapper = this.appConfig.data_model_mapper.default_map_ID
   }
@@ -62,18 +79,50 @@ export class AddAdapterComponent implements OnInit {
   }
 
   async loadMappers(): Promise<void> {
-    this.mappers = await this.http.post<any>(this.url, {
-      "getMapperList": true
-    }).toPromise();
-    this.loaded = true
+    console.log("loadmappers")
+    if (this.url)
+      try {
+        this.mappers = await this.http.post<any>(this.url, {
+          "getMapperList": true
+        }).toPromise();
+        for (let mapper of this.mappers) this.options.push(mapper.id)
+        this.loaded = true
+        this.validURL=true
+      }
+      catch (error) {
+        console.log("Cannot get response from remote url")
+        this.validURL=false
+      }
+    else this.validURL=false
   }
 
   ngOnInit(): void {
+
     this.loaded = false
+    //this.loadMappers()
+    this.options = [];
+
+    /*this.filteredControlOptions$ = of(this.options);
+    this.filteredNgModelOptions$ = of(this.options);
+    this.filteredOptions$ = of(this.options);
+    this.inputFormControl = new FormControl();
+    this.filteredControlOptions$ = this.inputFormControl.valueChanges
+
+      .pipe(
+        startWith(''),
+        map(filterString => this.filter(filterString)),
+      );*/
+    //this.filteredNgModelOptions$ = of(this.options);
     try {
       this.inputItemFormControl = new FormControl();
       this.textareaItemFormControl = new FormControl();
+      /*
+      if (this.type == "MODEL" && this.context == "IMPORT") {
+        this.adapterId = this.appConfig.data_model_mapper.default_map_ID;
+        //adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
+      }else*/
       if (this.value && this.value.adapterId) this.adapterId = this.value.adapterId
+      this.url = this.appConfig.data_model_mapper.default_mapper_url
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
@@ -82,6 +131,30 @@ export class AddAdapterComponent implements OnInit {
     }
 
   }
+
+  private filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+  }
+
+  getFilteredOptions(value: string): Observable<string[]> {
+    return of(value).pipe(
+      map(filterString => this.filter(filterString)),
+    );
+  }
+
+  /*
+  onChange() {
+    this.filteredOptions$ = this.getFilteredOptions(this.input.nativeElement.value);
+  }
+
+  onSelectionChange($event) {
+    this.filteredOptions$ = this.getFilteredOptions($event);
+  }
+
+  onModelChange(value: string) {
+    this.filteredNgModelOptions$ = of(this.filter(value));
+  }*/
 
   onFileChanged(event: Event): void {
     try {
@@ -122,138 +195,37 @@ export class AddAdapterComponent implements OnInit {
     }
   }
 
-  async onEdit() {
-    try {
-
-      let name = this.name,
-        description = this.description,
-        status = this.status,
-        adapterId = this.adapterId,
-        type = this.type,
-        url = this.url,
-        context = this.context,
-        mapper,
-        adapterModel;
-
-      if (type == "MODEL" && context == "IMPORT") {
-        mapper = this.appConfig.data_model_mapper.default_map_ID;
-        adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
-      } else {
-        mapper = this.mapper;
-        adapterModel = this.adapterModel
-      }
-
-      if (adapterId == '' || adapterId == null) {
-        console.log("dialog-add-new-prompt.component.ts.onSubmit(): Adapter ID must be set");
-        throw new Error("Adapter ID must be set");
-      }
-
-      await this.availableAdapterService.saveAdapter(((
-        type == "MODEL" ?
-          { name, description, status, adapterId, type, url, context, mapper, adapterModel } as unknown :
-          { name, description, status, adapterId, type, url, mapper, adapterModel } as unknown)) as AdapterEntry);
-      this.ref.close({ content: this.json, format: this.selectedItem });
-      this.editedValue.emit(this.value);
-      this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
-    }
-    catch (error) {
-      let errors: Object[] = []
-
-      if (!this.adapterId) errors.push({
-        "path": "root.adapterId",
-        "property": "minLength",
-        "message": "Value required",
-        "errorcount": 1
-      })
-      if (!this.name) errors.push({
-        "path": "root.name",
-        "property": "minLength",
-        "message": "Value required",
-        "errorcount": 1
-      })
-      if (!this.description) errors.push({
-        "path": "root.description",
-        "property": "minLength",
-        "message": "Value required",
-        "errorcount": 1
-      })
-      if (!this.url) errors.push({
-        "path": "root.url",
-        "property": "minLength",
-        "message": "Value required",
-        "errorcount": 1
-      })/*
-      if (!this.type) errors.push({
-        "path": "root.type",
-        "property": "minLength",
-        "message": "Value required",
-        "errorcount": 1
-      })*/
-
-      console.log("error:", "\n", error)
-      if (error.message == "Adapter ID must be set") {
-        this.errorService.openErrorDialog({
-          error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
-            {
-              "path": "root.adapterId",
-              "property": "minLength",
-              "message": "Value required",
-              "errorcount": 1
-            }
-          ]
-        });
-      }
-      else if (error.status && error.status == 400) {
-        if (error.error.status == "Adapter already exists")
-          this.errorService.openErrorDialog({
-            error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
-              {
-                "path": "root.adapterId",
-                "property": "minLength",
-                "message": "A adapter with adapter ID < " + this.adapterId + " > already exists",
-                "errorcount": 1
-              }
-            ]
-          });
-        else this.errorService.openErrorDialog({
-          error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
-        });
-      }
-    }
-  }
-
   async onSubmit() {
     try {
 
       let name = this.name,
         description = this.description,
         status = this.status,
-        adapterId = this.adapterId,
+        adapterId = this.adapterId? this.adapterId : this.value? this.value : null,
         type = this.type,
         url = this.url,
-        context = this.context,
-        mapper,
-        adapterModel;
+        context = this.context//,
+      //mapper,
+      //adapterModel;
 
       if (type == "MODEL" && context == "IMPORT") {
-        mapper = this.appConfig.data_model_mapper.default_map_ID;
-        adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
+        adapterId = this.appConfig.data_model_mapper.default_map_ID;
+        //adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
       } else {
-        mapper = this.mapper;
-        adapterModel = this.adapterModel
+        adapterId = this.adapterId? this.adapterId : this.value? this.value : null;
+        //adapterModel = this.adapterModel
       }
 
       if (adapterId == '' || adapterId == null) {
         console.log("dialog-add-new-prompt.component.ts.onSubmit(): Adapter ID must be set");
+        console.log("adapterId\n", this.adapterId,"\nnvalue\n",this.value, "adapterId",adapterId)
         throw new Error("Adapter ID must be set");
       }
 
       await this.availableAdapterService.saveAdapter(((
         type == "MODEL" ?
-          context == "IMPORT" ?
-          { name, description, status, adapterId, type, url, context, mapper, adapterModel } as unknown :
-          { name, description, status, adapterId, type, url, context, mapper } as unknown :
-          { name, description, status, adapterId, type, url, mapper } as unknown)) as AdapterEntry);
+          { name, description, status, adapterId, type, url, context } as unknown :
+          { name, description, status, adapterId, type, url } as unknown)) as AdapterEntry);
 
       this.ref.close();
       this.editedValue.emit(this.value);

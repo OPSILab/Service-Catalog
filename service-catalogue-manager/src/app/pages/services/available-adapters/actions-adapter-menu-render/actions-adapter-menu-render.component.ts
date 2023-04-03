@@ -19,7 +19,7 @@ import { AddAdapterComponent } from '.././add-adapter/add-adapter.component';
 import { LoginService } from '../../../../auth/login/login.service';
 import { AdapterStatusEnum } from '../../../../model/services/adapter';
 import { AdapterEntry } from '../../../../model/adapter/adapterEntry';
-import {ServiceModelSchema } from '../../../../model/services/serviceModelSchema'
+import { ServiceModelSchema } from '../../../../model/services/serviceModelSchema'
 import { NgxConfigureService } from 'ngx-configure';
 import { AppConfig } from '../../../../model/appConfig';
 import { HttpClient } from '@angular/common/http';
@@ -44,11 +44,11 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   ref
   dialogRef
   context
-  mapper
-  adapterModel
+  //mapper
+  //adapterModel
   adapterId
   mappers
-  loaded=false
+  loaded = false
   private appConfig: AppConfig;
 
   private unsubscribe: Subject<void> = new Subject();
@@ -75,9 +75,10 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
 
   ) {
     this.appConfig = this.configService.config as AppConfig
-      this.adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
-      this.mapper = this.appConfig.data_model_mapper.default_map_ID
-   }
+    this.adapterId = this.appConfig.data_model_mapper.default_map_ID
+    //this.adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
+    //this.mapper = this.appConfig.data_model_mapper.default_map_ID
+  }
 
   get registered(): boolean {
     return this.value.status == AdapterStatusEnum.Active ? true : false;
@@ -92,15 +93,15 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loaded = false
-    this.adapterId=this.value.adapterId
-    this.name=this.value.name
-    this.context=this.value.context
-    this.description=this.value.description
-    this.url=this.value.url
-    this.type=this.value.type
-    this.mapper=this.value.mapper
-    this.adapterModel=this.value.adapterModel
-    this.status=this.value.status
+    this.adapterId = this.value.adapterId
+    this.name = this.value.name
+    this.context = this.value.context
+    this.description = this.value.description
+    this.url = this.value.url
+    this.type = this.value.type
+    //this.mapper=this.value.mapper
+    //this.adapterModel=this.value.adapterModel
+    this.status = this.value.status
     this.actions = this.translatedActionLabels();
     this.menuService
       .onItemClick()
@@ -174,16 +175,16 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
         adapterId = this.adapterId,
         type = this.type,
         url = this.url,
-        context = this.context,
-        mapper,
-        adapterModel;
+        context = this.context//,
+      //mapper,
+      //adapterModel;
 
       if (type == "MODEL" && context == "IMPORT") {
-        mapper = this.appConfig.data_model_mapper.default_map_ID;
-        adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
+        adapterId = this.appConfig.data_model_mapper.default_map_ID;
+        //adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
       } else {
-        mapper = this.mapper;
-        adapterModel = this.adapterModel
+        //mapper = this.mapper;
+        adapterId = this.adapterId
       }
 
       if (adapterId == '' || adapterId == null) {
@@ -193,10 +194,8 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
 
       await this.availableAdaptersService.updateAdapter(((
         type == "MODEL" ?
-          context == "IMPORT" ?
-          { name, description, status, adapterId, type, url, context, mapper, adapterModel } as unknown :
-          { name, description, status, adapterId, type, url, context, mapper } as unknown :
-          { name, description, status, adapterId, type, url, mapper } as unknown)) as AdapterEntry, adapterId);
+          { name, description, status, adapterId, type, url, context } as unknown :
+          { name, description, status, adapterId, type, url } as unknown)) as AdapterEntry, adapterId);
       this.updateResult.emit(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
     }
@@ -233,7 +232,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
         "message": "Value required",
         "errorcount": 1
       })
-      if (this.type== "MODEL" && !this.context) errors.push({
+      if (this.type == "MODEL" && !this.context) errors.push({
         "path": "root.context",
         "property": "minLength",
         "message": "Value required for adapter type model",
@@ -315,7 +314,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.adapters.adapter_registered_message', { adapterName: this.value.adapterId }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -328,7 +327,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.adapters.adapter_deregistered_message', { adapterName: this.value.adapterId }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -349,7 +348,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
             ref.close();
             this.updateResult.emit(this.value.id);
           } catch (error) {
-            if (error.statusCode === '401'||error.status==401)  {
+            if (error.statusCode === '401' || error.status == 401) {
               void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
             } else this.errorDialogService.openErrorDialog(error);
           }
