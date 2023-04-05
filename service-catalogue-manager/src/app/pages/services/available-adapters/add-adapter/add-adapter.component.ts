@@ -1,6 +1,4 @@
 import { Observable, of } from 'rxjs';
-import { StatusCardComponent } from './../../../dashboard/status-card/status-card.component';
-import { Description } from './../../../../model/services/description';
 import { FormControl } from '@angular/forms';
 import { NbComponentStatus, NbDialogRef, NbGlobalPhysicalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { AvailableAdaptersService } from '../available-adapters.service'
@@ -10,10 +8,10 @@ import { AdapterEntry } from '../../../../model/adapter/adapterEntry'
 import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorDialogAdapterService } from '../../../error-dialog/error-dialog-adapter.service';
-import { ServiceModelSchema } from '../../../../model/services/serviceModelSchema'
 import { AppConfig } from '../../../../model/appConfig';
 import { map, startWith, filter } from 'rxjs/operators';
 import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
+import { Mapper } from '../../../../model/adapter/mapper';
 
 @Component({
   selector: 'add-adapter',
@@ -23,12 +21,9 @@ import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
 })
 
 export class AddAdapterComponent implements OnInit {
-  //[x: string]: any;
+
   @Input() value: any;
   @Output() editedValue = new EventEmitter<unknown>();
-  //http: HttpClient;
-  //configService: NgxConfigureService;
-  inputItemNgModel;
   adapterId: string
   name: string
   description: string
@@ -36,40 +31,23 @@ export class AddAdapterComponent implements OnInit {
   type: string = "MODEL"
   context: string = "IMPORT"
   url: string
-  //mapper: string
-  //adapterModel: string
-  textareaItemNgModel;
-  inputItemFormControl;
-  textareaItemFormControl;
+  inputItemFormControl: FormControl;
+  textareaItemFormControl: FormControl;
   selectedFile: File;
   json: Record<string, unknown>;
   selectedItem = 'Json';
   loaded = false
-  private appConfig: AppConfig;
-  mappers
-
-  mapperIDs: string[] = [];
+  mappers: Mapper[];
   validURL = true
-
   IDs: string[] = [];
   filteredControlIDOptions$: Observable<string[]>;
   filteredIDOptions$: Observable<string[]>;
   IDFormControl: FormControl;
   NameFormControl: FormControl;
-
   filteredControlNameOptions$: Observable<string[]>;
   filteredNameOptions$: Observable<string[]>;
   names: string[] = [];
-  mapperNames: string[] = [];
-  //value: string;
-  //filteredControlOptions$
-  //inputFormControl: FormControl;
-  //filteredOptions$: Observable<string[]>;
-  //options$ : Observable<string[]>
-  //filteredNgModelOptions$: Observable<string[]>;
-  //value
-
-  //@ViewChild('autoInput') input;
+  private appConfig: AppConfig;
 
   constructor(
     private http: HttpClient,
@@ -81,9 +59,6 @@ export class AddAdapterComponent implements OnInit {
     private configService: NgxConfigureService
   ) {
     this.appConfig = this.configService.config as AppConfig
-    //this.options$ = this.options.valueChanges();
-    //this.adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
-    //this.mapper = this.appConfig.data_model_mapper.default_map_ID
   }
 
   cancel(): void {
@@ -219,23 +194,15 @@ export class AddAdapterComponent implements OnInit {
         adapterId = this.adapterId ? this.adapterId : this.value ? this.value : null,
         type = this.type,
         url = this.url,
-        context = this.context//,
-      //mapper,
-      //adapterModel;
+        context = this.context
 
-      if (type == "MODEL" && context == "IMPORT") {
+      if (type == "MODEL" && context == "IMPORT")
         adapterId = this.appConfig.data_model_mapper.default_map_ID;
-        //adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
-      } else {
+      else
         adapterId = this.adapterId ? this.adapterId : this.value ? this.value : null;
-        //adapterModel = this.adapterModel
-      }
 
-      if (adapterId == '' || adapterId == null) {
-        console.log("dialog-add-new-prompt.component.ts.onSubmit(): Adapter ID must be set");
-        console.log("adapterId\n", this.adapterId, "\nnvalue\n", this.value, "adapterId", adapterId)
+      if (adapterId == '' || adapterId == null)
         throw new Error("Adapter ID must be set");
-      }
 
       await this.availableAdapterService.saveAdapter(((
         type == "MODEL" ?
