@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/unbound-method */
-import { Component, OnInit, TemplateRef, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, ChangeDetectorRef, Inject } from '@angular/core';
 import { DMMService } from './dmm.service';
 import {
   NbDialogService,
@@ -19,31 +19,151 @@ import { Account, AccountNotificationEnum } from '../../model/account/account.mo
 import { NgxConfigureService } from 'ngx-configure';
 import { AppConfig } from '../../model/appConfig';
 
-import { JsonEditorComponent, JsonEditorOptions } from 'ang-jsoneditor';
+import * as JSONEditor  from '../../../../node_modules/jsoneditor/dist/jsoneditor.js';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component({
   selector: 'app-root',
-  template: '<json-editor [options]="editorOptions" [data]="data"></json-editor>',
-  styleUrls: ['./dmm.component.css']
+  templateUrl: './dmm.component.html',
+  styleUrls: ['./dmm.component.scss']
 })
 export class DMMComponent implements OnInit {
 
-  public editorOptions: JsonEditorOptions;
-  public data: any;
-  @ViewChild(JsonEditorComponent, { static: false }) editor: JsonEditorComponent;
+private editor :any;
+container:any ;
+container2:any ;
+container3:any ;
+selectBox:any;
+inputType:any;
+public isNew = false;
+separatorItem="semiColon";
 
-  constructor() { 
-    this.editorOptions = new JsonEditorOptions()
-    this.editorOptions.modes = ['code', 'text', 'tree', 'view']; // set all allowed modes
-    //this.options.mode = 'code'; //set only one mode
-      
-      this.data = {"products":[{"name":"car","product":[{"name":"honda","model":[{"id":"civic","name":"civic"},{"id":"accord","name":"accord"},{"id":"crv","name":"crv"},{"id":"pilot","name":"pilot"},{"id":"odyssey","name":"odyssey"}]}]}]}
+  flipped = false;
+
+  toggleView() {
+    this.flipped = !this.flipped;
+  }
+  
+constructor( @Inject(DOCUMENT) private document: Document) { 
+    
   } 
   
   
 
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    this.container = this.document.getElementById('jsoneditor');
+    this.container2 = this.document.getElementById('jsoneditor2');
+    this.container3 = this.document.getElementById('jsoneditor3');
+    this.selectBox = <HTMLInputElement>this.document.getElementById('input-type');
+    
+    const options2 = {
+      mode: 'tree',
+      modes: ['tree', 'code','view', 'preview'], // allowed modes
+      onModeChange: function (newMode, oldMode) {
+        
+      }
+    }
+
+    const json2 = {
+      "root1": "",
+      "root2": "",
+      "root3": {
+        "level1_1": "",
+        "level1_2": {
+          "level2_1": "",
+          "level2_2": ""
+        },
+        "level1_3": ""
+      },
+      "root4": "",
+      "targetDataModel": "NestedModel"
+    }
+
+    const editor2 = new JSONEditor(this.container2, options2, json2)
+
+  
+
+    var selectedValue = "csv";
+
+      
+
+    const options = {
+      mode: 'view',
+      modes: ['view', 'preview'], // allowed modes
+      onModeChange: function (newMode, oldMode) {
+
+      },
+
+    }
+
+    const json = {
+
+    }
+
+    const editor = new JSONEditor(this.container, options, json)
+    
+   
+
+    const options3 = {
+      mode: 'view',
+      modes: ['view', 'preview'], // allowed modes
+      onModeChange: function (newMode, oldMode) {
+
+      },
+
+    }
+
+    const json3 = [
+      {
+        "root1": "r1",
+        "root2": "r2",
+        "root3": {
+          "level1_1": "r3",
+          "level1_2": { "level2_1": ["tag1", "tag2", "tag3"], "level2_2": "22" },
+          "level1_3": "13"
+        },
+        "root4": "4"
+      }
+    ]
+
+    const editor3 = new JSONEditor(this.container3, options3, json3)
+ 
+
+   
   }
+
+
+  getAllNestedProperties(obj) {
+    let properties = [];
+
+    for (let key in obj) {
+      properties.push(key);
+      if (typeof obj[key] === 'object') {
+        let nestedProps = this.getAllNestedProperties(obj[key]);
+        properties = properties.concat(nestedProps.map(prop => key + '.' + prop));
+      }
+    }
+    return properties;
+  }
+
+  
+
+  onUpdateInputType(event){
+    console.log(event);
+    const divJsonElement = document.getElementById('json-input');
+    const divCSVElement = document.getElementById('csv-input');
+
+
+    if (event === 'csv') {
+      divCSVElement.style.display = 'block';
+      divJsonElement.style.display = 'none';
+
+    } else {
+      divCSVElement.style.display = 'none';
+      divJsonElement.style.display = 'block';
+    }
+  }
+
+  
 }

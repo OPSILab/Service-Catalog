@@ -21,12 +21,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDropdownModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { DMMService } from './dmm.service';
 import { HttpClient } from '@angular/common/http';
-import { NgJsonEditorModule } from 'ang-jsoneditor' 
+
 
 
 @NgModule({
   imports: [
-    NgJsonEditorModule,
+   
     CommonModule,
     DMMRoutingModule,
     NbAccordionModule,

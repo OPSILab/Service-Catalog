@@ -1,121 +1,156 @@
-<!-- General Information -->
 
-  <nb-card>
-    <nb-card-header>{{ 'general.account.roles' | translate }}</nb-card-header>
-    <nb-card-body>
-      
-      <nb-user
-      [onlyPicture]="userPictureOnly"
-      [name]="user?.name"
-      [title]="user?.roles?.join(' | ')"
-      [picture]="'assets/images/app/default_user.png'"
-      
-    >
-    </nb-user>
 
-    </nb-card-body>
-    
+<!-- Save Service modal ng-template -->
+<ng-template #confirmSaveDialog let-data let-ref="dialogRef">
+  <nb-card status="primary">
+    <nb-card-body class="p-5">{{ 'general.editor.confirm_save' | translate: { name: data.name } }}</nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="data.callback()">
+        {{ 'general.save' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+    </nb-card-footer>
   </nb-card>
+</ng-template>
 
+<!-- Update Service modal ng-template -->
+<ng-template #confirmUpdateDialog let-data let-ref="dialogRef">
+  <nb-card status="primary">
+    <nb-card-body class="p-5">{{ 'general.editor.confirm_update' | translate: { name: data.name } }}</nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="data.callback()">
+        {{ 'general.editor.update' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
 
-
-
-<!-- Change Password -->
-<ng-template #changePassword let-data let-ref="dialogRef">
-  <form [formGroup]="passwordForm" (ngSubmit)="onSubmitPassword()">
-    <nb-card>
-      <nb-card-header class="d-flex justify-content-between">
-        <h5>{{ 'general.account.change_password' | translate }}</h5>
-        <button nbButton ghost shape="rectangle" size="tiny" class="close" (click)="ref.close()">
-          <i class="material-icons">close</i>
-        </button>
-      </nb-card-header>
-      <nb-card-body>
-        <div class="row">
-          <div class="col-md-6">
-            <label class="m-3" for="password">{{ 'general.account.new_password' | translate }}</label>
-            <input nbInput type="password" formControlName="newPassword" name="newPassword" />
-          </div>
-          <div class="col-md-6">
-            <label class="m-3" for="confirmPassword">{{ 'general.account.confirm_password' | translate }}</label>
-            <input nbInput type="password" formControlName="confirmPassword" name="confirmPassword" />
-          </div>
-        </div>
-        <div class="row no-gutters">
-          <div *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)" class="col-md-6 mt-2 text-danger">
-            <div *ngIf="newPassword.errors?.required">
-              {{ 'general.account.newpassword_errors_required' | translate }}
-            </div>
-            <div *ngIf="newPassword.errors?.minlength">
-              {{ 'general.account.newpassword_errors_minlength' | translate }}
-            </div>
-            <div *ngIf="newPassword.errors?.pattern">
-              {{ 'general.account.newpassword_errors_pattern' | translate }}
-            </div>
-          </div>
-          <div
-            *ngIf="passwordForm.errors?.passwordMismatch"
-            class="col-md-6 d-flex justify-content-center mt-2 text-danger d-flex justify-content-start"
-          >
-            {{ 'general.account.passwords_errors_dontmatch' | translate }}
-          </div>
-        </div>
-      </nb-card-body>
-      <nb-card-footer class="d-flex justify-content-center">
-        <button
-          nbButton
-          class="mr-2"
-          shape="rectangle"
-          status="primary"
-          type="submit"
-          [disabled]="!passwordForm.valid"
-          (click)="onSubmitPassword(ref)"
-        >
-          {{ 'general.save' | translate }}
-        </button>
-        <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
-          {{ 'general.close' | translate }}
-        </button>
-      </nb-card-footer>
-    </nb-card>
-  </form>
+<!-- Existing Service modal - Ask overwrite ng-template -->
+<ng-template #confirmOverwriteDialog let-data let-ref="dialogRef">
+  <nb-card status="primary">
+    <nb-card-body class="p-5">{{ 'general.editor.confirm_overwrite' | translate: { name: data.name } }}</nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="data.callback()">
+        {{ 'general.editor.overwrite' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
 </ng-template>
 
 
-
-<!-- Assistance and Support -->
 <nb-card>
-  <nb-card-header>{{ 'general.account.assistance_and_support' | translate }}</nb-card-header>
-  <nb-card-body>
-    <div class="row">
-      <div class="mb-1 col-sm-6 d-flex justify-content-center">
-        <button nbButton shape="rectangle" status="primary" (click)="openReportProblem()">
-          {{ 'general.account.report_the_problem' | translate }}
-        </button>
-      </div>
-      <div class="mb-1 col-sm-6 d-flex justify-content-center">
-        <a href={{docsUrl}} target="_blank">{{ 'general.account.tutorials_and_documentations' | translate }}</a>
-      </div>
-    </div>
+  <nb-card-header class="h3"> Data Model Mapper </nb-card-header>
 
-    <ng-template #reportProblemWindowTemplate let-data>
-      <form [formGroup]="reportProblemForm" (ngSubmit)="onSubmitReportProblem()">
-      
-        <nb-select name="topic" id="topic" formControlName="reportTopicText" placeholder="{{ 'general.account.report_subject' | translate }}" [(selected)]="selectedItem">
-          <nb-option value="General">General</nb-option>
-          <nb-option value="Other">Other</nb-option>
-        </nb-select>
-     
-        <div class="row align-items-center justify-content-center mb-3 flex-column">
-          <br> 
-          <textarea nbInput type="text" id="textarea" name="textarea" rows="4" cols="50" formControlName="reportProblemText" placeholder="{{ 'general.account.report_message' | translate }}"></textarea>
-        </div>
-        <div class="row justify-content-center">
-          <button nbButton type="submit" status="primary" size="medium">
-            {{ 'general.submit' | translate }}
-          </button>
-        </div>
-      </form>
+  <nb-card-body  class="row justify-content-center">
+    <ng-container *ngIf="!isNew; then updateButton; else createButton"> </ng-container>
+
+    <ng-template #createButton>
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
+        (click)="openSaveToRegistryDialog()" >
+        {{ 'general.save' | translate }}
+        <i class="mx-1 material-icons">save</i>
+      </button>
     </ng-template>
+    <ng-template #updateButton>
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
+        (click)="openUpdateToRegistryDialog()" >
+        {{ 'general.editor.update' | translate }}
+        <i class="mx-1 material-icons">save</i>
+      </button>
+    </ng-template>
+    <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning" (click)="saveAsFile()"
+      >
+      {{ 'general.editor.export' | translate }}
+      <i class="mx-1 fas fa-file-export fa-lg"></i>
+    </button>
+    <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger" (click)="importAsFile()"
+      >
+      {{ 'general.editor.import' | translate }}
+      <i class="mx-1 fas fa-file-import fa-lg"></i>
+    </button>
   </nb-card-body>
+
+  <nb-card-footer  >
+    <!--Map Editor accordion-->
+      
+<nb-accordion multi>
+  <nb-accordion-item>
+    <nb-accordion-item-header>
+      Source
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <p>To get started, select the type of input (CSV or JSON) and upload or paste your data.
+      </p>
+      <div class="mb-1">
+        <nb-select placeholder="Select Input Type" size="small" (selectedChange)="onUpdateInputType($event)">
+          <nb-option value="csv">CSV</nb-option>
+          <nb-option value="json">JSON</nb-option>
+        </nb-select>
+      </div>
+      <div class="mb-1" style="display:none;" id="json-input">
+        <div id="jsoneditor"></div>
+      </div>
+      <div class="mb-2" id="csv-input"  style="display:none;">
+        <div class="mb-1">
+          <nb-select placeholder="Separator" size="small" [(selected)]="separatorItem">
+            <nb-option value="comma">Comma separator</nb-option>
+            <nb-option value="semiColon">Semi-colon separator</nb-option>
+            <nb-option value="tab">Tab separator</nb-option>
+          </nb-select>
+        </div>
+        
+        <div class="mb-3">
+          <textarea id="textarea" rows="10" style="width:100%; display: block; padding: -0.625rem .75rem;"
+            placeholder="Enter CVS text..."></textarea>
+        </div>       
+      </div>
+    
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+
+  <nb-accordion-item>
+    <nb-accordion-item-header>
+      Mapper
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <div class="mb-2">
+      <nb-select placeholder="Select Json Schema" size="small">
+        <nb-option value=""></nb-option>
+        <nb-option value="model1">Model1</nb-option>
+        <nb-option value="nested" selected>NestedModel</nb-option>
+        <nb-option value="model3" >Model3</nb-option>
+      </nb-select>
+    </div>
+      <div class="mb-1">Or load from file: </div>
+          <div class="mb-2" id="load-json-schema">
+          <input type="file" id="loadSchema" value="Load" />
+      </div>
+
+      <div id="jsoneditor2"></div> 
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+
+  <nb-accordion-item>
+    <nb-accordion-item-header>
+      Output
+    </nb-accordion-item-header>
+    <nb-accordion-item-body>
+      <div id="jsoneditor3"></div>
+    </nb-accordion-item-body>
+  </nb-accordion-item>
+</nb-accordion>
+<!--End Map Editor accordion-->
+    
+  </nb-card-footer>
+  
+  
 </nb-card>
+
