@@ -10,20 +10,18 @@ import {
   NbComponentStatus,
   NbGlobalPhysicalPosition,
   NbToastrConfig,
-  NbMenuItem,
+  NbMenuItem
 } from '@nebular/theme';
 import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
 import { AvailableAdaptersService } from '.././available-adapters.service';
-import { AddAdapterComponent } from '.././add-adapter/add-adapter.component';
-
 import { LoginService } from '../../../../auth/login/login.service';
 import { AdapterStatusEnum } from '../../../../model/services/adapter';
 import { AdapterEntry } from '../../../../model/adapter/adapterEntry';
-import { ServiceModelSchema } from '../../../../model/services/serviceModelSchema'
 import { NgxConfigureService } from 'ngx-configure';
 import { AppConfig } from '../../../../model/appConfig';
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
+import { Mapper } from '../../../../model/adapter/mapper';
 
 @Component({
   selector: 'actions-adapter-menu-render',
@@ -37,44 +35,38 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   @Output() updateResult = new EventEmitter<unknown>();
   @Input() editedValue: AdapterEntry;
   @Output() outValue = new EventEmitter<unknown>();
-  name
-  description
-  status
-  type
-  url
-  ref
-  dialogRef
-  context
-  //mapper
-  //adapterModel
-  adapterId
-  mappers
-  loaded = false
-  private appConfig: AppConfig;
-
-  inputItemFormControl
-  textareaItemFormControl;
-
+  name: string;
+  description: string;
+  status: string;
+  type: string;
+  url: string;
+  context: string;
+  adapterId: string;
+  mappers: Mapper[];
+  loaded: boolean = false
+  inputItemFormControl: FormControl;
+  textareaItemFormControl: FormControl;
   IDs: string[] = [];
   filteredControlIDOptions$: Observable<string[]>;
   filteredIDOptions$: Observable<string[]>;
   IDFormControl: FormControl;
   NameFormControl: FormControl;
-
   filteredControlNameOptions$: Observable<string[]>;
   filteredNameOptions$: Observable<string[]>;
   names: string[] = [];
   mapperNames: string[] = [];
-
-  private unsubscribe: Subject<void> = new Subject();
   actions: NbMenuItem[];
+  private appConfig: AppConfig;
+  private unsubscribe: Subject<void> = new Subject();
+
+  ref;
+
 
   @ViewChild('confirmDeleteDialog', { static: false }) confirmDeleteDialogTemplate: TemplateRef<unknown>;
   @ViewChild('confirmRegisterDialog', { static: false }) confirmRegisterDialog: TemplateRef<unknown>;
   @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
   @ViewChild('editAdapter', { static: false }) editAdapter: TemplateRef<unknown>;
   validURL: boolean;
-  //@ViewChild('adapter',{ static: false }) addAdapter: AddAdapterComponent;
 
   constructor(
     private http: HttpClient,
@@ -92,8 +84,6 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   ) {
     this.appConfig = this.configService.config as AppConfig
     this.adapterId = this.appConfig.data_model_mapper.default_map_ID
-    //this.adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
-    //this.mapper = this.appConfig.data_model_mapper.default_map_ID
   }
 
   get registered(): boolean {
@@ -140,10 +130,6 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
     this.description = this.value.description
     this.url = this.value.url
     this.type = this.value.type
-    //this.mapper=this.value.mapper
-    //this.adapterModel=this.value.adapterModel
-
-    //
     this.loadMappers()
     this.filteredControlIDOptions$ = of(this.IDs);
     this.filteredControlNameOptions$ = of(this.names);
@@ -161,8 +147,6 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
       );
     this.inputItemFormControl = new FormControl();
     this.textareaItemFormControl = new FormControl();
-    //
-
     this.status = this.value.status
     this.actions = this.translatedActionLabels();
     this.menuService
@@ -247,22 +231,16 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
         adapterId = this.adapterId,
         type = this.type,
         url = this.url,
-        context = this.context//,
-      //mapper,
-      //adapterModel;
+        context = this.context;
 
-      if (type == "MODEL" && context == "IMPORT") {
+      if (type == "MODEL" && context == "IMPORT")
         adapterId = this.appConfig.data_model_mapper.default_map_ID;
-        //adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
-      } else {
-        //mapper = this.mapper;
+      else
         adapterId = this.adapterId
-      }
 
-      if (adapterId == '' || adapterId == null) {
-        console.log("dialog-add-new-prompt.component.ts.onSubmit(): Adapter ID must be set");
+      if (adapterId == '' || adapterId == null)
         throw new Error("Adapter ID must be set");
-      }
+
 
       await this.availableAdaptersService.updateAdapter(((
         type == "MODEL" ?
