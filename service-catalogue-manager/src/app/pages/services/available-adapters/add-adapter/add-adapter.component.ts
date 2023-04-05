@@ -18,13 +18,13 @@ import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
 @Component({
   selector: 'add-adapter',
   templateUrl: './add-adapter.component.html',
-  styleUrls: ['./add-adapter.component.scss']//,
-  //changeDetection: ChangeDetectionStrategy.OnPush,
+  styleUrls: ['./add-adapter.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class AddAdapterComponent implements OnInit {
   //[x: string]: any;
-  @Input() value: AdapterEntry;
+  @Input() value: any;
   @Output() editedValue = new EventEmitter<unknown>();
   //http: HttpClient;
   //configService: NgxConfigureService;
@@ -48,8 +48,20 @@ export class AddAdapterComponent implements OnInit {
   private appConfig: AppConfig;
   mappers
 
-  options: string[];
-  validURL=true
+  mapperIDs: string[] = [];
+  validURL = true
+
+  options: string[] = [];
+  filteredControlOptions$: Observable<string[]>;
+  filteredNgModelOptions$: Observable<string[]>;
+  inputFormControl: FormControl;
+  inputFormControl2: FormControl;
+
+  filteredControlOptions2$: Observable<string[]>;
+  filteredNgModelOptions2$: Observable<string[]>;
+  options2: string[] = [];
+  mapperNames: string[] = [];
+  //value: string;
   //filteredControlOptions$
   //inputFormControl: FormControl;
   //filteredOptions$: Observable<string[]>;
@@ -85,22 +97,50 @@ export class AddAdapterComponent implements OnInit {
         this.mappers = await this.http.post<any>(this.url, {
           "getMapperList": true
         }).toPromise();
-        for (let mapper of this.mappers) this.options.push(mapper.id)
+        for (let mapper of this.mappers) {
+          this.mapperIDs.push(mapper.id);
+          this.mapperNames.push(mapper.name);
+        }
         this.loaded = true
-        this.validURL=true
+        this.validURL = true
       }
       catch (error) {
         console.log("Cannot get response from remote url")
-        this.validURL=false
+        console.log(error)
+        this.validURL = false
       }
-    else this.validURL=false
+    else this.validURL = false
+    this.options = this.mapperIDs;
+    this.options2 = this.mapperNames;
+    console.log(this.validURL)
+    console.log(this.mapperIDs)
+    console.log(this.mapperNames)
+    this.filteredControlOptions$ = of(this.options);
+    this.filteredControlOptions2$ = of(this.options2);
   }
 
   ngOnInit(): void {
 
     this.loaded = false
-    //this.loadMappers()
-    this.options = [];
+    this.url = this.appConfig.data_model_mapper.default_mapper_url
+    this.loadMappers()
+    this.options = this.mapperIDs;
+    this.options2 = this.mapperNames;
+    this.filteredControlOptions$ = of(this.options);
+    this.filteredControlOptions2$ = of(this.options2);
+    console.log(this.options2, "-------", this.options)
+    this.inputFormControl = new FormControl();
+    this.inputFormControl2 = new FormControl();
+    this.filteredControlOptions$ = this.inputFormControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(filterString => this.filter(filterString)),
+      );
+    this.filteredControlOptions2$ = this.inputFormControl2.valueChanges
+      .pipe(
+        startWith(''),
+        map(filterString => this.filter(filterString)),
+      );
 
     /*this.filteredControlOptions$ = of(this.options);
     this.filteredNgModelOptions$ = of(this.options);
@@ -137,6 +177,11 @@ export class AddAdapterComponent implements OnInit {
     return this.options.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
   }
 
+  private filter2(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options2.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+  }
+
   getFilteredOptions(value: string): Observable<string[]> {
     return of(value).pipe(
       map(filterString => this.filter(filterString)),
@@ -150,11 +195,17 @@ export class AddAdapterComponent implements OnInit {
 
   onSelectionChange($event) {
     this.filteredOptions$ = this.getFilteredOptions($event);
+  }*/
+
+  onAdapterIDChange(value: string) {
+    this.filteredNgModelOptions$ = of(this.filter(value));
+    this.adapterId = value
   }
 
-  onModelChange(value: string) {
-    this.filteredNgModelOptions$ = of(this.filter(value));
-  }*/
+  onNameChange(value2: string) {
+    this.filteredNgModelOptions2$ = of(this.filter2(value2));
+    this.name = value2
+  }
 
   onFileChanged(event: Event): void {
     try {
@@ -196,12 +247,13 @@ export class AddAdapterComponent implements OnInit {
   }
 
   async onSubmit() {
+    console.log("value", this.value)
     try {
 
       let name = this.name,
         description = this.description,
         status = this.status,
-        adapterId = this.adapterId? this.adapterId : this.value? this.value : null,
+        adapterId = this.adapterId ? this.adapterId : this.value ? this.value : null,
         type = this.type,
         url = this.url,
         context = this.context//,
@@ -212,13 +264,13 @@ export class AddAdapterComponent implements OnInit {
         adapterId = this.appConfig.data_model_mapper.default_map_ID;
         //adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
       } else {
-        adapterId = this.adapterId? this.adapterId : this.value? this.value : null;
+        adapterId = this.adapterId ? this.adapterId : this.value ? this.value : null;
         //adapterModel = this.adapterModel
       }
 
       if (adapterId == '' || adapterId == null) {
         console.log("dialog-add-new-prompt.component.ts.onSubmit(): Adapter ID must be set");
-        console.log("adapterId\n", this.adapterId,"\nnvalue\n",this.value, "adapterId",adapterId)
+        console.log("adapterId\n", this.adapterId, "\nnvalue\n", this.value, "adapterId", adapterId)
         throw new Error("Adapter ID must be set");
       }
 
