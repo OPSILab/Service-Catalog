@@ -51,15 +51,15 @@ export class AddAdapterComponent implements OnInit {
   mapperIDs: string[] = [];
   validURL = true
 
-  options: string[] = [];
-  filteredControlOptions$: Observable<string[]>;
-  filteredNgModelOptions$: Observable<string[]>;
-  inputFormControl: FormControl;
-  inputFormControl2: FormControl;
+  IDs: string[] = [];
+  filteredControlIDOptions$: Observable<string[]>;
+  filteredIDOptions$: Observable<string[]>;
+  IDFormControl: FormControl;
+  NameFormControl: FormControl;
 
-  filteredControlOptions2$: Observable<string[]>;
-  filteredNgModelOptions2$: Observable<string[]>;
-  options2: string[] = [];
+  filteredControlNameOptions$: Observable<string[]>;
+  filteredNameOptions$: Observable<string[]>;
+  names: string[] = [];
   mapperNames: string[] = [];
   //value: string;
   //filteredControlOptions$
@@ -92,14 +92,16 @@ export class AddAdapterComponent implements OnInit {
 
   async loadMappers(): Promise<void> {
     console.log("loadmappers")
+    this.IDs = []
+    this.names = []
     if (this.url)
       try {
         this.mappers = await this.http.post<any>(this.url, {
           "getMapperList": true
         }).toPromise();
         for (let mapper of this.mappers) {
-          this.mapperIDs.push(mapper.id);
-          this.mapperNames.push(mapper.name);
+          this.IDs.push(mapper.id);
+          this.names.push(mapper.name);
         }
         this.loaded = true
         this.validURL = true
@@ -110,13 +112,6 @@ export class AddAdapterComponent implements OnInit {
         this.validURL = false
       }
     else this.validURL = false
-    this.options = this.mapperIDs;
-    this.options2 = this.mapperNames;
-    console.log(this.validURL)
-    console.log(this.mapperIDs)
-    console.log(this.mapperNames)
-    this.filteredControlOptions$ = of(this.options);
-    this.filteredControlOptions2$ = of(this.options2);
   }
 
   ngOnInit(): void {
@@ -124,87 +119,55 @@ export class AddAdapterComponent implements OnInit {
     this.loaded = false
     this.url = this.appConfig.data_model_mapper.default_mapper_url
     this.loadMappers()
-    this.options = this.mapperIDs;
-    this.options2 = this.mapperNames;
-    this.filteredControlOptions$ = of(this.options);
-    this.filteredControlOptions2$ = of(this.options2);
-    console.log(this.options2, "-------", this.options)
-    this.inputFormControl = new FormControl();
-    this.inputFormControl2 = new FormControl();
-    this.filteredControlOptions$ = this.inputFormControl.valueChanges
+    this.filteredControlIDOptions$ = of(this.IDs);
+    this.filteredControlNameOptions$ = of(this.names);
+    this.IDFormControl = new FormControl();
+    this.NameFormControl = new FormControl();
+    this.filteredControlIDOptions$ = this.IDFormControl.valueChanges
       .pipe(
         startWith(''),
-        map(filterString => this.filter(filterString)),
+        map(filterString => this.filterID(filterString)),
       );
-    this.filteredControlOptions2$ = this.inputFormControl2.valueChanges
+    this.filteredControlNameOptions$ = this.NameFormControl.valueChanges
       .pipe(
         startWith(''),
-        map(filterString => this.filter(filterString)),
+        map(filterString => this.filterID(filterString)),
       );
-
-    /*this.filteredControlOptions$ = of(this.options);
-    this.filteredNgModelOptions$ = of(this.options);
-    this.filteredOptions$ = of(this.options);
-    this.inputFormControl = new FormControl();
-    this.filteredControlOptions$ = this.inputFormControl.valueChanges
-
-      .pipe(
-        startWith(''),
-        map(filterString => this.filter(filterString)),
-      );*/
-    //this.filteredNgModelOptions$ = of(this.options);
     try {
       this.inputItemFormControl = new FormControl();
       this.textareaItemFormControl = new FormControl();
-      /*
-      if (this.type == "MODEL" && this.context == "IMPORT") {
-        this.adapterId = this.appConfig.data_model_mapper.default_map_ID;
-        //adapterModel = this.appConfig.data_model_mapper.default_data_model_ID
-      }else*/
       if (this.value && this.value.adapterId) this.adapterId = this.value.adapterId
       this.url = this.appConfig.data_model_mapper.default_mapper_url
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
-      //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      //else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
-
   }
 
-  private filter(value: string): string[] {
+  private filterID(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.options.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+    return this.IDs.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
   }
 
-  private filter2(value: string): string[] {
+  private filterName(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.options2.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+    return this.names.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
   }
 
   getFilteredOptions(value: string): Observable<string[]> {
     return of(value).pipe(
-      map(filterString => this.filter(filterString)),
+      map(filterString => this.filterID(filterString)),
     );
   }
 
-  /*
-  onChange() {
-    this.filteredOptions$ = this.getFilteredOptions(this.input.nativeElement.value);
+  onAdapterIDChange(ID: string) {
+    this.filteredIDOptions$ = of(this.filterID(ID));
+    this.adapterId = ID
   }
 
-  onSelectionChange($event) {
-    this.filteredOptions$ = this.getFilteredOptions($event);
-  }*/
-
-  onAdapterIDChange(value: string) {
-    this.filteredNgModelOptions$ = of(this.filter(value));
-    this.adapterId = value
-  }
-
-  onNameChange(value2: string) {
-    this.filteredNgModelOptions2$ = of(this.filter2(value2));
-    this.name = value2
+  onNameChange(name: string) {
+    this.filteredNameOptions$ = of(this.filterName(name));
+    this.name = name
   }
 
   onFileChanged(event: Event): void {

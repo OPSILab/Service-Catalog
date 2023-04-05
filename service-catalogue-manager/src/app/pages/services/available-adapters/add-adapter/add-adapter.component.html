@@ -13,82 +13,25 @@
       <form>
         <label for="adapterId" fullWidth>{{ 'general.adapters.adapterId' | translate }}</label>
         <br>
-
-        <!--
-        <nb-select *ngIf="loaded" fullWidth placeholder="Select adapter ID" [(ngModel)]="adapterId"
-          [ngModelOptions]="{standalone: true}">
-          <nb-option *ngFor="let map of mappers" value={{map.id}}>{{map.id}}</nb-option>
-        </nb-select>
-        -->
-
-        <!--<input type="text" *ngIf="type!='MODEL'||context!='IMPORT'" nbInput fullWidth fieldSize="small"
-          placeholder="Insert ID manually or click 'Load mapper list' button" [(ngModel)]="adapterId"
-          [ngModelOptions]="{standalone: true}">-->
-
-        <!--<input #autoInput nbInput *ngIf="type!='MODEL'||context!='IMPORT'" type="text" (input)="onChange()" placeholder="Enter value"
-          [nbAutocomplete]="auto" />
-
-        <nb-autocomplete #auto (selectedChange)="onSelectionChange($event)">
-
-          <nb-option *ngFor="let option of filteredOptions$ | async" [value]="option">
+        <input [ngModel]="adapterId" (ngModelChange)="onAdapterIDChange($event)" (click)="loadMappers()" nbInput
+          type="text" fullWidth placeholder="adapterId" [nbAutocomplete]="IDautoComplete"
+          [ngModelOptions]="{standalone: true}" />
+        <nb-autocomplete #IDautoComplete>
+          <nb-option *ngFor="let option of filteredIDOptions$ | async" [value]="option">
             {{ option }}
           </nb-option>
-
-        </nb-autocomplete>-->
-
-
-        <!--
-        <input [formControl]="inputFormControl" nbInput type="text" placeholder="Form control"
-          [nbAutocomplete]="autoControl" />
-
-        <nb-autocomplete #autoControl>
-
-          <nb-option *ngFor="let option of filteredControlOptions$ | async" [value]="option">
-            {{ option }}
-          </nb-option>
-
         </nb-autocomplete>
-        -->
-
-        <input [ngModel]="adapterId" (ngModelChange)="onAdapterIDChange($event)" nbInput type="text" fullWidth placeholder="adapterId"
-          [nbAutocomplete]="autoNgModel" [ngModelOptions]="{standalone: true}"/>
-
-        <nb-autocomplete #autoNgModel>
-
-          <nb-option *ngFor="let option of filteredNgModelOptions$ | async" [value]="option">
-            {{ option }}
-          </nb-option>
-
-        </nb-autocomplete>
-
-<!--
-        <input *ngIf="!loaded && (context!='IMPORT'||type!='MODEL')" type="text" nbInput fullWidth fieldSize="small"
-          placeholder="Insert ID manually or click 'Load mapper list' button" [(ngModel)]="adapterId"
-          [ngModelOptions]="{standalone: true}">
-        <input *ngIf="type=='MODEL' && context=='IMPORT'" type="text" nbInput fullWidth fieldSize="small"
-          placeholder="Default ID" [(ngModel)]="adapterId" [ngModelOptions]="{standalone: true}" disabled>
-          -->
-
         <br>
         <br>
-
         <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
         <br>
-        <input [ngModel]="name" (ngModelChange)="onNameChange($event)" nbInput type="text" fullWidth placeholder="Name"
-          [nbAutocomplete]="autoNgModel2" [ngModelOptions]="{standalone: true}"/>
-
-        <nb-autocomplete #autoNgModel2>
-
-          <nb-option *ngFor="let n of filteredNgModelOptions2$ | async" [value]="n">
+        <input [ngModel]="name" (ngModelChange)="onNameChange($event)" (click)="loadMappers()" nbInput type="text"
+          fullWidth placeholder="Name" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}" />
+        <nb-autocomplete #nameAutoComplete>
+          <nb-option *ngFor="let n of filteredNameOptions$ | async" [value]="n">
             {{ n }}
           </nb-option>
-
         </nb-autocomplete>
-
-        <!--
-        <input type="text" fullWidth nbInput fieldSize="small" placeholder="name" [(ngModel)]="name"
-          [ngModelOptions]="{standalone: true}">
-          -->
         <br><br>
         <label for="status">{{ 'general.adapters.status' | translate }}</label>
         <br>
@@ -98,10 +41,14 @@
         <br>
         <label for="url">{{ 'general.adapters.url' | translate }}</label>
         <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+          [ngModelOptions]="{standalone: true}">
+        <!--
         <input type="text" *ngIf="!loaded" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
           [ngModelOptions]="{standalone: true}">
         <input type="text" *ngIf="loaded" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
           [ngModelOptions]="{standalone: true}" disabled>
+        -->
         <br><br>
         <label for="description">{{ 'general.adapters.description' | translate }}</label>
         <br>
@@ -136,10 +83,12 @@
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
           </button>
           &nbsp;
+          <!--
           <button *ngIf="(type!='MODEL'||context!='IMPORT') && !loaded" nbButton appearance="outline" shape="semi-round"
             size="medium" status="info" (click)="loadMappers()">
             <i class="mx-1">{{ 'general.adapters.load_mapper_list' | translate }}</i>
           </button>
+          -->
         </h3>
       </form>
     </h6>

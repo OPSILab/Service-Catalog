@@ -1,8 +1,8 @@
 import { Component, Input, Output, OnInit, OnChanges, TemplateRef, EventEmitter, OnDestroy, ViewChild, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { filter, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { filter, map, startWith, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
 import {
   NbMenuService,
   NbToastrService,
@@ -23,6 +23,7 @@ import { ServiceModelSchema } from '../../../../model/services/serviceModelSchem
 import { NgxConfigureService } from 'ngx-configure';
 import { AppConfig } from '../../../../model/appConfig';
 import { HttpClient } from '@angular/common/http';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'actions-adapter-menu-render',
@@ -51,6 +52,20 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   loaded = false
   private appConfig: AppConfig;
 
+  inputItemFormControl
+  textareaItemFormControl;
+
+  IDs: string[] = [];
+  filteredControlIDOptions$: Observable<string[]>;
+  filteredIDOptions$: Observable<string[]>;
+  IDFormControl: FormControl;
+  NameFormControl: FormControl;
+
+  filteredControlNameOptions$: Observable<string[]>;
+  filteredNameOptions$: Observable<string[]>;
+  names: string[] = [];
+  mapperNames: string[] = [];
+
   private unsubscribe: Subject<void> = new Subject();
   actions: NbMenuItem[];
 
@@ -58,6 +73,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   @ViewChild('confirmRegisterDialog', { static: false }) confirmRegisterDialog: TemplateRef<unknown>;
   @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
   @ViewChild('editAdapter', { static: false }) editAdapter: TemplateRef<unknown>;
+  validURL: boolean;
   //@ViewChild('adapter',{ static: false }) addAdapter: AddAdapterComponent;
 
   constructor(
@@ -85,10 +101,35 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   async loadMappers(): Promise<void> {
-    this.mappers = await this.http.post<any>(this.url, {
-      "getMapperList": true
-    }).toPromise();
-    this.loaded = true
+    console.log("loadmappers")
+    if (this.url)
+      try {
+        this.mappers = await this.http.post<any>(this.url, {
+          "getMapperList": true
+        }).toPromise();
+        for (let mapper of this.mappers) {
+          this.IDs.push(mapper.id);
+          this.names.push(mapper.name);
+        }
+        this.loaded = true
+        this.validURL = true
+      }
+      catch (error) {
+        console.log("Cannot get response from remote url")
+        console.log(error)
+        this.validURL = false
+      }
+    else this.validURL = false
+  }
+
+  private filterID(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.IDs.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+  }
+
+  private filterName(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.names.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
   }
 
   ngOnInit(): void {
@@ -101,6 +142,27 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
     this.type = this.value.type
     //this.mapper=this.value.mapper
     //this.adapterModel=this.value.adapterModel
+
+    //
+    this.loadMappers()
+    this.filteredControlIDOptions$ = of(this.IDs);
+    this.filteredControlNameOptions$ = of(this.names);
+    this.IDFormControl = new FormControl();
+    this.NameFormControl = new FormControl();
+    this.filteredControlIDOptions$ = this.IDFormControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(filterString => this.filterID(filterString)),
+      );
+    this.filteredControlNameOptions$ = this.NameFormControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(filterString => this.filterID(filterString)),
+      );
+    this.inputItemFormControl = new FormControl();
+    this.textareaItemFormControl = new FormControl();
+    //
+
     this.status = this.value.status
     this.actions = this.translatedActionLabels();
     this.menuService
@@ -134,6 +196,16 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
         },
       })
       .onClose.subscribe()
+  }
+
+  onAdapterIDChange(ID: string) {
+    this.filteredIDOptions$ = of(this.filterID(ID));
+    this.adapterId = ID
+  }
+
+  onNameChange(name: string) {
+    this.filteredNameOptions$ = of(this.filterName(name));
+    this.name = name
   }
 
   ngOnDestroy(): void {
