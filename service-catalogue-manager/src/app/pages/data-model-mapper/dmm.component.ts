@@ -20,6 +20,7 @@ import { NgxConfigureService } from 'ngx-configure';
 import { AppConfig } from '../../model/appConfig';
 
 import * as JSONEditor  from '../../../../node_modules/jsoneditor/dist/jsoneditor.js';
+
 import { DOCUMENT } from '@angular/common';
 
 

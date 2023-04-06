@@ -17,7 +17,8 @@
       "authRealm": "Cape"
     },
     "mailTo":"support@across.eu",
-    "docsUrl":"https://service-catalogue.readthedocs.io/en/latest/"
+    "docsUrl":"https://service-catalogue.readthedocs.io/en/latest/",
+    "dataMapEnumUrl":"http://localhost:81/assets/data/examples/dataMapEnum.json"
   },
   "i18n": {
     "locale": "en",
