@@ -15,7 +15,10 @@
       "disableAuth": "false",
       "authProfile": "oidc",
       "authRealm": "Cape"
-    }
+    },
+    "mailTo":"support@across.eu",
+    "docsUrl":"https://service-catalogue.readthedocs.io/en/latest/",
+    "dataMapEnumUrl":"http://localhost:81/assets/data/examples/dataMapEnum.json"
   },
   "data_model_mapper" : {
     "default_mapper_url":"http://localhost:5000/api/mapper",
@@ -26,6 +29,6 @@
   },
   "i18n": {
     "locale": "en",
-    "languages": ["it","en","de","gr","lv"]
+    "languages": ["it","en","de","el","lv"]
   }
 }

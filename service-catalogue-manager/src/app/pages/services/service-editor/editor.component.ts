@@ -22,6 +22,7 @@ import { ServiceModel } from '../../../model/services/serviceModel';
 import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Description } from '../../../model/services/description';
+import * as _ from "lodash"
 
 @Component({
   selector: 'ngx-spinner-color',
@@ -43,6 +44,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   public isNew = false;
 
   flipped = false;
+  dataMapEnum: string[];
 
   toggleView() {
     this.flipped = !this.flipped;
@@ -92,8 +94,12 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       } else {
         this.isNew = true;
       }
-
+      
+      this.dataMapEnum=await this.availablesServicesService.getDataMapEnum();
+     
       this.initializeEditor(this.serviceData);
+
+      
       // this.loading = true;
     } catch (error) {
       this.router.navigate(['/services']);
@@ -199,6 +205,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     this.editor = editor;
 
+    
     let isFirstChange = true;
     // Hook up the validation indicator to update its status whenever the editor changes
     editor.on('change', function () {
@@ -250,6 +257,10 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     //editor.on('ready', this.closeSpinner);
 
     editor.on('ready', () => {
+
+      //TO-DO invoke an externa service to retrieve the enum list
+      this.setSchemaEnum(editor.getEditor('root.hasServiceInstance.dataset'),'schema.items.properties.dataMapping.items.properties.datamap.enum', this.dataMapEnum)
+      
       editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
       this.loading = false;
       $('nb-spinner').remove();
@@ -261,6 +272,13 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
       }
     });
   }
+
+  setSchemaEnum(editor:JSONEditor,schemapath:string,enumValueList:string[]):void{
+
+    _.set(editor, schemapath, enumValueList);
+
+    }
+
 
   closeSpinner(): void {
     console.log('closing');

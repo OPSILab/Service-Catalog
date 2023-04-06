@@ -576,6 +576,12 @@
                     },
                     "source": {
                       "type": "string"
+                    },
+                    "readonly": {
+                      "type": "boolean"
+                    },
+                    "datamap": {
+                      "type": "string"
                     }
                   },
                   "required": [
@@ -583,7 +589,10 @@
                     "conceptId",
                     "name",
                     "type",
-                    "required"
+                    "required",
+                    "source",
+                    "readonly",
+                    "datamap"
                   ]
                 }
               }

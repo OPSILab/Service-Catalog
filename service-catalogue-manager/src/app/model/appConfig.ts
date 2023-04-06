@@ -9,11 +9,14 @@ export interface AppConfig {
 
 export interface System {
   sdkUrl: string;
+  dataMapEnumUrl: string;
   checkConsentAtOperator: boolean;
   serviceEditorUrl: string;
   editorSchemaPath: string;
   editorSchemaName: string;
   auth: Auth;
+  mailTo:string;
+  docsUrl:string;
 }
 
 export interface Auth {

@@ -334,7 +334,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the count of the registered Connector descriptions (total, public and private services).", tags = {
+	@Operation(summary = "Get the count of the registered Connector descriptions.", tags = {
 			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/connectors/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HashMap<String, Object>> getConnectorsCount() {
@@ -343,7 +343,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the count of the registered Adapter descriptions (total, public and private services).", tags = {
+	@Operation(summary = "Get the count of the registered Adapter descriptions.", tags = {
 			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/adapters/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HashMap<String, Object>> getAdaptersCount() {

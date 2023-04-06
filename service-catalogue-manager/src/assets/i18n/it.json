@@ -41,10 +41,9 @@
       "account": "Account",
       "adapters": "Adattatori",
       "connectors_adapters": "CONNETTORI e ADATTATORI",
-      "administration": "Amministrazione",
-      "fedarated_catalogues": "Cataloghi Federati",
-      "remote_catalogues": "Cataloghi Remoti",
-      "manage_configurations": "Gestisci Configurazioni"
+      "administration": "GESTIONE CATALOGO",
+      "federated_catalogues": "Cataloghi Federati",
+      "remote_catalogues":"Cataloghi remoti"
     },
     "consents": {
       "legalbasis": "Base giuridica",
@@ -116,6 +115,9 @@
       "refresh": "Aggiorna"
     },
     "account": {
+      "roles":"I tuoi ruoli",
+      "report_message":"Messaggio",
+      "report_subject":"Seleziona la tipologia",
       "export_data": "Esporta dati",
       "export_csv": "Esporta come CSV",
       "export_json": "Esporta come JSON",
@@ -165,7 +167,7 @@
       "privacy_policy": "Informativa Privacy",
       "assistance_and_support": "Assistenza e supporto",
       "tutorials_and_documentations": "Tutorials e documentazione",
-      "report_the_problem": "Segnala il problema",
+      "report_the_problem": "Segnala un problema",
       "save_button": "Salva",
       "name_errors_minlength": "Il nome deve contenere almeno due letere",
       "email_errors_pattern": "L'email deve essere regolare",

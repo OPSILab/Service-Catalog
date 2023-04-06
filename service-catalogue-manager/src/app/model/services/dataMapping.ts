@@ -19,5 +19,7 @@ export interface DataMapping {
     inputType?: string;
     required: boolean;
     source?: string;
+    readonly:boolean;
+    datamap?:string;
 }
 
