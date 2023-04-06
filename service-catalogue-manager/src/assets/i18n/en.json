@@ -44,8 +44,7 @@
       "connectors_adapters": "CONNECTORS & ADAPTERS",
       "administration": "ADMINISTRATION",
       "federated_catalogues": "Federated Catalogues",
-      "remote_catalogues":"Remote Catalogues"
-
+      "remote_catalogues": "Remote Catalogues"
     },
     "consents": {
       "legalbasis": "Legal basis",
@@ -117,9 +116,9 @@
       "refresh": "Refresh"
     },
     "account": {
-      "roles":"Your Roles",
-      "report_message":"Message",
-      "report_subject":"Select the topic",
+      "roles": "Your Roles",
+      "report_message": "Message",
+      "report_subject": "Select the topic",
       "export_data": "Export Data",
       "export_csv": "Export as CSV",
       "export_json": "Export as JSON",
@@ -286,8 +285,8 @@
       "validationErrors": "There are validation errors in the Service description.",
       "path": "Path",
       "publish": "Publish",
-      "show_error_details":"Show error details",
-      "hide_error_details":"Hide error details"
+      "show_error_details": "Show error details",
+      "hide_error_details": "Hide error details"
     },
     "connectors": {
       "connector": "Connector",
@@ -365,10 +364,21 @@
       "adapter_added_message": "A new adapter was added",
       "adapter_edited_message": "Adapter was edited",
       "validationErrors": "There are validation errors in the Adapter description.",
-      "context" : "Context",
-      "mapper" : "Mapper",
-      "adapter_model" : "Adapter model",
+      "context": "Context",
+      "mapper": "Mapper",
+      "adapter_model": "Adapter model",
       "load_mapper_list": "Load mapper list"
+    },
+    "catalogues": {
+      "catalogues": "Catalogues",
+      "description": "Description",
+      "details": "Details",
+      "status": "Status",
+      "actions": "Actions",
+      "country": "Country",
+      "services": "Services",
+      "active": "Active",
+      "name" : "Name"
     }
   },
   "login": {

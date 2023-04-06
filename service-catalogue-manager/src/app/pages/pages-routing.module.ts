@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { AuthGuard } from '../auth/services/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AvailableCataloguesComponent } from './services/availableCatalogues/availableCatalogues.component';
+import { AvailableCataloguesComponent } from './management/availableCatalogues/availableCatalogues.component';
+import {ManagementModule} from './management/management.module'
 
 const routes: Routes = [
   {
@@ -58,6 +59,11 @@ const routes: Routes = [
       {
         path: 'dmm',
         loadChildren: () => import('./data-model-mapper/dmm.module').then((m) => m.DMMModule),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'management',
+        loadChildren: () => import('./management/management.module').then((m) => m.ManagementModule),
         canActivate: [AuthGuard],
       },
 

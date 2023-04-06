@@ -368,6 +368,17 @@
       "mapper" : "Mappatore",
       "adapter_model" : "Modello adapter",
       "load_mapper_list": "Carica lista mapper"
+    },
+    "catalogues": {
+      "catalogues": "Cataloghi",
+      "description": "Descrizione",
+      "details": "Dettagli",
+      "status": "Stato",
+      "actions": "Azioni",
+      "country": "Paese",
+      "services": "Servizi",
+      "active": "Attivo",
+      "name" : "Nome"
     }
   },
   "login": {

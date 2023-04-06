@@ -1,3 +1,4 @@
+import { AvailableAdaptersService } from './available-adapters/available-adapters.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -39,8 +40,6 @@ import { AdapterInfoRenderComponent } from './available-adapters/adapter-info-re
 import { CustomKeywordRenderComponent } from './availableServices/custom-keyword-render.component';
 import { CustomStatusRenderComponent } from './availableServices/custom-status-render.component';
 import {ConnectorStatusRenderComponent } from './availableConnectors/custom-status-render.component';
-import { AvailableCataloguesComponent } from './availableCatalogues/availableCatalogues.component';
-
 
 @NgModule({
   imports: [
@@ -84,9 +83,8 @@ import { AvailableCataloguesComponent } from './availableCatalogues/availableCat
     CustomKeywordRenderComponent,
     CustomStatusRenderComponent,
     ConnectorStatusRenderComponent,
-    AvailableCataloguesComponent
   ],
-  providers: [AvailableServicesService, AvailableConnectorsService],
+  providers: [AvailableServicesService, AvailableConnectorsService, AvailableAdaptersService],
   entryComponents: [
     ActionsServiceMenuRenderComponent,
     ActionsConnectorMenuRenderComponent,

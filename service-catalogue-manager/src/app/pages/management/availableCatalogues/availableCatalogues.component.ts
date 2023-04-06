@@ -14,7 +14,7 @@ import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
-import { ConnectorStatusRenderComponent } from '../availableConnectors/custom-status-render.component';
+import { ConnectorStatusRenderComponent } from '../../services/availableConnectors/custom-status-render.component';
 import { LoginService } from '../../../auth/login/login.service';
 
 @Component({
@@ -37,8 +37,8 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   public catalogueId: string;
   public serviceName: string;
   public readOnly = false;
-  private catalogueLabel: string;
-  private descriptionLabel: string;
+  private nameLabel: string;
+  private countryLabel: string;
   private actionsLabel: string;
   private detailsLabel: string;
   private statusLabel: string;
@@ -113,8 +113,8 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   }
 
   loadTableSettings(): Record<string, unknown> {
-    this.catalogueLabel = this.translate.instant('general.catalogues.catalogue') as string;
-    this.descriptionLabel = this.translate.instant('general.catalogues.description') as string;
+    this.nameLabel = this.translate.instant('general.catalogues.name') as string;
+    this.countryLabel = this.translate.instant('general.catalogues.country') as string;
     this.actionsLabel = this.translate.instant('general.catalogues.actions') as string;
     this.detailsLabel = this.translate.instant('general.catalogues.details') as string;
     this.statusLabel = this.translate.instant('general.catalogues.status') as string;
@@ -133,13 +133,13 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
 
       columns: {
         id: {
-          title: this.catalogueLabel,
+          title: this.nameLabel,
           type: 'text',
           width: '25%',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row.name,
         },
         description: {
-          title: this.descriptionLabel,
+          title: this.countryLabel,
           editor: {
             type: 'textarea',
           },

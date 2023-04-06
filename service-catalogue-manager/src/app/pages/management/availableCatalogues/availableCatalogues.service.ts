@@ -63,9 +63,5 @@ export class AvailableCataloguesService {
   deleteCatalogue(catalogueId: string): Promise<CatalogueEntry> {
     return this.http.delete<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueId=${catalogueId}`).toPromise();
   }
-/*//TODO delete
-  getCatalogueLogs(catalogueId: string): Promise<CatalogueEntryLog[]> {
-    return this.http.get<CatalogueEntryLog[]>(`${this.serviceRegistryUrl}/api/v2/catalogues/logs?catalogueId=${catalogueId}`).toPromise();
-  }*/
 }
 
