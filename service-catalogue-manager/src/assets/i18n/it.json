@@ -40,7 +40,11 @@
       "registry": "Registro Servizi",
       "account": "Account",
       "adapters": "Adattatori",
-      "connectors_adapters": "CONNETTORI e ADATTATORI"
+      "connectors_adapters": "CONNETTORI e ADATTATORI",
+      "administration": "Amministrazione",
+      "fedarated_catalogues": "Cataloghi Federati",
+      "remote_catalogues": "Cataloghi Remoti",
+      "manage_configurations": "Gestisci Configurazioni"
     },
     "consents": {
       "legalbasis": "Base giuridica",

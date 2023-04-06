@@ -41,7 +41,11 @@
       "account": "Account",
       "editorpage_title": "Service description",
       "adapters": "Adapters",
-      "connectors_adapters": "CONNECTORS & ADAPTERS"
+      "connectors_adapters": "CONNECTORS & ADAPTERS",
+      "administration": "Administration",
+      "fedarated_catalogues": "Federated Catalogues",
+      "remote_catalogues": "Remote Catalogues",
+      "manage_configurations": "Manage Configuration"
     },
     "consents": {
       "legalbasis": "Legal basis",

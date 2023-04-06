@@ -25,8 +25,10 @@
         <br>
         <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
         <br>
-        <input [ngModel]="name" (ngModelChange)="onNameChange($event)" (click)="loadMappers()" nbInput type="text"
-          fullWidth placeholder="Name" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}" />
+        <input *ngIf="!validURL"  [ngModel]="name" (ngModelChange)="onNameChange($event)" (click)="loadMappers()" nbInput type="text"
+            fullWidth placeholder="Name" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}"/>
+          <input *ngIf="validURL"  [ngModel]="name" (ngModelChange)="onNameChange($event)" (click)="loadMappers()" nbInput type="text"
+            fullWidth placeholder="Name" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}" disabled/>
         <nb-autocomplete #nameAutoComplete>
           <nb-option *ngFor="let n of filteredNameOptions$ | async" [value]="n">
             {{ n }}
@@ -77,8 +79,8 @@
         <br>
         <br>
         <h3>
-          <p *ngIf="validURL==false" style=" text-align : center; font-size: 14px; color: red ">Invalid URL <br><br></p>
-          <button *ngIf="type=='MODEL'&&context=='IMPORT' || loaded" nbButton appearance="outline" shape="semi-round"
+          <p *ngIf="validURL==false" style=" text-align : center; font-size: 14px; color: red ">Invalid URL or unable to connect to load mapper list <br><br></p>
+          <button nbButton appearance="outline" shape="semi-round"
             size="medium" status="info" (click)="confirm()">
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
           </button>

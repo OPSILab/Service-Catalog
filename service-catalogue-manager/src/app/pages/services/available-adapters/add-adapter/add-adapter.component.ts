@@ -25,8 +25,8 @@ export class AddAdapterComponent implements OnInit {
   @Input() value: any;
   @Output() editedValue = new EventEmitter<unknown>();
   adapterId: string
-  name: string
-  description: string
+  name: string = ''
+  description: string = ''
   status: string = "inactive"
   type: string = "MODEL"
   context: string = "IMPORT"
@@ -66,7 +66,6 @@ export class AddAdapterComponent implements OnInit {
   }
 
   async loadMappers(): Promise<void> {
-    console.log("loadmappers")
     this.IDs = []
     this.names = []
     if (this.url)
@@ -138,6 +137,7 @@ export class AddAdapterComponent implements OnInit {
   onAdapterIDChange(ID: string) {
     this.filteredIDOptions$ = of(this.filterID(ID));
     this.adapterId = ID
+    this.name = this.names[this.IDs.indexOf(ID)]
   }
 
   onNameChange(name: string) {
@@ -185,7 +185,6 @@ export class AddAdapterComponent implements OnInit {
   }
 
   async onSubmit() {
-    console.log("value", this.value)
     try {
 
       let name = this.name,
@@ -195,11 +194,6 @@ export class AddAdapterComponent implements OnInit {
         type = this.type,
         url = this.url,
         context = this.context
-
-      if (type == "MODEL" && context == "IMPORT")
-        adapterId = this.appConfig.data_model_mapper.default_map_ID;
-      else
-        adapterId = this.adapterId ? this.adapterId : this.value ? this.value : null;
 
       if (adapterId == '' || adapterId == null)
         throw new Error("Adapter ID must be set");

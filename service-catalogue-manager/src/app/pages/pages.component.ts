@@ -21,6 +21,7 @@ export class PagesComponent implements OnInit, OnDestroy {
   public menu: NbMenuItem[];
   private hideServicesMenu: boolean;
   private hideConsentsMenu: boolean;
+  private hideAdministrationMenu: boolean;
   private unsubscribe: Subject<void> = new Subject();
 
   constructor(private translateService: TranslateService, private cdr: ChangeDetectorRef, private accessChecker: NbAccessChecker) { }
@@ -91,6 +92,29 @@ export class PagesComponent implements OnInit, OnDestroy {
         icon: 'options-2-outline',
         link: '/pages/services/availableAdapters',
         hidden: this.hideServicesMenu,
+      },
+      {
+        title: 'general.menu.administration',
+        group: true,
+        hidden: this.hideAdministrationMenu,
+      },
+      {
+        title: 'general.menu.fedarated_catalogues',
+        icon: 'file-text-outline',
+        link: '/pages/services/federatedCatalogues',
+        hidden: this.hideAdministrationMenu,
+      },
+      {
+        title: 'general.menu.remote_catalogues',
+        icon: 'file-outline',
+        link: '/pages/services/remoteCatalogues',
+        hidden: this.hideAdministrationMenu,
+      },
+      {
+        title: 'general.menu.manage_configurations',
+        icon: 'settings-2-outline',
+        link: '/pages/services/manageConfigurations',
+        hidden: this.hideAdministrationMenu,
       },
     ];
 

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { AuthGuard } from '../auth/services/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AvailableCataloguesComponent } from './services/availableCatalogues/availableCatalogues.component';
 
 const routes: Routes = [
   {
@@ -22,8 +23,21 @@ const routes: Routes = [
       },
       {
         path: 'adapters',
-        redirectTo: 'adapters/availableAdapters',
+        redirectTo: 'servicess/availableAdapters',
         pathMatch: 'full',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'connectors',
+        redirectTo: 'connectors/availableConnectors',
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'catalogues',
+        redirectTo: 'services/federatedCatalogues',
+        pathMatch: 'full',
+        component: AvailableCataloguesComponent,
         canActivate: [AuthGuard],
       },
       {
