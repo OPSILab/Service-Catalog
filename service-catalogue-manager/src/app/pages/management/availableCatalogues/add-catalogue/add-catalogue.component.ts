@@ -23,13 +23,18 @@ export class AddCatalogueComponent implements OnInit {
 
   @Input() value: any;
   @Output() editedValue = new EventEmitter<unknown>();
-  catalogueId: string
-  name: string = ''
-  description: string = ''
+  competentAuthority: string
+  //catalogueId
+  country: string;
+  category: string;
+  homePage: string;
+  apiEndpoint: string;
+  active: boolean;
+  refresh: any;
+  name: string;
+  description: string;
   status: string = "inactive"
-  type: string = "MODEL"
-  context: string = "IMPORT"
-  url: string
+  type: string;
   inputItemFormControl: FormControl;
   textareaItemFormControl: FormControl;
   selectedFile: File;
@@ -38,13 +43,6 @@ export class AddCatalogueComponent implements OnInit {
   loaded = false
   validURL = true
   IDs: string[] = [];
-  filteredControlIDOptions$: Observable<string[]>;
-  filteredIDOptions$: Observable<string[]>;
-  IDFormControl: FormControl;
-  NameFormControl: FormControl;
-  filteredControlNameOptions$: Observable<string[]>;
-  filteredNameOptions$: Observable<string[]>;
-  names: string[] = [];
   private appConfig: AppConfig;
 
   constructor(
@@ -63,89 +61,7 @@ export class AddCatalogueComponent implements OnInit {
     this.ref.close();
   }
 
-  ngOnInit(): void {
-
-    this.loaded = false
-    this.url = this.appConfig.data_model_mapper.default_mapper_url
-    this.filteredControlIDOptions$ = of(this.IDs);
-    this.filteredControlNameOptions$ = of(this.names);
-    this.IDFormControl = new FormControl();
-    this.NameFormControl = new FormControl();
-    this.filteredControlIDOptions$ = this.IDFormControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(filterString => this.filterID(filterString)),
-      );
-    this.filteredControlNameOptions$ = this.NameFormControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(filterString => this.filterID(filterString)),
-      );
-    try {
-      this.inputItemFormControl = new FormControl();
-      this.textareaItemFormControl = new FormControl();
-      if (this.value && this.value.catalogueId) this.catalogueId = this.value.catalogueId
-      this.url = this.appConfig.data_model_mapper.default_mapper_url
-    }
-    catch (error) {
-      console.log("error:<\n", error, ">\n")
-    }
-  }
-
-  private filterID(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.IDs.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
-  }
-
-  private filterName(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.names.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
-  }
-
-  getFilteredOptions(value: string): Observable<string[]> {
-    return of(value).pipe(
-      map(filterString => this.filterID(filterString)),
-    );
-  }
-
-  onCatalogueIDChange(ID: string) {
-    this.filteredIDOptions$ = of(this.filterID(ID));
-    this.catalogueId = ID
-    this.name = this.names[this.IDs.indexOf(ID)]
-  }
-
-  onNameChange(name: string) {
-    this.filteredNameOptions$ = of(this.filterName(name));
-    this.name = name
-  }
-
-  onFileChanged(event: Event): void {
-    try {
-      this.selectedFile = (<HTMLInputElement>event.target).files[0];
-      const fileReader = new FileReader();
-      fileReader.readAsText(this.selectedFile, 'UTF-8');
-      fileReader.onload = () => {
-        try {
-          this.json = JSON.parse(fileReader.result as string) as Record<string, unknown>;
-        } catch (error) {
-          //this.errorService.openErrorDialog(error);//TODO
-          console.log("error:<\n", error, ">\n")
-          //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-          //else if (error.message) console.log("message:<\n", error.message, ">\n")
-          this.ref.close();
-        }
-      };
-
-      fileReader.onerror = (error) => {
-        //this.errorService.openErrorDialog(error);//TODO
-      };
-    } catch (error) {
-      //console.log("error:<\n", error, ">\n")
-      //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      //else if (error.message) console.log("message:<\n", error.message, ">\n")
-      //this.errorService.openErrorDialog(error);//TODO
-    }
-  }
+  ngOnInit(): void { }
 
   confirm() {
     try {
@@ -162,20 +78,28 @@ export class AddCatalogueComponent implements OnInit {
     try {
 
       let name = this.name,
+        competentAuthority = this.competentAuthority,
+        country = this.country,
+        category = this.category,
+        homePage = this.homePage,
+        apiEndpoint = this.apiEndpoint,
+        active = this.active,
+        refresh = this.refresh,
         description = this.description,
-        status = this.status,
-        catalogueId = this.catalogueId ? this.catalogueId : this.value ? this.value : null,
-        type = this.type,
-        url = this.url,
-        context = this.context
+        type = this.type;
 
-      if (catalogueId == '' || catalogueId == null)
-        throw new Error("Catalogue ID must be set");
-
-      await this.availableCatalogueService.saveCatalogue(((
-        type == "MODEL" ?
-          { name, description, status, catalogueId, type, url, context } as unknown :
-          { name, description, status, catalogueId, type, url } as unknown)) as CatalogueEntry);
+        await this.availableCatalogueService.saveCatalogue((({
+          name,
+          competentAuthority,
+          country,
+          category,
+          description,
+          homePage,
+          apiEndpoint,
+          active,
+          refresh,
+          type
+        } as unknown)) as CatalogueEntry);
 
       this.ref.close();
       this.editedValue.emit(this.value);
@@ -184,12 +108,6 @@ export class AddCatalogueComponent implements OnInit {
     catch (error) {
       let errors: Object[] = []
 
-      if (!this.catalogueId) errors.push({
-        "path": "root.catalogueId",
-        "property": "minLength",
-        "message": "Value required",
-        "errorcount": 1
-      })
       if (!this.name) errors.push({
         "path": "root.name",
         "property": "minLength",
@@ -202,22 +120,10 @@ export class AddCatalogueComponent implements OnInit {
         "message": "Value required",
         "errorcount": 1
       })
-      if (!this.url) errors.push({
-        "path": "root.url",
-        "property": "minLength",
-        "message": "Value required",
-        "errorcount": 1
-      })
       if (!this.type) errors.push({
         "path": "root.type",
         "property": "minLength",
         "message": "Value required",
-        "errorcount": 1
-      })
-      if (this.type == "MODEL" && !this.context) errors.push({
-        "path": "root.context",
-        "property": "minLength",
-        "message": "Value required for catalogue type model",
         "errorcount": 1
       })
 

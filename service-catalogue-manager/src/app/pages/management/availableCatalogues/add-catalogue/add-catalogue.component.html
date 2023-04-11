@@ -11,73 +11,67 @@
   <nb-card-body class="m-2 p-4">
     <h6>
       <form>
-        <label for="catalogueId" fullWidth>{{ 'general.catalogues.catalogueId' | translate }}</label>
-        <br>
-        <input [ngModel]="catalogueId" (ngModelChange)="onCatalogueIDChange($event)" nbInput
-          type="text" fullWidth placeholder="catalogueId" [nbAutocomplete]="IDautoComplete"
-          [ngModelOptions]="{standalone: true}" />
-        <nb-autocomplete #IDautoComplete>
-          <nb-option *ngFor="let option of filteredIDOptions$ | async" [value]="option">
-            {{ option }}
-          </nb-option>
-        </nb-autocomplete>
-        <br>
-        <br>
         <label for="name" fullWidth>{{ 'general.catalogues.name' | translate }}</label>
         <br>
-        <input *ngIf="!validURL"  [ngModel]="name" (ngModelChange)="onNameChange($event)" nbInput type="text"
-            fullWidth placeholder="Name" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}"/>
-          <input *ngIf="validURL"  [ngModel]="name" (ngModelChange)="onNameChange($event)" nbInput type="text"
-            fullWidth placeholder="Name" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}" disabled/>
-        <nb-autocomplete #nameAutoComplete>
-          <nb-option *ngFor="let n of filteredNameOptions$ | async" [value]="n">
-            {{ n }}
-          </nb-option>
-        </nb-autocomplete>
-        <br><br>
-        <label for="status">{{ 'general.catalogues.status' | translate }}</label>
+        <input [ngModel]="name" nbInput type="text" fullWidth placeholder="Name" [ngModelOptions]="{standalone: true}"/>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
+        <br>
+        <label for="competent authority">{{ 'general.catalogues.competent_authority' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Competent authority" [(ngModel)]="competentAuthority"
           [ngModelOptions]="{standalone: true}" disabled>
         <br>
         <br>
-        <label for="url">{{ 'general.catalogues.url' | translate }}</label>
+        <label for="url">{{ 'general.catalogues.country' | translate }}</label>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Country" [(ngModel)]="country"
           [ngModelOptions]="{standalone: true}">
-        <!--
-        <input type="text" *ngIf="!loaded" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+        <br>
+        <br>
+        <label for="category">{{ 'general.catalogues.category' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Category" [(ngModel)]="category"
           [ngModelOptions]="{standalone: true}">
-        <input type="text" *ngIf="loaded" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
-          [ngModelOptions]="{standalone: true}" disabled>
-        -->
-        <br><br>
+        <br>
+        <br>
         <label for="description">{{ 'general.catalogues.description' | translate }}</label>
         <br>
         <textarea nbInput fullWidth fieldSize="medium" placeholder="description" [(ngModel)]="description"
           [ngModelOptions]="{standalone: true}"></textarea>
         <br><br>
+        <label for="home page">{{ 'general.catalogues.home_page' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Home page" [(ngModel)]="homePage"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <label for="API endpoint">{{ 'general.catalogues.api_endpoint' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="API endpoint" [(ngModel)]="apiEndpoint"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
         <label for="type">{{ 'general.catalogues.type' | translate }}</label>
         <br>
-        <nb-select fullWidth placeholder="Select catalogue type" [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
-          <nb-option-group title="type">
-            <nb-option value="MODEL">Model</nb-option>
-            <nb-option value="DATA">Data</nb-option>
-          </nb-option-group>
-        </nb-select>
-        <br><br>
-        <label *ngIf="type=='MODEL'" for="context">{{ 'general.catalogues.context' | translate
-          }}</label>
-        <br *ngIf="type=='MODEL'">
-        <nb-select *ngIf="type=='MODEL'" fullWidth placeholder="Select catalogue context" [(ngModel)]="context"
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Type" [(ngModel)]="type"
           [ngModelOptions]="{standalone: true}">
-          <nb-option-group title="context">
-            <nb-option value="IMPORT">Import</nb-option>
-            <nb-option value="EXPORT">Export</nb-option>
-          </nb-option-group>
-        </nb-select>
         <br>
         <br>
+        <label for="active">{{ 'general.catalogues.active' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Active" [(ngModel)]="active"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <label for="refresh">{{ 'general.catalogues.refresh' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Refresh" [(ngModel)]="refresh"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <nb-checkbox>
+          Authenticated
+        </nb-checkbox>
         <h3>
           <p *ngIf="validURL==false" style=" text-align : center; font-size: 14px; color: red ">Invalid URL or unable to connect to load mapper list <br><br></p>
           <button nbButton appearance="outline" shape="semi-round"
@@ -85,12 +79,6 @@
             <i class="mx-1">{{ 'general.catalogues.confirm' | translate }}</i>
           </button>
           &nbsp;
-          <!--
-          <button *ngIf="(type!='MODEL'||context!='IMPORT') && !loaded" nbButton appearance="outline" shape="semi-round"
-            size="medium" status="info" (click)="loadMappers()">
-            <i class="mx-1">{{ 'general.catalogues.load_mapper_list' | translate }}</i>
-          </button>
-          -->
         </h3>
       </form>
     </h6>
