@@ -5,10 +5,9 @@
   "format": "tabs",
   "items": {
     "type": "object",
-    "id": "arr_item_d",
-    "required": ["identifier", "dataMapping"],
+    "required": ["datasetId", "dataMapping"],
     "title": "Dataset",
-    "description": "Service dataset description  describes the type and structure of the set of  data processed by the Service. Each dataset property can be set as personal and linked to a processing class (Personal data handling).",
+    "description": "Service dataset description (IsDescribedAt) describes the type and structure of the set of personal data processed by the Service. Each dataset will be linked in one or more specific processing base object.",
     "options": {
       "collapsed": false
     },
@@ -22,7 +21,7 @@
       },
       "description": {
         "type": "array",
-        "title": "Description",
+        "title": "Textual Description",
         "description": " Array of localized textual descriptions.",
         "format": "tabs",
         "items": {
@@ -35,24 +34,16 @@
           "properties": {
             "locale": {
               "type": "string",
-              "title": "Locale",
               "description": "Language used in textual description, in ISO 639-1 format.",
               "watch": {
-                "possible_langs": "root.hasInfo.language"
+                "possible_langs": "root.language"
               },
               "enumSource": "possible_langs"
             },
             "description": {
               "type": "string",
-              "title": "Description",
-              "description": "Textual description in specified language.",
+              "description": "Textual description of the Service in specified language.",
               "format": "textarea"
-            },
-            "title": {
-              "type": "string",
-              "title": "Title",
-              "description": "Title in specified language.",
-              "format": "string"
             },
             "keywords": {
               "type": "array",
@@ -101,11 +92,6 @@
         "description": "URL pointing to further description of the data (e.g. to JSON schema)."
       },
       "distribution": {
-        "type": "array",
-        "title": "Distribution",
-        "description": " Objects describing distribution points of the Datasets.",
-        "format": "tabs",
-        "items":{
         "type": "object",
         "title": "Distribution",
         "format": "categories",
@@ -126,7 +112,6 @@
             "title": "Description",
             "description": "Localized description of Distribution.",
             "format": "tabs",
-            "uniqueItems": true,
             "items": {
               "type": "object",
               "title": "Locale",
@@ -140,7 +125,7 @@
                   "description": "Language used in textual description, in ISO 639-1 format.",
                   "enumSource": "possible_langs",
                   "watch": {
-                    "possible_langs": "root.hasInfo.language"
+                    "possible_langs": "root.language"
                   }
                 },
                 "description": {
@@ -158,17 +143,17 @@
             "description": "Data format (i.e json, csv...)"
           }
         }
-       }
       },
       "dataMapping": {
         "type": "array",
         "format": "tabs",
         "title": "Data Mapping",
-        "description": "Array of objects describing mapping of each Service specific data property and (if personal) with a personal data concept belonging to a controlled vocabulary.",
+        "description": "Array of objects describing mapping of each Service specific data with a personal data concept belonging to a controlled vocabulary.",
         "items": {
           "type": "object",
           "title": "Field",
-          "headerTemplate": "{{ self.property }}",
+          "id": "arr_item",
+          "headerTemplate": "{{ self.name }}",
           "properties": {
             "property": {
               "type": "string",
@@ -198,56 +183,13 @@
               },
               "default": "text"
             },
-
-            "inputType": {
-              "type": "string",
-              "description": "Type of input Data: text, files, dropdown list, ect",
-              "title": "Input Type",
-              "format": "select2",
-              "enum": ["input text", "file", "select", "text area","date", "datetime-local", "email","month", "password", "number", "range", "tel", "time", "url", "week" ],
-              "options": {
-                "enum_titles": ["input text", "file", "select", "text area", "date", "datetime-local", "email","month", "password", "number", "range", "tel", "time", "url", "week"],
-                "input_width": "85px",
-                "grid_columns": 12
-              },
-              "default": "input text"
-            },
-
             "required": {
               "type": "boolean",
               "title": "Required",
-              "description": "If the property is mandatory when used in a dataset.",
-              "format": "checkbox",
-              "default": false
-            },
-           "source": {
-              "type": "string",
-              "title": "Source",
-              "description": "Reference to one of the Distribution class for possible values in type input (ex. select values)",
-              "watch": {
-                "possible_inputs": "arr_item_d.distribution"
-              },
-              "enumSource": [
-                [""],
-                {
-                  "source": "possible_inputs",
-                  "value": "{{item.distributionId}}"
-                }
-              ]
-            },
-            "readonly": {
-              "type": "boolean",
-              "title": "Readonly",
-              "description": "If the property is readonly and/or prefilled ( set DataMap)",
-              "format": "checkbox",
-              "default": false
-            },
-
-            "datamap": {
-              "$ref": "../../wallet-schema/wallet-schemas.json"
+              "description": "If the property is mandatory when used in a dataset."
             }
           },
-          "required": ["property", "name", "type", "required", "readonly", "datamap"]
+          "required": ["property", "conceptId", "name", "type", "required"]
         }
       }
     }

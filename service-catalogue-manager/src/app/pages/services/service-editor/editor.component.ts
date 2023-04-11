@@ -94,9 +94,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       } else {
         this.isNew = true;
       }
-      
-      this.dataMapEnum=await this.availablesServicesService.getDataMapEnum();
-     
+         
       this.initializeEditor(this.serviceData);
 
       
@@ -134,7 +132,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       autocomplete: {
         search_services: function search(editor, input) {
           return new Promise(function (resolve) {
-            if (input.length < 3) {
+            if (input.length < 0) {
               return resolve([]);
             }
 
@@ -160,8 +158,8 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
           }, []);
           return [
             '<li ' + props + '>',
-            '<div class="wiki-title">' + result.title + '</div>',
-            '<div class="wiki-snippet"><small>[' + result.hasInfo.spatial + '] ' + description[0]?.description + '<small></div>',
+            '<div >' + result.title + '</div>',
+            '<div><small>[' + result.hasInfo.spatial + '] ' + description[0]?.description + '<small></div>',
             '</li>',
           ].join('');
         },
@@ -257,10 +255,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     //editor.on('ready', this.closeSpinner);
 
     editor.on('ready', () => {
-
-      //TO-DO invoke an externa service to retrieve the enum list
-      this.setSchemaEnum(editor.getEditor('root.hasServiceInstance.dataset'),'schema.items.properties.dataMapping.items.properties.datamap.enum', this.dataMapEnum)
-      
+    
       editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
       this.loading = false;
       $('nb-spinner').remove();
@@ -273,11 +268,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     });
   }
 
-  setSchemaEnum(editor:JSONEditor,schemapath:string,enumValueList:string[]):void{
-
-    _.set(editor, schemapath, enumValueList);
-
-    }
+  
 
 
   closeSpinner(): void {

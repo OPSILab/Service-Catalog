@@ -244,13 +244,7 @@
             },
 
             "datamap": {
-              "type": "string",
-              "title": "Data Map",
-              "format": "select2",
-              "description": "Reference to one of Once-Only data attributes (e.g from wallet, services...)",
-              "enum": [
-                ""
-              ]
+              "$ref": "../../wallet-schema/wallet-schemas.json"
             }
           },
           "required": ["property", "name", "type", "required", "readonly", "datamap"]

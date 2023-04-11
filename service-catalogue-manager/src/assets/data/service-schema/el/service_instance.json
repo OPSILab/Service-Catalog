@@ -1,0 +1,201 @@
+{
+  "type": "object",
+  "title": "Service Instance",
+  "description": "Technical, Service Provider and Data Controller Descriptions of actual instance where service is deployed.",
+  "format": "categories",
+  "required": ["serviceProvider", "serviceUrls", "endpointConnector", "dataset", "dataController"],
+  "properties": {
+    "serviceProvider": {
+      "type": "object",
+      "title": "Service Provider",
+      "description": "Object describing Service Provider.",
+      "required": ["businessId", "name", "hasAddress", "postalcode", "city", "state", "country", "email", "telephone", "jurisdiction"],
+      "properties": {
+        "businessId": {
+          "type": "string",
+          "title": "Business ID",
+          "description": "Business ID for Service Provider"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name",
+          "description": "Service Provider name."
+        },
+        "hasAddress": {
+          "type": "string",
+          "title": "Address",
+          "description": "Principal address."
+        },
+        "postalcode": {
+          "type": "string",
+          "title": "Postal Code",
+          "description": "Postal ZIP Code."
+        },
+        "city": {
+          "type": "string",
+          "title": "City",
+          "description": "City."
+        },
+        "state": {
+          "type": "string",
+          "title": "State",
+          "description": "State."
+        },
+        "country": {
+          "type": "string",
+          "title": "Country",
+          "description": "Country."
+        },
+        "email": {
+          "type": "string",
+          "title": "Email",
+          "description": "Email."
+        },
+        "telephone": {
+          "type": "string",
+          "title": "Phone",
+          "description": "Phone."
+        },
+        "jurisdiction": {
+          "type": "string",
+          "title": "Jurisdiction",
+          "description": "Jurisdiction."
+        }
+      }
+    },
+    "endpointConnector": {
+      "type": "object",
+      "title": "Endpoint Connector",
+      "description": "Endpoint Connector",
+      "basicCategoryTitle": "Connector",
+      "format": "categories",
+      "properties": {
+        "endpoint": {
+          "type": "object",
+          "title": "Endpoint",
+          "properties": {
+            "accessURL": {
+              "type": "string",
+              "title": "Access URL",
+              "description": "Access URL of an endpoint."
+            },
+            "endpointInformation": {
+              "type": "string",
+              "title": "Description",
+              "description": "Endpoint description"
+            },
+            "endpointDocumentation": {
+              "type": "string",
+              "title": "Endpoint documentation",
+              "description": "IRI reference to a documentation of the endpoint, e.g., reference to an OpenAPI-based documentation."
+            },
+            "path": {
+              "type": "string",
+              "title": "Path",
+              "description": "Relative path, topic or queue at which the content is published by the related host."
+            },
+            "async": {
+              "title": "Async",
+              "type": "boolean",
+              "description":"If the endpoint call is async or not",
+              "format": "checkbox",
+              "default": false
+              
+            },
+            "callback": {
+              "type": "string",
+              "title": "Callback",
+              "description": "Callback path if async"
+              
+            }
+          }
+        },
+        "connectorId": {
+          "type": "string",
+          "title": "Connector Id",
+          "description": "Id of registered connector instance associated to the service endpoint"
+        }
+      }
+    },
+
+    "dataset": {
+      "$ref": "./dataset.json"
+    },
+
+    "serviceUrls": {
+      "type": "object",
+      "title": "Internal Service Urls",
+      "description": "Service Urls used for interacting with Cape.",
+      "required": ["libraryDomain", "loginUri", "linkingRedirectUri", "objectionUri", "notificationUri"],
+      "properties": {
+        "libraryDomain": {
+          "type": "string",
+          "title": "Library Domain",
+          "description": "Service's integration library url. Endpoint where Cape SDK is publicly reachable (http(s)://host:port)."
+        },
+        "loginUri": {
+          "type": "string",
+          "title": "Login URI",
+          "description": "Url of Service Login Page where User will be redirected when start service linking from Operator (Cape User Dashboard)."
+        },
+        "linkingRedirectUri": {
+          "type": "string",
+          "title": "Linking Redirect URI",
+          "description": "URI where ​User​ ​will​ ​be redirected​ ​after​ ​service has​ ​been​ ​linked.​ ​Used in​ ​service​ ​linking starting​ ​from​ ​the service."
+        },
+        "objectionUri": {
+          "type": "string",
+          "title": "Objection URI",
+          "description": "URI for objection"
+        },
+        "notificationUri": {
+          "type": "string",
+          "title": "Notification URI",
+          "description": "URI for subscribing notifications"
+        }
+      }
+    },
+    "dataController": {
+      "type": "object",
+      "title": "Data Controller",
+      "description": "Object describing the Data Controler of the specific Service instance",
+      "properties": {
+        "piiController": {
+          "type": "string",
+          "title": "Controller Name",
+          "description": "Name of Data Controller."
+        },
+        "organizationName": {
+          "type": "string",
+          "title": "Organization Name",
+          "description": "Organization name."
+        },
+        "hasContact": {
+          "type": "string",
+          "title": "Contact",
+          "description": "Contact Person."
+        },
+        "hasAddress": {
+          "type": "string",
+          "title": "Address",
+          "description": "Address."
+        },
+        "email": {
+          "type": "string",
+          "title": "Email",
+          "description": "Email Address."
+        },
+        "telephone": {
+          "type": "string",
+          "title": "Phone",
+          "description": "Phone"
+        },
+        "operatorName": {
+          "type": "string",
+          "title": "Operator Name",
+          "description": "Name of the Operator is describing the Service."
+        }
+      }
+    }
+  }
+}

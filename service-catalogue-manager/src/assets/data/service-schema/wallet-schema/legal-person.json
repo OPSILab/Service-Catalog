@@ -1,0 +1,8 @@
+{
+    "type": "string",
+    "title": "Data Map",
+    "description": "Reference to one of Once-Only data attributes from eIDAS scheme for Legal Person",
+    "enum": [
+      "LegalPersonIdentifier","LegalName", "LegalPersonAddress","VATRegistrationNumber","TaxReference","D-2012-17-EUIdentifier","LEI","EORI","SEED","SIC"
+    ]
+  }
