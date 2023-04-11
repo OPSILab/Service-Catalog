@@ -9,7 +9,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 //import { ActionsCatalogueMenuRenderComponent } from './actions-catalogue-menu-render/actions-catalogue-menu-render.component';//TODO
 import { CatalogueEntry } from '../../../model/catalogue/catalogueEntry';//TODO
-//import { AddCatalogueComponent } from './add-catalogue/add-catalogue.component';//TODO
+import { AddCatalogueComponent } from './add-catalogue/add-catalogue.component';
 import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
@@ -40,8 +40,10 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   private nameLabel: string;
   private countryLabel: string;
   private actionsLabel: string;
-  private detailsLabel: string;
+  private infoLabel: string;
   private statusLabel: string;
+  private activeLabel: string;
+  private servicesLabel: string;
   public settings: Record<string, unknown>;
   private locale: string;
   public source: LocalDataSource = new LocalDataSource();
@@ -92,11 +94,9 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
 
   async addNew(): Promise<void> {
     try {
-      //TODO
-      /*
       this.dialogService.open(AddCatalogueComponent).onClose.subscribe(() => {
         void console.log("confirm ok", this.ngOnInit());
-      });*/
+      });
       this.updateResult.emit(this.value);
       this.ngOnInit()
     }
@@ -116,8 +116,10 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     this.nameLabel = this.translate.instant('general.catalogues.name') as string;
     this.countryLabel = this.translate.instant('general.catalogues.country') as string;
     this.actionsLabel = this.translate.instant('general.catalogues.actions') as string;
-    this.detailsLabel = this.translate.instant('general.catalogues.details') as string;
+    this.infoLabel = this.translate.instant('general.catalogues.details') as string;
     this.statusLabel = this.translate.instant('general.catalogues.status') as string;
+    this.activeLabel = this.translate.instant('general.catalogues.active') as string;
+    this.servicesLabel = this.translate.instant('general.catalogues.services') as string;
 
     return {
       mode: 'external',
@@ -138,22 +140,17 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           width: '25%',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row.name,
         },
-        description: {
+        country: {
           title: this.countryLabel,
-          editor: {
-            type: 'textarea',
-          },
-          width: '65%',
+          type: 'text',
+          width: '25%',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row.description,
         },
-        details: {
-          title: this.detailsLabel,
-          filter: false,
-          sort: false,
-          width: '5%',
-          type: 'custom',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row,
-          //renderComponent: CatalogueInfoRenderComponent,//TODO
+        services: {
+          title: this.servicesLabel,
+          type: 'text',
+          width: '25%',
+          valuePrepareFunction: (cell, row: CatalogueEntry) => row.description,
         },
         status: {
           title: this.statusLabel,
@@ -163,6 +160,24 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           type: 'custom',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row.status,
           renderComponent: ConnectorStatusRenderComponent,
+        },
+        active: {
+          title: this.activeLabel,
+          sort: false,
+          filter: false,
+          width: '5%',
+          type: 'custom',
+          valuePrepareFunction: (cell, row: CatalogueEntry) => row.active,
+          renderComponent: ConnectorStatusRenderComponent,
+        },
+        info: {
+          title: this.infoLabel,
+          filter: false,
+          sort: false,
+          width: '5%',
+          type: 'custom',
+          valuePrepareFunction: (cell, row: CatalogueEntry) => row,
+          //renderComponent: CatalogueInfoRenderComponent,//TODO
         },
         actions: {
           title: this.actionsLabel,

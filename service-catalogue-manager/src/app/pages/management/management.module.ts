@@ -22,6 +22,7 @@ import { AvailableCataloguesComponent } from './availableCatalogues/availableCat
 import { AvailableCataloguesService } from './availableCatalogues/availableCatalogues.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ManagementRoutingModule } from './management-routing.module';
+import { AddCatalogueComponent } from './availableCatalogues/add-catalogue/add-catalogue.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { ManagementRoutingModule } from './management-routing.module';
     ManagementRoutingModule
   ],
   declarations: [
-    AvailableCataloguesComponent
+    AvailableCataloguesComponent,
+    AddCatalogueComponent
   ],
   providers: [AvailableCataloguesService],
   entryComponents: [
