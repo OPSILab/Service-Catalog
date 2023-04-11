@@ -370,6 +370,8 @@
       "load_mapper_list": "Load mapper list"
     },
     "catalogues": {
+      "add" : "Add catalogue",
+      "confirm" : "Confirm",
       "catalogues": "Catalogues",
       "description": "Description",
       "details": "Details",
@@ -378,7 +380,17 @@
       "country": "Country",
       "services": "Services",
       "active": "Active",
-      "name" : "Name"
+      "name" : "Name",
+      "competent_authority" : "Competent Authority",
+      "category" : "Category",
+      "home_page" : "Home page",
+      "api_endpoint" : "API endpoint",
+      "type" : "Type",
+      "refresh" : "Refresh",
+      "authenticated" : "authenticated",
+      "oauth2_endpoint": "Oauth2 Endpoint",
+      "client_ID": "Client ID",
+      "client_secret": "Client secret"
     }
   },
   "login": {

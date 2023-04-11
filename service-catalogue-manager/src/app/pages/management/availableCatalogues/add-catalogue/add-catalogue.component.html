@@ -69,11 +69,30 @@
           [ngModelOptions]="{standalone: true}">
         <br>
         <br>
-        <nb-checkbox>
+        <nb-checkbox (checkedChange)="toggle($event)">
           Authenticated
         </nb-checkbox>
+        <br *ngIf="authenticated">
+        <br *ngIf="authenticated">
+        <label *ngIf="authenticated" for="oauth2 endpoint">{{ 'general.catalogues.oauth2_endpoint' | translate }}</label>
+        <br *ngIf="authenticated">
+        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" placeholder="Oauth2 endpoint " [(ngModel)]="oAuth2Endpoint"
+          [ngModelOptions]="{standalone: true}">
+        <br *ngIf="authenticated">
+        <br *ngIf="authenticated">
+        <label *ngIf="authenticated" for="Client ID">{{ 'general.catalogues.client_ID' | translate }}</label>
+        <br *ngIf="authenticated">
+        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" placeholder="Client ID" [(ngModel)]="clientID"
+          [ngModelOptions]="{standalone: true}">
+        <br *ngIf="authenticated">
+        <br *ngIf="authenticated">
+        <label *ngIf="authenticated" for="Client Secret">{{ 'general.catalogues.client_secret' | translate }}</label>
+        <br *ngIf="authenticated">
+        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" placeholder="Client secret" [(ngModel)]="clientSecret"
+          [ngModelOptions]="{standalone: true}">
+        <br *ngIf="authenticated">
+        <br *ngIf="authenticated">
         <h3>
-          <p *ngIf="validURL==false" style=" text-align : center; font-size: 14px; color: red ">Invalid URL or unable to connect to load mapper list <br><br></p>
           <button nbButton appearance="outline" shape="semi-round"
             size="medium" status="info" (click)="confirm()">
             <i class="mx-1">{{ 'general.catalogues.confirm' | translate }}</i>

@@ -35,14 +35,10 @@ export class AddCatalogueComponent implements OnInit {
   description: string;
   status: string = "inactive"
   type: string;
-  inputItemFormControl: FormControl;
-  textareaItemFormControl: FormControl;
-  selectedFile: File;
-  json: Record<string, unknown>;
-  selectedItem = 'Json';
-  loaded = false
-  validURL = true
-  IDs: string[] = [];
+  authenticated:boolean = false;
+  oAuth2Endpoint:string;
+  clientID:string;
+  clientSecret:string;
   private appConfig: AppConfig;
 
   constructor(
@@ -72,6 +68,11 @@ export class AddCatalogueComponent implements OnInit {
       //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
       //else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
+  }
+
+  toggle(authenticated: boolean) {
+    this.authenticated = authenticated;
+    console.log(this.authenticated)
   }
 
   async onSubmit() {
