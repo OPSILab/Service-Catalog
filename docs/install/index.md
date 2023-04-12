@@ -94,7 +94,7 @@ In order to get Keycloak ready to be used by Service Catalogue, following steps 
  in the  client. [(see here)](https://www.keycloak.org/docs/latest/server_admin/#client-roles).
  - Assign  `SERVICE_MANAGER` as default role. [(see here)](https://www.keycloak.org/docs/latest/server_admin/#_default_roles).
 
- - Create a least a user playing the above third roles in order to view all the sections of the  [Service Catalogue Manager Dashboard](../usage/index.md)
+ - Create at least a user playing the above third roles in order to view all the sections of the  [Service Catalogue Manager Dashboard](../usage/index.md)
 
  - Create for client a Mapper of type User Client Role and set `roles` as Token Claim Name, in order to map client roles to the `roles` field of the generated Access Token. 
 

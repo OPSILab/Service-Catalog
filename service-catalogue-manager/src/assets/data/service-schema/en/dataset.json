@@ -2,7 +2,6 @@
   "type": "array",
   "title": "Service Data Description",
   "description": "Array of objects describing Service Data (Datasets).",
-  "format": "tabs",
   "items": {
     "type": "object",
     "id": "arr_item_d",
