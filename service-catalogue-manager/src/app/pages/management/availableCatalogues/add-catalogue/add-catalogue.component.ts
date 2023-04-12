@@ -23,22 +23,22 @@ export class AddCatalogueComponent implements OnInit {
 
   @Input() value: any;
   @Output() editedValue = new EventEmitter<unknown>();
-  competentAuthority: string
-  //catalogueId
-  country: string;
-  category: string;
-  homePage: string;
-  apiEndpoint: string;
-  active: boolean;
-  refresh: any;
-  name: string;
-  description: string;
+  competentAuthority: string = 'competent authority';
+  catalogueID: string = 'ID';
+  country: string = 'Country';
+  category: string = 'category';
+  homePage: string = 'home page';
+  apiEndpoint: string = 'http';
+  active: string = 'yes';
+  refresh: any = 'no';
+  name: string = 'name';
+  description: string = 'description';
   status: string = "inactive"
-  type: string;
-  authenticated:boolean = false;
-  oAuth2Endpoint:string;
-  clientID:string;
-  clientSecret:string;
+  type: string = 'type';
+  authenticated: boolean = false;
+  oAuth2Endpoint: string = 'endpoint';
+  clientID: string = 'id';
+  clientSecret: string = 'secret';
   private appConfig: AppConfig;
 
   constructor(
@@ -77,8 +77,9 @@ export class AddCatalogueComponent implements OnInit {
 
   async onSubmit() {
     try {
-
+    console.log(this.catalogueID)
       let name = this.name,
+        catalogueID = this.catalogueID,
         competentAuthority = this.competentAuthority,
         country = this.country,
         category = this.category,
@@ -87,20 +88,30 @@ export class AddCatalogueComponent implements OnInit {
         active = this.active,
         refresh = this.refresh,
         description = this.description,
-        type = this.type;
+        type = this.type,
+        authenticated = this.authenticated,
+        oAuth2Endpoint = this.oAuth2Endpoint,
+        clientSecret = this.clientSecret,
+        clientID = this.clientID;
 
-        await this.availableCatalogueService.saveCatalogue((({
-          name,
-          competentAuthority,
-          country,
-          category,
-          description,
-          homePage,
-          apiEndpoint,
-          active,
-          refresh,
-          type
-        } as unknown)) as CatalogueEntry);
+
+      await this.availableCatalogueService.saveCatalogue((({
+        catalogueID,
+        name,
+        competentAuthority,
+        country,
+        category,
+        description,
+        homePage,
+        apiEndpoint,
+        active,
+        refresh,
+        type,
+        authenticated,
+        clientID,
+        clientSecret,
+        oAuth2Endpoint
+      } as unknown)) as CatalogueEntry);
 
       this.ref.close();
       this.editedValue.emit(this.value);
@@ -134,7 +145,7 @@ export class AddCatalogueComponent implements OnInit {
         /*TODO this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
             {
-              "path": "root.catalogueId",
+              "path": "root.catalogueID",
               "property": "minLength",
               "message": "Value required",
               "errorcount": 1
@@ -147,9 +158,9 @@ export class AddCatalogueComponent implements OnInit {
           TODOthis.errorService.openErrorDialog({
             error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
               {
-                "path": "root.catalogueId",
+                "path": "root.catalogueID",
                 "property": "minLength",
-                "message": "A catalogue with catalogue ID < " + this.catalogueId + " > already exists",
+                "message": "A catalogue with catalogue ID < " + this.catalogueID + " > already exists",
                 "errorcount": 1
               }
             ]

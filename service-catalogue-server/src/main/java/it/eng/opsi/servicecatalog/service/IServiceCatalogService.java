@@ -21,6 +21,7 @@ import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
+import it.eng.opsi.servicecatalog.model.Catalogue;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.model.HasCost;
@@ -123,5 +124,15 @@ public interface IServiceCatalogService {
       public abstract Object getTimeByServiceId(String decodedServiceIdentifier);
 
       public abstract List<ServiceModel> createServices(@Valid List<ServiceModel> services);
+
+      public abstract List<Catalogue> getCatalogues();
+
+      public abstract Catalogue getCatalogueBycatalogueID(String catalogueID);
+
+      public abstract Catalogue createCatalogue(@Valid Catalogue catalogue);
+
+      public abstract Catalogue updateCatalogue(String decodedCataloguecatalogueID, @Valid Catalogue catalogue);
+
+      public abstract void deleteCatalogue(String decodedCataloguecatalogueID);
 
 }

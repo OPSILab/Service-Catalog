@@ -34,7 +34,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   private systemLocale: string;
   private config: AppConfig;
   public serviceId: string;
-  public catalogueId: string;
+  public catalogueID: string;
   public serviceName: string;
   public readOnly = false;
   private nameLabel: string;
@@ -158,7 +158,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           filter: false,
           width: '5%',
           type: 'custom',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row.status,
+          valuePrepareFunction: (cell, row: CatalogueEntry) => row.active,
           renderComponent: ConnectorStatusRenderComponent,
         },
         active: {

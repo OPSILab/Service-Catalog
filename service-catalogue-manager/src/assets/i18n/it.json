@@ -390,7 +390,8 @@
       "authenticated" : "authenticato",
       "oauth2_endpoint": "Oauth2 Endpoint",
       "client_ID": "Client ID",
-      "client_secret": "Client secret"
+      "client_secret": "Client secret",
+      "ID" : "ID"
     }
   },
   "login": {

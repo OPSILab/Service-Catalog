@@ -11,15 +11,20 @@
   <nb-card-body class="m-2 p-4">
     <h6>
       <form>
+        <label for="catalogue ID" fullWidth>{{ 'general.catalogues.ID' | translate }}</label>
+        <br>
+        <input [(ngModel)]="catalogueID" nbInput type="text" fullWidth placeholder="Catalogue ID" [ngModelOptions]="{standalone: true}"/>
+        <br>
+        <br>
         <label for="name" fullWidth>{{ 'general.catalogues.name' | translate }}</label>
         <br>
-        <input [ngModel]="name" nbInput type="text" fullWidth placeholder="Name" [ngModelOptions]="{standalone: true}"/>
+        <input [(ngModel)]="name" nbInput type="text" fullWidth placeholder="Name" [ngModelOptions]="{standalone: true}"/>
         <br>
         <br>
         <label for="competent authority">{{ 'general.catalogues.competent_authority' | translate }}</label>
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" placeholder="Competent authority" [(ngModel)]="competentAuthority"
-          [ngModelOptions]="{standalone: true}" disabled>
+          [ngModelOptions]="{standalone: true}">
         <br>
         <br>
         <label for="url">{{ 'general.catalogues.country' | translate }}</label>

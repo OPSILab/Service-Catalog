@@ -39,6 +39,8 @@ import it.eng.opsi.servicecatalog.exception.AdapterLogNotEditableException;
 import it.eng.opsi.servicecatalog.exception.AdapterLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotEditableException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotFoundException;
+import it.eng.opsi.servicecatalog.exception.CatalogueNotEditableException;
+import it.eng.opsi.servicecatalog.exception.CatalogueNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorLogNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
@@ -46,6 +48,7 @@ import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
+import it.eng.opsi.servicecatalog.model.Catalogue;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
@@ -80,6 +83,16 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			return ResponseEntity.ok(catalogService.getServices(name, location, keywords, completed));
 		}
 		return ResponseEntity.ok(catalogService.getServices());
+	}
+
+	@Override
+	@Operation(summary = "Get all the catalogue descriptions.", description = "Get all the catalogue descriptions saved in the Service Catalog.", tags = {
+			"Catalogue" }, responses = {
+					@ApiResponse(description = "Returns the list of all registered catalogue descriptions.", responseCode = "200") })
+	@GetMapping(value = "/catalogues", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<Catalogue>> getCatalogues()
+			throws CatalogueNotFoundException {
+		return ResponseEntity.ok(catalogService.getCatalogues());
 	}
 
 	@Override
@@ -256,6 +269,23 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getAdapterLogsByadapterId(decodedAdapterAdapterId));
 	}
 
+	@Operation(summary = "Get catalogue description by catalogueID.", tags = {
+			"Catalogue" }, responses = {
+					@ApiResponse(description = "Get Catalogue description by catalogueID.", responseCode = "200") })
+	@Override
+	@GetMapping(value = "/catalogues/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getCatalogue(@RequestParam("catalogueID") String catalogueID)
+			throws CatalogueNotFoundException {
+
+		if (StringUtils.isBlank(catalogueID))
+			throw new IllegalArgumentException("Illegal catalogueID in input");
+
+		String decodedCataloguecatalogueID = java.net.URLDecoder.decode(catalogueID,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.getCatalogueBycatalogueID(decodedCataloguecatalogueID));
+	}
+
 	@Override
 	@Operation(summary = "Get the Service Model descriptions by specified Service Ids.", description = "Get the Service Model descriptions by specified Service Id.", tags = {
 			"Service Model" }, responses = {
@@ -395,6 +425,33 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
 	}
 
+	@Operation(summary = "Create a new catalogue.", tags = {
+			"Catalogue Model" }, responses = {
+					@ApiResponse(description = "Create a new catalogue.", responseCode = "201") })
+	@Override
+	@PostMapping(value = "/catalogues")
+	public ResponseEntity<Catalogue> createCatalogue(@RequestBody @Valid Catalogue catalogue) {
+		Catalogue result = new Catalogue();
+		System.out.println(catalogue);
+		// System.out.println(result);
+		try {
+
+			if (catalogService.getCatalogueBycatalogueID(catalogue.getCatalogueID()) != null
+					&& (catalogService
+							.getCatalogueBycatalogueID(catalogue.getCatalogueID())).getCatalogueID().equals(catalogue
+									.getCatalogueID()))
+				throw new Error("catalogueID already exists");
+
+			result = catalogService.createCatalogue(catalogue);
+		} catch (Error e) {
+			System.out.println("Error :\n");
+			System.out.println(e);
+			result.setStatus("Catalogue already exists");
+			return ResponseEntity.badRequest().body(result);
+		}
+		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
+	}
+
 	@Operation(summary = "Create a new connector log.", tags = {
 			"Connector Model" }, responses = {
 					@ApiResponse(description = "Create a new connector.", responseCode = "201") })
@@ -482,6 +539,26 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				decodedConnectorConnectorId, connector));
 	}
 
+	@Operation(summary = "Update Catalogue Model description, by replacing the existing one", tags = {
+			"Catalogue Model" }, responses = {
+					@ApiResponse(description = "Returns the Catalogue Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Catalogue.class))) })
+	@Override
+	@PutMapping(value = "/catalogues", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Catalogue> updateCatalogue(
+			@RequestParam("catalogueID") String catalogueID,
+			@RequestBody @Valid Catalogue catalogue)
+			throws CatalogueNotFoundException, CatalogueNotEditableException {
+
+		if (StringUtils.isBlank(catalogueID))
+			throw new IllegalArgumentException("Illegal catalogueID in input");
+
+		String decodedCataloguecatalogueID = java.net.URLDecoder.decode(catalogueID,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.updateCatalogue(
+				decodedCataloguecatalogueID, catalogue));
+	}
+
 	@Operation(summary = "Update Adapter Model description, by replacing the existing one", tags = {
 			"Adapter Model" }, responses = {
 					@ApiResponse(description = "Returns the Adapter Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Adapter.class))) })
@@ -538,6 +615,25 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		String decodedConnectorConnectorId = java.net.URLDecoder.decode(connectorId, StandardCharsets.UTF_8);
 
 		catalogService.deleteConnector(decodedConnectorConnectorId);
+
+		return ResponseEntity.noContent().build();
+
+	}
+
+	@Operation(summary = "Delete Catalogue Model description by catalogueID.", tags = {
+			"Catalogue Model" }, responses = {
+					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
+	@Override
+	@DeleteMapping(value = "/catalogues")
+	public ResponseEntity<Object> deleteCatalogue(@RequestParam("catalogueID") String catalogueID)
+			throws CatalogueNotFoundException {
+
+		if (StringUtils.isBlank(catalogueID))
+			throw new IllegalArgumentException("Illegal catalogueID in input");
+
+		String decodedCataloguecatalogueID = java.net.URLDecoder.decode(catalogueID, StandardCharsets.UTF_8);
+
+		catalogService.deleteCatalogue(decodedCataloguecatalogueID);
 
 		return ResponseEntity.noContent().build();
 

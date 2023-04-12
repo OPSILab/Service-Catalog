@@ -14,6 +14,8 @@ import com.github.andrewoma.dexx.collection.internal.adapter.Adapters;
 import it.eng.opsi.servicecatalog.exception.AdapterLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotEditableException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotFoundException;
+import it.eng.opsi.servicecatalog.exception.CatalogueNotEditableException;
+import it.eng.opsi.servicecatalog.exception.CatalogueNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotFoundException;
@@ -22,6 +24,7 @@ import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
+import it.eng.opsi.servicecatalog.model.Catalogue;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 
@@ -32,6 +35,8 @@ public interface IServiceCatalogController {
 			throws ServiceNotFoundException;
 
 	public abstract ResponseEntity<List<Adapter>> getAdapters(String type) throws AdapterNotFoundException;
+
+	public abstract ResponseEntity<List<Catalogue>> getCatalogues() throws CatalogueNotFoundException;
 
 	public abstract ResponseEntity<List<ConnectorLog>> getConnectorLogs() throws ConnectorLogNotFoundException;
 
@@ -53,6 +58,8 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<ServiceModel> createService(ServiceModel service);
 
+	public abstract ResponseEntity<Catalogue> createCatalogue(Catalogue catalogue);
+
 	public abstract ResponseEntity<List<ServiceModel>> createServices(List<ServiceModel> services);
 
 	public abstract ResponseEntity<Connector> createConnector(Connector connector);
@@ -69,6 +76,9 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<Connector> updateConnector(String connectorId, Connector connector)
 			throws ConnectorNotFoundException, ConnectorNotEditableException;
 
+	public abstract ResponseEntity<Catalogue> updateCatalogue(String catalogueID, Catalogue catalogue)
+			throws CatalogueNotFoundException, CatalogueNotEditableException;
+
 	public abstract ResponseEntity<Adapter> updateAdapter(String adapterId, Adapter adapter)
 			throws AdapterNotFoundException, AdapterNotEditableException;
 
@@ -82,7 +92,11 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<Object> deleteAdapter(String identifier) throws AdapterNotFoundException;
 
+	public abstract ResponseEntity<Object> deleteCatalogue(String identifier) throws CatalogueNotFoundException;
+
 	public abstract ResponseEntity<?> getConnector(String serviceId) throws ConnectorNotFoundException;
+
+	public abstract ResponseEntity<?> getCatalogue(String catalogueID) throws CatalogueNotFoundException;
 
 	public abstract ResponseEntity<?> getAdapter(String serviceId) throws AdapterNotFoundException;
 
