@@ -1,0 +1,67 @@
+{
+  "type": "object",
+  "format": "categories",
+  "title": "Usage Rule",
+  "headerTemplate": "{{ self.usageName }}",
+  "required": [],
+  "properties": {
+    "usageId": {
+      "type": "string",
+      "title": "Usage ID",
+      "description": "Usage's ID, must be unique within the service description."
+    },
+    "usageName": {
+      "type": "string",
+      "title": "Usage Name",
+      "description": "Human readeable Usage's Name, Short name that identifies the rule."
+    },
+    "usageType": {
+      "type": "string",
+      "title": "Usage Category",
+      "format": "select2",
+      "uniqueItems": true,
+      "description": "Category of contract agreements from a controlled taxonomy.",
+      "enum": [
+
+        "ConnectorbasedAgreement",
+        "IntervalUsageAgreement",
+        "DurationAgreement",
+        "SpatialAgreement",
+        "SalesAgreement",
+        "RentalAgreement",
+        "RolebasedAgreement",
+        "PurposeAgreement",
+        "EventAgreement",
+        "NotMoreThanNAgreement",
+        "SecurityAgreement",
+        "DeleteAfterIntervalAgreement",
+        "LoggingAgreement",
+        "NotificationAgreement",
+        "DistributeEcryptedAgreement",
+        "SwapAgreement"
+            
+      ],
+      "options": {
+        "enum_titles": [
+          "Connector restricted data usage", 
+          "Interval restricted data usage",	
+          "Duration restricted data usage",	
+          "Location restricted data usage", 	
+          "Prepatual data sale", 	
+          "Data rental", 	
+          "Role restricted data usage", 	
+          "Purpose restricted data usage", 	
+          "Event restricted data usage", 
+          "Restricted number of usages", 
+          "Security level restricted policy", 
+          "Use data and delete after", 	
+          "Local logging", 	
+          "Remote notification", 
+          "Distribute only if encrypted", 
+          "Data Swap"
+        ]
+      }
+    
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+    "type": "string",
+    "title": "Data Map",
+    "oneOf": [
+      {
+        "$ref": "./default.json",
+        "title": ""
+      },
+      {
+        "$ref": "./natural-person.json",
+        "title": "eIDAS Natual Person"
+      },
+      {
+        "$ref": "./legal-person.json",
+        "title": "eIDAS Legal Person"
+      }
+      ]
+    
+  }
