@@ -427,11 +427,12 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
-	public List<ServiceModel> getServices(String name, String location, String[] keywords) {
+	public List<ServiceModel> getServices(String name, String location, String[] keywords, boolean completed) {
 		List<ServiceModel> services = new ArrayList<ServiceModel>();
 		List<ServiceModel> servicesByName = new ArrayList<ServiceModel>();
 		List<ServiceModel> servicesByKeyword = new ArrayList<ServiceModel>();
 		List<ServiceModel> servicesByLocation = new ArrayList<ServiceModel>();
+		List<ServiceModel> servicesByStatus = new ArrayList<ServiceModel>();
 		if (name != null)
 			if (!serviceModelRepo.findByServiceName(name).isEmpty()) {
 				servicesByName.addAll(serviceModelRepo.findByServiceName(name));
@@ -450,6 +451,31 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			} else {
 				return services;
 			}
+
+		if (completed) {
+			if (!serviceModelRepo.findByStatus("COMPLETED").isEmpty())
+				servicesByStatus.addAll(serviceModelRepo.findByStatus("COMPLETED"));
+			else
+				return services;
+			for (ServiceModel serviceByStatus : servicesByStatus) {
+				if (name != null && location != null && keywords != null) {
+					if (servicesByName.contains(serviceByStatus) && servicesByLocation.contains(serviceByStatus)
+							&& servicesByKeyword.contains(serviceByStatus))
+						services.add(serviceByStatus);
+				} else if (location != null && keywords != null) {
+					if (servicesByLocation.contains(serviceByStatus) && servicesByKeyword.contains(serviceByStatus))
+						services.add(serviceByStatus);
+				} else if (location != null) {
+					if (servicesByLocation.contains(serviceByStatus))
+						services.add(serviceByStatus);
+				} else if (keywords != null) {
+					if (servicesByKeyword.contains(serviceByStatus))
+						services.add(serviceByStatus);
+				} else
+					return this.duplicatesClear(servicesByStatus);
+			}
+			return this.duplicatesClear(services);
+		}
 
 		if (name != null) {
 			for (ServiceModel serviceByName : servicesByName) {
@@ -497,7 +523,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	public List<ServiceModel> createServices(@Valid List<ServiceModel> services) {
 
 		for (ServiceModel service : services) {
-			//service.setStatus(ServiceDescriptionStatus.UNDER_DEVELOPMENT);
+			// service.setStatus(ServiceDescriptionStatus.UNDER_DEVELOPMENT);
 			// If identifier is blank, set as the Service Id
 			if (StringUtils.isBlank(service.getIdentifier()))
 				service.setIdentifier(uriBasePath + service.getIdentifier());

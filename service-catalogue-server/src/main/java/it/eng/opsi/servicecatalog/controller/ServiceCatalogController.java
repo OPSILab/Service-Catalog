@@ -73,10 +73,11 @@ public class ServiceCatalogController implements IServiceCatalogController {
 					@ApiResponse(description = "Returns the list of all registered Service Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ServiceModel>> getServices(@RequestParam(required = false) String name,
-			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords)
+			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords,
+			@RequestParam(required = false) boolean completed)
 			throws ServiceNotFoundException {
-		if (name != null || location != null || keywords != null) {
-			return ResponseEntity.ok(catalogService.getServices(name, location, keywords));
+		if (name != null || location != null || keywords != null || completed) {
+			return ResponseEntity.ok(catalogService.getServices(name, location, keywords, completed));
 		}
 		return ResponseEntity.ok(catalogService.getServices());
 	}

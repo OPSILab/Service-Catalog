@@ -27,7 +27,8 @@ import it.eng.opsi.servicecatalog.model.ConnectorLog;
 
 public interface IServiceCatalogController {
 
-	public abstract ResponseEntity<List<ServiceModel>> getServices(String name, String location, String[] keywords)
+	public abstract ResponseEntity<List<ServiceModel>> getServices(String name, String location, String[] keywords,
+			boolean completed)
 			throws ServiceNotFoundException;
 
 	public abstract ResponseEntity<List<Adapter>> getAdapters(String type) throws AdapterNotFoundException;

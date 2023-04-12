@@ -31,6 +31,9 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 	@Query(value = "{ 'title': { $regex : ?0, $options: i}}")
 	public List<ServiceModel> findByServiceName(String serviceName);
 
+	@Query(value = "{ 'status': { $regex : ?0, $options: i}}")
+	public List<ServiceModel> findByStatus(String status);
+
 	@Query(value = "{ 'hasInfo.keyword': { $regex : ?0, $options: i}}")
 	public List<ServiceModel> findByServiceKeywords(String keywords);
 

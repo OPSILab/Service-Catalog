@@ -222,6 +222,7 @@ export class AddAdapterComponent implements OnInit {
         "message": "Value required",
         "errorcount": 1
       })
+      console.log("name : ", this.name)
       if (!this.description) errors.push({
         "path": "root.description",
         "property": "minLength",

@@ -117,7 +117,8 @@ public interface IServiceCatalogService {
 
       public abstract List<HasCost> getCostByServiceId(String decodedServiceIdentifier);
 
-      public abstract List<ServiceModel> getServices(String name, String location, String[] keywords);
+      public abstract List<ServiceModel> getServices(String name, String location, String[] keywords,
+                  boolean completed);
 
       public abstract Object getTimeByServiceId(String decodedServiceIdentifier);
 
