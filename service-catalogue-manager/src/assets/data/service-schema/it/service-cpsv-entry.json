@@ -335,7 +335,7 @@
                 "format": "textarea"
               }
             },
-            "required": ["locale", "description"]
+            "required": ["locale", "description","title"]
           }
         },
           "type": {
@@ -495,7 +495,7 @@
                 "format": "textarea"
               }
             },
-            "required": ["locale", "description"]
+            "required": ["locale", "description","title"]
           }
         }
         }
