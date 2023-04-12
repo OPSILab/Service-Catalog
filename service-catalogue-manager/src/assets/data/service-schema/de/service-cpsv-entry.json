@@ -335,7 +335,7 @@
                 "format": "textarea"
               }
             },
-            "required": ["locale", "description"]
+            "required": ["locale", "description","title"]
           }
         },
           "type": {
