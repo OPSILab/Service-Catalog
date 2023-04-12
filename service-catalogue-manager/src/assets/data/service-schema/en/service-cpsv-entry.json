@@ -495,7 +495,7 @@
                 "format": "textarea"
               }
             },
-            "required": ["locale", "description","title"]
+            "required": ["locale", "description"]
           }
         }
         }
