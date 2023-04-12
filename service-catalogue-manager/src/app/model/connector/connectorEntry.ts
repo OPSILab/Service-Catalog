@@ -6,4 +6,5 @@ export interface ConnectorEntry {
   connectorId: string;
   serviceId: string;
   url: string;
+  adapterId: string;
 }

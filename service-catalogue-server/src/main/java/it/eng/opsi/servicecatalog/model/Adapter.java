@@ -15,6 +15,7 @@ import com.github.jsonldjava.shaded.com.google.common.base.Objects;
 
 import it.eng.opsi.servicecatalog.repository.AdapterRepository;
 import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
+import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -23,8 +24,13 @@ import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
         "name",
         "description",
         "status",
-        "type"
+        "type",
+        "context",
+        "mapper",
+        "adapterModel"
 })
+
+@Data
 public class Adapter {
 
     @Autowired
@@ -65,8 +71,29 @@ public class Adapter {
     // @NotNull
     private Type type;
 
+    enum Context {
+        IMPORT,
+        EXPORT
+    }
+
+    @JsonProperty("context")
+    @Valid
+    // @NotNull
+    // private Context context;
+    private Context context;
+
+    @JsonProperty("mapper")
+    @Valid
+    // @NotNull
+    private String mapper;
+
+    @JsonProperty("adapterModel")
+    @Valid
+    // @NotNull
+    private String adapterModel;
+
     public Adapter(AdapterRepository adapterRepo, String adapterId, String url, String name, String description,
-            String status, Type type) {
+            String status, Type type, Context context, String mapper, String adapterModel) {
         this.adapterRepo = adapterRepo;
         this.adapterId = adapterId;
         this.url = url;
@@ -74,6 +101,9 @@ public class Adapter {
         this.description = description;
         this.status = status;
         this.type = type;
+        this.context = context;
+        this.mapper = mapper;
+        this.adapterModel = adapterModel;
     }
 
     public AdapterRepository getAdapterRepo() {
@@ -185,17 +215,6 @@ public class Adapter {
     public Adapter adapterId(String adapterId) {
         setAdapterId(adapterId);
         return this;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Adapter)) {
-            return false;
-        }
-        Adapter adapter = (Adapter) o;
-        return Objects.equal(adapterRepo, adapter.adapterRepo) && Objects.equal(adapterId, adapter.adapterId);
     }
 
     /*

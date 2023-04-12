@@ -5,6 +5,7 @@ import { AvailableServicesComponent } from './availableServices/availableService
 import { AvailableConnectorsComponent } from './availableConnectors/availableConnectors.component';
 import { EditorComponent } from './service-editor/editor.component';
 import { AvailableAdaptersComponent } from './available-adapters/available-adapters.component';
+import { AvailableCataloguesComponent } from '../management/availableCatalogues/availableCatalogues.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,10 @@ const routes: Routes = [
   {
     path: 'availableAdapters',
     component: AvailableAdaptersComponent,
+  },
+  {
+    path: 'federatedCatalogues',
+    component: AvailableCataloguesComponent,
   },
 ];
 

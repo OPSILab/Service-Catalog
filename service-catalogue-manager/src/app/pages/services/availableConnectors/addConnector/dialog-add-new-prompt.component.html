@@ -38,7 +38,7 @@
         <nb-select fullWidth placeholder="Select service to connect with" [(ngModel)]="serviceId"
           [ngModelOptions]="{standalone: true}">
           <nb-option-group title="serviceId">
-            <nb-option value ="">--</nb-option>
+            <nb-option value="">--</nb-option>
             <nb-option *ngFor="let service of services" value={{service.identifier}}>{{service.title}}</nb-option>
           </nb-option-group>
         </nb-select>
@@ -47,6 +47,17 @@
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
           [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <label for="adapter">{{ 'general.connectors.adapter' | translate }}</label>
+        <br>
+        <nb-select fullWidth placeholder="Select adapter to connect with" [(ngModel)]="adapterId"
+          [ngModelOptions]="{standalone: true}">
+          <nb-option-group title="adapterId">
+            <nb-option value="">--</nb-option>
+            <nb-option *ngFor="let adapter of adaptersTypeModel" value={{adapter.adapterId}}>{{adapter.name}}</nb-option>
+          </nb-option-group>
+        </nb-select>
         <br>
         <br>
         <h3>

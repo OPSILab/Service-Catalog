@@ -33,7 +33,8 @@
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
               "src/app/@theme/styles/styles.scss",
-              "node_modules/select2/dist/css/select2.min.css"
+              "node_modules/select2/dist/css/select2.min.css",
+              "node_modules/jsoneditor/dist/jsoneditor.css"
             ],
             "scripts": [
               "node_modules/pace-js/pace.min.js",

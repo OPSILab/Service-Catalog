@@ -1,8 +1,8 @@
 import { Component, Input, Output, OnInit, OnChanges, TemplateRef, EventEmitter, OnDestroy, ViewChild, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { filter, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+import { filter, map, startWith, takeUntil } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
 import {
   NbMenuService,
   NbToastrService,
@@ -10,15 +10,18 @@ import {
   NbComponentStatus,
   NbGlobalPhysicalPosition,
   NbToastrConfig,
-  NbMenuItem,
+  NbMenuItem
 } from '@nebular/theme';
 import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
 import { AvailableAdaptersService } from '.././available-adapters.service';
-import { AddAdapterComponent } from '.././add-adapter/add-adapter.component';
-
 import { LoginService } from '../../../../auth/login/login.service';
 import { AdapterStatusEnum } from '../../../../model/services/adapter';
 import { AdapterEntry } from '../../../../model/adapter/adapterEntry';
+import { NgxConfigureService } from 'ngx-configure';
+import { AppConfig } from '../../../../model/appConfig';
+import { HttpClient } from '@angular/common/http';
+import { FormControl } from '@angular/forms';
+import { Mapper } from '../../../../model/adapter/mapper';
 
 @Component({
   selector: 'actions-adapter-menu-render',
@@ -32,24 +35,41 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   @Output() updateResult = new EventEmitter<unknown>();
   @Input() editedValue: AdapterEntry;
   @Output() outValue = new EventEmitter<unknown>();
-  name
-  description
-  status
-  type
-  url
-  ref
-  dialogRef
-
-  private unsubscribe: Subject<void> = new Subject();
+  name: string;
+  description: string;
+  status: string;
+  type: string;
+  url: string;
+  context: string;
+  adapterId: string;
+  mappers: Mapper[];
+  loaded: boolean = false
+  inputItemFormControl: FormControl;
+  textareaItemFormControl: FormControl;
+  IDs: string[] = [];
+  filteredControlIDOptions$: Observable<string[]>;
+  filteredIDOptions$: Observable<string[]>;
+  IDFormControl: FormControl;
+  NameFormControl: FormControl;
+  filteredControlNameOptions$: Observable<string[]>;
+  filteredNameOptions$: Observable<string[]>;
+  names: string[] = [];
+  mapperNames: string[] = [];
   actions: NbMenuItem[];
+  private appConfig: AppConfig;
+  private unsubscribe: Subject<void> = new Subject();
+
+  ref;
+
 
   @ViewChild('confirmDeleteDialog', { static: false }) confirmDeleteDialogTemplate: TemplateRef<unknown>;
   @ViewChild('confirmRegisterDialog', { static: false }) confirmRegisterDialog: TemplateRef<unknown>;
   @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
   @ViewChild('editAdapter', { static: false }) editAdapter: TemplateRef<unknown>;
-  //@ViewChild('adapter',{ static: false }) addAdapter: AddAdapterComponent;
+  validURL: boolean;
 
   constructor(
+    private http: HttpClient,
     private availableAdaptersService: AvailableAdaptersService,
     private menuService: NbMenuService,
     private router: Router,
@@ -58,18 +78,75 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
     private toastrService: NbToastrService,
     private dialogService: NbDialogService,
     private translateService: TranslateService,
-    private loginService: LoginService
-  ) { }
+    private loginService: LoginService,
+    private configService: NgxConfigureService
+
+  ) {
+    this.appConfig = this.configService.config as AppConfig
+    this.adapterId = this.appConfig.data_model_mapper.default_map_ID
+  }
 
   get registered(): boolean {
     return this.value.status == AdapterStatusEnum.Active ? true : false;
   }
 
+  async loadMappers(): Promise<void> {
+    if (this.url)
+      try {
+        this.mappers = await this.http.post<any>(this.url, {
+          "getMapperList": true
+        }).toPromise();
+        for (let mapper of this.mappers) {
+          this.IDs.push(mapper.id);
+          this.names.push(mapper.name);
+        }
+        this.loaded = true
+        this.validURL = true
+      }
+      catch (error) {
+        console.log("Cannot get response from remote url")
+        console.log(error)
+        this.validURL = false
+      }
+    else this.validURL = false
+  }
+
+  private filterID(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.IDs.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+  }
+
+  private filterName(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.names.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+  }
+
   ngOnInit(): void {
-    this.name=this.value.name
-    this.description=this.value.description
-    this.url=this.value.url
-    this.type=this.value.type
+    this.loaded = false
+    this.adapterId = this.value.adapterId
+    this.name = this.value.name
+    this.context = this.value.context
+    this.description = this.value.description
+    this.url = this.value.url
+    this.type = this.value.type
+    this.loadMappers()
+    this.filteredControlIDOptions$ = of(this.IDs);
+    this.filteredControlNameOptions$ = of(this.names);
+    this.IDFormControl = new FormControl();
+    this.NameFormControl = new FormControl();
+    this.filteredControlIDOptions$ = this.IDFormControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(filterString => this.filterID(filterString)),
+      );
+    this.filteredControlNameOptions$ = this.NameFormControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(filterString => this.filterID(filterString)),
+      );
+    this.inputItemFormControl = new FormControl();
+    this.textareaItemFormControl = new FormControl();
+    this.status = this.value.status
     this.actions = this.translatedActionLabels();
     this.menuService
       .onItemClick()
@@ -102,6 +179,17 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
         },
       })
       .onClose.subscribe()
+  }
+
+  onAdapterIDChange(ID: string) {
+    this.filteredIDOptions$ = of(this.filterID(ID));
+    this.adapterId = ID
+    this.name = this.names[this.IDs.indexOf(ID)]
+  }
+
+  onNameChange(name: string) {
+    this.filteredNameOptions$ = of(this.filterName(name));
+    this.name = name
   }
 
   ngOnDestroy(): void {
@@ -137,8 +225,21 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
 
   async onEdit() {
     try {
-      let name = this.name, description = this.description, status = this.value.status, adapterId = this.value.adapterId, url = this.url, type = this.type;
-      await this.availableAdaptersService.updateAdapter((({ name, description, status, adapterId, type, url } as unknown)) as AdapterEntry, adapterId);//as unknown)) as AdapterEntry were VisualStudioCode tips
+      let name = this.name,
+        description = this.description,
+        status = this.status,
+        adapterId = this.adapterId,
+        type = this.type,
+        url = this.url,
+        context = this.context;
+
+      if (adapterId == '' || adapterId == null)
+        throw new Error("Adapter ID must be set");
+
+      await this.availableAdaptersService.updateAdapter(((
+        type == "MODEL" ?
+          { name, description, status, adapterId, type, url, context } as unknown :
+          { name, description, status, adapterId, type, url } as unknown)) as AdapterEntry, adapterId);
       this.updateResult.emit(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
     }
@@ -167,6 +268,18 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
         "path": "root.url",
         "property": "minLength",
         "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.type) errors.push({
+        "path": "root.type",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (this.type == "MODEL" && !this.context) errors.push({
+        "path": "root.context",
+        "property": "minLength",
+        "message": "Value required for adapter type model",
         "errorcount": 1
       })
 
@@ -245,7 +358,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.adapters.adapter_registered_message', { adapterName: this.value.adapterId }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -258,7 +371,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.adapters.adapter_deregistered_message', { adapterName: this.value.adapterId }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -279,7 +392,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
             ref.close();
             this.updateResult.emit(this.value.id);
           } catch (error) {
-            if (error.statusCode === '401'||error.status==401)  {
+            if (error.statusCode === '401' || error.status == 401) {
               void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
             } else this.errorDialogService.openErrorDialog(error);
           }

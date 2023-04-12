@@ -5,5 +5,8 @@ export interface AdapterEntry {
 	name: string,
 	description: string,
 	status,
-	type
+	type,
+  context
+  //mapper
+  //adapterModel
 }

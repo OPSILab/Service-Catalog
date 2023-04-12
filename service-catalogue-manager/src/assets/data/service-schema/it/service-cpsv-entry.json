@@ -186,11 +186,14 @@
     "hasInput": {
       "title": "Input",
       "type": "array",
-      "format": "categories",
       "description": "A specific Public Service may require the presence of certain pieces of Evidence in order to be delivered",
       "items": {
         "type": "object",
+        "options": {
+          "collapsed": true
+        },
         "title": "Input",
+        "headerTemplate": "{{ self.title }}",
         "basicCategoryTitle": "Info",
         "format": "categories",
         "properties": {

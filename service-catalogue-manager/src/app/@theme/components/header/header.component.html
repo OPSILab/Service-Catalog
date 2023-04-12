@@ -28,14 +28,13 @@
         [nbContextMenu]="loggedUserMenu"
         [onlyPicture]="userPictureOnly"
         [name]="user?.name"
-        [title]="user?.roles?.join(' | ')"
         [picture]="'assets/images/app/default_user.png'"
       >
       </nb-user>
       <ng-template #elseBlock>
         <button outline nbButton>
           <a routerLink="/login" routerLinkActive="button-outline-basic-active-background-color">{{ 'login.enter_button' | translate }}</a>
-        </button>
+        </button>       
       </ng-template>
     </nb-action>
   </nb-actions>

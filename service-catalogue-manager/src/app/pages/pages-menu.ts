@@ -44,4 +44,23 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'link-2-outline',
     link: '/pages/services/availableAdapters',
   },
+  {
+    title: 'general.menu.administration',
+    group: true,
+  },
+  {
+    title: 'general.menu.fedarated_catalogues',
+    icon: 'link-2-outline',
+    link: '/pages/services/federatedCatalogues',
+  },
+  {
+    title: 'general.menu.remote_catalogues',
+    icon: 'link-2-outline',
+    link: '/pages/services/remoteCatalogues',
+  },
+  {
+    title: 'general.menu.manage_configurations',
+    icon: 'link-2-outline',
+    link: '/pages/services/manageConfigurations',
+  },
 ];

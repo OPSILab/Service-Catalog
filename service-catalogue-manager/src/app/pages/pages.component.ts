@@ -21,6 +21,7 @@ export class PagesComponent implements OnInit, OnDestroy {
   public menu: NbMenuItem[];
   private hideServicesMenu: boolean;
   private hideConsentsMenu: boolean;
+  private hideManageMenu: boolean;
   private unsubscribe: Subject<void> = new Subject();
 
   constructor(private translateService: TranslateService, private cdr: ChangeDetectorRef, private accessChecker: NbAccessChecker) { }
@@ -37,8 +38,16 @@ export class PagesComponent implements OnInit, OnDestroy {
       .isGranted('view', 'consents')
       .pipe(take(1))
       .subscribe((granted: boolean) => {
-        this.hideConsentsMenu = !granted;
+        this.hideManageMenu = !granted;
       });
+
+      this.accessChecker
+      .isGranted('view', 'manage')
+      .pipe(take(1))
+      .subscribe((granted: boolean) => {
+        this.hideManageMenu = !granted;
+      });
+
 
     const MENU_ITEMS: NbMenuItem[] = [
       {
@@ -88,9 +97,32 @@ export class PagesComponent implements OnInit, OnDestroy {
       },
       {
         title: 'general.menu.adapters',
-        icon: 'options-2-outline',
+        icon: 'shuffle-2-outline',
         link: '/pages/services/availableAdapters',
         hidden: this.hideServicesMenu,
+      },
+      {
+        title: 'general.menu.administration',
+        group: true,
+        hidden: this.hideManageMenu,
+      },
+      {
+        title: 'general.menu.federated_catalogues',
+        icon: 'share-outline',
+        link: '/pages/management/federatedCatalogues',
+        hidden: this.hideManageMenu,
+      },
+      {
+        title: 'general.menu.remote_catalogues',
+        icon: 'list-outline',
+        link: '/pages/management/remoteCatalogues',
+        hidden: this.hideManageMenu,
+      },
+      {
+        title: 'general.menu.configuration',
+        icon: 'settings-outline',
+        link: '/pages/management/configurations',
+        hidden: this.hideManageMenu,
       },
     ];
 
@@ -103,7 +135,6 @@ export class PagesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('ngOnDestroy');
     this.unsubscribe.next();
     this.unsubscribe.complete();
   }

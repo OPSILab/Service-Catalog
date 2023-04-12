@@ -11,11 +11,13 @@ export class AvailableServicesService {
   private serviceRegistryUrl: string;
   private config: AppConfig;
   private sdkUrl: string;
+  private dataMapEnumUrl: string;
 
   constructor(private configService: NgxConfigureService, private http: HttpClient) {
     this.config = this.configService.config as AppConfig;
     this.serviceRegistryUrl = this.config.serviceRegistry.url;
     this.sdkUrl = this.config.system.sdkUrl;
+    this.dataMapEnumUrl=this.config.system.dataMapEnumUrl;
   }
 
   getServices(): Promise<ServiceModel[]> {
@@ -84,5 +86,9 @@ export class AvailableServicesService {
 
   findService(name: string): Promise<ServiceModel> {
     return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/specified/title?title=${name}`).toPromise();
+  }
+
+  getDataMapEnum(): Promise<string[]> {
+        return this.http.get<string[]>(`${this.dataMapEnumUrl}`).toPromise();
   }
 }

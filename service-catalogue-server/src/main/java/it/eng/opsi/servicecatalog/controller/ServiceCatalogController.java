@@ -73,10 +73,11 @@ public class ServiceCatalogController implements IServiceCatalogController {
 					@ApiResponse(description = "Returns the list of all registered Service Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ServiceModel>> getServices(@RequestParam(required = false) String name,
-			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords)
+			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords,
+			@RequestParam(required = false) boolean completed)
 			throws ServiceNotFoundException {
-		if (name != null || location != null || keywords != null) {
-			return ResponseEntity.ok(catalogService.getServices(name, location, keywords));
+		if (name != null || location != null || keywords != null || completed) {
+			return ResponseEntity.ok(catalogService.getServices(name, location, keywords, completed));
 		}
 		return ResponseEntity.ok(catalogService.getServices());
 	}
@@ -334,7 +335,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the count of the registered Connector descriptions (total, public and private services).", tags = {
+	@Operation(summary = "Get the count of the registered Connector descriptions.", tags = {
 			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/connectors/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HashMap<String, Object>> getConnectorsCount() {
@@ -343,7 +344,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the count of the registered Adapter descriptions (total, public and private services).", tags = {
+	@Operation(summary = "Get the count of the registered Adapter descriptions.", tags = {
 			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/adapters/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HashMap<String, Object>> getAdaptersCount() {
@@ -424,7 +425,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@Override
 	@PostMapping(value = "/adapters")
 	public ResponseEntity<Adapter> createAdapter(@RequestBody @Valid Adapter adapter) {
-
+		System.out.println(adapter);
 		Adapter result = new Adapter();
 		try {
 			if (catalogService.getAdapterByadapterId(adapter.getAdapterId()) != null && catalogService

@@ -1,0 +1,105 @@
+<nb-card>
+  <nb-card-header class="d-flex align-content-center justify-content-between">
+    <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+    <div>
+      <h3>{{ 'general.catalogues.add' | translate }}</h3>
+    </div>
+    <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
+      <i class="material-icons">close</i>
+    </button>
+  </nb-card-header>
+  <nb-card-body class="m-2 p-4">
+    <h6>
+      <form>
+        <label for="name" fullWidth>{{ 'general.catalogues.name' | translate }}</label>
+        <br>
+        <input [ngModel]="name" nbInput type="text" fullWidth placeholder="Name" [ngModelOptions]="{standalone: true}"/>
+        <br>
+        <br>
+        <label for="competent authority">{{ 'general.catalogues.competent_authority' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Competent authority" [(ngModel)]="competentAuthority"
+          [ngModelOptions]="{standalone: true}" disabled>
+        <br>
+        <br>
+        <label for="url">{{ 'general.catalogues.country' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Country" [(ngModel)]="country"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <label for="category">{{ 'general.catalogues.category' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Category" [(ngModel)]="category"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <label for="description">{{ 'general.catalogues.description' | translate }}</label>
+        <br>
+        <textarea nbInput fullWidth fieldSize="medium" placeholder="description" [(ngModel)]="description"
+          [ngModelOptions]="{standalone: true}"></textarea>
+        <br><br>
+        <label for="home page">{{ 'general.catalogues.home_page' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Home page" [(ngModel)]="homePage"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <label for="API endpoint">{{ 'general.catalogues.api_endpoint' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="API endpoint" [(ngModel)]="apiEndpoint"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <label for="type">{{ 'general.catalogues.type' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Type" [(ngModel)]="type"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <label for="active">{{ 'general.catalogues.active' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Active" [(ngModel)]="active"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <label for="refresh">{{ 'general.catalogues.refresh' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="Refresh" [(ngModel)]="refresh"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <nb-checkbox (checkedChange)="toggle($event)">
+          Authenticated
+        </nb-checkbox>
+        <br *ngIf="authenticated">
+        <br *ngIf="authenticated">
+        <label *ngIf="authenticated" for="oauth2 endpoint">{{ 'general.catalogues.oauth2_endpoint' | translate }}</label>
+        <br *ngIf="authenticated">
+        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" placeholder="Oauth2 endpoint " [(ngModel)]="oAuth2Endpoint"
+          [ngModelOptions]="{standalone: true}">
+        <br *ngIf="authenticated">
+        <br *ngIf="authenticated">
+        <label *ngIf="authenticated" for="Client ID">{{ 'general.catalogues.client_ID' | translate }}</label>
+        <br *ngIf="authenticated">
+        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" placeholder="Client ID" [(ngModel)]="clientID"
+          [ngModelOptions]="{standalone: true}">
+        <br *ngIf="authenticated">
+        <br *ngIf="authenticated">
+        <label *ngIf="authenticated" for="Client Secret">{{ 'general.catalogues.client_secret' | translate }}</label>
+        <br *ngIf="authenticated">
+        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" placeholder="Client secret" [(ngModel)]="clientSecret"
+          [ngModelOptions]="{standalone: true}">
+        <br *ngIf="authenticated">
+        <br *ngIf="authenticated">
+        <h3>
+          <button nbButton appearance="outline" shape="semi-round"
+            size="medium" status="info" (click)="confirm()">
+            <i class="mx-1">{{ 'general.catalogues.confirm' | translate }}</i>
+          </button>
+          &nbsp;
+        </h3>
+      </form>
+    </h6>
+  </nb-card-body>
+</nb-card>

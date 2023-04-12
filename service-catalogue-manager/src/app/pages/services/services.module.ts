@@ -1,3 +1,4 @@
+import { AvailableAdaptersService } from './available-adapters/available-adapters.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -26,6 +27,7 @@ import {
   NbCheckboxModule,
   NbRadioModule,
   NbTagModule,
+  NbAutocompleteModule,
 } from '@nebular/theme';
 import { ActionsServiceMenuRenderComponent } from './availableServices/actionsServiceMenuRender.component';
 import { ActionsConnectorMenuRenderComponent } from './availableConnectors/actionsConnectorMenuRender.component';
@@ -38,7 +40,6 @@ import { AdapterInfoRenderComponent } from './available-adapters/adapter-info-re
 import { CustomKeywordRenderComponent } from './availableServices/custom-keyword-render.component';
 import { CustomStatusRenderComponent } from './availableServices/custom-status-render.component';
 import {ConnectorStatusRenderComponent } from './availableConnectors/custom-status-render.component';
-
 
 @NgModule({
   imports: [
@@ -60,7 +61,8 @@ import {ConnectorStatusRenderComponent } from './availableConnectors/custom-stat
     NbTabsetModule,
     TranslateModule.forChild({}),
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NbAutocompleteModule
   ],
   declarations: [
     AvailableServicesComponent,
@@ -80,9 +82,9 @@ import {ConnectorStatusRenderComponent } from './availableConnectors/custom-stat
     AdapterInfoRenderComponent,
     CustomKeywordRenderComponent,
     CustomStatusRenderComponent,
-    ConnectorStatusRenderComponent
+    ConnectorStatusRenderComponent,
   ],
-  providers: [AvailableServicesService, AvailableConnectorsService],
+  providers: [AvailableServicesService, AvailableConnectorsService, AvailableAdaptersService],
   entryComponents: [
     ActionsServiceMenuRenderComponent,
     ActionsConnectorMenuRenderComponent,

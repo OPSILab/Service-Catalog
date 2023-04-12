@@ -1,0 +1,508 @@
+{
+  "title": "Service Information",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "basicCategoryTitle": "General Info",
+  "format": "categories",
+  "properties": {
+    "identifier": {
+      "type": "string",
+      "title": "Service Identifier",
+      "description": "This property represents a formally-issued Identifier for the Public Service.",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "title": "Name",
+      "minLength": 1,
+      "description": "This property represents the official Name of the Public Service."
+    },
+    "status": {
+      "type": "string",
+      "title": "Service Description status",
+      "description": "Status of Service Description (Allowed values: *Completed*, *Deprecated*, *UnderDevelopment*, *Withdrawn*)",
+      "default": "UnderDevelopment",
+      "enum": ["Completed", "Deprecated", "UnderDevelopment", "WithDrawn"],
+      "options": {
+        "hidden": true
+      }
+    },
+    "keyword": {
+      "type": "array",
+      "title": "Keyword",
+      "description": "Keyword tags",
+      "uniqueItems": true,
+      "format":"tabs",
+       "items": {
+        "type": "string",
+        "title": "Keyword"        
+      }
+    },
+
+    "sector": {
+      "$ref": "./sectors.json"
+    },
+    "thematicArea": {
+      "$ref": "./thematic_area.json"
+    },
+    "type": {
+      "$ref": "./types.json"
+    },
+    "language": {
+      "$ref": "./locale.json"
+    },
+    "description": {
+      "type": "array",
+      "title": "Description",
+      "description": " Array of localized textual descriptions.",
+      "format": "tabs",
+      "items": {
+        "type": "object",
+        "title": "Locale",
+        "headerTemplate": "Locale ({{ self.locale }}) ",
+        "options": {
+          "collapsed": false
+        },
+        "properties": {
+          "locale": {
+            "type": "string",
+            "title": "Locale",
+            "description": "Language used in textual description, in ISO 639-1 format.",
+            "watch": {
+              "possible_langs": "root.hasInfo.language"
+            },
+            "enumSource": "possible_langs"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "description": "Textual description in specified language.",
+            "format": "textarea"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "description": "Title in specified language.",
+            "format": "string"
+          },
+          "keyword": {
+            "type": "array",
+            "title": "Keywords",
+            "description": "Keyword tags related to textual description.",
+            "uniqueItems": true,
+            "format": "select",
+            "options": {
+              "tags": true
+            },
+            "items": {
+              "type": "string",
+              "title": "Tag"
+            }
+          }
+        }
+      }
+    },
+    "isDescribedAt": {
+      "type": "array",
+      "title": "Described at",
+      "format": "tabs",
+      "items": {
+        "type": "object",
+        "title": "Document",
+        "headerTemplate": "{{ self.name }}",
+        "properties": {
+          "identifier": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "landingPage": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "processingTime": {
+      "type": "string",
+      "title": "Processing Time",
+      "description": "The (estimated) time needed for executing a Public Service. The actual information is provided using the ISO8601 syntax for durations: P(n)Y(n)M(n)DT(n)H(n)M(n)S)."
+    },
+    "isGroupedBy": {
+      "$ref": "./event.json"
+    },
+    "hasCompetentAuthority": {
+      "title": "Competent Authority",
+      "description": "If public Service, link to a Public Organization, which is the responsible Agent for the delivery of the Public Service.",
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "type": "string",
+          "title": "Id"
+        },
+        "title": {
+          "type": "string",
+          "title": "name"
+        },
+        "hasAddress": {
+          "type": "string",
+          "title": "Address"
+        },
+        "prefLabel": {
+          "type": "string",
+          "title": "Preferred Label"
+        },
+        "spatial": {
+          "$ref": "./spatials.json"
+        }
+      }
+    },
+    "requires": {
+      "title": "Requires",
+      "type": "array",
+      "format":"tabs",
+      "items": {
+        "type": "string",
+        "title":"Service",
+        "headerTemplate": "{{ self}}",
+        "format": "autocomplete",
+        "description": "Service Catalogue Id or URI", 
+        "options": {
+          "grid_columns": 6,
+          "autocomplete": {
+            "search": "search_services",
+            "getResultValue": "getResultValue_services",
+            "renderResult": "renderResult_services",
+            "autoSelect": false
+          }
+        }
+      }
+    },
+    "spatial": {
+      "$ref": "./spatials.json"
+    },
+    "hasInput": {
+      "title": "Input",
+      "type": "array",
+      "description": "A specific Public Service may require the presence of certain pieces of Evidence in order to be delivered",
+      "items": {
+        "type": "object",
+        "options": {
+          "collapsed": true
+        },
+        "title": "Input",
+        "headerTemplate": "{{ self.title }}",
+        "basicCategoryTitle": "Info",
+        "format": "categories",
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "title": "Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "name"
+          },
+          "description": {
+            "type": "array",
+            "title": "Description",
+            "description": " Array of localized textual descriptions.",
+            "format": "tabs",
+            "uniqueItems": true,
+            "items": {
+            "type": "object",
+            "headerTemplate": "Locale ({{ self.locale }}) ",
+            "properties": {
+              "locale": {
+                "type": "string",
+                "title":"Locale",
+                "description": "Language used in textual description, in ISO 639-1 format.",
+                "enumSource": "possible_langs",
+                "watch": {
+                  "possible_langs": "root.hasInfo.language"
+                }
+              },
+              "title": {
+                "type": "string",
+                "title":"Title",
+                "description": "Localized Title"
+              },
+              "description": {
+                "type": "string",
+                "title":"Description",
+                "description": "Textual description in specified language.",
+                "format": "textarea"
+              }
+            },
+            "required": ["locale", "description","title"]
+          }
+        },
+          "type": {
+            "type": "array",
+            "title": "Type of Input",
+            "description": "Type of requested input for the service",
+            "format": "select2",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
+            }
+          },
+          "language": {
+            "$ref": "./locale.json"
+          },
+          "page": {
+            "title": "Related Documentation",
+            "type": "array",
+            "format": "tabs",
+            "items": {
+              "type": "string",
+              "title": "Documentation",
+              "description": "Input documentation"
+            }
+          },
+          "conformsTo": {
+            "title": "Conforms to",
+            "type": "array",
+            "format": "tabs",
+            "items": {
+              "type": "string",
+              "title": "Dataset",
+              "description": "id/uri of input characterization/dataset ",
+              "watch": {
+                "possible_datasets": "root.hasServiceInstance.dataset"
+              },
+              "enumSource": [
+                {
+                  "source": "possible_datasets",
+                  "value": "{{item.identifier}}"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "produces": {
+      "title": "Output",
+      "type": "array",
+      "format": "categories",
+      "description": "describing the actual result of executing a given Public Service. Outputs can be any resource, for instance a document, artefact or anything else being produced as a result of executing the Public Service",
+      "items": {
+        "type": "object",
+        "title": "Output",
+        "basicCategoryTitle": "Info",
+        "format": "categories",
+        "options": {
+          "collapsed": false
+        },
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "title": "id"
+          },
+          "title": {
+            "type": "string",
+            "title": "name"
+          },
+          "description": {
+            "type": "array",
+            "title": "Description",
+            "description": " Array of localized textual descriptions.",
+            "format": "tabs",
+            "uniqueItems": true,
+            "items": {
+            "type": "object",
+            "title": "Description",
+            "headerTemplate": "Locale ({{ self.locale }}) ",
+            "properties": {
+              "locale": {
+                "type": "string",
+                "title":"Locale",
+                "description": "Language used in textual description, in ISO 639-1 format.",
+                "enumSource": "possible_langs",
+                "watch": {
+                  "possible_langs": "root.hasInfo.language"
+                }
+              },
+              "title": {
+                "type": "string",
+                "title":"Title",
+                "description": "Localized Title"
+              },
+              "description": {
+                "type": "string",
+                "title":"Description",
+                "description": "Textual description  in specified language.",
+                "format": "textarea"
+              }
+            },
+            "required": ["locale", "description","title"]
+          }
+        },
+          "type": {
+            "type": "array",
+            "title": "Type of Output",
+            "description": "Type of produced output by the service",
+            "format": "select2",
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "enum": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
+            }
+          }
+        }
+      }
+    },
+    "hasContactPoint": {
+      "title": "Contact Point",
+      "description": "A contact point for the service ",
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "faxNumber": {
+          "type": "string"
+        },
+        "telephone": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string"
+        },
+        "identifier": {
+          "type": "string"
+        },
+        "openingHours": {
+          "type": "string"
+        },
+        "hoursAvailable": {
+          "type": "string"
+        }
+      }
+    },
+    "hasChannel": {
+      "title": "Channel",
+      "description": "This property links the Public Service to any Channel through which an Agent provides, uses or otherwise interacts with the Public Service, such as an online service, phone number or office.",
+      "type": "array",
+      "format": "tabs",
+      "items": {
+        "type": "object",
+        "title": "Channel",
+        "headerTemplate": "{{ self.type }}",
+        "options": {
+          "collapsed": false
+        },
+        "properties": {
+          "identifier": {
+            "type": "string",
+            "title": "Identifier"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type of channel",
+            "description": "Type of channel",
+            "enum": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location", "Citizen Service Centres"]
+          },
+          "openingHours": {
+            "type": "string",
+            "title": "Opening Hours",
+            "description": "the normal opening hours of a channel"
+          },
+          "hoursAvailable": {
+            "type": "string",
+            "title": "Opening Hours restriction",
+            "description": "the opening hours restriction of a channel"
+          },
+          "hasInput": {
+            "title": "Has Input",
+            "type": "array",
+            "format": "tabs",
+            "items": {
+              "type": "string",
+              "title": "Input",
+              "description": "id/uri of registered input ",
+              "watch": {
+                "possible_inputs": "root.hasInfo.hasInput"
+              },
+              "enumSource": [
+                {
+                  "source": "possible_inputs",
+                  "value": "{{item.identifier}}"
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "hasCost": {
+      "type": "array",
+      "title": "Cost",
+      "format": "tabs",
+      "items": {
+        "type": "object",
+        "title": "Cost",
+        "headerTemplate": "{{ self.code }}",
+        "properties": {
+          "identifier": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string",
+            "title": "Currency Code",
+            "description": "Currency Code",
+            "enum": ["EUR", "BGN", "CZK", "DKK", "HUF", "PLN", "RON", "SEK", "CHF", "TRY", "NOK"]
+          },
+          "hasCost": {
+            "type": "string"
+          },
+          "ifAccessedThrough": {
+            "type": "string",
+            "description": "Cost if acccessed through the specific channel",
+            "watch": {
+              "possible_channels": "root.hasInfo.hasChannel"
+            },
+            "enumSource": [
+              {
+                "source": "possible_channels",
+                "value": "{{item.type}}"
+              }
+            ]
+          },
+          "description": {
+            "type": "array",
+            "title": "Description",
+            "description": " Array of localized textual descriptions.",
+            "format": "tabs",
+            "uniqueItems": true,
+            "items": {
+            "type": "object",
+            "title": "Description",
+            "headerTemplate": "Locale ({{ self.locale }}) ",
+            "properties": {
+              "locale": {
+                "type": "string",
+                "title":"Locale",
+                "description": "Language used in textual description, in ISO 639-1 format.",
+                "enumSource": "possible_langs",
+                "watch": {
+                  "possible_langs": "root.hasInfo.language"
+                }
+              },
+              "description": {
+                "type": "string",
+                "description": "Textual description in specified language.",
+                "format": "textarea"
+              }
+            },
+            "required": ["locale", "description"]
+          }
+        }
+        }
+      }
+    }
+  }
+}

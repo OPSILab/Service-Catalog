@@ -11,26 +11,52 @@
   <nb-card-body class="m-2 p-4">
     <h6>
       <form>
-        <label for="adapterId">{{ 'general.adapters.adapterId' | translate }}</label>
+        <label for="adapterId" fullWidth>{{ 'general.adapters.adapterId' | translate }}</label>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="adapterId" [(ngModel)]="adapterId"
-          [ngModelOptions]="{standalone: true}">
-          <br><br>
-        <label for="name">{{ 'general.adapters.name' | translate }}</label>
+        <input [ngModel]="adapterId" (ngModelChange)="onAdapterIDChange($event)" (click)="loadMappers()" nbInput
+          type="text" fullWidth placeholder="adapterId" [nbAutocomplete]="IDautoComplete"
+          [ngModelOptions]="{standalone: true}" />
+        <nb-autocomplete #IDautoComplete>
+          <nb-option *ngFor="let option of filteredIDOptions$ | async" [value]="option">
+            {{ option }}
+          </nb-option>
+        </nb-autocomplete>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
+        <br>
+        <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
+        <br>
+        <input *ngIf="!validURL"  [ngModel]="name" (ngModelChange)="onNameChange($event)" (click)="loadMappers()" nbInput type="text"
+            fullWidth placeholder="Name" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}"/>
+          <input *ngIf="validURL"  [ngModel]="name" (ngModelChange)="onNameChange($event)" (click)="loadMappers()" nbInput type="text"
+            fullWidth placeholder="Name" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}" disabled/>
+        <nb-autocomplete #nameAutoComplete>
+          <nb-option *ngFor="let n of filteredNameOptions$ | async" [value]="n">
+            {{ n }}
+          </nb-option>
+        </nb-autocomplete>
+        <br><br>
+        <label for="status">{{ 'general.adapters.status' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
+          [ngModelOptions]="{standalone: true}" disabled>
+        <br>
+        <br>
+        <label for="url">{{ 'general.adapters.url' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
           [ngModelOptions]="{standalone: true}">
-          <br><br>
+        <!--
+        <input type="text" *ngIf="!loaded" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+          [ngModelOptions]="{standalone: true}">
+        <input type="text" *ngIf="loaded" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+          [ngModelOptions]="{standalone: true}" disabled>
+        -->
+        <br><br>
         <label for="description">{{ 'general.adapters.description' | translate }}</label>
         <br>
         <textarea nbInput fullWidth fieldSize="medium" placeholder="description" [(ngModel)]="description"
           [ngModelOptions]="{standalone: true}"></textarea>
-          <br><br>
-        <label for="status">{{ 'general.adapters.status' | translate }}</label>
-        <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
-            [ngModelOptions]="{standalone: true}" disabled>
-          <br><br>
+        <br><br>
         <label for="type">{{ 'general.adapters.type' | translate }}</label>
         <br>
         <nb-select fullWidth placeholder="Select adapter type" [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
@@ -39,17 +65,32 @@
             <nb-option value="DATA">Data</nb-option>
           </nb-option-group>
         </nb-select>
-          <br><br>
-        <label for="url">{{ 'general.adapters.url' | translate }}</label>
-        <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+        <br><br>
+        <label *ngIf="type=='MODEL'" for="context">{{ 'general.adapters.context' | translate
+          }}</label>
+        <br *ngIf="type=='MODEL'">
+        <nb-select *ngIf="type=='MODEL'" fullWidth placeholder="Select adapter context" [(ngModel)]="context"
           [ngModelOptions]="{standalone: true}">
+          <nb-option-group title="context">
+            <nb-option value="IMPORT">Import</nb-option>
+            <nb-option value="EXPORT">Export</nb-option>
+          </nb-option-group>
+        </nb-select>
         <br>
         <br>
         <h3>
-          <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
+          <p *ngIf="validURL==false" style=" text-align : center; font-size: 14px; color: red ">Invalid URL or unable to connect to load mapper list <br><br></p>
+          <button nbButton appearance="outline" shape="semi-round"
+            size="medium" status="info" (click)="confirm()">
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
           </button>
+          &nbsp;
+          <!--
+          <button *ngIf="(type!='MODEL'||context!='IMPORT') && !loaded" nbButton appearance="outline" shape="semi-round"
+            size="medium" status="info" (click)="loadMappers()">
+            <i class="mx-1">{{ 'general.adapters.load_mapper_list' | translate }}</i>
+          </button>
+          -->
         </h3>
       </form>
     </h6>

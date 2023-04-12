@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { AuthGuard } from '../auth/services/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AvailableCataloguesComponent } from './management/availableCatalogues/availableCatalogues.component';
+import {ManagementModule} from './management/management.module'
 
 const routes: Routes = [
   {
@@ -22,8 +24,21 @@ const routes: Routes = [
       },
       {
         path: 'adapters',
-        redirectTo: 'adapters/availableAdapters',
+        redirectTo: 'servicess/availableAdapters',
         pathMatch: 'full',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'connectors',
+        redirectTo: 'connectors/availableConnectors',
+        pathMatch: 'full',
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'catalogues',
+        redirectTo: 'services/federatedCatalogues',
+        pathMatch: 'full',
+        component: AvailableCataloguesComponent,
         canActivate: [AuthGuard],
       },
       {
@@ -34,6 +49,21 @@ const routes: Routes = [
       {
         path: 'services',
         loadChildren: () => import('./services/services.module').then((m) => m.ServicesModule),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'account',
+        loadChildren: () => import('./account/account.module').then((m) => m.AccountModule),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'dmm',
+        loadChildren: () => import('./data-model-mapper/dmm.module').then((m) => m.DMMModule),
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'management',
+        loadChildren: () => import('./management/management.module').then((m) => m.ManagementModule),
         canActivate: [AuthGuard],
       },
 

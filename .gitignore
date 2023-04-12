@@ -2,8 +2,10 @@
 
 docker-compose.prod
 
+### Visual Code ###
 .vs/
 .vscode/
+.hintrc
 
 ### Maven ###
 target/
@@ -237,3 +239,7 @@ hs_err_pid*
 
 #temp files
 temp/
+
+sync.ffs_db
+service-catalogue-server/service-catalogue-server.bat
+service-catalogue-manager/service-catalogue-manager.bat

@@ -87,19 +87,52 @@ fields of `config.json` configuration file, located in `dist/assets/` folder.
     "serviceEditorUrl": "http://localhost/service-manager",
 ```   
 
-- **`i18n.locale`**: with locale (`it`, `en` allowed as default) enabling internazionalization on Dashboard pages. 
+- **`i18n.locale`**: with locale ( `en` allowed as default) enabling internazionalization on Dashboard pages. 
 
 ```
   },
   "i18n": {
     "locale": "en",
-    "languages": ["it","en","de","gr","lv"] 
+    "languages": ["it","en","de","el","lv"] 
   }
 }
 ```
 To enable other languages:
 - copy paste and rename src/assets/data/i18n/en.json file with the language label ( e.g. "de") and translate the related properties.
-- copy, paste and rename folder src/assets/data/service-schema/en for translating service model labels, by including or changing "title" for each class property. Each property should include "title" property in order to be translated.
+- copy, paste and rename folder src/assets/data/service-schema/en for translating service model labels, by including or changing "title" and "description" for each class property. Each property should include "title" and "description" property in order to be translated:
+
+```
+"property": {
+              "type": "string",
+              "title": "Property",
+              "description": "The property name of Data Concept at the Service (i.e. specific field in a form).",
+              "minLength": 1
+            }
+```
+Include them if not present in the specific class property.
+
+Enumerated list can be translated also by including localized "enum_titles" for each item
+
+```
+"items": {
+    "type": "string",
+    "title": "Event",
+    "enum": [
+      "",
+      "Having a child",
+      .
+      .
+      
+    ],
+    "options": {
+      "enum_titles": [
+        "",
+        "(Life) Having a child", <---translate this
+        .
+        .
+        
+      ]
+```
 
 
 #### IDM Configuration for OAuth2 authentication

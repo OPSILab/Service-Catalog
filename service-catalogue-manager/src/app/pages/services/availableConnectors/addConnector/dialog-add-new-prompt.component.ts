@@ -1,3 +1,5 @@
+import { AvailableAdaptersService } from './../../available-adapters/available-adapters.service';
+import { AdapterEntry } from './../../../../model/adapter/adapterEntry';
 import { ServiceModel } from './../../../../model/services/serviceModel';
 import { FormControl } from '@angular/forms';
 import { NbComponentStatus, NbDialogRef, NbGlobalPhysicalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
@@ -30,6 +32,7 @@ export class DialogAddNewPromptComponent implements OnInit {
   status: string = "inactive";
   connectorId: string;
   serviceId: string// = "";
+  adapterId: string
   textareaItemNgModel;
   inputItemFormControl;
   textareaItemFormControl;
@@ -37,11 +40,14 @@ export class DialogAddNewPromptComponent implements OnInit {
   json: Record<string, unknown>;
   selectedItem = 'Json';
   services: ServiceModel[]
+  adapters: AdapterEntry[]
+  adaptersTypeModel: AdapterEntry[] = []
 
 
   constructor(protected ref: NbDialogRef<DialogAddNewPromptComponent>, private toastrService: NbToastrService,
     private errorService: ErrorDialogConnectorService,
-    private availableConnectorService: AvailableConnectorsService, private availableServiceService: AvailableServicesService, private translate: TranslateService) {
+    private availableConnectorService: AvailableConnectorsService, private availableServiceService: AvailableServicesService,
+    private availableAdaptersService: AvailableAdaptersService, private translate: TranslateService) {
   }
 
   cancel(): void {
@@ -53,12 +59,19 @@ export class DialogAddNewPromptComponent implements OnInit {
       this.inputItemFormControl = new FormControl();
       this.textareaItemFormControl = new FormControl();
       this.services = await this.availableServiceService.getServices();
+      this.adapters = await this.availableAdaptersService.getAdapters();
+      for (let adapter of this.adapters)
+        if (adapter.type == "DATA")
+          this.adaptersTypeModel.push(adapter)
+        else
+          console.debug(adapter)
       if (this.value) {
         if (this.value.name) this.name = this.value.name
         if (this.value.description) this.description = this.value.description
         if (this.value.status) this.status = this.value.status
         if (this.value.connectorId) this.connectorId = this.value.connectorId
         if (this.value.serviceId) this.serviceId = this.value.serviceId
+        if (this.value.adapterId) this.adapterId = this.value.adapterId
         if (this.value.url) this.url = this.value.url
       }
     }
@@ -181,12 +194,12 @@ export class DialogAddNewPromptComponent implements OnInit {
 
   async onSubmit() {
     try {
-      let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url;
+      let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url, adapterId = this.adapterId;
       if (connectorId == '' || connectorId == null) {
         console.log("dialog-add-new-prompt.component.ts.onSubmit(): Connector ID must be set");
         throw new Error("Connector ID must be set");
       }
-      await this.availableConnectorService.saveConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry);
+      await this.availableConnectorService.saveConnector((({ name, description, status, connectorId, serviceId, url , adapterId} as unknown)) as ConnectorEntry);
       this.ref.close();
       this.editedValue.emit(this.value);
       this.showToast('primary', this.translate.instant('general.connectors.connector_added_message'), '');

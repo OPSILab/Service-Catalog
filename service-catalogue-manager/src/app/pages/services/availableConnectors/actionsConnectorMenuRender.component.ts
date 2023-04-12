@@ -14,7 +14,6 @@ import {
 } from '@nebular/theme';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { AvailableConnectorsService } from './availableConnectors.service';
-
 import { LoginService } from '../../../auth/login/login.service';
 import { ConnectorStatusEnum } from '../../../model/services/connector';
 import { ConnectorEntry } from '../../../model/connector/connectorEntry';
@@ -22,6 +21,9 @@ import { AvailableServiceRow } from '../availableServices/availableServices.comp
 import { AvailableServicesService } from '../availableServices/availableServices.service';
 import { ErrorDialogConnectorService } from '../../error-dialog/error-dialog-connector.service';
 import { ServiceModel } from '../../../model/services/serviceModel';
+import { AdapterEntry } from '../../../model/adapter/adapterEntry';
+import { AvailableAdaptersService } from '../available-adapters/available-adapters.service';
+
 @Component({
   selector: 'actionsConnectorMenuRender',
   templateUrl: 'actionsConnectorMenuRender.component.html', //``,
@@ -37,11 +39,14 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
   description
   status
   serviceId
+  adapterId
   url
   ref
   dialogRef
   service: AvailableServiceRow;
   services: ServiceModel[]
+  adapters: AdapterEntry[]
+  adaptersTypeModel: AdapterEntry[] = []
 
   private unsubscribe: Subject<void> = new Subject();
   actions: NbMenuItem[];
@@ -66,7 +71,8 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private loginService: LoginService,
     private availableConnectorService: AvailableConnectorsService,
-  ) { }
+    private availableAdapterService: AvailableAdaptersService,
+  ) {}
 
   get registered(): boolean {
     return this.value.status == ConnectorStatusEnum.Active ? true : false;
@@ -74,10 +80,17 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     try {
+      /*
+      this.services = await this.availableServicesService.getServices();
+      this.adapters = await this.availableAdapterService.getAdapters();
+      for (let adapter of this.adapters)
+        if (adapter.type == "DATA")
+          this.adaptersTypeModel.push(adapter)*/
       this.name = this.value.name
       this.description = this.value.description
       this.url = this.value.url
       this.serviceId = this.value.serviceId
+      this.adapterId = this.value.adapterId
       if (this.ref) this.ref.close()
       this.actions = this.translatedActionLabels();
       this.menuService
@@ -106,7 +119,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
         });
     }
     catch (error) {
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error));
       }
     }
@@ -221,8 +234,8 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
 
   async onEdit() {
     try {
-      let name = this.name, description = this.description, status = this.value.status, connectorId = this.value.connectorId, serviceId = this.serviceId, url = this.url;
-      await this.availableConnectorService.updateConnector((({ name, description, status, connectorId, serviceId, url } as unknown)) as ConnectorEntry, connectorId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
+      let name = this.name, description = this.description, status = this.value.status, connectorId = this.value.connectorId, serviceId = this.serviceId, url = this.url, adapterId = this.adapterId;
+      await this.availableConnectorService.updateConnector((({ name, description, status, connectorId, serviceId, url, adapterId } as unknown)) as ConnectorEntry, connectorId);//as unknown)) as ConnectorEntry were VisualStudioCode tips
       this.updateResult.emit(this.value);
       this.showToast('primary', this.translate.instant('general.connectors.connector_edited_message'), '');
     }
@@ -309,6 +322,10 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
 
   async openEditConnector(): Promise<void> {
     this.services = await this.availableServicesService.getServices();
+      this.adapters = await this.availableAdapterService.getAdapters();
+      for (let adapter of this.adapters)
+        if (adapter.type == "DATA")
+          this.adaptersTypeModel.push(adapter)
     this.ref = this.dialogService
       .open(this.editConnector, {
         hasScroll: false,
@@ -339,7 +356,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.connectors.connector_registered_message', { connectorName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -352,7 +369,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.connectors.connector_deregistered_message', { connectorName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -373,7 +390,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
             ref.close();
             this.updateResult.emit(this.value.id);
           } catch (error) {
-            if (error.statusCode === '401'||error.status==401)  {
+            if (error.statusCode === '401' || error.status == 401) {
               void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
             } else this.errorDialogService.openErrorDialog(error);
           }
