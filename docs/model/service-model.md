@@ -3979,7 +3979,7 @@ The Class diagram representation described above will imply in pratices the gene
 
 ```
 
-#### Service Model Extension
+### Service Model Extension
 
 Some Service Model classes provides some references to controlled vocabularies or to prefixed enumerated list. Each vocabulary or enumerated list can be extended by adding additional "items" in the related assets/data/service-schema/(locale)/ files.
 
@@ -4007,7 +4007,7 @@ As example
           }
 ```
 
-or retrieved from external schemas (https://github.com/json-editor/json-editor#json-schema-support). 
+or retrieved from external schemas ( see https://github.com/json-editor/json-editor#json-schema-support). 
 
 See as example in assets/data/service-schema/wallet-schema/wallet-schemas.json, the enumerated list of eIDAS attributes.
 

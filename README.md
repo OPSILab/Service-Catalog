@@ -139,6 +139,8 @@ Service Catalogue Suite uses following libraries and frameworks.
 | [Apache Tomcat](https://tomcat.apache.org)                                                                     | >=9.0                | Apache License v.2.0                    |
 | [MongoDB Community Server](www.mongodb.com)                                                                    | >=4.2.9              | Server Side Public License (SSPL)       |
 | [Maven](https://maven.apache.org)                                                                              | >=3.5.0              | Apache License 2.0                      |
+| [JsonEditor](https://www.npmjs.com/package/jsoneditor)                                                                              | 9.10.0              | Apache License 2.0                      |
+| [Lodash](https://www.npmjs.com/package/lodash)                                                                              | 4.17.21              | MIT                      |
 ---
 
 ### External Components

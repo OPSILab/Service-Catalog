@@ -200,5 +200,7 @@ Open your favourite browser and point to that endpoint.
 
 Go to [Service Catalogue Usage Manual](../usage/index.md) section to learn how to use the Dashboard.
 
+[Service Catalogue Editor](../usage/index.md#service-description-editor-section) section is implemented by using  [JSON Schema Based Editor](https://github.com/json-editor/json-editor) libraries to build editor from [**Service Model**](../model/service-model.md) schema . Please refer on related documentation for further info and customization.
+
 ---
 
