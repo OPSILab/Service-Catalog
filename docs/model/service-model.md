@@ -2062,7 +2062,7 @@ properties belong to ISA² CPSV-AP v2.2.1.
             </td>
             <td width="64%" valign="top">
                 <p>
-                    Array of objects describing the mapping of each data with a
+                    Array of objects describing the mapping of each data and the map (if personal) with a
                     personal data concept belonging to a controlled vocabulary:
                 </p>
                 <table border="1" cellspacing="0" cellpadding="0" width="100%">
@@ -3096,894 +3096,894 @@ The Class diagram representation described above will imply in pratices the gene
 
 ```
 {
-	"$schema": "http://json-schema.org/draft-04/schema#",
-	"type": "object",
-	"title": "ServiceModel",
-	"properties": {
-		"identifier": {
-			"type": "string"
-		},
-		"title": {
-			"type": "string",
-			"title": "name"
-		},
-		"issued": {
-			"type": "string"
-		},
-		"createdByUserId": {
-			"type": "string"
-		},
-		"versionInfo": {
-			"type": "string",
-			"title": "Description Version"
-		},
-		"serviceIconUrl": {
-			"type": "string"
-		},
-		"status": {
-			"type": "string",
-			"title": "Service Description status",
-			"description": "Status of Service Description (Allowed values: *Completed*, *Deprecated*, *UnderDevelopment*, *Withdrawn*)",
-			"default": "UnderDevelopment",
-			"enum": [
-				"Completed",
-				"Deprecated",
-				"UnderDevelopment",
-				"WithDrawn"
-			]
-		},
-		"isPublicService": {
-			"type": "boolean"
-		},
-		"hasInfo": {
-			"type": "object",
-			"properties": {
-				"identifier": {
-					"type": "string"
-				},
-				"title": {
-					"type": "string",
-					"title": "name"
-				},
-				"status": {
-					"type": "string"
-				},
-				"keyword": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				},
-				"sector": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				},
-				"thematicArea": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				},
-				"type": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				},
-				"language": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				},
-				"description": {
-					"type": "object",
-					"properties": {
-						"locale": {
-							"type": "string"
-						},
-						"description": {
-							"type": "string"
-						}
-					},
-					"required": [
-						"locale",
-						"description"
-					]
-				},
-				
-				"isDescribedAt":{
-		     		 "type": "array",
-		     		 "items":{
-		        		"type": "object",
-		       			"properties":{
-					          "identifier": {
-					            "type": "string"
-					            },
-					          "name": {
-					            "type": "string"
-					            },  
-					          "landingPage": {
-					            "type": "string"
-					            }  
-		        		}
-				      }
-				 },
-				 
-				 "hasCost":{
-		     		 "type": "array",
-		     		 "items":{
-		        		"type": "object",
-		       			"properties":{
-					          "identifier": {
-					            "type": "string"
-					            },
-					          "code": {
-					            "type": "string"
-					            }, 
-					          "hasCost": {
-					            "type": "string"
-					            },  
-					          "description": {
-					            "type": "object",
-					            "properties": {
-						           "locale": {
-							         "type": "string"
-						           },
-						           "description": {
-							         "type": "string"
-						           }
-					            },
-								"required": [
-									"locale",
-									"description"
-								]
-								},   
-					          "ifAccessedThrough": {
-					            "type": "string"
-					            }  
-		        		}
-				      }
-				 },				
-				
-				"processingTime": {
-					"type": "string"
-				},
-				"isGroupedBy": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				},
-				"hasCompetentAuthority": {
-					"type": "object",
-					"properties": {
-						"identifier": {
-							"type": "string"
-						},
-						"title": {
-							"type": "string",
-							"title": "name"
-						},
-						"hasAddress": {
-							"type": "string"
-						},
-						"prefLabel": {
-							"type": "string"
-						},
-						"spatial": {
-							"type": "string"
-						}
-					},
-					"required": [
-						"prefLabel",
-						"spatial"
-					]
-				},
-				"requires": {
-					"type": "array",
-					"items": {
-						"type": "string"
-					}
-				},
-				"spatial": {
-					"type": "string"
-				},
-				"hasInput": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"identifier": {
-								"type": "string"
-							},
-							"title": {
-								"type": "string",
-								"title": "name"
-							},
-							"description": {
-								"type": "object",
-								"properties": {
-									"locale": {
-										"type": "string"
-									},
-									"description": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"locale",
-									"description"
-								]
-							},
-							"type": {
-								"type": "array",
-								"items": {
-									"type": "string"
-								}
-							},
-							"language": {
-								"type": "array",
-								"items": {
-									"type": "string"
-								}
-							},
-							"page": {
-								"type": "array",
-								"items": {
-									"type": "string"
-								}
-							},
-							"conformsTo": {
-								"type": "array",
-								"items": {
-									"type": "string"
-								}
-							}
-						}
-					}
-				},
-				"produces": {
-					"title": "produces",
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"identifier": {
-								"type": "string"
-							},
-							"title": {
-								"type": "string",
-								"title": "name"
-							},
-							"description": {
-								"type": "object",
-								"properties": {
-									"locale": {
-										"type": "string"
-									},
-									"description": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"locale",
-									"description"
-								]
-							},
-							"type": {
-								"type": "array",
-								"items": {
-									"type": "string"
-								}
-							}
-						}
-					}
-				},
-				"hasContactPoint": {
-					"type": "object",
-					"properties": {
-						"email": {
-							"type": "string"
-						},
-						"faxNumber": {
-							"type": "string"
-						},
-						"telephone": {
-							"type": "string"
-						},
-						"identifier": {
-							"type": "string"
-						},
-						"openingHours": {
-							"type": "string"
-						},
-						"hoursAvailable": {
-							"type": "string"
-						},
-						"url": {
-							"type": "string"
-						}
-					}
-				},
-				"hasChannel": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"identifier": {
-								"type": "string"
-							},
-							"type": {
-								"type": "string"
-							},
-							"openingHours": {
-								"type": "string"
-							},
-							"hoursAvailable": {
-								"type": "string"
-							},
-							"hasInput": {
-								"type": "array",
-								"items": {
-									"type": "string"
-								}
-							}
-						},
-						"required": [
-							"identifier",
-							"type",
-							"openingHours"
-						]
-					}
-				}
-			},
-			"required": [
-				"identifier",
-				"title",
-				"status",
-				"keyword",
-				"sector",
-				"thematicArea",
-				"type",
-				"language",
-				"description",
-				"isDescribedAt",
-				"hasCost",
-				"processingTime",
-				"isGroupedBy",
-				"hasCompetentAuthority",
-				"requires",
-				"spatial",
-				"hasInput",
-				"produces",
-				"hasContactPoint",
-				"hasChannel"
-			]
-		},
-		"hasServiceInstance": {
-			"type": "object",
-			"properties": {
-				"serviceProvider": {
-					"type": "object",
-					"properties": {
-						"businessId": {
-							"type": "string"
-						},
-						"name": {
-							"type": "string"
-						},
-						"hasAddress": {
-							"type": "string"
-						},
-						"postalcode": {
-							"type": "string"
-						},
-						"city": {
-							"type": "string"
-						},
-						"state": {
-							"type": "string"
-						},
-						"country": {
-							"type": "string"
-						},
-						"email": {
-							"type": "string"
-						},
-						"telephone": {
-							"type": "string"
-						},
-						"jurisdiction": {
-							"type": "string"
-						}
-					},
-					"required": [
-						"businessId",
-						"name",
-						"hasAddress",
-						"postalcode",
-						"city",
-						"state",
-						"country",
-						"email",
-						"telephone",
-						"jurisdiction"
-					]
-				},
-				"endpointConnector": {
-					"type": "object",
-					"properties": {
-						"endpoint": {
-							"type": "object",
-							"properties": {
-								"accessURL": {
-									"type": "string"
-								},
-								"endpointInformation": {
-									"type": "string"
-								},
-								"endpointDocumentation": {
-									"type": "string"
-								},
-								"path": {
-									"type": "string"
-								}
-							},
-							"required": [
-								"accessURL",
-								"endpointInformation",
-								"endpointDocumentation",
-								"path"
-							]
-						},
-						"connectorId": {
-							"type": "string"
-						}
-					},
-					"required": [
-						"endpoint",
-						"connectorId"
-					]
-				},
-				"dataset": {
-					"type": "array",
-					"items": {
-						"type": "object",
-						"properties": {
-							"identifier": {
-								"type": "string"
-							},
-							"description": {
-								"type": "array",
-								"items": {
-									"type": "object",
-									"properties": {
-										"locale": {
-											"type": "string"
-										},
-										"description": {
-											"type": "string"
-										},
-										"keywords": {
-											"type": "array",
-											"items": {
-												"type": "string"
-											}
-										}
-									},
-									"required": [
-										"locale",
-										"description",
-										"keywords"
-									]
-								}
-							},
-							"datasetSchema": {
-								"type": "object",
-								"properties": {
-									"context": {
-										"type": "string"
-									},
-									"type": {
-										"type": "string"
-									},
-									"id": {
-										"type": "string"
-									}
-								},
-								"required": [
-									"context",
-									"type",
-									"id"
-								]
-							},
-							"dataStructureSpecification": {
-								"type": "string"
-							},
-							"distribution": {
-								"type": "array",
-								"items": {
-									"properties": {
-										"accessUrl": {
-											"type": "string"
-										},
-										"description": {
-											"type": "array",
-											"items": {
-												"type": "object",
-												"properties": {
-													"locale": {
-														"type": "string"
-													},
-													"description": {
-														"type": "string"
-													},
-													"keywords": {
-														"type": "array",
-														"items": {
-															"type": "string"
-														}
-													}
-												},
-												"required": [
-													"locale",
-													"description",
-													"keywords"
-												]
-											}
-										},
-										"format": {
-											"type": "string"
-										}
-									},
-									"required": [
-										"distributionId",
-										"accessUrl",
-										"description",
-										"format"
-									]
-								}
-							},
-							"dataMapping": {
-								"type": "array",
-								"items": {
-									"type": "object",
-									"properties": {
-										"property": {
-											"type": "string"
-										},
-										"conceptId": {
-											"type": "string"
-										},
-										"name": {
-											"type": "string"
-										},
-										"type": {
-											"type": "string"
-										},
-										"inputType": {
-											"type": "string"
-										},
-										"required": {
-											"type": "boolean"
-										}
-									},
-									"required": [
-										"property",
-										"conceptId",
-										"name",
-										"type",
-										"required"
-									]
-								}
-							}
-						},
-						"required": [
-							"datasetId",
-							"description",
-							"datasetSchema",
-							"dataStructureSpecification",
-							"distribution",
-							"dataMapping"
-						]
-					}
-				},
-				"serviceUrls": {
-					"type": "object",
-					"properties": {
-						"libraryDomain": {
-							"type": "string"
-						},
-						"loginUri": {
-							"type": "string"
-						},
-						"linkingRedirectUri": {
-							"type": "string"
-						},
-						"objectionUri": {
-							"type": "string"
-						},
-						"notificationUri": {
-							"type": "string"
-						}
-					},
-					"required": [
-						"libraryDomain",
-						"loginUri",
-						"linkingRedirectUri",
-						"objectionUri",
-						"notificationUri"
-					]
-				},
-				"dataController": {
-					"type": "object",
-					"properties": {
-						"piiController": {
-							"type": "string"
-						},
-						"organizationName": {
-							"type": "string"
-						},
-						"hasContact": {
-							"type": "string"
-						},
-						"hasAddress": {
-							"type": "string"
-						},
-						"email": {
-							"type": "string"
-						},
-						"telephone": {
-							"type": "string"
-						},
-						"operatorName": {
-							"type": "string"
-						}
-					},
-					"required": [
-						"piiController",
-						"organizationName",
-						"hasContact",
-						"hasAddress",
-						"email",
-						"telephone",
-						"operatorName"
-					]
-				}
-			},
-			"required": [
-				"serviceProvider",
-				"cert",
-				"connector",
-				"dataset",
-				"serviceUrls",
-				"dataController"
-			]
-		},
-		"hasUsageRule": {
-			"type": "array",
-			"items": {
-				"type": "object",
-				"properties": {
-					"usageId": {
-						"type": "string"
-					},
-					"usageName": {
-						"type": "string"
-					},
-					"usageType": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"usageId",
-					"usageName",
-					"usageType"
-				]
-			}
-		},
-		"isPersonalDataHandling": {
-			"type": "array",
-			"items": {
-				"type": "object",
-				"properties": {
-					"purposeId": {
-						"type": "string"
-					},
-					"purposeName": {
-						"type": "string"
-					},
-					"legalBasis": {
-						"type": "string"
-					},
-					"purposeCategory": {
-						"type": "string"
-					},
-					"hasSector":{
-						"type": "array",
-							"items": {
-								"type": "string"
-							}
-					},
-					"hasContext":{
-						"type": "array",
-							"items": {
-								"type": "string"
-							}
-					},
-					"processingCategories": {
-						"type": "array",
-						"items": {
-							"type": "string"
-						}
-					},
-					"description": {
-						"type": "array",
-						"items": {
-							"type": "object",
-							"properties": {
-								"locale": {
-									"type": "string"
-								},
-								"title": {
-									"type": "string"
-								},
-								"description": {
-									"type": "string"
-								},
-								"descriptionUrl": {
-									"type": "string"
-								},
-								"iconUrl": {
-									"type": "string"
-								}
-							},
-							"required": [
-								"locale",
-								"title",
-								"description",
-								"descriptionUrl",
-								"iconUrl"
-							]
-						}
-					},
-					"hasPersonalDataCategory": {
-						"type": "array",
-						"items": {
-							"type": "string"
-						}
-					},
-					"requiredDatasets": {
-						"type": "array",
-						"items": {
-							"type": "string"
-						}
-					},
-					"storage": {
-						"type": "object",
-						"properties": {
-							"location": {
-								"type": "string"
-							},
-							"duration": {
-								"type": "string"
-							}
-						},
-						"required": [
-							"location",
-							"duration"
-						]
-					},
-					"recipients": {
-						"type": "array",
-						"items": {
-							"type": "string"
-						}
-					},
-					"shareWith": {
-						"type": "array",
-						"items": {
-							"type": "object",
-							"properties": {
-								"orgName": {
-									"type": "string"
-								},
-								"orgUrl": {
-									"type": "string"
-								},
-								"businessType": {
-									"type": "string"
-								},
-								"required": {
-									"type": "boolean"
-								}
-							},
-							"required": [
-								"orgName",
-								"orgUrl",
-								"businessType",
-								"required"
-							]
-						}
-					},
-					"obligations": {
-						"type": "array",
-						"items": {
-							"type": "object",
-							"properties": {
-								"event": {
-									"type": "string"
-								},
-								"activity": {
-									"type": "string"
-								}
-							},
-							"required": [
-								"event",
-								"activity"
-							]
-						}
-					},
-					"policyRef": {
-						"type": "string"
-					},
-					"collectionMethod": {
-						"type": "string"
-					},
-					"collectionOperator": {
-						"type": "string"
-					},
-					"termination": {
-						"type": "string"
-					}
-				},
-				"required": [
-					"purposeId",
-					"purposeName",
-					"legalBasis",
-					"purposeCategory",
-					"hasSector",
-					"hasContext",
-					"processingCategories",
-					"description",
-					"hasPersonalDataCategory",
-					"requiredDatasets",
-					"storage",
-					"recipients",
-					"shareWith",
-					"obligations",
-					"policyRef",
-					"collectionMethod",
-					"collectionOperator",
-					"termination"
-				]
-			}
-		}
-	},
-	"required": [
-		"serviceId",
-		"title",
-		"identifier",
-		"issued",
-		"createdByUserId",
-		"serviceDescriptionVersion",
-		"serviceIconUrl",
-		"status",
-		"isPublicService",
-		"hasInfo",
-		"hasServiceInstance",
-		"hasUsageRule"
-	]
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "ServiceModel",
+  "properties": {
+    "identifier": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string",
+      "title": "name"
+    },
+    "issued": {
+      "type": "string"
+    },
+    "createdByUserId": {
+      "type": "string"
+    },
+    "versionInfo": {
+      "type": "string",
+      "title": "Description Version"
+    },
+    "serviceIconUrl": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "title": "Service Description status",
+      "description": "Status of Service Description (Allowed values: *Completed*, *Deprecated*, *UnderDevelopment*, *Withdrawn*)",
+      "default": "UnderDevelopment",
+      "enum": ["Completed", "Deprecated", "UnderDevelopment", "WithDrawn"]
+    },
+    "isPublicService": {
+      "type": "boolean"
+    },
+    "hasInfo": {
+      "type": "object",
+      "properties": {
+        "identifier": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string",
+          "title": "name"
+        },
+        "status": {
+          "type": "string"
+        },
+        "keyword": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sector": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "thematicArea": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "language": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "locale": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string"
+              },
+              "keyword": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                   }
+              }
+            }
+          },
+          "required": ["locale", "description", "title"]
+        },
+
+        "isDescribedAt": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "identifier": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "landingPage": {
+                "type": "string"
+              }
+            }
+          }
+        },
+
+        "hasCost": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "identifier": {
+                "type": "string"
+              },
+              "code": {
+                "type": "string"
+              },
+              "hasCost": {
+                "type": "string"
+              },
+              "description": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "locale": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["locale", "description"]
+                }
+              },
+              "ifAccessedThrough": {
+                "type": "string"
+              }
+            }
+          }
+        },
+
+        "processingTime": {
+          "type": "string"
+        },
+        "isGroupedBy": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hasCompetentAuthority": {
+          "type": "object",
+          "properties": {
+            "identifier": {
+              "type": "string"
+            },
+            "title": {
+              "type": "string",
+              "title": "name"
+            },
+            "hasAddress": {
+              "type": "string"
+            },
+            "prefLabel": {
+              "type": "string"
+            },
+            "spatial": {
+              "type": "string"
+            }
+          },
+          "required": ["prefLabel", "spatial"]
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "spatial": {
+          "type": "string"
+        },
+        "hasInput": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "identifier": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string",
+                "title": "name"
+              },
+              "description": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "locale": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": ["locale", "description", "title"]
+              },
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "language": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "page": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "conformsTo": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "produces": {
+          "title": "produces",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "identifier": {
+                "type": "string"
+              },
+              "title": {
+                "type": "string",
+                "title": "name"
+              },
+              "description": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "locale": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": ["locale", "description", "title"]
+              },
+              "type": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "hasContactPoint": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string"
+            },
+            "faxNumber": {
+              "type": "string"
+            },
+            "telephone": {
+              "type": "string"
+            },
+            "identifier": {
+              "type": "string"
+            },
+            "openingHours": {
+              "type": "string"
+            },
+            "hoursAvailable": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            }
+          }
+        },
+        "hasChannel": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "identifier": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              },
+              "openingHours": {
+                "type": "string"
+              },
+              "hoursAvailable": {
+                "type": "string"
+              },
+              "hasInput": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "required": ["identifier", "type", "openingHours"]
+          }
+        }
+      },
+      "required": [
+        "identifier",
+        "title",
+        "status",
+        "keyword",
+        "sector",
+        "thematicArea",
+        "type",
+        "language",
+        "description",
+        "isDescribedAt",
+        "hasCost",
+        "processingTime",
+        "isGroupedBy",
+        "hasCompetentAuthority",
+        "requires",
+        "spatial",
+        "hasInput",
+        "produces",
+        "hasContactPoint",
+        "hasChannel"
+      ]
+    },
+    "hasServiceInstance": {
+      "type": "object",
+      "properties": {
+        "serviceProvider": {
+          "type": "object",
+          "properties": {
+            "businessId": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "hasAddress": {
+              "type": "string"
+            },
+            "postalcode": {
+              "type": "string"
+            },
+            "city": {
+              "type": "string"
+            },
+            "state": {
+              "type": "string"
+            },
+            "country": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "telephone": {
+              "type": "string"
+            },
+            "jurisdiction": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "businessId",
+            "name",
+            "hasAddress",
+            "postalcode",
+            "city",
+            "state",
+            "country",
+            "email",
+            "telephone",
+            "jurisdiction"
+          ]
+        },
+        "endpointConnector": {
+          "type": "object",
+          "properties": {
+            "endpoint": {
+              "type": "object",
+              "properties": {
+                "accessURL": {
+                  "type": "string"
+                },
+                "endpointInformation": {
+                  "type": "string"
+                },
+                "endpointDocumentation": {
+                  "type": "string"
+                },
+                "path": {
+                  "type": "string"
+                },
+                "async": {
+                  "type": "boolean"
+                },
+                "callback": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "accessURL",
+                "endpointInformation",
+                "endpointDocumentation",
+                "path",
+                "async"
+              ]
+            },
+            "connectorId": {
+              "type": "string"
+            }
+          },
+          "required": ["endpoint", "connectorId"]
+        },
+        "dataset": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "identifier": {
+                "type": "string"
+              },
+              "description": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "locale": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    },
+                    "keywords": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": ["locale", "description", "keywords"]
+                }
+              },
+              "datasetSchema": {
+                "type": "object",
+                "properties": {
+                  "context": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "id": {
+                    "type": "string"
+                  }
+                },
+                "required": ["context", "type", "id"]
+              },
+              "dataStructureSpecification": {
+                "type": "string"
+              },
+              "distribution": {
+                "type": "array",
+                "items": {
+                  "properties": {					  
+					"distributionId":{
+					  "type": "string"
+					},  
+                    "accessUrl": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "locale": {
+                            "type": "string"
+                          },
+                          "description": {
+                            "type": "string"
+                          },
+                          "keywords": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": ["locale", "description", "keywords"]
+                      }
+                    },
+                    "format": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "distributionId",
+                    "accessUrl",
+                    "description",
+                    "format"
+                  ]
+                }
+              },
+              "dataMapping": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "property": {
+                      "type": "string"
+                    },
+                    "conceptId": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string"
+                    },
+                    "inputType": {
+                      "type": "string"
+                    },
+                    "required": {
+                      "type": "boolean"
+                    },
+                    "source": {
+                      "type": "string"
+                    },
+                    "readonly": {
+                      "type": "boolean"
+                    },
+                    "datamap": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "property",
+                    "conceptId",
+                    "name",
+                    "type",
+                    "required",
+                    "source",
+                    "readonly",
+                    "datamap"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "datasetId",
+              "description",
+              "datasetSchema",
+              "dataStructureSpecification",
+              "distribution",
+              "dataMapping"
+            ]
+          }
+        },
+        "serviceUrls": {
+          "type": "object",
+          "properties": {
+            "libraryDomain": {
+              "type": "string"
+            },
+            "loginUri": {
+              "type": "string"
+            },
+            "linkingRedirectUri": {
+              "type": "string"
+            },
+            "objectionUri": {
+              "type": "string"
+            },
+            "notificationUri": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "libraryDomain",
+            "loginUri",
+            "linkingRedirectUri",
+            "objectionUri",
+            "notificationUri"
+          ]
+        },
+        "dataController": {
+          "type": "object",
+          "properties": {
+            "piiController": {
+              "type": "string"
+            },
+            "organizationName": {
+              "type": "string"
+            },
+            "hasContact": {
+              "type": "string"
+            },
+            "hasAddress": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            },
+            "telephone": {
+              "type": "string"
+            },
+            "operatorName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "piiController",
+            "organizationName",
+            "hasContact",
+            "hasAddress",
+            "email",
+            "telephone",
+            "operatorName"
+          ]
+        }
+      },
+      "required": [
+        "serviceProvider",
+        "cert",
+        "connector",
+        "dataset",
+        "serviceUrls",
+        "dataController"
+      ]
+    },
+    "hasUsageRule": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "usageId": {
+            "type": "string"
+          },
+          "usageName": {
+            "type": "string"
+          },
+          "usageType": {
+            "type": "string"
+          }
+        },
+        "required": ["usageId", "usageName", "usageType"]
+      }
+    },
+    "isPersonalDataHandling": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "purposeId": {
+            "type": "string"
+          },
+          "purposeName": {
+            "type": "string"
+          },
+          "legalBasis": {
+            "type": "string"
+          },
+          "purposeCategory": {
+            "type": "string"
+          },
+          "hasSector": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "hasContext": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "processingCategories": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "locale": {
+                  "type": "string"
+                },
+                "title": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "descriptionUrl": {
+                  "type": "string"
+                },
+                "iconUrl": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "locale",
+                "title",
+                "description",
+                "descriptionUrl",
+                "iconUrl"
+              ]
+            }
+          },
+          "hasPersonalDataCategory": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "requiredDatasets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "storage": {
+            "type": "object",
+            "properties": {
+              "location": {
+                "type": "string"
+              },
+              "duration": {
+                "type": "string"
+              }
+            },
+            "required": ["location", "duration"]
+          },
+          "recipients": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "shareWith": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "orgName": {
+                  "type": "string"
+                },
+                "orgUrl": {
+                  "type": "string"
+                },
+                "businessType": {
+                  "type": "string"
+                },
+                "required": {
+                  "type": "boolean"
+                }
+              },
+              "required": ["orgName", "orgUrl", "businessType", "required"]
+            }
+          },
+          "obligations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "type": "string"
+                },
+                "activity": {
+                  "type": "string"
+                }
+              },
+              "required": ["event", "activity"]
+            }
+          },
+          "policyRef": {
+            "type": "string"
+          },
+          "collectionMethod": {
+            "type": "string"
+          },
+          "collectionOperator": {
+            "type": "string"
+          },
+          "termination": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "purposeId",
+          "purposeName",
+          "legalBasis",
+          "purposeCategory",
+          "hasSector",
+          "hasContext",
+          "processingCategories",
+          "description",
+          "hasPersonalDataCategory",
+          "requiredDatasets",
+          "storage",
+          "recipients",
+          "shareWith",
+          "obligations",
+          "policyRef",
+          "collectionMethod",
+          "collectionOperator",
+          "termination"
+        ]
+      }
+    }
+  },
+  "required": [
+    "title",
+    "identifier",
+    "issued",
+    "createdByUserId",
+    "serviceDescriptionVersion",
+    "serviceIconUrl",
+    "status",
+    "isPublicService",
+    "hasInfo",
+    "hasServiceInstance",
+    "hasUsageRule"
+  ]
 }
+
 
 ```
 
-#### Service Model Extension
+### Service Model Extension
 
-Some Service Model classes provides some references to controlled vocabularies or to prefixed enumerated list. Each vocabulary or enumerated list can be extended by adding additional "items" in the related /service-schema/(locale)/ files.
+Some Service Model classes provides some references to controlled vocabularies or to prefixed enumerated list. Each vocabulary or enumerated list can be extended by adding additional "items" in the related assets/data/service-schema/(locale)/ files.
+
+As example
 
 ```
 "type": {
@@ -4006,3 +4006,42 @@ Some Service Model classes provides some references to controlled vocabularies o
                 <add here new items>]
           }
 ```
+
+or retrieved from external schemas ( see https://github.com/json-editor/json-editor#json-schema-support). 
+
+See as example in assets/data/service-schema/wallet-schema/wallet-schemas.json, the enumerated list of eIDAS attributes.
+
+
+```
+{
+    "type": "string",
+    "title": "Data Map",
+    "oneOf": [
+      {
+        "$ref": "./default.json",
+        "title": ""
+      },
+      {
+        "$ref": "./natural-person.json",
+        "title": "eIDAS Natual Person"
+      },
+      {
+        "$ref": "./legal-person.json",
+        "title": "eIDAS Legal Person"
+      }
+      ]
+    
+  }
+
+```
+
+included in the definition of DataMap property in Dataset class (assets/data/service-schema/(locale)/dataset.json)
+
+```
+"datamap": {
+              "$ref": "../../wallet-schema/wallet-schemas.json"
+            }
+```
+
+for localized enumeration see what described in "enabling other languages" in [**Configuration**](../install/install-sc-manager.md#configuration)
+

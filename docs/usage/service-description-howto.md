@@ -192,13 +192,17 @@ following values are used:
 
 -   Concept: (if personal data)personal data concept
 
--   Input Type - input form type ( text input, select, ..)
+-   Input Type - input form type ( text input, select, ..). In the selectbox you can select one of the HTML5 input types.
 
 -   Source - it is possible assign a previously defined *Distribution* class which refers to an external enumerate list of possible values
 
 ![](datamapping-distribution.jpg)
 
+- ReadOnly - Set at true if the property is readonly and/or prefilled by connecting to an integrated datasource/wallet/external service. In the last case you can map it with a specific propertyin the following Datamap field.
 
+- DataMap - the map of the property with an existing property of the available wallet or other Once-Only data attributes. By default you can select the eIDAS Profile attributes for Natual and Legal Person. To extend the available attributes schemas update the references of Dataset class (see [**Service Model Extension**](../model/service-model.md#service-model-extension))
+
+![](howto_datamap.png)
 
 ## JSON Example
 

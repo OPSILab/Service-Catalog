@@ -60,6 +60,8 @@ Service Catalogue uses following libraries and frameworks.
 | [Apache Tomcat](https://tomcat.apache.org)                                                                     | >=9.0                | Apache License v.2.0                    |
 | [MongoDB Community Server](www.mongodb.com)                                                                    | >=4.2.9              | Server Side Public License (SSPL)       |
 | [Maven](https://maven.apache.org)                                                                              | >=3.5.0              | Apache License 2.0
+| [JsonEditor](https://www.npmjs.com/package/jsoneditor)                                                                              | 9.10.0              | Apache License 2.0                      |
+| [Lodash](https://www.npmjs.com/package/lodash)                                                                              | 4.17.21              | MIT                      |
 
 ---
 
@@ -94,7 +96,7 @@ In order to get Keycloak ready to be used by Service Catalogue, following steps 
  in the  client. [(see here)](https://www.keycloak.org/docs/latest/server_admin/#client-roles).
  - Assign  `SERVICE_MANAGER` as default role. [(see here)](https://www.keycloak.org/docs/latest/server_admin/#_default_roles).
 
- - Create a least a user playing the above third roles in order to view all the sections of the  [Service Catalogue Manager Dashboard](../usage/index.md)
+ - Create at least a user playing the above third roles in order to view all the sections of the  [Service Catalogue Manager Dashboard](../usage/index.md)
 
  - Create for client a Mapper of type User Client Role and set `roles` as Token Claim Name, in order to map client roles to the `roles` field of the generated Access Token. 
 
