@@ -391,7 +391,23 @@
       "oauth2_endpoint": "Oauth2 Endpoint",
       "client_ID": "Client ID",
       "client_secret": "Client secret",
-      "ID" : "ID"
+      "ID" : "ID",
+      "edit": "Modifica",
+      "delete" : "Cancella",
+      "activate": "Attiva",
+      "deactivate": "Disattiva",
+      "catalogue_edited_message": "Il catalogo è stato modificato",
+      "catalogue_deleted_message": "Il catalogo {{catalogueName}} è stato cancellato con successo!",
+      "catalogue_activated_message": "Il catalogo {{catalogueName}} è stato attivato con successo!",
+      "catalogue_deactivated_message": "Il catalogo {{catalogueName}} è stato disattivato con successo!",
+      "delete_catalogue_message" : "Sei sicuro di voler cancellare permanentemente il catalogo <strong>{{catalogueName}}</strong>?\n",
+      "catalogue_added_message" : "e' stato aggiunto un nuovo catalogo",
+      "delete_catalogue": "Cancella il catalogo",
+      "activate_deactivate" : "Attiva/disattiva",
+      "download_metadata" : "Download metadata",
+      "activate_catalogue": "Attivazione catalogo",
+      "deactivate_catalogue_message": "Sei sicuro di voler disattivare il catalogo <strong>{{catalogueName}}</strong>?\n",
+      "activate_catalogue_message": "Sei sicuro di attivare il catalogo <strong>{{catalogueName}}</strong><br>Una volta attivato, non potrai modificarlo fino a quando non lo avrai prima disattivato."
     }
   },
   "login": {

@@ -49,6 +49,8 @@ export class AvailableCataloguesService {
   }
 
   registerCatalogue(catalogue: CatalogueEntry): Promise<CatalogueEntry> {
+    console.log("registerCatalogue")
+    console.log(catalogue)
     return this.http.put<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogue.catalogueID}`, catalogue).toPromise();
   }
 
@@ -57,7 +59,7 @@ export class AvailableCataloguesService {
   }
 
   updateCatalogue(catalogue: CatalogueEntry, catalogueID: string): Promise<CatalogueEntry> {
-    return this.http.put<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogueID}`, catalogue).toPromise();
+    return this.http.put<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogue.catalogueID}`, catalogue).toPromise();
   }
 
   deleteCatalogue(catalogueID: string): Promise<CatalogueEntry> {

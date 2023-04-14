@@ -115,7 +115,7 @@ public class Catalogue {
             String active, String refresh, boolean authenticated, String oAuth2Endpoint, String clientID,
             String clientSecret) {
         this.catalogueRepo = catalogueRepo;
-        this.catalogueID = catalogueID;
+        this.catalogueID = new Integer(this.hashCode()).toString();
         this.name = name;
         this.competentAuthority = competentAuthority;
         this.country = country;

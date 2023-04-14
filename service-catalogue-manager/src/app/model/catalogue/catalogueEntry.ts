@@ -2,18 +2,18 @@ export interface CatalogueEntry {
   catalogueID : string
   name : string
   country : string
-  //services
+  services : number
   status : string
   active : string
   description :string
-  compethentAuthority : string
+  competentAuthority : string
   category : string
   homePage : string
   apiEndpoint : string
   type : string
-  refresh : string
+  refresh
   authenticated : boolean
   clientSecret : string
   clientID : string
-  oAuh2Endpoint : string
+  oAuth2Endpoint : string
 }

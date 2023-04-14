@@ -391,7 +391,23 @@
       "oauth2_endpoint": "Oauth2 Endpoint",
       "client_ID": "Client ID",
       "client_secret": "Client secret",
-      "ID" : "ID"
+      "ID" : "ID",
+      "edit": "Edit",
+      "delete" : "Delete",
+      "activate": "Activate",
+      "deactivate": "Deactivate",
+      "catalogue_edited_message": "Catalogue was edited",
+      "catalogue_activated_message": "Catalogue {{catalogueName}} activated successfully!",
+      "catalogue_deactivated_message": "Catalogue {{catalogueName}} decativated successfully!",
+      "catalogue_deleted_message": "Catalogue {{catalogueName}} deleted successfully!",
+      "deactivate_catalogue_message": "Are you sure you want to deactivate catalogue <strong>{{catalogueName}}</strong>?\n",
+      "delete_catalogue_message" : "Are you sure to delete permanently the catalogue <strong>{{catalogueName}}</strong>?\n",
+      "catalogue_added_message" : "A new catalogue was added",
+      "delete_catalogue": "Delete catalogue",
+      "activate_deactivate" : "Activate/deactivate",
+      "download_metadata" : "Download metadata",
+      "activate_catalogue": "Catalogue activation",
+      "activate_catalogue_message": "Are you sure to activate the catalogue <strong>{{catalogueName}}</strong><br>Once activated, you will not be able to edit it until you disabled it first."
     }
   },
   "login": {

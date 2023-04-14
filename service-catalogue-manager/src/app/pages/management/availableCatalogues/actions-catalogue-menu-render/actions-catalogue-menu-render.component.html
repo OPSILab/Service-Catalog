@@ -1,0 +1,222 @@
+<button nbButton outline aria-label="Name" status="basic" [nbContextMenu]="actions"
+  nbContextMenuTag="service-context-menu{{ value.catalogueID }}">
+  <nb-icon icon="settings-2"></nb-icon>
+</button>
+<!-- Register Catalogue modal ng-template -->
+<ng-template #confirmRegisterDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{ 'general.catalogues.activate_catalogue' | translate: { catalogueName: value.name } }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="p-5 text-center"
+      [innerHTML]="'general.catalogues.activate_catalogue_message' | translate: { catalogueName: value.name }"></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="ref.close(true)">
+        {{ 'general.catalogues.activate' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.close' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!-- DeRegister Catalogue modal ng-template -->
+<ng-template #confirmDeRegisterDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{'general.catalogues.deactivate' | translate: {catalogueName: value.name} }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="p-5 text-center"
+      [innerHTML]="'general.catalogues.deactivate_catalogue_message' | translate: { catalogueName: value.name }"></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="ref.close(true)">
+        {{ 'general.catalogues.deactivate' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.close' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!-- Delete Catalogue modal ng-template -->
+<ng-template #confirmDeleteDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{ 'general.catalogues.delete_catalogue' | translate: {catalogueName: value.name} }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="p-5 text-center"
+      [innerHTML]="'general.catalogues.delete_catalogue_message' | translate: {catalogueName: value.name}"></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="danger" size="small" (click)="data.callback()">
+        {{ 'general.editor.delete' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<ng-template #editCatalogue let-data let-ref="dialogRef">
+  <style>
+    input {
+      text-align: center;
+      width: 100%;
+    }
+
+    nb-card {
+      text-align: center;
+      min-width: 40rem;
+      max-height: 100vh;
+      overflow-y: scroll;
+    }
+
+    nb-card-header {
+      text-align: center;
+    }
+
+    textarea {
+      text-align: center;
+    }
+
+    h3 {
+      text-align: center;
+    }
+
+    h6 {
+      text-align: left;
+      font-weight: normal;
+    }
+
+    input[type="text"] {
+      font-weight: normal;
+      text-align: left;
+    }
+
+    textarea {
+      font-weight: normal;
+      text-align: left;
+    }
+
+    label {
+      text-align: left;
+    }
+
+    .btn-success {
+      margin-left: 1rem;
+    }
+  </style>
+  <nb-card class="aci">
+    <nb-card-header class="d-flex align-content-center justify-content-between">
+      <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+      <h3>{{ 'general.catalogues.edit' | translate }}</h3>
+      <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="m-2 p-4">
+      <h6>
+        <form>
+          <label for="name" fullWidth>{{ 'general.catalogues.name' | translate }}</label>
+          <br>
+          <input [(ngModel)]="name" nbInput type="text" fullWidth placeholder="Name"
+            [ngModelOptions]="{standalone: true}" />
+          <br>
+          <br>
+          <label for="competent authority">{{ 'general.catalogues.competent_authority' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Competent authority"
+            [(ngModel)]="competentAuthority" [ngModelOptions]="{standalone: true}">
+          <br>
+          <br>
+          <label for="url">{{ 'general.catalogues.country' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Country" [(ngModel)]="country"
+            [ngModelOptions]="{standalone: true}">
+          <br>
+          <br>
+          <label for="category">{{ 'general.catalogues.category' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Category" [(ngModel)]="category"
+            [ngModelOptions]="{standalone: true}">
+          <br>
+          <br>
+          <label for="description">{{ 'general.catalogues.description' | translate }}</label>
+          <br>
+          <textarea nbInput fullWidth fieldSize="medium" placeholder="description" [(ngModel)]="description"
+            [ngModelOptions]="{standalone: true}"></textarea>
+          <br><br>
+          <label for="home page">{{ 'general.catalogues.home_page' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Home page" [(ngModel)]="homePage"
+            [ngModelOptions]="{standalone: true}">
+          <br>
+          <br>
+          <label for="API endpoint">{{ 'general.catalogues.api_endpoint' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="API endpoint" [(ngModel)]="apiEndpoint"
+            [ngModelOptions]="{standalone: true}">
+          <br>
+          <br>
+          <label for="type">{{ 'general.catalogues.type' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Type" [(ngModel)]="type"
+            [ngModelOptions]="{standalone: true}">
+          <br>
+          <br>
+          <label for="active">{{ 'general.catalogues.active' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Active" [(ngModel)]="active"
+            [ngModelOptions]="{standalone: true}">
+          <br>
+          <br>
+          <label for="refresh">{{ 'general.catalogues.refresh' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="Refresh" [(ngModel)]="refresh"
+            [ngModelOptions]="{standalone: true}">
+          <br>
+          <br>
+          <nb-checkbox (checkedChange)="toggle($event)">
+            Authenticated
+          </nb-checkbox>
+          <br *ngIf="authenticated">
+          <br *ngIf="authenticated">
+          <label *ngIf="authenticated" for="oauth2 endpoint">{{ 'general.catalogues.oauth2_endpoint' | translate
+            }}</label>
+          <br *ngIf="authenticated">
+          <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" placeholder="Oauth2 endpoint "
+            [(ngModel)]="oAuth2Endpoint" [ngModelOptions]="{standalone: true}">
+          <br *ngIf="authenticated">
+          <br *ngIf="authenticated">
+          <label *ngIf="authenticated" for="Client ID">{{ 'general.catalogues.client_ID' | translate }}</label>
+          <br *ngIf="authenticated">
+          <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" placeholder="Client ID"
+            [(ngModel)]="clientID" [ngModelOptions]="{standalone: true}">
+          <br *ngIf="authenticated">
+          <br *ngIf="authenticated">
+          <label *ngIf="authenticated" for="Client Secret">{{ 'general.catalogues.client_secret' | translate }}</label>
+          <br *ngIf="authenticated">
+          <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" placeholder="Client secret"
+            [(ngModel)]="clientSecret" [ngModelOptions]="{standalone: true}">
+          <br *ngIf="authenticated">
+          <br *ngIf="authenticated">
+          <h3>
+            <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+              (click)="onEdit(); ref.close()">
+              <i class="mx-1">{{ 'general.catalogues.confirm' | translate }}</i>
+            </button>
+            &nbsp;
+          </h3>
+        </form>
+      </h6>
+    </nb-card-body>
+  </nb-card>
+</ng-template>

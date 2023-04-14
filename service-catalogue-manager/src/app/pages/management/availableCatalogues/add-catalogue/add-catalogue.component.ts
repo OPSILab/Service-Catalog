@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from '../../../../model/appConfig';
 import { map, startWith, filter } from 'rxjs/operators';
 import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
+//import { randomBytes, randomInt } from 'crypto';
 
 @Component({
   selector: 'add-catalogue',
@@ -21,24 +22,24 @@ import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
 
 export class AddCatalogueComponent implements OnInit {
 
-  @Input() value: any;
+  @Input() value: CatalogueEntry;
   @Output() editedValue = new EventEmitter<unknown>();
-  competentAuthority: string = 'competent authority';
-  catalogueID: string = 'ID';
-  country: string = 'Country';
-  category: string = 'category';
-  homePage: string = 'home page';
-  apiEndpoint: string = 'http';
-  active: string = 'yes';
-  refresh: any = 'no';
-  name: string = 'name';
-  description: string = 'description';
+  competentAuthority: string ;
+  catalogueID: string = 'ID' ;
+  country: string ;
+  category: string ;
+  homePage: string ;
+  apiEndpoint: string ;
+  active: string ;
+  refresh: any;
+  name: string ;
+  description: string ;
   status: string = "inactive"
-  type: string = 'type';
+  type: string ;
   authenticated: boolean = false;
-  oAuth2Endpoint: string = 'endpoint';
-  clientID: string = 'id';
-  clientSecret: string = 'secret';
+  oAuth2Endpoint: string ;
+  clientID: string  ;
+  clientSecret: string ;
   private appConfig: AppConfig;
 
   constructor(
@@ -57,7 +58,27 @@ export class AddCatalogueComponent implements OnInit {
     this.ref.close();
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    if (this.value) {
+      if (this.value.name) this.name = this.value.name
+      if (this.value.description) this.description = this.value.description
+      if (this.value.status) this.status = this.value.status
+      if (this.value.competentAuthority) this.competentAuthority = this.value.competentAuthority
+      if (this.value.active) this.active = this.value.active
+      if (this.value.apiEndpoint) this.apiEndpoint = this.value.apiEndpoint
+      if (this.value.authenticated) this.authenticated = this.value.authenticated
+      if (this.value.catalogueID) this.catalogueID = this.value.catalogueID
+      if (this.value.category) this.category = this.value.category
+      if (this.value.clientID) this.clientID = this.value.clientID
+      if (this.value.clientSecret) this.clientSecret = this.value.clientSecret
+      if (this.value.country) this.country = this.value.country
+      if (this.value.homePage) this.homePage = this.value.homePage
+    }
+  }
+
+  onFileChanged(event: Event): void {
+      this.editedValue.emit(this.value);
+  }
 
   confirm() {
     try {
@@ -77,9 +98,10 @@ export class AddCatalogueComponent implements OnInit {
 
   async onSubmit() {
     try {
-    console.log(this.catalogueID)
+      console.log(this.catalogueID)
       let name = this.name,
-        catalogueID = this.catalogueID,
+        catalogueID = this.name+ this.competentAuthority+ this.country+ this.category+ this.description+
+          this.homePage+ this.apiEndpoint+ this.type+ this.active+ this.refresh+ this.authenticated+ this.oAuth2Endpoint+ this.clientID+ this.clientSecret,
         competentAuthority = this.competentAuthority,
         country = this.country,
         category = this.category,
