@@ -2,19 +2,13 @@
 package it.eng.opsi.servicecatalog.model;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.github.jsonldjava.shaded.com.google.common.base.Objects;
-
 import it.eng.opsi.servicecatalog.repository.AdapterRepository;
-import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
 import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
