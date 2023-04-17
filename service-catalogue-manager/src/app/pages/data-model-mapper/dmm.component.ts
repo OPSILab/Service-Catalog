@@ -166,5 +166,13 @@ constructor( @Inject(DOCUMENT) private document: Document) {
     }
   }
 
+  saveAsFile(): void {
+    
+  }
+
+  importAsFile(): void {
+    
+  }
+
   
 }
