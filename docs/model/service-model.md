@@ -100,7 +100,7 @@ properties belong to ISA² CPSV-AP v2.2.1.
         <tr>
             <td width="13%" valign="top">
                 <p>
-                    Name
+                    Title
                 </p>
             </td>
             <td width="37%" valign="top">
@@ -206,6 +206,41 @@ properties belong to ISA² CPSV-AP v2.2.1.
                             <td valign="top">
                                 <p>
                                     Textual description
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top">
+                                <p>
+                                    <strong>title</strong>
+                                </p>
+                            </td>
+                            <td valign="top">
+                                <p>
+                                    string
+                                </p>
+                            </td>
+                            <td valign="top">
+                                <p>
+                                    Localized label name 
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="96" valign="top">
+                                <p>
+                                    <strong>keywords</strong>
+                                </p>
+                            </td>
+                            <td width="89" valign="top">
+                                <p>
+                                    Array[String]
+                                </p>
+                            </td>
+                            <td width="227" valign="top">
+                                <p>
+                                    Keyword tags related to textual
+                                    description.
                                 </p>
                             </td>
                         </tr>
@@ -614,7 +649,24 @@ properties belong to ISA² CPSV-AP v2.2.1.
                             </td>
                             <td width="47%" valign="top">
                                 <p>
-                                    Preferred Label
+                                    Language
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="33%" valign="top">
+                                <p>
+                                    <strong>description</strong>
+                                </p>
+                            </td>
+                            <td width="19%" valign="top">
+                                <p>
+                                    Object
+                                </p>
+                            </td>
+                            <td width="47%" valign="top">
+                                <p>
+                                    Object describing localized description ( locale, description, title)
                                 </p>
                             </td>
                         </tr>
@@ -1959,6 +2011,40 @@ properties belong to ISA² CPSV-AP v2.2.1.
                                 </p>
                             </td>
                         </tr>
+                        <tr>
+                            <td width="45%" valign="top">
+                                <p>
+                                    <strong>asynch</strong>
+                                </p>
+                            </td>
+                            <td width="13%" valign="top">
+                                <p>
+                                    boolean
+                                </p>
+                            </td>
+                            <td width="40%" valign="top">
+                                <p>
+                                    if the API endpoint is asynchronous. If yes you can set callback api endpoint
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="45%" valign="top">
+                                <p>
+                                    <strong>callback</strong>
+                                </p>
+                            </td>
+                            <td width="13%" valign="top">
+                                <p>
+                                    string
+                                </p>
+                            </td>
+                            <td width="40%" valign="top">
+                                <p>
+                                    Callback api if endpoint if asynch.
+                                </p>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </td>
@@ -2049,6 +2135,136 @@ properties belong to ISA² CPSV-AP v2.2.1.
         <tr>
             <td width="25%" valign="top">
                 <p>
+                    <strong>Distribution</strong>
+                </p>
+            </td>
+            <td width="9%" valign="top">
+                <p>
+                    Object
+                </p>
+                <p>
+                    (1..n)
+                </p>
+            </td>
+            <td width="64%" valign="top">
+                <p>
+                    Objects describing distribution points of the Datasets.
+                </p>
+                <table border="1" cellspacing="0" cellpadding="0" width="100%">
+                    <tbody>
+                        <tr>
+                            <td width="30%" valign="top">
+                                <p>
+                                    <strong><em>Property</em></strong>
+                                </p>
+                            </td>
+                            <td width="26%" valign="top">
+                                <p>
+                                    <strong><em>Type</em></strong>
+                                </p>
+                            </td>
+                            <td width="43%" valign="top">
+                                <p>
+                                    <strong><em>Description</em></strong>
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%" valign="top">
+                                <p>
+                                    <strong>distributionId</strong>
+                                </p>
+                            </td>
+                            <td width="26%" valign="top">
+                                <p>
+                                    string
+                                </p>
+                            </td>
+                            <td width="43%" valign="top">
+                                <p>
+                                    Unique identifier of the Distribution.
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%" valign="top">
+                                <p>
+                                    <strong>accessUrl</strong>
+                                </p>
+                            </td>
+                            <td width="26%" valign="top">
+                                <p>
+                                    string
+                                </p>
+                            </td>
+                            <td width="43%" valign="top">
+                                <p>
+                                    URL where data is available. The resource at the access URL may contain information about how to get the Dataset.
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%" valign="top">
+                                <p>
+                                    <strong>format</strong>
+                                </p>
+                            </td>
+                            <td width="26%" valign="top">
+                                <p>
+                                    string
+                                </p>
+                            </td>
+                            <td width="43%" valign="top">
+                                <p>
+                                    Data format (i.e json, csv...)
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%" valign="top">
+                                <p>
+                                    <strong>inputType</strong>
+                                </p>
+                            </td>
+                            <td width="26%" valign="top">
+                                <p>
+                                    string
+                                </p>
+                            </td>
+                            <td width="43%" valign="top">
+                                <p>
+                                    Type of input data [file type, dropdown
+                                    list,...
+                                </p>
+                                <p>
+                                    ]
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%" valign="top">
+                                <p>
+                                    <strong>description</strong>
+                                </p>
+                            </td>
+                            <td width="26%" valign="top">
+                                <p>
+                                    object
+                                </p>
+                            </td>
+                            <td width="43%" valign="top">
+                                <p>
+                                   localized description ( locale, description)
+                                </p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td width="25%" valign="top">
+                <p>
                     <strong>dataMapping</strong>
                 </p>
             </td>
@@ -2062,8 +2278,7 @@ properties belong to ISA² CPSV-AP v2.2.1.
             </td>
             <td width="64%" valign="top">
                 <p>
-                    Array of objects describing the mapping of each data and the map (if personal) with a
-                    personal data concept belonging to a controlled vocabulary:
+                    Array of objects describing mapping of each Service specific data property and (if personal) with a personal data concept belonging to a controlled vocabulary.
                 </p>
                 <table border="1" cellspacing="0" cellpadding="0" width="100%">
                     <tbody>
@@ -2167,31 +2382,64 @@ properties belong to ISA² CPSV-AP v2.2.1.
                             </td>
                             <td width="26%" valign="top">
                                 <p>
-                                    integer
+                                    boolean
                                 </p>
                             </td>
                             <td width="43%" valign="top">
                                 <p>
                                     If that property is required [True=1,
-                                    False=0]
+                                    False=0] when used in a dataset.
                                 </p>
                             </td>
                         </tr>
                         <tr>
                             <td width="30%" valign="top">
                                 <p>
-                                    <strong>sensitive</strong>
+                                    <strong>source</strong>
                                 </p>
                             </td>
                             <td width="26%" valign="top">
                                 <p>
-                                    integer
+                                    string
                                 </p>
                             </td>
                             <td width="43%" valign="top">
                                 <p>
-                                    If this personal data is also sensitive
-                                    [True=1, False=0]
+                                    Reference to one of the Distribution class for possible values in type input (ex. select values)
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%" valign="top">
+                                <p>
+                                    <strong>readonly</strong>
+                                </p>
+                            </td>
+                            <td width="26%" valign="top">
+                                <p>
+                                    boolean
+                                </p>
+                            </td>
+                            <td width="43%" valign="top">
+                                <p>
+                                    If the property is readonly and/or prefilled ( in case to set DataMap)
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%" valign="top">
+                                <p>
+                                    <strong>datamap</strong>
+                                </p>
+                            </td>
+                            <td width="26%" valign="top">
+                                <p>
+                                    string
+                                </p>
+                            </td>
+                            <td width="43%" valign="top">
+                                <p>
+                                    Reference to one of Once-Only data attributes (e.g from wallet, services...)
                                 </p>
                             </td>
                         </tr>
@@ -2274,6 +2522,23 @@ properties belong to ISA² CPSV-AP v2.2.1.
                             <td width="227" valign="top">
                                 <p>
                                     Textual description
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="96" valign="top">
+                                <p>
+                                    <strong>title</strong>
+                                </p>
+                            </td>
+                            <td width="89" valign="top">
+                                <p>
+                                    string
+                                </p>
+                            </td>
+                            <td width="227" valign="top">
+                                <p>
+                                   localized title
                                 </p>
                             </td>
                         </tr>
@@ -3979,7 +4244,7 @@ The Class diagram representation described above will imply in pratices the gene
 
 ```
 
-#### Service Model Extension
+### Service Model Extension
 
 Some Service Model classes provides some references to controlled vocabularies or to prefixed enumerated list. Each vocabulary or enumerated list can be extended by adding additional "items" in the related assets/data/service-schema/(locale)/ files.
 
@@ -4007,7 +4272,7 @@ As example
           }
 ```
 
-or retrieved from external schemas (https://github.com/json-editor/json-editor#json-schema-support). 
+or retrieved from external schemas ( see https://github.com/json-editor/json-editor#json-schema-support). 
 
 See as example in assets/data/service-schema/wallet-schema/wallet-schemas.json, the enumerated list of eIDAS attributes.
 

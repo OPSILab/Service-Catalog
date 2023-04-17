@@ -7,7 +7,7 @@ import { NgxConfigureService } from 'ngx-configure';
 import { AppConfig, System } from '../../../model/appConfig';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-//import { ActionsCatalogueMenuRenderComponent } from './actions-catalogue-menu-render/actions-catalogue-menu-render.component';//TODO
+import { ActionsCatalogueMenuRenderComponent } from './actions-catalogue-menu-render/actions-catalogue-menu-render.component';//TODO
 import { CatalogueEntry } from '../../../model/catalogue/catalogueEntry';//TODO
 import { AddCatalogueComponent } from './add-catalogue/add-catalogue.component';
 import { NbDialogService } from '@nebular/theme';
@@ -16,6 +16,7 @@ import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
 import { ConnectorStatusRenderComponent } from '../../services/availableConnectors/custom-status-render.component';
 import { LoginService } from '../../../auth/login/login.service';
+import { StatusRenderComponent } from './status-render/status-render.component';
 
 @Component({
   selector: 'available-catalogues-smart-table',
@@ -34,7 +35,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   private systemLocale: string;
   private config: AppConfig;
   public serviceId: string;
-  public catalogueId: string;
+  public catalogueID: string;
   public serviceName: string;
   public readOnly = false;
   private nameLabel: string;
@@ -98,7 +99,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
         void console.log("confirm ok", this.ngOnInit());
       });
       this.updateResult.emit(this.value);
-      this.ngOnInit()
+      //this.ngOnInit()
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
@@ -144,7 +145,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           title: this.countryLabel,
           type: 'text',
           width: '25%',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row.description,
+          valuePrepareFunction: (cell, row: CatalogueEntry) => row.country,
         },
         services: {
           title: this.servicesLabel,
@@ -159,7 +160,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           width: '5%',
           type: 'custom',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row.status,
-          renderComponent: ConnectorStatusRenderComponent,
+          renderComponent: StatusRenderComponent,
         },
         active: {
           title: this.activeLabel,
@@ -168,9 +169,9 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           width: '5%',
           type: 'custom',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row.active,
-          renderComponent: ConnectorStatusRenderComponent,
+          renderComponent: StatusRenderComponent,
         },
-        info: {
+        /*info: {
           title: this.infoLabel,
           filter: false,
           sort: false,
@@ -178,7 +179,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           type: 'custom',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row,
           //renderComponent: CatalogueInfoRenderComponent,//TODO
-        },
+        },*/
         actions: {
           title: this.actionsLabel,
           sort: false,
@@ -186,7 +187,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           filter: false,
           type: 'custom',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row,
-          //renderComponent: ActionsCatalogueMenuRenderComponent,//TODO
+          renderComponent: ActionsCatalogueMenuRenderComponent,//TODO
           onComponentInitFunction: (instance) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
             instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe(() => this.ngOnInit());

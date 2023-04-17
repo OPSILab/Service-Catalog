@@ -216,8 +216,8 @@ or save as file and import as described  in the *service import* section [here](
 
 ```
 {
-  "title": "Service Catalogue Info",
-  "identifier": "https://service-catalogue-manager-dev.k8s.across-h2020.eu/service-catalogue-manager",
+  "title": "Service for TD testing 2",
+  "identifier": "992c3775-c79d-4d9d-9219-3b4166de34f9",
   "issued": "",
   "createdByUserId": "service.manager",
   "versionInfo": "1.0",
@@ -225,107 +225,410 @@ or save as file and import as described  in the *service import* section [here](
   "status": "UnderDevelopment",
   "isPublicService": true,
   "hasInfo": {
-    "identifier": "https://service-catalogue-manager-dev.k8s.across-h2020.eu/service-catalogue-manager",
-    "title": "Service Catalogue Info",
+    "identifier": "992c3775-c79d-4d9d-9219-3b4166de34f9",
+    "title": "Service for TD testing 2",
     "status": "UnderDevelopment",
     "keyword": [
-      "Services",
-      "Catalogue"
+      "application",
+      "university"
     ],
     "sector": [
-      "S - Other services activities"
+      "P - Education",
+      "P85.4 - Higher education"
     ],
-    "thematicArea": [
-      "other"
-    ],
-    "type": [
-      "other"
-    ],
-    "language": [
-      "en",
-      "de",
-      "el",
-      "it",
-      "lv"
-    ],
-    "description": [{
-      "locale": "en",
-      "description": "Service Catalogue provides search and manage functionalities for public and private services"
-    }],
-    "isDescribedAt": [
+    "thematicArea": [],
+    "type": [],
+    "language": [],
+    "description": [
       {
-        "identifier": "1",
-        "name": "Online documentation",
-        "landingPage": "https://service-catalogue.readthedocs.io/"
+        "locale": "",
+        "description": "Create an application",
+        "title": "",
+        "keyword": []
       }
     ],
-    "processingTime": "P1W",
-    "isGroupedBy": [],
+    "isDescribedAt": [],
+    "processingTime": "",
+    "isGroupedBy": [
+      "Having a child",
+      "Starting education"
+    ],
     "hasCompetentAuthority": {
-      "identifier": "eng",
-      "title": "Engineering S.p.A",
+      "identifier": "",
+      "title": "",
       "hasAddress": "",
       "prefLabel": "",
-      "spatial": "ITA-Italy"
+      "spatial": ""
     },
     "requires": [],
-    "spatial": "ESP-Spain",
+    "spatial": "GRC-Greece",
     "hasInput": [
       {
-        "identifier": "ServiceInput",
-        "title": "Service Description",
-        "description": [{
-          "locale": "en",
-          "description": "Service Description as defined in Service Catalogue schema"
-        }],
+        "identifier": "firstname",
+        "title": "First name",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "First name"
+          }
+        ],
         "type": [],
         "language": [
           "en"
         ],
         "page": [],
-        "conformsTo": [
-          "ServiceModel"
-        ]
+        "conformsTo": []
+      },
+      {
+        "identifier": "lastname",
+        "title": "Last name",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Last name"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "username",
+        "title": "Username",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "User name"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "street",
+        "title": "Street",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Street"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "zipCode",
+        "title": "Zip code",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Zip code"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "city",
+        "title": "City",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "City"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "state",
+        "title": "State",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "State"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "country",
+        "title": "Country",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Country"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "password",
+        "title": "Password",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Password"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "institution",
+        "title": "Institution",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Institution"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "email",
+        "title": "Email",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Email"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "mobile",
+        "title": "Mobile",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Mobile"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "academicStatus",
+        "title": "Academic Status",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Academic Status"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "department",
+        "title": "Department",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Department"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "registrationNumber",
+        "title": "Registration Number",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Registration Number"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "studentNo",
+        "title": "Student Number",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": "Student Number"
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "SSN",
+        "title": "SSN",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": ""
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "firstRegistrationMonth",
+        "title": "First Registration Month",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": ""
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "firstRegistrationYear",
+        "title": "First Registration Year",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": ""
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
+      },
+      {
+        "identifier": "distributionPoint",
+        "title": "Distribution Point",
+        "description": [
+          {
+            "locale": "",
+            "title": "",
+            "description": ""
+          }
+        ],
+        "type": [],
+        "language": [
+          "en"
+        ],
+        "page": [],
+        "conformsTo": []
       }
     ],
     "produces": [],
     "hasContactPoint": {
-      "email": "emailToContact@across.eu",
+      "email": "webmaster@daad.de",
       "faxNumber": "",
-      "telephone": "",
-      "url": "",
+      "telephone": "+49 228 882-0",
+      "url": "https://academicid-academicid-dev.k8s.across-h2020.eu",
       "identifier": "",
       "openingHours": "",
       "hoursAvailable": ""
     },
     "hasChannel": [
       {
-        "identifier": "get",
+        "identifier": "",
         "type": "RESTService",
         "openingHours": "",
         "hoursAvailable": "",
-        "hasInput": [
-          "ServiceInput"
-        ]
+        "hasInput": []
       }
     ],
-    "hasCost": [
-      {
-        "identifier": "rest_cost",
-        "code": "EUR",
-        "hasCost": "1",
-        "ifAccessedThrough": "RESTService",
-        "description": [{
-          "locale": "en",
-          "description": "cost per api call"
-        }]
-      }
-    ]
+    "hasCost": []
   },
   "hasServiceInstance": {
     "serviceProvider": {
-      "businessId": "ENG",
-      "name": "Engineering II",
+      "businessId": "servProv1",
+      "name": "TECNALIA",
       "hasAddress": "",
       "postalcode": "",
       "city": "",
@@ -337,35 +640,19 @@ or save as file and import as described  in the *service import* section [here](
     },
     "endpointConnector": {
       "endpoint": {
-        "accessURL": "https://service-catalogue-server-dev.k8s.across-h2020.eu/service-catalogue",
-        "endpointInformation": "Service Catalogue endpoint to get&search",
-        "endpointDocumentation": "https://service-catalogue-server-dev.k8s.across-h2020.eu/service-catalogue/swagger-ui/index.html?configUrl=/service-catalogue/api-docs/swagger-config",
-        "path": "/api/v2/services [GET, content-type: application/json]"
+        "accessURL": "http://academicid-academicid-dev.k8s.across-h2020.eu",
+        "endpointInformation": "",
+        "endpointDocumentation": "",
+        "path": "/applications/create [POST, Content-Type:application/json]",
+        "async": false,
+        "callback": ""
       },
-      "connectorId": ""
+      "connectorId": "connector1"
     },
     "dataset": [
       {
-        "identifier": "ServiceModel",
+        "identifier": "dataset1",
         "description": [],
-        "datasetSchema": {
-          "context": "",
-          "type": "",
-          "id": ""
-        },
-        "dataStructureSpecification": "",
-        "distribution": [],
-        "dataMapping": []
-      },
-      {
-        "identifier": "PD1",
-        "description": [
-          {
-            "locale": "en",
-            "description": "Personal data included in the Service Model ( contacts email, ect)",
-            "keywords": []
-          }
-        ],
         "datasetSchema": {
           "context": "",
           "type": "",
@@ -375,20 +662,224 @@ or save as file and import as described  in the *service import* section [here](
         "distribution": [],
         "dataMapping": [
           {
+            "property": "academicStatus",
+            "conceptId": "personal_details_highest_degree_received",
+            "name": "Highest Degree Received",
+            "type": "text",
+            "inputType": "input text",
+            "required": false,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "lastname",
+            "conceptId": "preferred_last_name",
+            "name": "Last Name",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": true,
+            "datamap": "CurrentFamilyName"
+          },
+          {
+            "property": "street",
+            "conceptId": "previous_address_street",
+            "name": "Street Address 1",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "zipCode",
+            "conceptId": "previous_address_zip_code",
+            "name": "Postal Code",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "city",
+            "conceptId": "previous_address_city",
+            "name": "City",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "state",
+            "conceptId": "previous_address_state",
+            "name": "State",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "country",
+            "conceptId": "previous_address_country",
+            "name": "Country",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "firstname",
+            "conceptId": "preferred_first_name",
+            "name": "First Name",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "username",
+            "conceptId": "account_logins_user_name",
+            "name": "Username/Email",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "password",
+            "conceptId": "account_logins_password",
+            "name": "Password",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
             "property": "email",
             "conceptId": "personal_email",
             "name": "Email",
             "type": "text",
             "inputType": "input text",
-            "required": false
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
           },
           {
-            "property": "address",
-            "conceptId": "previous_address_street",
-            "name": "Street Address 1",
+            "property": "mobile",
+            "conceptId": "phone_number",
+            "name": "Phone Number",
             "type": "text",
             "inputType": "input text",
-            "required": false
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "institution",
+            "conceptId": "schoole_name",
+            "name": "School Name",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "department",
+            "conceptId": "schoole_name",
+            "name": "School Name",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "registrationNumber",
+            "conceptId": "identification_number",
+            "name": "Identification Number",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "studentNo",
+            "conceptId": "identification_number",
+            "name": "Identification Number",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "ssn",
+            "conceptId": "personal_details_identifying_information",
+            "name": "Identifying Information",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "firstRegistrationMonth",
+            "conceptId": "rental_start_date.month",
+            "name": "Start Date Month",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "firstRegistrationYear",
+            "conceptId": "rental_start_date.year",
+            "name": "Start Date Year",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
+          },
+          {
+            "property": "distributionPoint",
+            "conceptId": "document_location",
+            "name": "Document Location",
+            "type": "text",
+            "inputType": "input text",
+            "required": true,
+            "source": "",
+            "readonly": false,
+            "datamap": ""
           }
         ]
       }
@@ -401,44 +892,68 @@ or save as file and import as described  in the *service import* section [here](
       "notificationUri": ""
     },
     "dataController": {
-      "piiController": "",
-      "organizationName": "",
+      "piiController": "John Doe 2",
+      "organizationName": "TEC",
       "hasContact": "",
       "hasAddress": "",
-      "email": "",
-      "telephone": "",
+      "email": "johndoe2@example.com",
+      "telephone": "+385556",
       "operatorName": ""
     }
   },
   "hasUsageRule": [],
   "isPersonalDataHandling": [
     {
-      "purposeId": "SP1",
-      "purposeName": "Service Notification and contact",
-      "legalBasis": "Contract",
-      "purposeCategory": "ServiceProvision",
-      "hasSector": [],
+      "purposeId": "purpose1",
+      "purposeName": "InterestProfile",
+      "legalBasis": "Consent",
+      "purposeCategory": "AcademicResearch",
+      "hasSector": [
+        "P - Education"
+      ],
       "hasContext": [],
       "processingCategories": [
-        "Collect"
+        "Acquire"
       ],
-      "description": [],
+      "description": [
+        {
+          "locale": "",
+          "title": "",
+          "description": "This purpose enables to enhance the Apply for university service",
+          "descriptionUrl": "",
+          "iconUrl": ""
+        }
+      ],
       "hasPersonalDataCategory": [
-        "EmailAddress",
-        "PhysicalAddress"
+        "PhysicalAddress",
+        "School"
       ],
       "requiredDatasets": [
-        "PD1"
+        "dataset1"
       ],
       "storage": {
         "location": "Controller servers",
         "duration": "Business practices"
       },
-      "recipients": [],
-      "shareWith": [],
-      "obligations": [],
-      "policyRef": "",
-      "collectionMethod": "",
+      "recipients": [
+        "Ours"
+      ],
+      "shareWith": [
+        {
+          "orgName": "Optional Organization",
+          "orgUrl": "http://example2.com",
+          "businessType": "Profit",
+          "required": false
+        }
+      ],
+      "obligations": [
+        {
+          "event": "Consent revoked",
+          "activity": "Stop processing"
+        }
+      ],
+      "policyRef": "http://example2.com/policy",
+      "collectionMethod": "Automatic aggregation",
       "collectionOperator": "",
       "termination": ""
     }

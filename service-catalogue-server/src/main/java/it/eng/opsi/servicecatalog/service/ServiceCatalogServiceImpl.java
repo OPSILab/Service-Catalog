@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 import it.eng.opsi.servicecatalog.exception.AdapterLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotEditableException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotFoundException;
+import it.eng.opsi.servicecatalog.exception.CatalogueNotEditableException;
+import it.eng.opsi.servicecatalog.exception.CatalogueNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ConnectorNotFoundException;
@@ -33,6 +35,7 @@ import it.eng.opsi.servicecatalog.model.HasServiceInstance;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
+import it.eng.opsi.servicecatalog.model.Catalogue;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.model.Endpoint;
@@ -42,6 +45,7 @@ import it.eng.opsi.servicecatalog.model.ServiceModel.ServiceDescriptionStatus;
 import it.eng.opsi.servicecatalog.repository.ServiceModelRepository;
 import it.eng.opsi.servicecatalog.repository.AdapterLogRepository;
 import it.eng.opsi.servicecatalog.repository.AdapterRepository;
+import it.eng.opsi.servicecatalog.repository.CatalogueRepository;
 import it.eng.opsi.servicecatalog.repository.ConnectorLogRepository;
 import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -73,6 +77,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Autowired
 	private AdapterRepository adapterRepo;
+
+	@Autowired
+	private CatalogueRepository catalogueRepo;
 
 	@Override
 	public List<ServiceModel> getServices() throws ServiceNotFoundException {
@@ -531,5 +538,43 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		}
 
 		return serviceModelRepo.saveAll(services);
+	}
+
+	@Override
+	public List<Catalogue> getCatalogues() {
+		return catalogueRepo.findAll();
+	}
+
+	@Override
+	public Catalogue getCatalogueBycatalogueID(String catalogueID) {
+		return catalogueRepo.findBycatalogueID(catalogueID);
+	}
+
+	@Override
+	public Catalogue createCatalogue(@Valid Catalogue catalogue) {
+
+		return catalogueRepo.save(catalogue);
+	}
+
+	@Override
+	public Catalogue updateCatalogue(String decodedCataloguecatalogueID, @Valid Catalogue catalogue) {
+
+		if (StringUtils.isBlank(catalogue.getCatalogueID()))
+			catalogue.setCatalogueID(uriBasePath + catalogue.getCatalogueID());
+
+		if (!decodedCataloguecatalogueID.equals(catalogue.getCatalogueID()))
+			throw new CatalogueNotEditableException("catalogueID in the path and the one in the body mismatch.");
+
+		return catalogueRepo.updateCatalogue(decodedCataloguecatalogueID, catalogue).orElseThrow(
+				() -> new CatalogueNotFoundException(
+						"No Catalogue description found for Catalogue Id: " + decodedCataloguecatalogueID));
+	}
+
+	@Override
+	public void deleteCatalogue(String decodedCataloguecatalogueID) {
+
+		if (catalogueRepo.deleteCatalogueBycatalogueID(decodedCataloguecatalogueID) == 0L)
+			throw new ServiceNotFoundException(
+					"No Catalogue description found for Catalogue Id: " + decodedCataloguecatalogueID);
 	}
 }

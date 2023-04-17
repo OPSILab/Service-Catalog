@@ -23,6 +23,8 @@ import { AvailableCataloguesService } from './availableCatalogues/availableCatal
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ManagementRoutingModule } from './management-routing.module';
 import { AddCatalogueComponent } from './availableCatalogues/add-catalogue/add-catalogue.component';
+import { ActionsCatalogueMenuRenderComponent } from './availableCatalogues/actions-catalogue-menu-render/actions-catalogue-menu-render.component';
+import { StatusRenderComponent } from './availableCatalogues/status-render/status-render.component';
 
 
 @NgModule({
@@ -50,7 +52,9 @@ import { AddCatalogueComponent } from './availableCatalogues/add-catalogue/add-c
   ],
   declarations: [
     AvailableCataloguesComponent,
-    AddCatalogueComponent
+    AddCatalogueComponent,
+    ActionsCatalogueMenuRenderComponent,
+    StatusRenderComponent
   ],
   providers: [AvailableCataloguesService],
   entryComponents: [
