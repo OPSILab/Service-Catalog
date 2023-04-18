@@ -22,6 +22,7 @@ import { AppConfig } from '../../model/appConfig';
 import * as JSONEditor  from '../../../../node_modules/jsoneditor/dist/jsoneditor.js';
 
 import { DOCUMENT } from '@angular/common';
+import { DialogImportComponent } from './dialog-import/dialog-import.component';
 
 
 @Component({
@@ -39,14 +40,18 @@ selectBox:any;
 inputType:any;
 public isNew = false;
 separatorItem="semiColon";
+csvSourceData:string;
+sourceRef:string="";
+typeSource:string;
 
   flipped = false;
+  csvtable: any;
 
   toggleView() {
     this.flipped = !this.flipped;
   }
   
-constructor( @Inject(DOCUMENT) private document: Document) { 
+constructor( @Inject(DOCUMENT) private document: Document,  private dialogService: NbDialogService,) { 
     
   } 
   
@@ -57,7 +62,8 @@ constructor( @Inject(DOCUMENT) private document: Document) {
     this.container2 = this.document.getElementById('jsoneditor2');
     this.container3 = this.document.getElementById('jsoneditor3');
     this.selectBox = <HTMLInputElement>this.document.getElementById('input-type');
-    
+    this.csvtable=this.document.getElementById('csv-table');
+    console.log(this.csvtable);
     const options2 = {
       mode: 'tree',
       modes: ['tree', 'code','view', 'preview'], // allowed modes
@@ -91,7 +97,7 @@ constructor( @Inject(DOCUMENT) private document: Document) {
 
     const options = {
       mode: 'view',
-      modes: ['view', 'preview'], // allowed modes
+      modes: ['view', 'code'], // allowed modes
       onModeChange: function (newMode, oldMode) {
 
       },
@@ -102,7 +108,7 @@ constructor( @Inject(DOCUMENT) private document: Document) {
 
     }
 
-    const editor = new JSONEditor(this.container, options, json)
+    this.editor = new JSONEditor(this.container, options, json)
     
    
 
@@ -129,9 +135,7 @@ constructor( @Inject(DOCUMENT) private document: Document) {
     ]
 
     const editor3 = new JSONEditor(this.container3, options3, json3)
- 
-
-   
+  
   }
 
 
@@ -164,6 +168,58 @@ constructor( @Inject(DOCUMENT) private document: Document) {
       divCSVElement.style.display = 'none';
       divJsonElement.style.display = 'block';
     }
+  }
+
+  saveAsFile(): void {
+    
+  }
+
+  importSource(typeSource:string): void {
+    this.typeSource=typeSource;
+    this.dialogService.open(DialogImportComponent, {
+      context: { type: typeSource},
+    }).onClose.subscribe((result: { content: string; source: string }) => {
+      if (result?.content ) {
+        this.sourceRef=result?.source;
+        if (typeSource=="csv") {
+        this.csvSourceData=result.content
+        this.displayCSV(this.csvSourceData,this.csvtable)
+        } else{
+          this.editor.setText(result.content)
+        }
+      }
+    });
+  }
+
+
+  displayCSV(csvData:string, element: HTMLElement) {
+    // Split the CSV data into an array of rows
+    const rows = csvData.split('\n');
+
+    // Create a table element
+    const table = document.createElement('table');
+
+    // Loop through each row in the CSV data
+    rows.forEach(rowData => {
+      // Split the row into an array of cells
+      const cells = rowData.split(';');
+
+      // Create a table row element
+      const row = document.createElement('tr');
+
+      // Loop through each cell in the row and add it to the table cell element
+      cells.forEach(cellData => {
+        const cell = document.createElement('td');
+        cell.textContent = cellData;
+        row.appendChild(cell);
+      });
+
+      // Add the row to the table
+      table.appendChild(row);
+    });
+
+    // Add the table to the document
+    element.appendChild(table);
   }
 
   

@@ -40,9 +40,7 @@ export class DialogImportPromptComponent implements OnInit {
 
 
   async ngOnInit() {
-    console.log(String.fromCharCode(parseInt("00001010", 2)))
-    console.log(String.fromCharCode(parseInt("01100001", 2)))
-
+    
     this.adaptersActive = [];
     this.adapters = await this.availableAdaptersService.getAdapters();
     this.adapters.forEach(adapterEntry => {
