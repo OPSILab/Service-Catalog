@@ -168,24 +168,21 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
 
 
     // Custom validators must return an array of errors or an empty array if valid
-JSONEditor.defaults.custom_validators.push((schema, value, path) => {
-  const errors = [];
-  if (path==="root.hasInfo.processingTime") {
-
-
-
-
-    if (!/^P(?=\d+[YMWD])(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d+[HMS])(\d+H)?(\d+M)?(\d+S)?)?$/.test(value)) {
-      // Errors must be an object with `path`, `property`, and `message`
-      errors.push({
-        path: path,
-        property: 'format',
-        message: 'Duration must be in the ISO8601 syntax for durations: P(n)Y(n)M(n)W(n)DT(n)H(n)M(n)S)'
-      });
+    JSONEditor.defaults.custom_validators.push((schema, value, path) => {
+      const errors = [];
+      if (path==="root.hasInfo.processingTime" && value.trim()!=="") {
+        
+          if (!/^P(?=\d+[YMWD])(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d+[HMS])(\d+H)?(\d+M)?(\d+S)?)?$/.test(value)) {
+            // Errors must be an object with `path`, `property`, and `message`
+            errors.push({
+              path: path,
+              property: 'format',
+              message: 'Duration must be in the ISO8601 syntax for durations: P(n)Y(n)M(n)W(n)DT(n)H(n)M(n)S'
+            });
+          }  
     }
-  }
-  return errors;
-});
+      return errors;
+    });
 
     const editor = new JSONEditor(elem, {
       ajax: true,
