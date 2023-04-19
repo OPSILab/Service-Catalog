@@ -172,7 +172,6 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
 
   async onEdit() {
     try {
-      console.log(this.catalogueID)
       let name = this.name,
         catalogueID = this.catalogueID,
         competentAuthority = this.competentAuthority,
@@ -306,7 +305,6 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
 
   onDeRegisterCatalogue = async (): Promise<void> => {
     try {
-      console.log("onDeRegisterCatalogue")
       this.value.active = this.value.active == "active" ? "inactive" : "active";
       this.value = await this.availableCataloguesService.deregisterCatalogue(this.value);
       this.showToast('primary', this.translate.instant('general.catalogues.catalogue_deactivated_message', { catalogueName: this.value.catalogueID }), '');
@@ -357,7 +355,6 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
 
   toggle(authenticated: boolean) {
     this.authenticated = authenticated;
-    console.log(this.authenticated)
   }
 }
 

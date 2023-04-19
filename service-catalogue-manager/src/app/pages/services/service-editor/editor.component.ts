@@ -94,10 +94,10 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       } else {
         this.isNew = true;
       }
-         
+
       this.initializeEditor(this.serviceData);
 
-      
+
       // this.loading = true;
     } catch (error) {
       this.router.navigate(['/services']);
@@ -203,7 +203,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     this.editor = editor;
 
-    
+
     let isFirstChange = true;
     // Hook up the validation indicator to update its status whenever the editor changes
     editor.on('change', function () {
@@ -255,7 +255,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     //editor.on('ready', this.closeSpinner);
 
     editor.on('ready', () => {
-    
+
       editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
       this.loading = false;
       $('nb-spinner').remove();
@@ -268,7 +268,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     });
   }
 
-  
+
 
 
   closeSpinner(): void {
@@ -286,9 +286,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
   importAsFile(): void {
     this.dialogService.open(DialogImportPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
       if (result?.content) {
-        console.log("result.content\n", result.content)
         this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
-        console.log("result.format\n", result.format)
         if (result.format == 'Cpsv') {
           this.editor.getEditor('root.hasInfo').setValue(result.content);
           this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());

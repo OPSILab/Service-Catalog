@@ -93,12 +93,10 @@ export class AddCatalogueComponent implements OnInit {
 
   toggle(authenticated: boolean) {
     this.authenticated = authenticated;
-    console.log(this.authenticated)
   }
 
   async onSubmit() {
     try {
-      console.log(this.catalogueID)
       let name = this.name,
         catalogueID = this.name+ this.competentAuthority+ this.country+ this.category+ this.description+
           this.homePage+ this.apiEndpoint+ this.type+ this.active+ this.refresh+ this.authenticated+ this.oAuth2Endpoint+ this.clientID+ this.clientSecret,

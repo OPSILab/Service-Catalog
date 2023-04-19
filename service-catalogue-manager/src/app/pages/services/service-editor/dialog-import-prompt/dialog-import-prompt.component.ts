@@ -1,3 +1,4 @@
+import { AvailableServicesService } from './../../availableServices/availableServices.service';
 import { AdapterEntry } from './../../../../model/adapter/adapterEntry';
 import { AvailableAdaptersService } from './../../available-adapters/available-adapters.service';
 import { Component, OnInit } from '@angular/core';
@@ -29,7 +30,7 @@ export class DialogImportPromptComponent implements OnInit {
   extension: String;
 
   constructor(private http: HttpClient, protected ref: NbDialogRef<DialogImportPromptComponent>,
-    private errorService: ErrorDialogService, private availableAdaptersService: AvailableAdaptersService,
+    private errorService: ErrorDialogService, private availableAdaptersService: AvailableAdaptersService, private availableServicesService: AvailableServicesService,
     private configService: NgxConfigureService,) {
     this.appConfig = this.configService.config as AppConfig
   }
@@ -40,9 +41,6 @@ export class DialogImportPromptComponent implements OnInit {
 
 
   async ngOnInit() {
-    console.log(String.fromCharCode(parseInt("00001010", 2)))
-    console.log(String.fromCharCode(parseInt("01100001", 2)))
-
     this.adaptersActive = [];
     this.adapters = await this.availableAdaptersService.getAdapters();
     this.adapters.forEach(adapterEntry => {
@@ -77,14 +75,8 @@ export class DialogImportPromptComponent implements OnInit {
   }
 
   async onUpload(): Promise<void> {
-    if (this.extension == "csv") this.service = await this.http.post<ServiceModel>(this.adaptersActive[0].url, {
-      "sourceDataType": "csv",
-      "sourceData": this.file,
-      "adapterID":this.adaptersActive[0].adapterId,
-      //"mapID": this.appConfig.data_model_mapper.default_map_ID,
-      //"dataModelIn": this.appConfig.data_model_mapper.default_data_model_name,
-      "csvDelimiter": ";"
-    }).toPromise();
-    this.ref.close({ content: this.service[0], format: this.extension });
+    let services = await this.availableServicesService.getAdaptedService(this.extension, this.file, this.adaptersActive[0])
+    this.service = services[0]
+    this.ref.close({ content: this.service, format: this.extension });
   }
 }
