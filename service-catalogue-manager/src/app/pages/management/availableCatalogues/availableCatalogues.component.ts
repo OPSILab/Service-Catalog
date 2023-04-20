@@ -151,7 +151,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           title: this.servicesLabel,
           type: 'text',
           width: '25%',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row.description,
+          valuePrepareFunction: (cell, row: CatalogueEntry) => row.services,
         },
         status: {
           title: this.statusLabel,
