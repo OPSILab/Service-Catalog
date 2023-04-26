@@ -130,7 +130,7 @@ export class AddCatalogueComponent implements OnInit {
         clientID = this.clientID,
         services;
 
-        services = (await this.availableServicesService.getServicesCount()).total
+        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
 
         switch(this.refresh) {
           case 'Every day' : refresh = 86400000; break;
@@ -185,6 +185,9 @@ export class AddCatalogueComponent implements OnInit {
       })
 
       console.log("error:", "\n", error)
+      console.log("---------")
+      for(let field in error)
+        console.log("|",field , "| :", "|", error[field], "|")
       if (error.message == "Catalogue ID must be set") {
         console.log(error)
         /*TODO this.errorService.openErrorDialog({

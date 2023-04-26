@@ -13,7 +13,7 @@
         <nb-option value="Cpsv">CPSV(json-ld)</nb-option>
       </nb-option-group>
         <nb-option-group *ngIf = adaptersActive[0] title="Adapters">
-          <nb-option *ngFor="let adapter of adaptersActive" value={{adapter}}>
+          <nb-option *ngFor="let adapter of adaptersActive" value={{adapter.adapterId}}>
             {{adapter.name}}
           </nb-option>
         </nb-option-group>

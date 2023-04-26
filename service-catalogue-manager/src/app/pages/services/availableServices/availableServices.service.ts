@@ -34,6 +34,10 @@ export class AvailableServicesService {
     return this.http.get<ServicesCount>(`${this.serviceRegistryUrl}/api/v2/services/count`).toPromise();
   }
 
+  getRemoteServicesCount(url : string): Promise<ServicesCount> {
+    return this.http.get<ServicesCount>(`${url}/api/v2/services/count`).toPromise();
+  }
+
   getServicesIsPersonalDataHandlingCount(): Promise<String> {
     return this.http.get<String>(`${this.serviceRegistryUrl}/api/v2/services/isPersonalDataHandling/count`).toPromise();
   }

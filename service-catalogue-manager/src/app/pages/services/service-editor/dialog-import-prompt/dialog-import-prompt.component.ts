@@ -20,14 +20,15 @@ import { NgxConfigureService } from 'ngx-configure';
 export class DialogImportPromptComponent implements OnInit {
   private appConfig: AppConfig;
   selectedFile: File;
-  file: String;
+  file: string;
   fileOutput: String;
   service: ServiceModel;
   json: Record<string, unknown>;
-  selectedItem //= 'Json';
+  selectedItem//= 'Json';
   adapters: AdapterEntry[];
   adaptersActive: AdapterEntry[];
   extension: String;
+  selectedAdapter: AdapterEntry;
 
   constructor(private http: HttpClient, protected ref: NbDialogRef<DialogImportPromptComponent>,
     private errorService: ErrorDialogService, private availableAdaptersService: AvailableAdaptersService, private availableServicesService: AvailableServicesService,
@@ -50,6 +51,15 @@ export class DialogImportPromptComponent implements OnInit {
   }
 
   onFileChanged(event: Event): void {
+    console.debug(typeof this.selectedItem, this.selectedItem, JSON.stringify(this.selectedItem))
+    console.debug(this.selectedItem.url)
+    for (let adapter of this.adaptersActive) {
+      if (this.selectedItem == adapter.adapterId) {
+        this.selectedAdapter = adapter
+        break
+      }
+      else this.selectedAdapter = undefined
+    }
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -58,7 +68,7 @@ export class DialogImportPromptComponent implements OnInit {
       fileReader.readAsText(this.selectedFile, 'UTF-8');
       fileReader.onload = () => {
         try {
-          this.file = fileReader.result as String
+          this.file = fileReader.result as string
           this.extension = (<HTMLInputElement>event.target).files[0].name.split('.').pop().toLowerCase()
         } catch (error) {
           this.errorService.openErrorDialog(error);
@@ -75,8 +85,22 @@ export class DialogImportPromptComponent implements OnInit {
   }
 
   async onUpload(): Promise<void> {
-    let services = await this.availableServicesService.getAdaptedService(this.extension, this.file, this.adaptersActive[0])
-    this.service = services[0]
-    this.ref.close({ content: this.service, format: this.extension });
+    console.debug(typeof this.selectedItem, this.selectedItem, JSON.stringify(this.selectedItem))
+    console.debug(this.selectedItem.url)
+    let content, format, services
+    if (!this.selectedAdapter) {
+      console.debug("JSON")
+      console.debug(this.selectedItem)
+      content = JSON.parse(this.file) as Record<string,unknown>
+      format = this.selectedItem
+    }
+    else {
+      console.debug("adapter")
+      services = await this.availableServicesService.getAdaptedService(this.extension, this.file, this.selectedAdapter)
+      content = services[0]
+      format = this.extension
+    }
+    //console.debug("CONTENT\n", content)
+    this.ref.close({ content, format });
   }
 }

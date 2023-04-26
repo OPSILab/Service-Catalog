@@ -126,7 +126,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   initializeEditor(serviceData: ServiceModel): void {
     const elem = this.document.getElementById('editor');
     var serviceService = this.availablesServicesService;
-    var locale= this.translateService.currentLang;
+    var locale = this.translateService.currentLang;
 
     JSONEditor.defaults.callbacks = {
       autocomplete: {
@@ -151,7 +151,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
         },
         renderResult_services: function (editor, result, props) {
           console.log(locale)
-          var description=result.hasInfo.description.reduce((filtered: Description[], description: Description) => {
+          var description = result.hasInfo.description.reduce((filtered: Description[], description: Description) => {
             if (locale !== 'en' && description.locale === locale) filtered = [description, ...filtered];
             else if (description.locale === 'en') filtered = [...filtered, description];
             return filtered;
@@ -168,24 +168,24 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
 
 
     // Custom validators must return an array of errors or an empty array if valid
-JSONEditor.defaults.custom_validators.push((schema, value, path) => {
-  const errors = [];
-  if (path==="root.hasInfo.processingTime") {
+    JSONEditor.defaults.custom_validators.push((schema, value, path) => {
+      const errors = [];
+      if (path === "root.hasInfo.processingTime") {
 
 
 
 
-    if (!/^P(?=\d+[YMWD])(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d+[HMS])(\d+H)?(\d+M)?(\d+S)?)?$/.test(value)) {
-      // Errors must be an object with `path`, `property`, and `message`
-      errors.push({
-        path: path,
-        property: 'format',
-        message: 'Duration must be in the ISO8601 syntax for durations: P(n)Y(n)M(n)W(n)DT(n)H(n)M(n)S)'
-      });
-    }
-  }
-  return errors;
-});
+        if (!/^P(?=\d+[YMWD])(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d+[HMS])(\d+H)?(\d+M)?(\d+S)?)?$/.test(value)) {
+          // Errors must be an object with `path`, `property`, and `message`
+          errors.push({
+            path: path,
+            property: 'format',
+            message: 'Duration must be in the ISO8601 syntax for durations: P(n)Y(n)M(n)W(n)DT(n)H(n)M(n)S)'
+          });
+        }
+      }
+      return errors;
+    });
 
     const editor = new JSONEditor(elem, {
       ajax: true,
@@ -217,7 +217,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
         const value = JSON.stringify(this.getEditor(path).getValue() as Record<string, unknown>);
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-       // console.log(`field with path: [${path as string}] changed to [${JSON.stringify(this.getEditor(path).getValue())}]`);
+        // console.log(`field with path: [${path as string}] changed to [${JSON.stringify(this.getEditor(path).getValue())}]`);
 
         if (value !== '"undefined"' && value !== '""') {
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -284,16 +284,19 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
   }
 
   importAsFile(): void {
+
     this.dialogService.open(DialogImportPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
       if (result?.content) {
+        console.debug("RESULT.CONTENT\n", result.content)
         this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
         if (result.format == 'Cpsv') {
           this.editor.getEditor('root.hasInfo').setValue(result.content);
           this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());
           this.editor.getEditor('root.title').setValue(this.editor.getEditor('root.hasInfo.title').getValue());
         }
-        else if (result.format=="csv") this.editor.getEditor('root').setValue(result.content)
-        else this.editor.setValue(result.content);
+        else //if (result.format=="csv" || result.format=="Json")
+          this.editor.getEditor('root').setValue(result.content)
+        //else this.editor.setValue(result.content);
 
         this.serviceId = result.content['identifier'] as string;
       }

@@ -194,7 +194,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         clientID = this.clientID,
         services;
 
-        services = (await this.availableServicesService.getServicesCount()).total
+        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
 
         switch(this.refresh) {
           case 'Every day' : refresh = 86400000; break;
