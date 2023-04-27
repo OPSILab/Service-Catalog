@@ -94,10 +94,10 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       } else {
         this.isNew = true;
       }
-         
+
       this.initializeEditor(this.serviceData);
 
-      
+
       // this.loading = true;
     } catch (error) {
       this.router.navigate(['/services']);
@@ -126,7 +126,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   initializeEditor(serviceData: ServiceModel): void {
     const elem = this.document.getElementById('editor');
     var serviceService = this.availablesServicesService;
-    var locale= this.translateService.currentLang;
+    var locale = this.translateService.currentLang;
 
     JSONEditor.defaults.callbacks = {
       autocomplete: {
@@ -151,7 +151,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
         },
         renderResult_services: function (editor, result, props) {
           console.log(locale)
-          var description=result.hasInfo.description.reduce((filtered: Description[], description: Description) => {
+          var description = result.hasInfo.description.reduce((filtered: Description[], description: Description) => {
             if (locale !== 'en' && description.locale === locale) filtered = [description, ...filtered];
             else if (description.locale === 'en') filtered = [...filtered, description];
             return filtered;
@@ -200,7 +200,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     this.editor = editor;
 
-    
+
     let isFirstChange = true;
     // Hook up the validation indicator to update its status whenever the editor changes
     editor.on('change', function () {
@@ -214,7 +214,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
         const value = JSON.stringify(this.getEditor(path).getValue() as Record<string, unknown>);
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-       // console.log(`field with path: [${path as string}] changed to [${JSON.stringify(this.getEditor(path).getValue())}]`);
+        // console.log(`field with path: [${path as string}] changed to [${JSON.stringify(this.getEditor(path).getValue())}]`);
 
         if (value !== '"undefined"' && value !== '""') {
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
@@ -252,7 +252,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     //editor.on('ready', this.closeSpinner);
 
     editor.on('ready', () => {
-    
+
       editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
       this.loading = false;
       $('nb-spinner').remove();
@@ -265,7 +265,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     });
   }
 
-  
+
 
 
   closeSpinner(): void {
@@ -281,18 +281,19 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
   }
 
   importAsFile(): void {
+
     this.dialogService.open(DialogImportPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
       if (result?.content) {
-        console.log("result.content\n", result.content)
+        console.debug("RESULT.CONTENT\n", result.content)
         this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
-        console.log("result.format\n", result.format)
         if (result.format == 'Cpsv') {
           this.editor.getEditor('root.hasInfo').setValue(result.content);
           this.editor.getEditor('root.identifier').setValue(this.editor.getEditor('root.hasInfo.identifier').getValue());
           this.editor.getEditor('root.title').setValue(this.editor.getEditor('root.hasInfo.title').getValue());
         }
-        else if (result.format=="csv") this.editor.getEditor('root').setValue(result.content)
-        else this.editor.setValue(result.content);
+        else //if (result.format=="csv" || result.format=="Json")
+          this.editor.getEditor('root').setValue(result.content)
+        //else this.editor.setValue(result.content);
 
         this.serviceId = result.content['identifier'] as string;
       }

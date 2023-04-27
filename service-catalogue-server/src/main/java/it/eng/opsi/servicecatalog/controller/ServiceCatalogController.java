@@ -446,7 +446,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		} catch (Error e) {
 			System.out.println("Error :\n");
 			System.out.println(e);
-			result.setStatus("Catalogue already exists");
+			// result.setStatus("Catalogue already exists");
 			return ResponseEntity.badRequest().body(result);
 		}
 		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
