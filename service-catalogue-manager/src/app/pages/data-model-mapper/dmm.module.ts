@@ -22,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbDropdownModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { DMMService } from './dmm.service';
 import { HttpClient } from '@angular/common/http';
+import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.component';
 
 
 
@@ -48,10 +49,11 @@ import { HttpClient } from '@angular/common/http';
     NbUserModule,
     TranslateModule.forChild({}),
   ],
-  declarations: [DMMComponent,DialogImportComponent,],
+  declarations: [DMMComponent,DialogImportComponent,DialogDataMapComponent,],
   providers: [DMMService],
   entryComponents: [
     DialogImportComponent,
+    DialogDataMapComponent
     
   ]
 })

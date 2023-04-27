@@ -72,10 +72,10 @@ export class DialogImportComponent implements OnInit {
     var source;
     if (type == "url") {
       this.file = await this.http.get<any>(this.dataUrl, { responseType: 'text' as 'json' }).toPromise();
-      this.ref.close({ content: this.file, source: this.dataUrl });
+      this.ref.close({ content: this.file, source: this.dataUrl , format:"url"});
     } else {
       
-      this.ref.close({ content: this.file, source: this.selectedFile.name });
+      this.ref.close({ content: this.file, source: this.selectedFile.name , format:"file"});
     }
          
   } 

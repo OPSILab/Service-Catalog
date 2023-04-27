@@ -89,7 +89,8 @@
     <nb-accordion-item-body>
       <p>To get started, select the type of input (CSV or JSON) and upload or paste your data.
       </p>
-      <p *ngIf="sourceRef!==''">URL: <a class="mb-3" href={{sourceRef}} target="_blank"> <i>{{sourceRef}}</i></a></p>
+      <p *ngIf="sourceRef!==''&&sourceRefFormat==='url'">URL: <a class="mb-3" href={{sourceRef}} target="_blank"> <i>{{sourceRef}}</i></a></p>
+      <p *ngIf="sourceRef!==''&&sourceRefFormat==='file'">File:  <i>{{sourceRef}}</i></p>
       <div class="mb-2">
         <nb-select placeholder="Select Input Type" size="small" (selectedChange)="onUpdateInputType($event)">
           <nb-option value="csv">CSV</nb-option>
@@ -99,10 +100,15 @@
       </div>
       <div class="mb-1" style="display:none;" id="json-input">
         <div class="mb-2">
-          <button nbButton  shape="rectangle" size="small"  (click)="importSource('json')">
+          <button nbButton  class="mr-2" shape="rectangle" size="small"  (click)="importSource('json')">
             {{ 'general.editor.import' | translate }}
             <i class="mx-1 fas fa-file-import fa-lg"></i>
           </button>
+          <nb-select  placeholder="Select path" size="small" (selectedChange)="onUpdatePathForDataMap($event)">
+            <nb-option value="">root.</nb-option>
+            <nb-option *ngFor="let path of paths" value={{path}}>.{{path}}</nb-option>
+          </nb-select>
+         
         </div>  
         <div id="jsoneditor"></div>
         
@@ -116,9 +122,9 @@
           </button>
 
           <nb-select placeholder="Separator" size="small" [(selected)]="separatorItem">
-            <nb-option value="comma">Comma separator</nb-option>
-            <nb-option value="semiColon">Semi-colon separator</nb-option>
-            <nb-option value="tab">Tab separator</nb-option>
+            <nb-option value=",">Comma separator</nb-option>
+            <nb-option value=";">Semi-colon separator</nb-option>
+            <nb-option value="\t">Tab separator</nb-option>
           </nb-select>
 
           
@@ -130,9 +136,10 @@
           
            <nb-tabset>
             <nb-tab tabTitle="CSV text">
-              <textarea id="textarea" nbInput fullWidth placeholder="Enter CVS text..." [(ngModel)]="csvSourceData"></textarea>
+              <textarea id="textarea" nbInput rows="10" fullWidth=true  placeholder="Enter CVS text..." [(ngModel)]="csvSourceData"></textarea>
             </nb-tab>
             <nb-tab id="csv-table" tabTitle="CSV Table">
+          
             
             </nb-tab>              
             </nb-tabset>
@@ -179,4 +186,8 @@
   
   
 </nb-card>
+
+<ng-template #contentTemplate >
+  <p>Here is the text provided via config</p>
+</ng-template>
 
