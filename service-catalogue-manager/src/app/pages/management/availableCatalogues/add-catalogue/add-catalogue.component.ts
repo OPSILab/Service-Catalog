@@ -43,6 +43,21 @@ export class AddCatalogueComponent implements OnInit {
   clientSecret: string ;
   filteredCountryOptions$: Observable<string[]>;
   countries: string[] = Countries.countries
+  placeholders = {
+    competentAuthority : this.translate.instant('general.catalogues.competent_authority'),
+    country : this.translate.instant('general.catalogues.country'),
+    category : this.translate.instant('general.catalogues.category'),
+    homePage : this.translate.instant('general.catalogues.home_page'),
+    apiEndpoint : this.translate.instant('general.catalogues.api_endpoint'),
+    refresh : this.translate.instant('general.catalogues.refresh'),
+    description : this.translate.instant('general.catalogues.description'),
+    clientID : this.translate.instant('general.catalogues.client_ID'),
+    clientSecret : this.translate.instant('general.catalogues.client_secret'),
+    name : this.translate.instant('general.catalogues.name'),
+    status : this.translate.instant('general.catalogues.status'),
+    type : this.translate.instant('general.catalogues.type'),
+    oAuth2Endpoint : this.translate.instant('general.catalogues.oauth2_endpoint')
+  }
   //countries: string[] = Object.keys(Countries).filter(value => isNaN(Number(value)) === false && JSON.stringify(value) != '0').map(key => Countries[key]);
   private appConfig: AppConfig;
 
@@ -113,8 +128,7 @@ export class AddCatalogueComponent implements OnInit {
   async onSubmit() {
     try {
       let name = this.name,
-        catalogueID = this.name+ this.competentAuthority+ this.country+ this.category+ this.description+
-          this.homePage+ this.apiEndpoint+ this.type+ this.active+ this.refresh+ this.authenticated+ this.oAuth2Endpoint+ this.clientID+ this.clientSecret,
+        catalogueID = new String(Date.now())+ JSON.stringify(Math.random()*999999999999999)+name,
         competentAuthority = this.competentAuthority,
         country = this.country,
         category = this.category,
@@ -129,6 +143,8 @@ export class AddCatalogueComponent implements OnInit {
         clientSecret = this.clientSecret,
         clientID = this.clientID,
         services;
+
+        console.debug(catalogueID)
 
         services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
 

@@ -95,8 +95,9 @@ export class DialogImportPromptComponent implements OnInit {
       format = this.selectedItem
     }
     else {
-      console.debug("adapter")
-      services = await this.availableServicesService.getAdaptedService(this.extension, this.file, this.selectedAdapter)
+      console.debug(this.selectedAdapter.sourceDataType)
+      services = await this.availableServicesService.getAdaptedService(this.selectedAdapter.sourceDataType, this.file, this.selectedAdapter)
+      //services = await this.availableServicesService.getAdaptedService(this.extension, this.file, this.selectedAdapter)
       content = services[0]
       format = this.extension
     }

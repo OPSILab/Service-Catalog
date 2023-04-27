@@ -367,7 +367,8 @@
       "context" : "Contesto",
       "mapper" : "Mappatore",
       "adapter_model" : "Modello adapter",
-      "load_mapper_list": "Carica lista mapper"
+      "load_mapper_list": "Carica lista mapper",
+      "source_data_type" : "Tipo di dato in ingresso"
     },
     "catalogues": {
       "add" : "Aggiungi catalogue",

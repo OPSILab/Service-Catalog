@@ -43,6 +43,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   context: string;
   adapterId: string;
   mappers: Mapper[];
+  sourceDataType: string
   loaded: boolean = false
   inputItemFormControl: FormControl;
   textareaItemFormControl: FormControl;
@@ -56,6 +57,15 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   names: string[] = [];
   mapperNames: string[] = [];
   actions: NbMenuItem[];
+  placeholders = {
+    adapterId : this.translate.instant('general.adapters.adapterId'),
+    status: this.translate.instant('general.adapters.status'),
+    url : this.translate.instant('general.adapters.status'),
+    sourceDataType : this.translate.instant('general.adapters.source_data_type' ),
+    description: this.translate.instant('general.adapters.description'),
+    type: this.translate.instant('general.adapters.type'),
+    context: this.translate.instant('general.adapters.context'),
+  }
   private appConfig: AppConfig;
   private unsubscribe: Subject<void> = new Subject();
 
@@ -231,15 +241,16 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
         adapterId = this.adapterId,
         type = this.type,
         url = this.url,
-        context = this.context;
+        context = this.context,
+        sourceDataType=this.sourceDataType;
 
       if (adapterId == '' || adapterId == null)
         throw new Error("Adapter ID must be set");
 
       await this.availableAdaptersService.updateAdapter(((
         type == "MODEL" ?
-          { name, description, status, adapterId, type, url, context } as unknown :
-          { name, description, status, adapterId, type, url } as unknown)) as AdapterEntry, adapterId);
+          { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
+          { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry, adapterId);
       this.updateResult.emit(this.value);
       this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
     }

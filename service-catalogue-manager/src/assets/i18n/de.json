@@ -367,7 +367,8 @@
       "context": "Context",
       "mapper": "Mapper",
       "adapter_model": "Adapter model",
-      "load_mapper_list": "Load mapper list"
+      "load_mapper_list": "Load mapper list",
+      "source_data_type" : "Source Data Type"
     },
     "catalogues": {
       "add": "Add catalogue",

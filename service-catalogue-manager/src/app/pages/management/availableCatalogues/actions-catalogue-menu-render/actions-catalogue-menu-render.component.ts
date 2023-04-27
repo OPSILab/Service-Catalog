@@ -54,6 +54,21 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   clientSecret: string;
   actions: NbMenuItem[];
   countries: string[] = Countries.countries
+  placeholders = {
+    competentAuthority : this.translate.instant('general.catalogues.competent_authority'),
+    country : this.translate.instant('general.catalogues.country'),
+    category : this.translate.instant('general.catalogues.category'),
+    homePage : this.translate.instant('general.catalogues.home_page'),
+    apiEndpoint : this.translate.instant('general.catalogues.api_endpoint'),
+    refresh : this.translate.instant('general.catalogues.refresh'),
+    description : this.translate.instant('general.catalogues.description'),
+    clientID : this.translate.instant('general.catalogues.clientID'),
+    clientSecret : this.translate.instant('general.catalogues.client_secret'),
+    name : this.translate.instant('general.catalogues.name'),
+    status : this.translate.instant('general.catalogues.status'),
+    type : this.translate.instant('general.catalogues.type'),
+    oAuth2endpoint : this.translate.instant('general.catalogues.o_auth_2_endpoint')
+  }
   private appConfig: AppConfig;
   private unsubscribe: Subject<void> = new Subject();
 

@@ -81,6 +81,11 @@ public class Adapter {
     // @NotNull
     private String mapper;
 
+    @JsonProperty("sourceDataType")
+    @Valid
+    // @NotNull
+    private String sourceDataType;
+
     @JsonProperty("adapterModel")
     @Valid
     // @NotNull

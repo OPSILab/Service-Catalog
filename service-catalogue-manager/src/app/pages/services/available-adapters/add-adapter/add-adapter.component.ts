@@ -31,6 +31,7 @@ export class AddAdapterComponent implements OnInit {
   type: string = "MODEL"
   context: string = "IMPORT"
   url: string
+  sourceDataType: string
   inputItemFormControl: FormControl;
   textareaItemFormControl: FormControl;
   selectedFile: File;
@@ -47,6 +48,15 @@ export class AddAdapterComponent implements OnInit {
   filteredControlNameOptions$: Observable<string[]>;
   filteredNameOptions$: Observable<string[]>;
   names: string[] = [];
+  placeholders = {
+    adapterId : this.translate.instant('general.adapters.adapterId'),
+    status: this.translate.instant('general.adapters.status'),
+    url : this.translate.instant('general.adapters.status'),
+    sourceDataType : this.translate.instant('general.adapters.source_data_type' ),
+    description: this.translate.instant('general.adapters.description'),
+    type: this.translate.instant('general.adapters.type'),
+    context: this.translate.instant('general.adapters.context'),
+  }
   private appConfig: AppConfig;
 
   constructor(
@@ -193,15 +203,16 @@ export class AddAdapterComponent implements OnInit {
         adapterId = this.adapterId ? this.adapterId : this.value ? this.value : null,
         type = this.type,
         url = this.url,
-        context = this.context
+        context = this.context,
+        sourceDataType = this.sourceDataType
 
       if (adapterId == '' || adapterId == null)
         throw new Error("Adapter ID must be set");
 
       await this.availableAdapterService.saveAdapter(((
         type == "MODEL" ?
-          { name, description, status, adapterId, type, url, context } as unknown :
-          { name, description, status, adapterId, type, url } as unknown)) as AdapterEntry);
+          { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
+          { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry);
 
       this.ref.close();
       this.editedValue.emit(this.value);

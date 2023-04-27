@@ -6,7 +6,8 @@ export interface AdapterEntry {
 	description: string,
 	status,
 	type,
-  context
+  context,
+  sourceDataType
   //mapper
   //adapterModel
 }
