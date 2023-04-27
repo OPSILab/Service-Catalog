@@ -1,0 +1,39 @@
+<nb-card>
+  <nb-card-header class="d-flex align-content-center justify-content-between">
+    <h5 class="">{{ 'general.mapper.map' | translate }}</h5>
+    <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
+      <i class="material-icons">close</i>
+    </button>
+  </nb-card-header>
+  <nb-card-body class="m-2 p-4">
+    <div class="row justify-content-left p-3">Select operator </div>
+    <nb-select fullWidth placeholder="Select source" [(ngModel)]="selectedItem">
+     
+        <nb-option value="direct">Direct</nb-option>
+        <nb-option value="static">Static</nb-option>
+        <nb-option value="array">Array</nb-option>
+        <nb-option value="concat">Concat</nb-option>
+     
+       
+    </nb-select>
+    <div *ngIf="selectedItem === 'static'" class="row justify-content-left p-3">
+
+      <input [(ngModel)]="dataMap" nbInput placeholder="Put static data" />
+
+    </div>
+    <div *ngIf="selectedItem === 'direct'" class="row justify-content-left p-3">
+
+      <nb-select fullWidth placeholder="Select source attribute" [(ngModel)]="selectedProp">
+        <nb-option *ngFor="let mapOption of mapOptions" value={{mapOption}}>
+          {{mapOption}}
+        </nb-option>
+               
+      </nb-select>
+
+    </div>
+    
+  </nb-card-body>
+  <nb-card-footer >
+    
+  </nb-card-footer>
+</nb-card>

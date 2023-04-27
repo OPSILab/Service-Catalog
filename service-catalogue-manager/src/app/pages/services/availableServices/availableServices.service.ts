@@ -5,6 +5,7 @@ import { NgxConfigureService } from 'ngx-configure';
 import { ServiceModel } from '../../../model/services/serviceModel';
 import { AppConfig } from '../../../model/appConfig';
 import { ServicesCount } from '../../../model/services/servicesCount';
+import { AdapterEntry } from '../../../model/adapter/adapterEntry';
 
 @Injectable({ providedIn: 'root' })
 export class AvailableServicesService {
@@ -17,7 +18,7 @@ export class AvailableServicesService {
     this.config = this.configService.config as AppConfig;
     this.serviceRegistryUrl = this.config.serviceRegistry.url;
     this.sdkUrl = this.config.system.sdkUrl;
-    this.dataMapEnumUrl=this.config.system.dataMapEnumUrl;
+    this.dataMapEnumUrl = this.config.system.dataMapEnumUrl;
   }
 
   getServices(): Promise<ServiceModel[]> {
@@ -31,6 +32,10 @@ export class AvailableServicesService {
 
   getServicesCount(): Promise<ServicesCount> {
     return this.http.get<ServicesCount>(`${this.serviceRegistryUrl}/api/v2/services/count`).toPromise();
+  }
+
+  getRemoteServicesCount(url : string): Promise<ServicesCount> {
+    return this.http.get<ServicesCount>(`${url}/api/v2/services/count`).toPromise();
   }
 
   getServicesIsPersonalDataHandlingCount(): Promise<String> {
@@ -89,6 +94,15 @@ export class AvailableServicesService {
   }
 
   getDataMapEnum(): Promise<string[]> {
-        return this.http.get<string[]>(`${this.dataMapEnumUrl}`).toPromise();
+    return this.http.get<string[]>(`${this.dataMapEnumUrl}`).toPromise();
+  }
+
+  getAdaptedService(type, source, adapter: AdapterEntry): Promise<ServiceModel[]> {
+    return this.http.post<ServiceModel[]>(adapter.url, {
+      "sourceDataType": type,
+      "sourceData": source,
+      "adapterID": adapter.adapterId,
+      "csvDelimiter": ";"
+    }).toPromise();
   }
 }

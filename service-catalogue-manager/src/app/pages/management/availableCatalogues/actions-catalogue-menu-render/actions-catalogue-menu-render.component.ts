@@ -21,6 +21,8 @@ import { NgxConfigureService } from 'ngx-configure';
 import { AppConfig } from '../../../../model/appConfig';
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
+import {Countries} from '../add-catalogue/countries'
+import { AvailableServicesService } from '../../../services/availableServices/availableServices.service'
 
 @Component({
   selector: 'actions-catalogue-menu-render',
@@ -44,13 +46,14 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   refresh: any;
   name: string;
   description: string;
-  status: string
+  status: string = 'inactive'
   type: string;
   authenticated: boolean;
   oAuth2Endpoint: string;
   clientID: string;
   clientSecret: string;
   actions: NbMenuItem[];
+  countries: string[] = Countries.countries
   private appConfig: AppConfig;
   private unsubscribe: Subject<void> = new Subject();
 
@@ -74,7 +77,9 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
     private dialogService: NbDialogService,
     private translateService: TranslateService,
     private loginService: LoginService,
-    private configService: NgxConfigureService
+    private configService: NgxConfigureService,
+    private availableServicesService: AvailableServicesService,
+
 
   ) {
     this.appConfig = this.configService.config as AppConfig
@@ -100,7 +105,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
     this.type = this.value.type
     this.status = this.value.status
     this.homePage = this.value.homePage
-    this.refresh = this.value.refresh
+    this.refresh = this.value.refresh == 86400000 ? 'Every day' : this.value.refresh == 604800000 ? 'Every week' :  this.value.refresh == 2629800000 ? 'Every month' : undefined
     this.actions = this.translatedActionLabels();
     this.menuService
       .onItemClick()
@@ -172,7 +177,6 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
 
   async onEdit() {
     try {
-      console.log(this.catalogueID)
       let name = this.name,
         catalogueID = this.catalogueID,
         competentAuthority = this.competentAuthority,
@@ -181,13 +185,22 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         homePage = this.homePage,
         apiEndpoint = this.apiEndpoint,
         active = this.active,
-        refresh = this.refresh,
+        refresh,
         description = this.description,
         type = this.type,
         authenticated = this.authenticated,
         oAuth2Endpoint = this.oAuth2Endpoint,
         clientSecret = this.clientSecret,
-        clientID = this.clientID;
+        clientID = this.clientID,
+        services;
+
+        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
+
+        switch(this.refresh) {
+          case 'Every day' : refresh = 86400000; break;
+          case 'Every week' : refresh = 604800000; break;
+          case 'Every month' : refresh = 2629800000; break;
+        }
 
       await this.availableCataloguesService.updateCatalogue((({
         catalogueID,
@@ -204,7 +217,8 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         authenticated,
         clientID,
         clientSecret,
-        oAuth2Endpoint
+        oAuth2Endpoint,
+        services
       } as unknown)) as CatalogueEntry, catalogueID);
       this.updateResult.emit(this.value);
       this.showToast('primary', this.translate.instant('general.catalogues.catalogue_edited_message'), '');
@@ -306,7 +320,6 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
 
   onDeRegisterCatalogue = async (): Promise<void> => {
     try {
-      console.log("onDeRegisterCatalogue")
       this.value.active = this.value.active == "active" ? "inactive" : "active";
       this.value = await this.availableCataloguesService.deregisterCatalogue(this.value);
       this.showToast('primary', this.translate.instant('general.catalogues.catalogue_deactivated_message', { catalogueName: this.value.catalogueID }), '');
@@ -357,7 +370,6 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
 
   toggle(authenticated: boolean) {
     this.authenticated = authenticated;
-    console.log(this.authenticated)
   }
 }
 

@@ -11,7 +11,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppConfig } from '../../../../model/appConfig';
 import { map, startWith, filter } from 'rxjs/operators';
 import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
-//import { randomBytes, randomInt } from 'crypto';
+import {Countries} from './countries'
+import { AvailableServicesService } from '../../../services/availableServices/availableServices.service'
 
 @Component({
   selector: 'add-catalogue',
@@ -40,6 +41,9 @@ export class AddCatalogueComponent implements OnInit {
   oAuth2Endpoint: string ;
   clientID: string  ;
   clientSecret: string ;
+  filteredCountryOptions$: Observable<string[]>;
+  countries: string[] = Countries.countries
+  //countries: string[] = Object.keys(Countries).filter(value => isNaN(Number(value)) === false && JSON.stringify(value) != '0').map(key => Countries[key]);
   private appConfig: AppConfig;
 
   constructor(
@@ -48,6 +52,7 @@ export class AddCatalogueComponent implements OnInit {
     private toastrService: NbToastrService,
     //private errorService: ErrorDialogCatalogueService,//TODO
     private availableCatalogueService: AvailableCataloguesService,
+    private availableServicesService: AvailableServicesService,
     private translate: TranslateService,
     private configService: NgxConfigureService
   ) {
@@ -80,6 +85,16 @@ export class AddCatalogueComponent implements OnInit {
       this.editedValue.emit(this.value);
   }
 
+  onCountryChange(country: string) {
+    this.filteredCountryOptions$ = of(this.filterCountry(country));
+    this.country = country
+  }
+
+  private filterCountry(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.countries.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+  }
+
   confirm() {
     try {
       this.onSubmit()
@@ -93,12 +108,10 @@ export class AddCatalogueComponent implements OnInit {
 
   toggle(authenticated: boolean) {
     this.authenticated = authenticated;
-    console.log(this.authenticated)
   }
 
   async onSubmit() {
     try {
-      console.log(this.catalogueID)
       let name = this.name,
         catalogueID = this.name+ this.competentAuthority+ this.country+ this.category+ this.description+
           this.homePage+ this.apiEndpoint+ this.type+ this.active+ this.refresh+ this.authenticated+ this.oAuth2Endpoint+ this.clientID+ this.clientSecret,
@@ -108,13 +121,22 @@ export class AddCatalogueComponent implements OnInit {
         homePage = this.homePage,
         apiEndpoint = this.apiEndpoint,
         active = this.active,
-        refresh = this.refresh,
+        refresh,
         description = this.description,
         type = this.type,
         authenticated = this.authenticated,
         oAuth2Endpoint = this.oAuth2Endpoint,
         clientSecret = this.clientSecret,
-        clientID = this.clientID;
+        clientID = this.clientID,
+        services;
+
+        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
+
+        switch(this.refresh) {
+          case 'Every day' : refresh = 86400000; break;
+          case 'Every week' : refresh = 604800000; break;
+          case 'Every month' : refresh = 2629800000; break;
+        }
 
 
       await this.availableCatalogueService.saveCatalogue((({
@@ -132,7 +154,8 @@ export class AddCatalogueComponent implements OnInit {
         authenticated,
         clientID,
         clientSecret,
-        oAuth2Endpoint
+        oAuth2Endpoint,
+        services
       } as unknown)) as CatalogueEntry);
 
       this.ref.close();
@@ -162,6 +185,9 @@ export class AddCatalogueComponent implements OnInit {
       })
 
       console.log("error:", "\n", error)
+      console.log("---------")
+      for(let field in error)
+        console.log("|",field , "| :", "|", error[field], "|")
       if (error.message == "Catalogue ID must be set") {
         console.log(error)
         /*TODO this.errorService.openErrorDialog({

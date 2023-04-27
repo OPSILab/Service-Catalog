@@ -1,3 +1,4 @@
+import { AvailableServicesService } from './../../availableServices/availableServices.service';
 import { AdapterEntry } from './../../../../model/adapter/adapterEntry';
 import { AvailableAdaptersService } from './../../available-adapters/available-adapters.service';
 import { Component, OnInit } from '@angular/core';
@@ -19,17 +20,18 @@ import { NgxConfigureService } from 'ngx-configure';
 export class DialogImportPromptComponent implements OnInit {
   private appConfig: AppConfig;
   selectedFile: File;
-  file: String;
+  file: string;
   fileOutput: String;
   service: ServiceModel;
   json: Record<string, unknown>;
-  selectedItem //= 'Json';
+  selectedItem//= 'Json';
   adapters: AdapterEntry[];
   adaptersActive: AdapterEntry[];
   extension: String;
+  selectedAdapter: AdapterEntry;
 
   constructor(private http: HttpClient, protected ref: NbDialogRef<DialogImportPromptComponent>,
-    private errorService: ErrorDialogService, private availableAdaptersService: AvailableAdaptersService,
+    private errorService: ErrorDialogService, private availableAdaptersService: AvailableAdaptersService, private availableServicesService: AvailableServicesService,
     private configService: NgxConfigureService,) {
     this.appConfig = this.configService.config as AppConfig
   }
@@ -40,9 +42,6 @@ export class DialogImportPromptComponent implements OnInit {
 
 
   async ngOnInit() {
-    console.log(String.fromCharCode(parseInt("00001010", 2)))
-    console.log(String.fromCharCode(parseInt("01100001", 2)))
-
     this.adaptersActive = [];
     this.adapters = await this.availableAdaptersService.getAdapters();
     this.adapters.forEach(adapterEntry => {
@@ -52,6 +51,15 @@ export class DialogImportPromptComponent implements OnInit {
   }
 
   onFileChanged(event: Event): void {
+    console.debug(typeof this.selectedItem, this.selectedItem, JSON.stringify(this.selectedItem))
+    console.debug(this.selectedItem.url)
+    for (let adapter of this.adaptersActive) {
+      if (this.selectedItem == adapter.adapterId) {
+        this.selectedAdapter = adapter
+        break
+      }
+      else this.selectedAdapter = undefined
+    }
     try {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -60,7 +68,7 @@ export class DialogImportPromptComponent implements OnInit {
       fileReader.readAsText(this.selectedFile, 'UTF-8');
       fileReader.onload = () => {
         try {
-          this.file = fileReader.result as String
+          this.file = fileReader.result as string
           this.extension = (<HTMLInputElement>event.target).files[0].name.split('.').pop().toLowerCase()
         } catch (error) {
           this.errorService.openErrorDialog(error);
@@ -77,14 +85,22 @@ export class DialogImportPromptComponent implements OnInit {
   }
 
   async onUpload(): Promise<void> {
-    if (this.extension == "csv") this.service = await this.http.post<ServiceModel>(this.adaptersActive[0].url, {
-      "sourceDataType": "csv",
-      "sourceData": this.file,
-      "adapterID":this.adaptersActive[0].adapterId,
-      //"mapID": this.appConfig.data_model_mapper.default_map_ID,
-      //"dataModelIn": this.appConfig.data_model_mapper.default_data_model_name,
-      "csvDelimiter": ";"
-    }).toPromise();
-    this.ref.close({ content: this.service[0], format: this.extension });
+    console.debug(typeof this.selectedItem, this.selectedItem, JSON.stringify(this.selectedItem))
+    console.debug(this.selectedItem.url)
+    let content, format, services
+    if (!this.selectedAdapter) {
+      console.debug("JSON")
+      console.debug(this.selectedItem)
+      content = JSON.parse(this.file) as Record<string,unknown>
+      format = this.selectedItem
+    }
+    else {
+      console.debug("adapter")
+      services = await this.availableServicesService.getAdaptedService(this.extension, this.file, this.selectedAdapter)
+      content = services[0]
+      format = this.extension
+    }
+    //console.debug("CONTENT\n", content)
+    this.ref.close({ content, format });
   }
 }
