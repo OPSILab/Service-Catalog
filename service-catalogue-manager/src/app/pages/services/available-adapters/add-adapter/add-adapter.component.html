@@ -25,10 +25,8 @@
         <br>
         <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
         <br>
-        <input *ngIf="!validURL"  [ngModel]="name" (ngModelChange)="onNameChange($event)" (click)="loadMappers()" nbInput type="text"
-            fullWidth [placeholder]="translate.instant('general.adapters.name')" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}"/>
-          <input *ngIf="validURL"  [ngModel]="name" (ngModelChange)="onNameChange($event)" (click)="loadMappers()" nbInput type="text"
-            fullWidth [placeholder]="translate.instant('general.adapters.name')" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}" disabled/>
+        <input [ngModel]="name" (ngModelChange)="onNameChange($event)" (click)="loadMappers()" nbInput type="text"
+            fullWidth placeholder="{{ 'general.adapters.name' | translate }}" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}"/>
         <nb-autocomplete #nameAutoComplete>
           <nb-option *ngFor="let n of filteredNameOptions$ | async" [value]="n">
             {{ n }}
@@ -38,7 +36,7 @@
         <label for="status">{{ 'general.adapters.status' | translate }}</label>
         <br>
         <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.status" [(ngModel)]="status"
-          [ngModelOptions]="{standalone: true}" disabled>
+          [ngModelOptions]="{standalone: true}">
         <br>
         <br>
         <label for="url">{{ 'general.adapters.url' | translate }}</label>

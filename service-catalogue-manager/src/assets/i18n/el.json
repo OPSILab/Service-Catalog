@@ -258,7 +258,9 @@
       "delete_service": "Delete service",
       "delete_service_message": "Are you sure to delete permanently the service <strong>{{serviceName}}</strong>?\n",
       "service_deleted_message": "Service {{serviceName}} deleted successfully!",
-      "view_service": "View service"
+      "view_service": "View service",
+      "select_source": "Select source",
+      "data_url": "Data url"
     },
     "editor": {
       "title": "Service Description, instances and personal data handling",

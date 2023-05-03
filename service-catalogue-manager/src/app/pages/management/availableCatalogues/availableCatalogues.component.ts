@@ -74,8 +74,25 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     this.loading = true;
   }
 
+  /*
+  refreshDaily(){
+
+  }
+
+  refreshWeekly(){
+
+  }
+
+  refreshMonthly(){
+
+  }
+  */
+
   async ngOnInit() {
     try {
+      //setTimeout(this.refreshDaily, 86400000);
+      //setTimeout(this.refreshWeekly, 604800000);
+      //setTimeout(this.refreshMonthly, 2629800000);
       this.availableCatalogues = await this.availableCataloguesService.getCatalogues();
       void this.source.load(this.availableCatalogues);
     } catch (error) {

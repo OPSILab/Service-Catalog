@@ -7,12 +7,13 @@
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
     <div class="row justify-content-left p-3">Select {{type}} data </div>
-    <nb-select fullWidth placeholder="Select source" [(ngModel)]="selectedItem">
-     
+    <nb-select fullWidth placeholder="{{'general.services.select_source'
+    | translate}}" [(ngModel)]="selectedItem">
+
         <nb-option value="file">From File</nb-option>
         <nb-option value="url">Url</nb-option>
-     
-       
+
+
     </nb-select>
     <div *ngIf="selectedItem === 'url'" class="row justify-content-left p-3">
 

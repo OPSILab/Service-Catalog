@@ -258,7 +258,9 @@
       "delete_service": "Elimina servizio",
       "delete_service_message": "Sei sicuro di eliminare definitivamente il servizio <strong>{{serviceName}}</strong> <strong>?",
       "service_deleted_message": "Servizio {{serviceName}} eliminato con successo!",
-      "view_service": "Vedi servizio"
+      "view_service": "Vedi servizio",
+      "select_source": "Seleziona sorgente",
+      "data_url": "Url data"
     },
     "editor": {
       "title": "Descrizione servizio, istanze e processamento dati",

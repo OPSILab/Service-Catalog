@@ -14,28 +14,28 @@
         <div>
           <label for="connectorId">{{ 'general.connectors.connectorId' | translate }}</label>
           <br>
-          <input type="text" nbInput fullWidth fieldSize="small" placeholder="connectorId" [(ngModel)]="connectorId"
+          <input type="text" nbInput fullWidth fieldSize="small" placeholder="{{ 'general.connectors.connectorId' | translate }}" [(ngModel)]="connectorId"
             [ngModelOptions]="{standalone: true}">
           <br><br>
         </div>
         <label for="name">{{ 'general.connectors.name' | translate }}</label>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="name" [(ngModel)]="name"
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="{{ 'general.connectors.name' | translate }}" [(ngModel)]="name"
           [ngModelOptions]="{standalone: true}">
         <br><br>
         <label for="description">{{ 'general.connectors.description' | translate }}</label>
         <br>
-        <textarea nbInput fullWidth fieldSize="medium" placeholder="description" [(ngModel)]="description"
+        <textarea nbInput fullWidth fieldSize="medium" placeholder="{{ 'general.connectors.description' | translate }}" [(ngModel)]="description"
           [ngModelOptions]="{standalone: true}"></textarea>
         <br><br>
         <label for="status">{{ 'general.connectors.status' | translate }}</label>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="status" [(ngModel)]="status"
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="{{ 'general.connectors.status' | translate }}" [(ngModel)]="status"
           [ngModelOptions]="{standalone: true}" disabled>
         <br><br>
         <label for="serviceId">{{ 'general.connectors.serviceId' | translate }}</label>
         <br>
-        <nb-select fullWidth placeholder="Select service to connect with" [(ngModel)]="serviceId"
+        <nb-select fullWidth placeholder="{{ 'general.connectors.serviceId' | translate }}" [(ngModel)]="serviceId"
           [ngModelOptions]="{standalone: true}">
           <nb-option-group title="serviceId">
             <nb-option value="">--</nb-option>
@@ -45,13 +45,13 @@
         <br><br>
         <label for="url">{{ 'general.connectors.url' | translate }}</label>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
+        <input type="text" nbInput fullWidth fieldSize="small" placeholder="{{ 'general.connectors.url' | translate }}" [(ngModel)]="url"
           [ngModelOptions]="{standalone: true}">
         <br>
         <br>
         <label for="adapter">{{ 'general.connectors.adapter' | translate }}</label>
         <br>
-        <nb-select fullWidth placeholder="Select adapter to connect with" [(ngModel)]="adapterId"
+        <nb-select fullWidth placeholder="{{ 'general.connectors.adapter' | translate }}" [(ngModel)]="adapterId"
           [ngModelOptions]="{standalone: true}">
           <nb-option-group title="adapterId">
             <nb-option value="">--</nb-option>
