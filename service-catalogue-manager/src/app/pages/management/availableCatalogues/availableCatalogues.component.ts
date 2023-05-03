@@ -1,3 +1,4 @@
+import { ServicesCount } from './../../../model/services/servicesCount';
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { LocalDataSource } from 'ng2-smart-table';
 import { AvailableCataloguesService } from './availableCatalogues.service';
@@ -17,6 +18,7 @@ import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
 import { ConnectorStatusRenderComponent } from '../../services/availableConnectors/custom-status-render.component';
 import { LoginService } from '../../../auth/login/login.service';
 import { StatusRenderComponent } from './status-render/status-render.component';
+import { AvailableServicesService } from '../../services/availableServices/availableServices.service';
 
 @Component({
   selector: 'available-catalogues-smart-table',
@@ -57,7 +59,8 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     private availableCataloguesService: AvailableCataloguesService,
     private translate: TranslateService,
     private configService: NgxConfigureService,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private availableServicesService: AvailableServicesService,
   ) {
     this.config = this.configService.config as AppConfig;
     this.systemConfig = this.config.system;
@@ -87,6 +90,25 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
 
   }
   */
+
+  refresh(catalogueIn) {
+
+    let apiEndpoint = catalogueIn.apiEndpoint
+    if (Date.now() > (catalogueIn.lastRefresh + parseInt(catalogueIn.refresh))) {
+      console.debug(catalogueIn.lastRefresh)
+      console.debug(catalogueIn.refresh)
+      console.debug((Date.now() - catalogueIn.lastRefresh - catalogueIn.refresh)/1000/3600)
+      let catalogueTmp : CatalogueEntry = catalogueIn
+      catalogueTmp.lastRefresh = Date.now()
+      this.availableServicesService.getRemoteServicesCount(apiEndpoint)
+      .then((value) => {
+        catalogueTmp.services = value.total;
+        this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID);
+        this.ngOnInit()
+      });
+    }
+    return catalogueIn.services
+  }
 
   async ngOnInit() {
     try {
@@ -168,7 +190,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           title: this.servicesLabel,
           type: 'text',
           width: '25%',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row.services,
+          valuePrepareFunction: (cell, row: CatalogueEntry) => this.refresh(row),
         },
         status: {
           title: this.statusLabel,

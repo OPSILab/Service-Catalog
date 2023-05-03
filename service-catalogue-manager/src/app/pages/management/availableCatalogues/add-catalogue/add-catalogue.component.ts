@@ -27,6 +27,7 @@ export class AddCatalogueComponent implements OnInit {
   @Output() editedValue = new EventEmitter<unknown>();
   competentAuthority: string ;
   catalogueID: string = 'ID' ;
+  lastRefresh
   country: string ;
   category: string ;
   homePage: string ;
@@ -93,6 +94,7 @@ export class AddCatalogueComponent implements OnInit {
       if (this.value.clientSecret) this.clientSecret = this.value.clientSecret
       if (this.value.country) this.country = this.value.country
       if (this.value.homePage) this.homePage = this.value.homePage
+      if (this.value.lastRefresh) this.homePage = this.value.lastRefresh
     }
   }
 
@@ -142,7 +144,8 @@ export class AddCatalogueComponent implements OnInit {
         oAuth2Endpoint = this.oAuth2Endpoint,
         clientSecret = this.clientSecret,
         clientID = this.clientID,
-        services;
+        services,
+        lastRefresh = Date.now();
 
         console.debug(catalogueID)
 
@@ -171,7 +174,8 @@ export class AddCatalogueComponent implements OnInit {
         clientID,
         clientSecret,
         oAuth2Endpoint,
-        services
+        services,
+        lastRefresh
       } as unknown)) as CatalogueEntry);
 
       this.ref.close();

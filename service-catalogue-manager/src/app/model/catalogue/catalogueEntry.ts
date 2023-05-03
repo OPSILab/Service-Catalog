@@ -15,5 +15,6 @@ export interface CatalogueEntry {
   authenticated : boolean
   clientSecret : string
   clientID : string
-  oAuth2Endpoint : string
+  oAuth2Endpoint : string,
+  lastRefresh
 }

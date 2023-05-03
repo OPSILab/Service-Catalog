@@ -37,6 +37,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   @Input() editedValue: CatalogueEntry;
   @Output() outValue = new EventEmitter<unknown>();
   competentAuthority: string;
+  lastRefresh;
   catalogueID: string;
   country: string;
   category: string;
@@ -120,6 +121,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
     this.type = this.value.type
     this.status = this.value.status
     this.homePage = this.value.homePage
+    this.lastRefresh = this.value.lastRefresh
     this.refresh = this.value.refresh == 86400000 ? 'Every day' : this.value.refresh == 604800000 ? 'Every week' :  this.value.refresh == 2629800000 ? 'Every month' : undefined
     this.actions = this.translatedActionLabels();
     this.menuService
@@ -207,7 +209,8 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         oAuth2Endpoint = this.oAuth2Endpoint,
         clientSecret = this.clientSecret,
         clientID = this.clientID,
-        services;
+        services,
+        lastRefresh = this.lastRefresh;
 
         services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
 
@@ -233,7 +236,8 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         clientID,
         clientSecret,
         oAuth2Endpoint,
-        services
+        services,
+        lastRefresh
       } as unknown)) as CatalogueEntry, catalogueID);
       this.updateResult.emit(this.value);
       this.showToast('primary', this.translate.instant('general.catalogues.catalogue_edited_message'), '');
