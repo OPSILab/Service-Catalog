@@ -37,5 +37,6 @@ export interface DataModelMapper {
   default_mapper_name: string,
   default_data_model_name: string,
   default_data_model_ID: string,
-  default_map_ID: string
+  default_map_ID: string,
+  connect: boolean
 }

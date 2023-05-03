@@ -147,8 +147,6 @@ export class AddCatalogueComponent implements OnInit {
         services,
         lastRefresh = Date.now();
 
-        console.debug(catalogueID)
-
         services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
 
         switch(this.refresh) {

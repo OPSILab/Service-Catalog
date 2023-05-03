@@ -78,7 +78,7 @@ export class AddAdapterComponent implements OnInit {
   async loadMappers(): Promise<void> {
     this.IDs = []
     this.names = []
-    if (this.url)
+    if (this.url && this.appConfig.data_model_mapper.connect)
       try {
         this.mappers = await this.http.post<any>(this.url, {
           "getMapperList": true

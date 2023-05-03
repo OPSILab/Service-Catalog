@@ -171,7 +171,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
 JSONEditor.defaults.custom_validators.push((schema, value, path) => {
   const errors = [];
   if (path==="root.hasInfo.processingTime" && value.trim()!=="") {
-    
+
       if (!/^P(?=\d+[YMWD])(\d+Y)?(\d+M)?(\d+W)?(\d+D)?(T(?=\d+[HMS])(\d+H)?(\d+M)?(\d+S)?)?$/.test(value)) {
         // Errors must be an object with `path`, `property`, and `message`
         errors.push({
@@ -179,7 +179,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
           property: 'format',
           message: 'Duration must be in the ISO8601 syntax for durations: P(n)Y(n)M(n)W(n)DT(n)H(n)M(n)S'
         });
-      }  
+      }
 }
   return errors;
 });
@@ -284,7 +284,6 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
 
     this.dialogService.open(DialogImportPromptComponent).onClose.subscribe((result: { content: unknown; format: string }) => {
       if (result?.content) {
-        console.debug("RESULT.CONTENT\n", result.content)
         this.editor.getEditor('root.createdByUserId').setValue(localStorage.getItem('accountId'));
         if (result.format == 'Cpsv') {
           this.editor.getEditor('root.hasInfo').setValue(result.content);

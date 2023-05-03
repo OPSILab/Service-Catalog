@@ -77,49 +77,29 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     this.loading = true;
   }
 
-  /*
-  refreshDaily(){
-
-  }
-
-  refreshWeekly(){
-
-  }
-
-  refreshMonthly(){
-
-  }
-  */
-
   refresh(catalogueIn) {
 
     let apiEndpoint = catalogueIn.apiEndpoint
-    if (Date.now() > (catalogueIn.lastRefresh + parseInt(catalogueIn.refresh))) {
-      console.debug(catalogueIn.lastRefresh)
-      console.debug(catalogueIn.refresh)
-      console.debug((Date.now() - catalogueIn.lastRefresh - catalogueIn.refresh)/1000/3600)
-      let catalogueTmp : CatalogueEntry = catalogueIn
+    if ((Date.now() > (catalogueIn.lastRefresh + parseInt(catalogueIn.refresh))) && catalogueIn.active == "active") {
+      let catalogueTmp: CatalogueEntry = catalogueIn
       catalogueTmp.lastRefresh = Date.now()
       this.availableServicesService.getRemoteServicesCount(apiEndpoint)
-      .then((value) => {
-        catalogueTmp.services = value.total;
-        this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID);
-        this.ngOnInit()
-      });
+        .then((value) => {
+          catalogueTmp.services = value.total;
+          this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID);
+          this.ngOnInit()
+        });
     }
     return catalogueIn.services
   }
 
   async ngOnInit() {
     try {
-      //setTimeout(this.refreshDaily, 86400000);
-      //setTimeout(this.refreshWeekly, 604800000);
-      //setTimeout(this.refreshMonthly, 2629800000);
       this.availableCatalogues = await this.availableCataloguesService.getCatalogues();
       void this.source.load(this.availableCatalogues);
     } catch (error) {
       console.log("error:<\n", error, ">\n")
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       }
       //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
@@ -145,7 +125,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
       //if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
       //else if (error.message) console.log("message:<\n", error.message, ">\n")
 
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       }
       this.errorService.openErrorDialog(error);

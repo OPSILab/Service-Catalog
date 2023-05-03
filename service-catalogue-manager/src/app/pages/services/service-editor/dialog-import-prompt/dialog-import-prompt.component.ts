@@ -51,8 +51,6 @@ export class DialogImportPromptComponent implements OnInit {
   }
 
   onFileChanged(event: Event): void {
-    console.debug(typeof this.selectedItem, this.selectedItem, JSON.stringify(this.selectedItem))
-    console.debug(this.selectedItem.url)
     for (let adapter of this.adaptersActive) {
       if (this.selectedItem == adapter.adapterId) {
         this.selectedAdapter = adapter
@@ -85,23 +83,17 @@ export class DialogImportPromptComponent implements OnInit {
   }
 
   async onUpload(): Promise<void> {
-    console.debug(typeof this.selectedItem, this.selectedItem, JSON.stringify(this.selectedItem))
-    console.debug(this.selectedItem.url)
     let content, format, services
     if (!this.selectedAdapter) {
-      console.debug("JSON")
-      console.debug(this.selectedItem)
       content = JSON.parse(this.file) as Record<string,unknown>
       format = this.selectedItem
     }
     else {
-      console.debug(this.selectedAdapter.sourceDataType)
       services = await this.availableServicesService.getAdaptedService(this.selectedAdapter.sourceDataType, this.file, this.selectedAdapter)
       //services = await this.availableServicesService.getAdaptedService(this.extension, this.file, this.selectedAdapter)
       content = services[0]
       format = this.extension
     }
-    //console.debug("CONTENT\n", content)
     this.ref.close({ content, format });
   }
 }
