@@ -25,6 +25,9 @@ import { ManagementRoutingModule } from './management-routing.module';
 import { AddCatalogueComponent } from './availableCatalogues/add-catalogue/add-catalogue.component';
 import { ActionsCatalogueMenuRenderComponent } from './availableCatalogues/actions-catalogue-menu-render/actions-catalogue-menu-render.component';
 import { StatusRenderComponent } from './availableCatalogues/status-render/status-render.component';
+import { RemoteCataloguesComponent } from './remote-catalogues/remote-catalogues.component';
+import { ManageConfigurationsComponent } from './manage-configurations/manage-configurations.component';
+import { AddRemoteCatalogueDatasetComponent } from './manage-configurations/add-remote-catalogue-dataset/add-remote-catalogue-dataset.component';
 
 
 @NgModule({
@@ -54,7 +57,10 @@ import { StatusRenderComponent } from './availableCatalogues/status-render/statu
     AvailableCataloguesComponent,
     AddCatalogueComponent,
     ActionsCatalogueMenuRenderComponent,
-    StatusRenderComponent
+    StatusRenderComponent,
+    RemoteCataloguesComponent,
+    ManageConfigurationsComponent,
+    AddRemoteCatalogueDatasetComponent
   ],
   providers: [AvailableCataloguesService],
   entryComponents: [

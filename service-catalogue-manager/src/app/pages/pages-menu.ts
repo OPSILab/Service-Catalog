@@ -51,16 +51,16 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'general.menu.fedarated_catalogues',
     icon: 'link-2-outline',
-    link: '/pages/services/federatedCatalogues',
+    link: '/pages/management/federatedCatalogues',
   },
   {
     title: 'general.menu.remote_catalogues',
     icon: 'link-2-outline',
-    link: '/pages/services/remoteCatalogues',
+    link: '/pages/management/remoteCatalogues',
   },
   {
     title: 'general.menu.manage_configurations',
     icon: 'link-2-outline',
-    link: '/pages/services/manageConfigurations',
+    link: '/pages/management/manageConfigurations',
   },
 ];

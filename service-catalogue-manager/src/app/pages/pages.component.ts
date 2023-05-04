@@ -121,7 +121,7 @@ export class PagesComponent implements OnInit, OnDestroy {
       {
         title: 'general.menu.configuration',
         icon: 'settings-outline',
-        link: '/pages/management/configurations',
+        link: '/pages/management/manageConfigurations',
         hidden: this.hideManageMenu,
       },
     ];

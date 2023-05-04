@@ -35,13 +35,6 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'catalogues',
-        redirectTo: 'services/federatedCatalogues',
-        pathMatch: 'full',
-        component: AvailableCataloguesComponent,
-        canActivate: [AuthGuard],
-      },
-      {
         path: 'consents',
         loadChildren: () => import('./consents/consents.module').then((m) => m.ConsentsModule),
         canActivate: [AuthGuard],
