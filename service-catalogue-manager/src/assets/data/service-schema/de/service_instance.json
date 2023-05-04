@@ -141,7 +141,7 @@
         "linkingRedirectUri": {
           "type": "string",
           "title": "Linking Redirect URI",
-          "description": "URI where ​User​ ​will​ ​be redirected​ ​after​ ​service has​ ​been​ ​linked.​ ​Used in​ ​service​ ​linking starting​ ​from​ ​the service."
+          "description": "URI where User will be redirected after service has been linked. Used in service linking starting from the service."
         },
         "objectionUri": {
           "type": "string",

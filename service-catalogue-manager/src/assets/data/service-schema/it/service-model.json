@@ -15,7 +15,8 @@
     "identifier": {
       "type": "string",
       "title": "Service Identifier",
-      "description": "Service URI if exists"
+      "description": "Service URI if exists",
+      "minLength": 1
     },
     "issued": {
       "type": "string",
@@ -33,7 +34,8 @@
     "versionInfo": {
       "type": "string",
       "title": "Service Description version",
-      "description": "Service description version number."
+      "description": "Service description version number.",
+      "default": "1.0"
     },
     "serviceIconUrl": {
       "type": "string",
@@ -46,7 +48,10 @@
       "description": "Status of Service Description (Allowed values: *Completed*, *Deprecated*, *UnderDevelopment*, *Withdrawn*)",
       "default": "UnderDevelopment",
       "enum": ["Completed", "Deprecated", "UnderDevelopment", "WithDrawn"],
-      "options": { "enum_titles": ["Completed", "Deprecated", "Under Development", "Withdrawn"] }
+      "options": { 
+        "enum_titles": 
+        ["Completed", "Deprecated", "Under Development", "Withdrawn"] 
+      }
     },
     "isPublicService": {
       "type": "boolean",

@@ -25,7 +25,9 @@
       "default": "UnderDevelopment",
       "enum": ["Completed", "Deprecated", "UnderDevelopment", "WithDrawn"],
       "options": {
-        "hidden": true
+        "hidden": true,
+        "enum_titles": 
+        ["Completed", "Deprecated", "Under Development", "Withdrawn"]
       }
     },
     "keyword": {
@@ -114,13 +116,16 @@
         "headerTemplate": "{{ self.name }}",
         "properties": {
           "identifier": {
-            "type": "string"
+            "type": "string",
+            "title": "Identifier"
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "title": "Name"
           },
           "landingPage": {
-            "type": "string"
+            "type": "string",
+            "landing": "Landing Page"
           }
         }
       }
@@ -144,7 +149,7 @@
         },
         "title": {
           "type": "string",
-          "title": "name"
+          "title": "Name"
         },
         "hasAddress": {
           "type": "string",
@@ -203,7 +208,7 @@
           },
           "title": {
             "type": "string",
-            "title": "name"
+            "title": "Name"
           },
           "description": {
             "type": "array",
@@ -247,7 +252,10 @@
             "uniqueItems": true,
             "items": {
               "type": "string",
-              "enum": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
+              "enum": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"],
+              "options": { 
+                "enum_titles": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
+               }
             }
           },
           "language": {
@@ -305,7 +313,7 @@
           },
           "title": {
             "type": "string",
-            "title": "name"
+            "title": "Name"
           },
           "description": {
             "type": "array",
@@ -350,7 +358,10 @@
             "uniqueItems": true,
             "items": {
               "type": "string",
-              "enum": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
+              "enum": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"],
+              "options": { 
+                "enum_titles": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
+               }
             }
           }
         }
@@ -362,25 +373,32 @@
       "type": "object",
       "properties": {
         "email": {
-          "type": "string"
+          "type": "string",
+          "title": "Email"
         },
         "faxNumber": {
-          "type": "string"
+          "type": "string",
+          "title": "Fax"
         },
         "telephone": {
-          "type": "string"
+          "type": "string",
+          "title": "Phone"
         },
         "url": {
-          "type": "string"
+          "type": "string",
+          "title": "URL"
         },
         "identifier": {
-          "type": "string"
+          "type": "string",
+          "title": "Identifier"
         },
         "openingHours": {
-          "type": "string"
+          "type": "string",
+          "title": "Opening Ours"
         },
         "hoursAvailable": {
-          "type": "string"
+          "type": "string",
+          "title": "Available Ours"
         }
       }
     },
@@ -405,7 +423,10 @@
             "type": "string",
             "title": "Type of channel",
             "description": "Type of channel",
-            "enum": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location", "Citizen Service Centres"]
+            "enum": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location", "Citizen Service Centres"],
+            "options": { 
+                "enum_titles": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location", "Citizen Service Centres"]
+               }
           },
           "openingHours": {
             "type": "string",
@@ -449,24 +470,31 @@
         "headerTemplate": "{{ self.code }}",
         "properties": {
           "identifier": {
-            "type": "string"
+            "type": "string",
+            "title": "Identifier"
           },
           "code": {
             "type": "string",
             "title": "Currency Code",
             "description": "Currency Code",
-            "enum": ["EUR", "BGN", "CZK", "DKK", "HUF", "PLN", "RON", "SEK", "CHF", "TRY", "NOK"]
+            "enum": ["EUR", "BGN", "CZK", "DKK", "HUF", "PLN", "RON", "SEK", "CHF", "TRY", "NOK"],
+            "options": { 
+                "enum_titles": ["EUR", "BGN", "CZK", "DKK", "HUF", "PLN", "RON", "SEK", "CHF", "TRY", "NOK"]
+               }
           },
           "hasCost": {
-            "type": "string"
+            "type": "string",
+            "title": "Cost Value"
           },
           "ifAccessedThrough": {
             "type": "string",
+            "title": "If Accessed Through",
             "description": "Cost if acccessed through the specific channel",
             "watch": {
               "possible_channels": "root.hasInfo.hasChannel"
             },
             "enumSource": [
+              [""],
               {
                 "source": "possible_channels",
                 "value": "{{item.type}}"
@@ -495,6 +523,7 @@
               },
               "description": {
                 "type": "string",
+                "title": "Description",
                 "description": "Textual description in specified language.",
                 "format": "textarea"
               }

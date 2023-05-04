@@ -1,6 +1,6 @@
 {
   "general": {
-    "welcome": "Welcome to Service Catalogue Manager!",
+    "welcome": "Καλώς ήρθατε στο Service Catalogue Manager!",
     "logo_text": "ACROSS",
     "home": "Home",
     "error": "Error",
@@ -28,7 +28,7 @@
       "consents_logs_group": "CONSENT REGISTRY",
       "data_event_logs": "Data&Event Logs",
       "consents": "Data Consents",
-      "services": "SERVICE REGISTRY",
+      "services": "ΜΗΤΡΏΟ ΥΠΗΡΕΣΙΏΝ",
       "availableservices": "Services",
       "editor": "Service Editor",
       "dataconnectors": "Data Connectors",
