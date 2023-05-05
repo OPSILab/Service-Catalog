@@ -60,19 +60,16 @@
       </button>
     </ng-template>
     <ng-template #updateButton>
-      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
-        (click)="openUpdateToRegistryDialog()" >
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"  >
         {{ 'general.editor.update' | translate }}
         <i class="mx-1 material-icons">save</i>
       </button>
     </ng-template>
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning" (click)="saveAsFile()"
-      >
+    <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning"    >
       {{ 'general.editor.export' | translate }}
       <i class="mx-1 fas fa-file-export fa-lg"></i>
     </button>
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger" (click)="importSource()"
-      >
+    <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger"   >
       {{ 'general.editor.import' | translate }}
       <i class="mx-1 fas fa-file-import fa-lg"></i>
     </button>
