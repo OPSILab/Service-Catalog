@@ -49,6 +49,7 @@ import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Catalogue;
+import it.eng.opsi.servicecatalog.model.CatalogueDataset;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
@@ -92,7 +93,20 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@GetMapping(value = "/catalogues", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Catalogue>> getCatalogues()
 			throws CatalogueNotFoundException {
+		System.out.println("8086");
+
 		return ResponseEntity.ok(catalogService.getCatalogues());
+	}
+
+	@Override
+	@Operation(summary = "Get all the catalogue datasets descriptions.", description = "Get all the catalogue datasets descriptions saved in the Service Catalog.", tags = {
+			"Catalogue Dataset" }, responses = {
+					@ApiResponse(description = "Returns the list of all registered catalogue datasets descriptions.", responseCode = "200") })
+	@GetMapping(value = "/catalogueDatasets", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<CatalogueDataset>> getCatalogueDatasets()
+	// throws CatalogueDatasetNotFoundException
+	{
+		return ResponseEntity.ok(catalogService.getCatalogueDatasets());
 	}
 
 	@Override
@@ -286,6 +300,25 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getCatalogueBycatalogueID(decodedCataloguecatalogueID));
 	}
 
+	// DATASET
+	@Operation(summary = "Get catalogue dataset  description by catalogue dataset ID.", tags = {
+			"Catalogue dataset " }, responses = {
+					@ApiResponse(description = "Get Catalogue dataset  description by catalogue dataset ID.", responseCode = "200") })
+	@Override
+	@GetMapping(value = "/catalogueDataset/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getCatalogueDataset(@RequestParam("catalogueDatasetID") String catalogueDatasetID)
+	// throws CatalogueDatasetNotFoundException //TODO
+	{
+
+		if (StringUtils.isBlank(catalogueDatasetID))
+			throw new IllegalArgumentException("Illegal catalogue dataset ID in input");
+
+		String decodedCatalogueDatasetID = java.net.URLDecoder.decode(catalogueDatasetID,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.getCatalogueDatasetBycatalogueDatasetID(decodedCatalogueDatasetID));
+	}
+
 	@Override
 	@Operation(summary = "Get the Service Model descriptions by specified Service Ids.", description = "Get the Service Model descriptions by specified Service Id.", tags = {
 			"Service Model" }, responses = {
@@ -452,6 +485,36 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
 	}
 
+	// DATASET
+	@Operation(summary = "Create a new catalogue dataset .", tags = {
+			"Catalogue dataset  Model" }, responses = {
+					@ApiResponse(description = "Create a new catalogue dataset .", responseCode = "201") })
+	@Override
+	@PostMapping(value = "/catalogueDataset")
+	public ResponseEntity<CatalogueDataset> createCatalogueDataset(
+			@RequestBody @Valid CatalogueDataset catalogueDataset) {
+		CatalogueDataset result = new CatalogueDataset();
+		System.out.println(catalogueDataset);
+		// System.out.println(result);
+		try {
+
+			if (catalogService.getCatalogueDatasetBycatalogueDatasetID(catalogueDataset.getCatalogueDatasetID()) != null
+					&& (catalogService
+							.getCatalogueDatasetBycatalogueDatasetID(catalogueDataset.getCatalogueDatasetID()))
+							.getCatalogueDatasetID().equals(catalogueDataset
+									.getCatalogueDatasetID()))
+				throw new Error("catalogue dataset ID already exists");
+
+			result = catalogService.createCatalogueDataset(catalogueDataset);
+		} catch (Error e) {
+			System.out.println("Error :\n");
+			System.out.println(e);
+			// result.setStatus("Catalogue dataset already exists");
+			return ResponseEntity.badRequest().body(result);
+		}
+		return ResponseEntity.created(URI.create(uriBasePath)).body(result);
+	}
+
 	@Operation(summary = "Create a new connector log.", tags = {
 			"Connector Model" }, responses = {
 					@ApiResponse(description = "Create a new connector.", responseCode = "201") })
@@ -559,6 +622,33 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				decodedCataloguecatalogueID, catalogue));
 	}
 
+	// DATASET
+
+	@Operation(summary = "Update Catalogue dataset  Model description, by replacing the existing one", tags = {
+			"Catalogue dataset  Model" }, responses = {
+					@ApiResponse(description = "Returns the Catalogue dataset  Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CatalogueDataset.class)))
+
+	})
+
+	@Override
+	@PutMapping(value = "/catalogueDataset", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<CatalogueDataset> updateCatalogueDataset(
+			@RequestParam("catalogueDatasetID") String catalogueDatasetID,
+			@RequestBody @Valid CatalogueDataset catalogueDataset)
+	// TODO throws Catalogue dataset NotFoundException,
+	// CatalogueDatasetNotEditableException
+	{
+
+		if (StringUtils.isBlank(catalogueDatasetID))
+			throw new IllegalArgumentException("Illegal catalogue dataset ID in input");
+
+		String decodedCatalogueDatasetID = java.net.URLDecoder.decode(catalogueDatasetID,
+				StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.updateCatalogueDataset(
+				decodedCatalogueDatasetID, catalogueDataset));
+	}
+
 	@Operation(summary = "Update Adapter Model description, by replacing the existing one", tags = {
 			"Adapter Model" }, responses = {
 					@ApiResponse(description = "Returns the Adapter Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Adapter.class))) })
@@ -634,6 +724,28 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		String decodedCataloguecatalogueID = java.net.URLDecoder.decode(catalogueID, StandardCharsets.UTF_8);
 
 		catalogService.deleteCatalogue(decodedCataloguecatalogueID);
+
+		return ResponseEntity.noContent().build();
+
+	}
+
+	// DATASET
+	@Operation(summary = "Delete Catalogue dataset  Model description by catalogue dataset ID.", tags = {
+			"Catalogue dataset  Model" }, responses = {
+					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
+	@Override
+	@DeleteMapping(value = "/catalogueDataset")
+	public ResponseEntity<Object> deleteCatalogueDataset(
+			@RequestParam("catalogueDatasetID") String catalogueDatasetID)
+	// throws Catalogue dataset NotFoundException
+	{
+
+		if (StringUtils.isBlank(catalogueDatasetID))
+			throw new IllegalArgumentException("Illegal catalogue dataset ID in input");
+
+		String decodedCatalogueDatasetID = java.net.URLDecoder.decode(catalogueDatasetID, StandardCharsets.UTF_8);
+
+		catalogService.deleteCatalogueDataset(decodedCatalogueDatasetID);
 
 		return ResponseEntity.noContent().build();
 

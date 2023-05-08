@@ -25,6 +25,7 @@ import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Catalogue;
+import it.eng.opsi.servicecatalog.model.CatalogueDataset;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 
@@ -37,6 +38,11 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<List<Adapter>> getAdapters(String type) throws AdapterNotFoundException;
 
 	public abstract ResponseEntity<List<Catalogue>> getCatalogues() throws CatalogueNotFoundException;
+
+	public abstract ResponseEntity<List<CatalogueDataset>> getCatalogueDatasets() throws CatalogueNotFoundException;// TODO
+																													// catalogue
+																													// dataset
+																													// exception
 
 	public abstract ResponseEntity<List<ConnectorLog>> getConnectorLogs() throws ConnectorLogNotFoundException;
 
@@ -60,6 +66,8 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<Catalogue> createCatalogue(Catalogue catalogue);
 
+	public abstract ResponseEntity<CatalogueDataset> createCatalogueDataset(CatalogueDataset catalogue);
+
 	public abstract ResponseEntity<List<ServiceModel>> createServices(List<ServiceModel> services);
 
 	public abstract ResponseEntity<Connector> createConnector(Connector connector);
@@ -79,6 +87,10 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<Catalogue> updateCatalogue(String catalogueID, Catalogue catalogue)
 			throws CatalogueNotFoundException, CatalogueNotEditableException;
 
+	public abstract ResponseEntity<CatalogueDataset> updateCatalogueDataset(String catalogueDatasetID,
+			CatalogueDataset catalogue)
+			throws CatalogueNotFoundException, CatalogueNotEditableException;
+
 	public abstract ResponseEntity<Adapter> updateAdapter(String adapterId, Adapter adapter)
 			throws AdapterNotFoundException, AdapterNotEditableException;
 
@@ -94,9 +106,13 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<Object> deleteCatalogue(String identifier) throws CatalogueNotFoundException;
 
+	public abstract ResponseEntity<Object> deleteCatalogueDataset(String identifier) throws CatalogueNotFoundException;
+
 	public abstract ResponseEntity<?> getConnector(String serviceId) throws ConnectorNotFoundException;
 
 	public abstract ResponseEntity<?> getCatalogue(String catalogueID) throws CatalogueNotFoundException;
+
+	public abstract ResponseEntity<?> getCatalogueDataset(String catalogueDatasetID) throws CatalogueNotFoundException;
 
 	public abstract ResponseEntity<?> getAdapter(String serviceId) throws AdapterNotFoundException;
 

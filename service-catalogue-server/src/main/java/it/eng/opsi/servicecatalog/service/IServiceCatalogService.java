@@ -22,6 +22,7 @@ import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Catalogue;
+import it.eng.opsi.servicecatalog.model.CatalogueDataset;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.model.HasCost;
@@ -127,12 +128,22 @@ public interface IServiceCatalogService {
 
       public abstract List<Catalogue> getCatalogues();
 
+      public abstract List<CatalogueDataset> getCatalogueDatasets();
+
       public abstract Catalogue getCatalogueBycatalogueID(String catalogueID);
 
+      public abstract CatalogueDataset getCatalogueDatasetBycatalogueDatasetID(String catalogueDatasetID);
+
       public abstract Catalogue createCatalogue(@Valid Catalogue catalogue);
+
+      public abstract CatalogueDataset createCatalogueDataset(@Valid CatalogueDataset catalogueDataset);
 
       public abstract Catalogue updateCatalogue(String decodedCataloguecatalogueID, @Valid Catalogue catalogue);
 
       public abstract void deleteCatalogue(String decodedCataloguecatalogueID);
 
+      public abstract CatalogueDataset updateCatalogueDataset(String decodedCatalogueDatasetID,
+                  @Valid CatalogueDataset catalogueDataset);
+
+      public abstract void deleteCatalogueDataset(String decodedCatalogueDatasetID);
 }

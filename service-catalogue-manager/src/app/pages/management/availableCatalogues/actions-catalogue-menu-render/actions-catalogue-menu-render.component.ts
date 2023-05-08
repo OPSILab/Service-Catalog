@@ -63,7 +63,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
     apiEndpoint : this.translate.instant('general.catalogues.api_endpoint'),
     refresh : this.translate.instant('general.catalogues.refresh'),
     description : this.translate.instant('general.catalogues.description'),
-    clientID : this.translate.instant('general.catalogues.clientID'),
+    clientID : this.translate.instant('general.catalogues.client_ID'),
     clientSecret : this.translate.instant('general.catalogues.client_secret'),
     name : this.translate.instant('general.catalogues.name'),
     status : this.translate.instant('general.catalogues.status'),

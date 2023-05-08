@@ -36,6 +36,7 @@ import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Catalogue;
+import it.eng.opsi.servicecatalog.model.CatalogueDataset;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.model.Endpoint;
@@ -45,6 +46,7 @@ import it.eng.opsi.servicecatalog.model.ServiceModel.ServiceDescriptionStatus;
 import it.eng.opsi.servicecatalog.repository.ServiceModelRepository;
 import it.eng.opsi.servicecatalog.repository.AdapterLogRepository;
 import it.eng.opsi.servicecatalog.repository.AdapterRepository;
+import it.eng.opsi.servicecatalog.repository.CatalogueDatasetRepository;
 import it.eng.opsi.servicecatalog.repository.CatalogueRepository;
 import it.eng.opsi.servicecatalog.repository.ConnectorLogRepository;
 import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
@@ -80,6 +82,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Autowired
 	private CatalogueRepository catalogueRepo;
+
+	@Autowired
+	private CatalogueDatasetRepository catalogueDatasetRepo;
 
 	@Override
 	public List<ServiceModel> getServices() throws ServiceNotFoundException {
@@ -576,5 +581,43 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		if (catalogueRepo.deleteCatalogueBycatalogueID(decodedCataloguecatalogueID) == 0L)
 			throw new ServiceNotFoundException(
 					"No Catalogue description found for Catalogue Id: " + decodedCataloguecatalogueID);
+	}
+
+	@Override
+	public List<CatalogueDataset> getCatalogueDatasets() {
+		return catalogueDatasetRepo.findAll();
+	}
+
+	@Override
+	public CatalogueDataset createCatalogueDataset(@Valid CatalogueDataset catalogueDataset) {
+		return catalogueDatasetRepo.save(catalogueDataset);
+
+	}
+
+	@Override
+	public CatalogueDataset updateCatalogueDataset(String decodedCatalogueDatasetID,
+			@Valid CatalogueDataset catalogueDataset) {
+		if (StringUtils.isBlank(catalogueDataset.getCatalogueDatasetID()))
+			catalogueDataset.setCatalogueDatasetID(uriBasePath + catalogueDataset.getCatalogueDatasetID());
+
+		if (!decodedCatalogueDatasetID.equals(catalogueDataset.getCatalogueDatasetID()))
+			throw new CatalogueNotEditableException("catalogueID in the path and the one in the body mismatch.");
+
+		return catalogueDatasetRepo.updateCatalogueDataset(decodedCatalogueDatasetID, catalogueDataset).orElseThrow(
+				() -> new CatalogueNotFoundException(
+						"No Catalogue description found for Catalogue Id: " + decodedCatalogueDatasetID));
+	}
+
+	@Override
+	public void deleteCatalogueDataset(String decodedCatalogueDatasetID) {
+
+		if (catalogueDatasetRepo.deleteCatalogueDatasetBycatalogueDatasetID(decodedCatalogueDatasetID) == 0L)
+			throw new ServiceNotFoundException(
+					"No Catalogue description found for Catalogue Id: " + decodedCatalogueDatasetID);
+	}
+
+	@Override
+	public CatalogueDataset getCatalogueDatasetBycatalogueDatasetID(String catalogueDatasetID) {
+		return catalogueDatasetRepo.findBycatalogueDatasetID(catalogueDatasetID);
 	}
 }

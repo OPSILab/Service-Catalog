@@ -51,57 +51,57 @@ public class Catalogue {
 
     @JsonProperty("competentAuthority")
     @Valid
-    @NotNull
+    // @NotNull
     private String competentAuthority;
 
     @JsonProperty("country")
     @Valid
-    @NotNull
+    // @NotNull
     private String country;
 
     @JsonProperty("category")
     @Valid
-    @NotNull
+    // @NotNull
     private String category;
 
     @JsonProperty("description")
     @Valid
-    @NotNull
+    // @NotNull
     private String description;
 
     @JsonProperty("homePage")
     @Valid
-    @NotNull
+    // @NotNull
     private String homePage;
 
     @JsonProperty("apiEndpoint")
     @Valid
-    @NotNull
+    // @NotNull
     private String apiEndpoint;
 
     @JsonProperty("type")
     @Valid
-    @NotNull
+    // @NotNull
     private String type;
 
     @JsonProperty("active")
     @Valid
-    @NotNull
+    // @NotNull
     private String active;
 
     @JsonProperty("refresh")
     @Valid
-    @NotNull
+    // @NotNull
     private long refresh;
 
     @JsonProperty("authenticated")
     @Valid
-    @NotNull
+    // @NotNull
     private boolean authenticated;
 
     @JsonProperty("services")
     @Valid
-    @NotNull
+    // @NotNull
     private int services;
 
     @JsonProperty("oAuth2Endpoint")

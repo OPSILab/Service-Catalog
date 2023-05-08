@@ -43,7 +43,8 @@
       "connectors_adapters": "CONNETTORI e ADATTATORI",
       "administration": "GESTIONE CATALOGO",
       "federated_catalogues": "Cataloghi Federati",
-      "remote_catalogues":"Cataloghi remoti"
+      "remote_catalogues":"Cataloghi remoti",
+      "manage_configurations" : "Gestisci configurazioni"
     },
     "consents": {
       "legalbasis": "Base giuridica",
@@ -373,6 +374,27 @@
       "source_data_type" : "Tipo di dato in ingresso"
     },
     "catalogues": {
+      "dataset": {
+        "dataset_added_message" : "Un nuovo dataset di cataloghi è stato aggiunto",
+        "delete_dataset_message" : "Sei sicuro di voler cancellare permanentemente il dataset cataloghi <strong>{{catalogueDatasetName}}</strong>?\n",
+        "dataset_edited_message": "Il dataset di cataloghi è stato modificato",
+        "catalogue_dataset"  : "Dataset di cataloghi",
+        "delete_dataset": "Cancella dataset di cataloghi",
+        "URL" : "URL",
+        "portal_URL" : "URL portale",
+        "authentication_method" : "Metodo di autenticazione",
+        "username": "Username",
+        "password": "Password",
+        "name": "Name",
+        "type": "Type",
+        "client_ID": "Client ID",
+        "client_secret": "Client secret",
+        "edit": "Modifica",
+        "delete": "Cancella",
+        "confirm": "Conferma",
+        "add" : "Aggiungi catalogue",
+        "actions": "Azioni"
+      },
       "add" : "Aggiungi catalogue",
       "confirm" : "Conferma",
       "catalogues": "Cataloghi",

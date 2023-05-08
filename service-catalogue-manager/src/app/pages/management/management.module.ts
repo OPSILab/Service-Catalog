@@ -28,6 +28,7 @@ import { StatusRenderComponent } from './availableCatalogues/status-render/statu
 import { RemoteCataloguesComponent } from './remote-catalogues/remote-catalogues.component';
 import { ManageConfigurationsComponent } from './manage-configurations/manage-configurations.component';
 import { AddRemoteCatalogueDatasetComponent } from './manage-configurations/add-remote-catalogue-dataset/add-remote-catalogue-dataset.component';
+import { ActionsMenuRenderComponent } from './manage-configurations/actions-menu-render/actions-menu-render.component';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { AddRemoteCatalogueDatasetComponent } from './manage-configurations/add-
     StatusRenderComponent,
     RemoteCataloguesComponent,
     ManageConfigurationsComponent,
-    AddRemoteCatalogueDatasetComponent
+    AddRemoteCatalogueDatasetComponent,
+    ActionsMenuRenderComponent
   ],
   providers: [AvailableCataloguesService],
   entryComponents: [

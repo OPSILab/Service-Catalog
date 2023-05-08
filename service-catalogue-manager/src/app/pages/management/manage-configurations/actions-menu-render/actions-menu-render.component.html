@@ -1,0 +1,216 @@
+<button nbButton outline aria-label="Name" status="basic" [nbContextMenu]="actions"
+  nbContextMenuTag="service-context-menu{{ value.catalogueDatasetID }}">
+  <nb-icon icon="settings-2"></nb-icon>
+</button>
+<!-- Register Catalogue modal ng-template -->
+<ng-template #confirmRegisterDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{ 'general.catalogues.dataset.activate_catalogue' | translate: { catalogueName: value.name } }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="p-5 text-center"
+      [innerHTML]="'general.catalogues.dataset.activate_catalogue_message' | translate: { catalogueName: value.name }"></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="ref.close(true)">
+        {{ 'general.catalogues.dataset.activate' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.close' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!-- DeRegister Catalogue modal ng-template -->
+<ng-template #confirmDeRegisterDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{'general.catalogues.dataset.deactivate' | translate: {catalogueName: value.name} }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="p-5 text-center"
+      [innerHTML]="'general.catalogues.dataset.deactivate_catalogue_message' | translate: { catalogueName: value.name }"></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="ref.close(true)">
+        {{ 'general.catalogues.dataset.deactivate' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.close' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!-- Delete Catalogue modal ng-template -->
+<ng-template #confirmDeleteDialog let-data let-ref="dialogRef">
+  <nb-card>
+    <nb-card-header class="d-flex justify-content-between">
+      <h5>{{ 'general.catalogues.dataset.delete_dataset' | translate: {catalogueName: value.name} }}</h5>
+      <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="p-5 text-center"
+      [innerHTML]="'general.catalogues.dataset.delete_dataset_message' | translate: {catalogueDatasetName: value.name}"></nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="danger" size="small" (click)="data.callback()">
+        {{ 'general.editor.delete' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<ng-template #editCatalogue let-data let-ref="dialogRef">
+  <style>
+    input {
+      text-align: center;
+      width: 100%;
+    }
+
+    nb-card {
+      text-align: center;
+      min-width: 40rem;
+      max-height: 100vh;
+      overflow-y: scroll;
+    }
+
+    nb-card-header {
+      text-align: center;
+    }
+
+    textarea {
+      text-align: center;
+    }
+
+    h3 {
+      text-align: center;
+    }
+
+    h6 {
+      text-align: left;
+      font-weight: normal;
+    }
+
+    input[type="text"] {
+      font-weight: normal;
+      text-align: left;
+    }
+
+    textarea {
+      font-weight: normal;
+      text-align: left;
+    }
+
+    label {
+      text-align: left;
+    }
+
+    .btn-success {
+      margin-left: 1rem;
+    }
+  </style>
+  <nb-card class="aci">
+    <nb-card-header class="d-flex align-content-center justify-content-between">
+      <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+      <h3>{{ 'general.catalogues.dataset.edit' | translate }}</h3>
+      <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="m-2 p-4">
+      <h6>
+        <form>
+          <label for="type">{{ 'general.catalogues.dataset.type' | translate }}</label>
+          <br>
+          <nb-select fullWidth [placeholder]="placeholders.type" [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
+            <nb-option-group title="type">
+              <nb-option value="Service Catalogue">Service Catalogue</nb-option>
+              <nb-option value="Json">Json</nb-option>
+            </nb-option-group>
+          </nb-select>
+          <br>
+          <br>
+          <label for="name" fullWidth>{{ 'general.catalogues.dataset.name' | translate }}</label>
+          <br>
+          <input [(ngModel)]="name" nbInput type="text" fullWidth [placeholder]="placeholders.name"
+            [ngModelOptions]="{standalone: true}" />
+          <br>
+          <br>
+          <label for="URL">{{ 'general.catalogues.dataset.URL' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.URL" [(ngModel)]="URL"
+            [ngModelOptions]="{standalone: true}">
+          <br>
+          <br>
+          <label *ngIf="type=='Service Catalogue'" for="authentication method">{{ 'general.catalogues.dataset.authentication_method' | translate }}</label>
+          <nb-select *ngIf="type=='Service Catalogue'" fullWidth [placeholder]="placeholders.authenticationMethod" [(ngModel)]="authenticationMethod"
+            [ngModelOptions]="{standalone: true}">
+            <nb-option-group title="authentication method">
+              <nb-option value="Basic">Basic</nb-option>
+              <nb-option value="Oauth2">Oauth2</nb-option>
+            </nb-option-group>
+          </nb-select>
+          <br *ngIf="type=='Service Catalogue'">
+          <br *ngIf="type=='Service Catalogue'">
+          <label *ngIf="type=='Service Catalogue'" for="username">{{
+            'general.catalogues.dataset.username' | translate
+            }}</label>
+          <br *ngIf="type=='Service Catalogue'">
+          <input *ngIf="type=='Service Catalogue'" type="text" nbInput fullWidth
+            fieldSize="small" [placeholder]="placeholders.username" [(ngModel)]="username"
+            [ngModelOptions]="{standalone: true}">
+          <br *ngIf="type=='Service Catalogue'">
+          <br *ngIf="type=='Service Catalogue'">
+
+          <label *ngIf="type=='Service Catalogue'" for="password">{{
+            'general.catalogues.dataset.password' | translate
+            }}</label>
+          <br *ngIf="type=='Service Catalogue'">
+          <input *ngIf="type=='Service Catalogue'" type="text" nbInput fullWidth
+            fieldSize="small" [placeholder]="placeholders.password" [(ngModel)]="password"
+            [ngModelOptions]="{standalone: true}">
+          <br *ngIf="type=='Service Catalogue'">
+          <br *ngIf="type=='Service Catalogue'">
+
+          <label *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" for="portal URL">{{
+            'general.catalogues.dataset.portal_URL' | translate
+            }}</label>
+          <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
+          <input *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" type="text" nbInput fullWidth
+            fieldSize="small" [placeholder]="placeholders.portalURL" [(ngModel)]="portalURL"
+            [ngModelOptions]="{standalone: true}">
+          <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
+          <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
+          <label *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" for="Client ID">{{
+            'general.catalogues.dataset.client_ID' | translate }}</label>
+          <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
+          <input *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" type="text" nbInput fullWidth
+            fieldSize="small" [placeholder]="placeholders.clientID" [(ngModel)]="clientID"
+            [ngModelOptions]="{standalone: true}">
+          <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
+          <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
+          <label *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" for="Client Secret">{{
+            'general.catalogues.dataset.client_secret' | translate }}</label>
+          <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
+          <input *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" type="text" nbInput fullWidth
+            fieldSize="small" [placeholder]="placeholders.clientSecret" [(ngModel)]="clientSecret"
+            [ngModelOptions]="{standalone: true}">
+          <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
+          <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
+          <h3>
+            <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+              (click)="onEdit(); ref.close()">
+              <i class="mx-1">{{ 'general.catalogues.dataset.confirm' | translate }}</i>
+            </button>
+            &nbsp;
+          </h3>
+        </form>
+      </h6>
+    </nb-card-body>
+  </nb-card>
+</ng-template>

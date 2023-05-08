@@ -7,9 +7,9 @@ import { NgxConfigureService } from 'ngx-configure';
 import { AppConfig, System } from '../../../model/appConfig';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CatalogueEntry } from '../../../model/catalogue/catalogueEntry';//TODO
+import { CatalogueEntry } from '../../../model/catalogue/catalogueEntry';
 import { NbDialogService } from '@nebular/theme';
-import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
 import { ConnectorStatusRenderComponent } from '../../services/availableConnectors/custom-status-render.component';
@@ -19,15 +19,32 @@ import { AvailableCataloguesService } from '../availableCatalogues/availableCata
 import { StatusRenderComponent } from '../availableCatalogues/status-render/status-render.component';
 import { AddCatalogueComponent } from '../availableCatalogues/add-catalogue/add-catalogue.component';
 import { ActionsCatalogueMenuRenderComponent } from '../availableCatalogues/actions-catalogue-menu-render/actions-catalogue-menu-render.component';
+import { CatalogueDataset } from '../../../model/catalogue/catalogueDataset';
+import { ManageConfigurationsService } from '../manage-configurations/manage-configurations.service';
 @Component({
   selector: 'remote-catalogues',
   templateUrl: './remote-catalogues.component.html',
   styleUrls: ['./remote-catalogues.component.css']
 })
-export class RemoteCataloguesComponent implements OnInit {
+export class RemoteCataloguesComponent implements OnInit, OnChanges {
   @Input() value: CatalogueEntry;
+  //@Input() selectedDataset: CatalogueDataset;
   @Output() updateResult = new EventEmitter<unknown>();
 
+  datasets: CatalogueDataset[];
+  selectedDatasetName: string;
+  selectedDataset: CatalogueDataset = {
+    name: undefined,
+    type: undefined,
+    URL: undefined,
+    portalURL: undefined,
+    authenticationMethod: undefined,
+    password: undefined,
+    username: undefined,
+    clientSecret: '',
+    clientID: '',
+    catalogueDatasetID: undefined
+  };
   schemaDir: string;
   loading = false;
   public isNew = false;
@@ -51,9 +68,11 @@ export class RemoteCataloguesComponent implements OnInit {
   private availableCatalogues: CatalogueEntry[];
   private unsubscribe: Subject<void> = new Subject();
   errorService: ErrorDialogService;
+  homePageLabel: string;
 
   constructor(
     private loginService: LoginService,
+    private availableCatalogueDatasetsService: ManageConfigurationsService,
     private availableCataloguesService: AvailableCataloguesService,
     private translate: TranslateService,
     private configService: NgxConfigureService,
@@ -74,27 +93,30 @@ export class RemoteCataloguesComponent implements OnInit {
       this.systemConfig.editorSchemaName;
     this.loading = true;
   }
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    console.log("ngOnChanges", this.selectedDataset, "\n", this.selectedDatasetName, "\n", changes)
+    this.selectedDataset = this.datasets.filter(dataset => dataset.name = this.selectedDatasetName)[0]
+    //console.log("ngOnChanges", this.datasets.filter(name => name = this.selectedDataset)[0], this.selectedDataset)
+    await this.ngOnInit()
+    //this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
+    //void await this.source.load(this.availableCatalogues);
+  }
 
-  refresh(catalogueIn) {
+  setValue() {
 
-    let apiEndpoint = catalogueIn.apiEndpoint
-    if ((Date.now() > (catalogueIn.lastRefresh + parseInt(catalogueIn.refresh))) && catalogueIn.active == "active") {
-      let catalogueTmp: CatalogueEntry = catalogueIn
-      catalogueTmp.lastRefresh = Date.now()
-      this.availableServicesService.getRemoteServicesCount(apiEndpoint)
-        .then((value) => {
-          catalogueTmp.services = value.total;
-          this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID);
-          this.ngOnInit()
-        });
-    }
-    return catalogueIn.services
+    console.log("ngOnChanges", this.selectedDataset)
+    this.selectedDataset = this.datasets.filter(dataset => dataset.name = this.selectedDatasetName)[0]
+    console.log("ngOnChanges", this.datasets.filter(name => name = this.selectedDataset)[0], this.selectedDataset)
+    this.ngOnInit()
   }
 
   async ngOnInit() {
     try {
-      this.availableCatalogues = await this.availableCataloguesService.getCatalogues();
-      void this.source.load(this.availableCatalogues);
+      this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
+      if (!this.selectedDataset.catalogueDatasetID) this.selectedDataset = this.datasets[0]
+      if (!this.selectedDatasetName) this.selectedDatasetName = this.selectedDataset.name
+      this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
+      void await this.source.load(this.availableCatalogues);
     } catch (error) {
       console.log("error:<\n", error, ">\n")
       if (error.statusCode === '401' || error.status == 401) {
@@ -132,6 +154,7 @@ export class RemoteCataloguesComponent implements OnInit {
 
   loadTableSettings(): Record<string, unknown> {
     this.nameLabel = this.translate.instant('general.catalogues.name') as string;
+    this.homePageLabel = this.translate.instant('general.catalogues.home_page') as string;
     this.countryLabel = this.translate.instant('general.catalogues.country') as string;
     this.actionsLabel = this.translate.instant('general.catalogues.actions') as string;
     this.infoLabel = this.translate.instant('general.catalogues.details') as string;
@@ -152,7 +175,7 @@ export class RemoteCataloguesComponent implements OnInit {
       },
 
       columns: {
-        id: {
+        name: {
           title: this.nameLabel,
           type: 'text',
           width: '25%',
@@ -164,39 +187,12 @@ export class RemoteCataloguesComponent implements OnInit {
           width: '25%',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row.country,
         },
-        services: {
-          title: this.servicesLabel,
+        host: {
+          title: this.homePageLabel,
           type: 'text',
           width: '25%',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => this.refresh(row),
+          valuePrepareFunction: (cell, row: CatalogueEntry) => row.homePage,
         },
-        status: {
-          title: this.statusLabel,
-          sort: false,
-          filter: false,
-          width: '5%',
-          type: 'custom',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row.status,
-          renderComponent: StatusRenderComponent,
-        },
-        active: {
-          title: this.activeLabel,
-          sort: false,
-          filter: false,
-          width: '5%',
-          type: 'custom',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row.active,
-          renderComponent: StatusRenderComponent,
-        },
-        /*info: {
-          title: this.infoLabel,
-          filter: false,
-          sort: false,
-          width: '5%',
-          type: 'custom',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row,
-          //renderComponent: CatalogueInfoRenderComponent,//TODO
-        },*/
         actions: {
           title: this.actionsLabel,
           sort: false,
