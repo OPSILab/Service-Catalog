@@ -28,11 +28,11 @@ import { ManageConfigurationsService } from '../manage-configurations/manage-con
 })
 export class RemoteCataloguesComponent implements OnInit, OnChanges {
   @Input() value: CatalogueEntry;
-  //@Input() selectedDataset: CatalogueDataset;
+  @Input() selectedDatasetName: string;
   @Output() updateResult = new EventEmitter<unknown>();
 
   datasets: CatalogueDataset[];
-  selectedDatasetName: string;
+  //selectedDatasetName: string;
   selectedDataset: CatalogueDataset = {
     name: undefined,
     type: undefined,

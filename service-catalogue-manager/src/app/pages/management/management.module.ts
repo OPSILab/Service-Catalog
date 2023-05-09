@@ -29,6 +29,7 @@ import { RemoteCataloguesComponent } from './remote-catalogues/remote-catalogues
 import { ManageConfigurationsComponent } from './manage-configurations/manage-configurations.component';
 import { AddRemoteCatalogueDatasetComponent } from './manage-configurations/add-remote-catalogue-dataset/add-remote-catalogue-dataset.component';
 import { ActionsMenuRenderComponent } from './manage-configurations/actions-menu-render/actions-menu-render.component';
+import { RemoteCataloguesSelectComponent } from './remote-catalogues/remote-catalogues-select/remote-catalogues-select.component';
 
 
 @NgModule({
@@ -62,7 +63,8 @@ import { ActionsMenuRenderComponent } from './manage-configurations/actions-menu
     RemoteCataloguesComponent,
     ManageConfigurationsComponent,
     AddRemoteCatalogueDatasetComponent,
-    ActionsMenuRenderComponent
+    ActionsMenuRenderComponent,
+    RemoteCataloguesSelectComponent
   ],
   providers: [AvailableCataloguesService],
   entryComponents: [
