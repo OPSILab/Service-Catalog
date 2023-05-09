@@ -207,6 +207,8 @@
                 "input text",
                 "file",
                 "select",
+                "radio",
+                "checkbox",
                 "text area",
                 "date",
                 "datetime-local",
@@ -225,6 +227,8 @@
                   "input text",
                   "file",
                   "select",
+                  "radio button",
+                  "checkbox",
                   "text area",
                   "date",
                   "datetime-local",
@@ -242,6 +246,14 @@
                 "grid_columns": 12
               },
               "default": "input text"
+            },
+
+            "multiple": {
+              "type": "boolean",
+              "title": "Multiple",
+              "description": "If the property can have multiple values",
+              "format": "checkbox",
+              "default": false
             },
 
             "required": {
@@ -278,7 +290,7 @@
               "$ref": "../../wallet-schema/wallet-schemas.json"
             }
           },
-          "required": ["property", "name", "type", "required", "readonly", "datamap"]
+          "required": ["property", "name", "type", "multiple","required", "readonly", "datamap"]
         }
       }
     }
