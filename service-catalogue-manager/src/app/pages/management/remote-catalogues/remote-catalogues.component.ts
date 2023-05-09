@@ -29,6 +29,7 @@ import { ManageConfigurationsService } from '../manage-configurations/manage-con
 export class RemoteCataloguesComponent implements OnInit, OnChanges {
   @Input() value: CatalogueEntry;
   @Input() selectedDatasetName: string;
+  @Input() availableCatalogues: CatalogueEntry[];
   @Output() updateResult = new EventEmitter<unknown>();
 
   datasets: CatalogueDataset[];
@@ -65,7 +66,7 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
   public settings: Record<string, unknown>;
   private locale: string;
   public source: LocalDataSource = new LocalDataSource();
-  private availableCatalogues: CatalogueEntry[];
+  //availableCatalogues: CatalogueEntry[];
   private unsubscribe: Subject<void> = new Subject();
   errorService: ErrorDialogService;
   homePageLabel: string;
@@ -103,7 +104,6 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
   }
 
   setValue() {
-
     console.log("ngOnChanges", this.selectedDataset)
     this.selectedDataset = this.datasets.filter(dataset => dataset.name = this.selectedDatasetName)[0]
     console.log("ngOnChanges", this.datasets.filter(name => name = this.selectedDataset)[0], this.selectedDataset)

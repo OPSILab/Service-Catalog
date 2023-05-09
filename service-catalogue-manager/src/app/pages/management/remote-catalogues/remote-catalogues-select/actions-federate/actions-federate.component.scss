@@ -1,0 +1,61 @@
+@import '../../../../../@theme/styles/themes';
+
+@include nb-install-component() {
+  input {
+    text-align: center;
+    width: 100%;
+  }
+
+  nb-card {
+    text-align: center;
+    min-width: 40rem;
+    max-height: 100vh;
+    overflow-y: scroll;
+  }
+
+  nb-card-header {
+    text-align: center;
+  }
+
+  textarea {
+    text-align: center;
+  }
+
+  h3 {
+    text-align: center;
+  }
+  h2 {
+    text-align: left;
+  }
+  h6 {
+    text-align: left;
+    font-weight: normal;
+  }
+  h8 {
+    text-align: left;
+  }
+
+  input[type="text"] {
+    //font-size: 18px;
+    font-weight: normal;
+    text-align: left;
+  }
+
+  textarea {
+    //font-size: 18px;
+    font-weight: normal;
+    text-align: left;
+  }
+
+  label{
+    text-align: left;
+  }
+
+  .btn-success {
+    margin-left: 1rem;
+  }
+
+  i{
+    text-align: left;
+  }
+}

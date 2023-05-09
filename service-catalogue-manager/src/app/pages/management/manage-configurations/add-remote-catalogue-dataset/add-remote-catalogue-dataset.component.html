@@ -39,27 +39,27 @@
             <nb-option value="Oauth2">Oauth2</nb-option>
           </nb-option-group>
         </nb-select>
-        <br *ngIf="type=='Service Catalogue'">
-        <br *ngIf="type=='Service Catalogue'">
-        <label *ngIf="type=='Service Catalogue'" for="username">{{
+        <br *ngIf="type=='Service Catalogue' && authenticationMethod">
+        <br *ngIf="type=='Service Catalogue'&& authenticationMethod">
+        <label *ngIf="type=='Service Catalogue' && authenticationMethod=='Basic'" for="username">{{
           'general.catalogues.dataset.username' | translate
           }}</label>
-        <br *ngIf="type=='Service Catalogue'">
-        <input *ngIf="type=='Service Catalogue'" type="text" nbInput fullWidth
+        <br *ngIf="type=='Service Catalogue' && authenticationMethod=='Basic'">
+        <input *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'" type="text" nbInput fullWidth
           fieldSize="small" [placeholder]="placeholders.username" [(ngModel)]="username"
           [ngModelOptions]="{standalone: true}">
-        <br *ngIf="type=='Service Catalogue'">
-        <br *ngIf="type=='Service Catalogue'">
+        <br *ngIf="type=='Service Catalogue' && authenticationMethod=='Basic'">
+        <br *ngIf="type=='Service Catalogue' && authenticationMethod=='Basic'">
 
-        <label *ngIf="type=='Service Catalogue'" for="password">{{
+        <label *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'" for="password">{{
           'general.catalogues.dataset.password' | translate
           }}</label>
-        <br *ngIf="type=='Service Catalogue'">
-        <input *ngIf="type=='Service Catalogue'" type="text" nbInput fullWidth
+        <br *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'">
+        <input *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'" type="text" nbInput fullWidth
           fieldSize="small" [placeholder]="placeholders.password" [(ngModel)]="password"
           [ngModelOptions]="{standalone: true}">
-        <br *ngIf="type=='Service Catalogue'">
-        <br *ngIf="type=='Service Catalogue'">
+        <br *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'">
+        <br *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'">
 
         <label *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" for="portal URL">{{
           'general.catalogues.dataset.portal_URL' | translate

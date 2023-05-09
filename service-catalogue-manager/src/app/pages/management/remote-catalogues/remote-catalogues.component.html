@@ -1,13 +1,13 @@
 <nb-card>
   <nb-card-header class="h3">
     {{ 'general.menu.remote_catalogues' | translate }}
-  </nb-card-header>
 
+  </nb-card-header>
   <nb-card-body>
     <div class="g-0 row mb-2">
-      <!--<remote-catalogues-select-- [selectedDatasetName] = selectedDatasetName></remote-catalogues-select-->
       <div class="col-6 col-md-6 text-left">
-        <nb-select fullWidth placeholder="{{ 'general.catalogues.catalogue_dataset' | translate }}" [(ngModel)]="selectedDatasetName" [ngModelOptions]="{standalone: true}">
+        <nb-select fullWidth placeholder="{{ 'general.catalogues.catalogue_dataset' | translate }}"
+          [(ngModel)]="selectedDatasetName" [ngModelOptions]="{standalone: true}">
           <nb-option-group title="Datasets">
             <nb-option *ngFor="let dataset of datasets" value={{dataset.name}}>{{dataset.name}}</nb-option>
           </nb-option-group>
@@ -20,6 +20,7 @@
         </button>
       </div>
     </div>
-    <ng2-smart-table [settings]="settings" [source]="source"> </ng2-smart-table>
+    <remote-catalogues-select [selectedDatasetName]=selectedDatasetName availableCatalogues=(updateResult)>
+    </remote-catalogues-select>
   </nb-card-body>
 </nb-card>
