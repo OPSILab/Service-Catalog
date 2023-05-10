@@ -28,7 +28,11 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
 							"/swagger-ui/**",
 							"/api-docs/**",
 							"/api/v2/catalogues",
+							"/api/v2/catalogue",
+							"/api/v2/catalogues/**",
+							"/api/v2/catalogues**",
 							"api/v2/catalogue/**",
+							"api/v2/catalogue**",
 							"/api/v2/catalogueDataset/**",
 							"/api/v2/catalogueDatasets")
 							.permitAll().anyRequest().authenticated())

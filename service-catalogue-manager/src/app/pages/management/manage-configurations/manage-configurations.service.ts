@@ -37,12 +37,12 @@ export class ManageConfigurationsService {
   }
 
   getCatalogueDataset(catalogueDatasetID: string): Promise<CatalogueDataset> {
-    return this.http.get<CatalogueDataset>(`${this.serviceRegistryUrl}/api/v2/catalogueDataset?catalogueDatasetID=${catalogueDatasetID}`).toPromise();
+    return this.http.get<CatalogueDataset>(`${this.serviceRegistryUrl}/api/v2/catalogueDatasets/json?catalogueDatasetID=${catalogueDatasetID}`).toPromise();
   }
 
   saveCatalogueDataset(catalogueDataset: CatalogueDataset): Promise<CatalogueDataset> {
     try {
-      return this.http.post<CatalogueDataset>(`${this.serviceRegistryUrl}/api/v2/catalogueDataset`, catalogueDataset).toPromise();
+      return this.http.post<CatalogueDataset>(`${this.serviceRegistryUrl}/api/v2/catalogueDatasets`, catalogueDataset).toPromise();
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
@@ -59,11 +59,11 @@ export class ManageConfigurationsService {
   }
 
   updateCatalogueDataset(catalogueDataset: CatalogueDataset, catalogueDatasetID: string): Promise<CatalogueDataset> {
-    return this.http.put<CatalogueDataset>(`${this.serviceRegistryUrl}/api/v2/catalogueDataset?catalogueDatasetID=${catalogueDataset.catalogueDatasetID}`, catalogueDataset).toPromise();
+    return this.http.put<CatalogueDataset>(`${this.serviceRegistryUrl}/api/v2/catalogueDatasets?catalogueDatasetID=${catalogueDataset.catalogueDatasetID}`, catalogueDataset).toPromise();
   }
 
   deleteCatalogueDataset(catalogueDatasetID: string): Promise<CatalogueDataset> {
-    return this.http.delete<CatalogueDataset>(`${this.serviceRegistryUrl}/api/v2/catalogueDataset?catalogueDatasetID=${catalogueDatasetID}`).toPromise();
+    return this.http.delete<CatalogueDataset>(`${this.serviceRegistryUrl}/api/v2/catalogueDatasets?catalogueDatasetID=${catalogueDatasetID}`).toPromise();
   }
 }
 

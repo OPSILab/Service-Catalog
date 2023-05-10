@@ -134,7 +134,7 @@ export class FederateCatalogueComponent implements OnInit {
   async onSubmit() {
     try {
       let name = this.name,
-        catalogueID = new String(Date.now()) + JSON.stringify(Math.random() * 999999999999999) + name,
+        catalogueID = this.catalogueID,
         competentAuthority = this.competentAuthority,
         country = this.country,
         category = this.category,

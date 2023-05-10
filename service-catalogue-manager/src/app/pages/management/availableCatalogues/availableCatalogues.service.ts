@@ -48,7 +48,7 @@ export class AvailableCataloguesService {
   }
 
   getCatalogue(catalogueID: string): Promise<CatalogueEntry> {
-    return this.http.get<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogueID}`).toPromise();
+    return this.http.get<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues/json?catalogueID=${catalogueID}`).toPromise();
   }
 
   saveCatalogue(catalogue: CatalogueEntry): Promise<CatalogueEntry> {

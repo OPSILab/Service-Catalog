@@ -51,7 +51,8 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
   homePageLabel: string;
   datasets: CatalogueDataset[];
   selectedDataset: CatalogueDataset;
-  availableCatalogues: import("c:/Users/Demetrix/Downloads/Repository/Service-Catalogue/service-catalogue-manager/src/app/model/catalogue/catalogueEntry").CatalogueEntry[];
+  availableCatalogues: CatalogueEntry[];
+
 
 
   //selectedDatasetName: string;
@@ -91,9 +92,22 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     //console.log("changes ", changes['selectedDatasetName'].currentValue)
     this.selectedDataset = this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0]// || this.datasets[0]
     //for (let i in this.selectedDataset) console.log(this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0][i])//console.log(i, "", this.selectedDataset[i])
-    try {this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);}
-    catch{this.availableCatalogues = []}
-    void await this.source.load(this.availableCatalogues);
+    try { this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL); }
+    catch { this.availableCatalogues = [] }
+    let notfederatedCatalogues: CatalogueEntry[] = [];
+    for (let remoteCatalogue of this.availableCatalogues) {
+      let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogue(remoteCatalogue.catalogueID);
+      console.log("get catalogue by catalogue ID", cataloguesAlreadyFedarated)
+      if (cataloguesAlreadyFedarated)
+        //if (cataloguesAlreadyFedarated[0].catalogueID) {
+        console.log("******temp[0].catalogueID*******", cataloguesAlreadyFedarated.catalogueID)
+      //}
+      else {
+        notfederatedCatalogues.push(remoteCatalogue)
+      }
+    }
+    console.log("NOT FEDERATED CATALOGUES ", notfederatedCatalogues)
+    void await this.source.load(notfederatedCatalogues);
     this.updateResult.emit(this.availableCatalogues);
   }
 

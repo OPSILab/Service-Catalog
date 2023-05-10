@@ -305,7 +305,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			"Catalogue dataset " }, responses = {
 					@ApiResponse(description = "Get Catalogue dataset  description by catalogue dataset ID.", responseCode = "200") })
 	@Override
-	@GetMapping(value = "/catalogueDataset/json", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/catalogueDatasets/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getCatalogueDataset(@RequestParam("catalogueDatasetID") String catalogueDatasetID)
 	// throws CatalogueDatasetNotFoundException //TODO
 	{
@@ -490,7 +490,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			"Catalogue dataset  Model" }, responses = {
 					@ApiResponse(description = "Create a new catalogue dataset .", responseCode = "201") })
 	@Override
-	@PostMapping(value = "/catalogueDataset")
+	@PostMapping(value = "/catalogueDatasets")
 	public ResponseEntity<CatalogueDataset> createCatalogueDataset(
 			@RequestBody @Valid CatalogueDataset catalogueDataset) {
 		CatalogueDataset result = new CatalogueDataset();
@@ -631,7 +631,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	})
 
 	@Override
-	@PutMapping(value = "/catalogueDataset", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/catalogueDatasets", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<CatalogueDataset> updateCatalogueDataset(
 			@RequestParam("catalogueDatasetID") String catalogueDatasetID,
 			@RequestBody @Valid CatalogueDataset catalogueDataset)
@@ -734,7 +734,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			"Catalogue dataset  Model" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
-	@DeleteMapping(value = "/catalogueDataset")
+	@DeleteMapping(value = "/catalogueDatasets")
 	public ResponseEntity<Object> deleteCatalogueDataset(
 			@RequestParam("catalogueDatasetID") String catalogueDatasetID)
 	// throws Catalogue dataset NotFoundException
