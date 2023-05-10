@@ -79,16 +79,25 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
 
   refresh(catalogueIn) {
 
-    let apiEndpoint = catalogueIn.apiEndpoint
-    if ((Date.now() > (catalogueIn.lastRefresh + parseInt(catalogueIn.refresh))) && catalogueIn.active == "active") {
-      let catalogueTmp: CatalogueEntry = catalogueIn
-      catalogueTmp.lastRefresh = Date.now()
-      this.availableServicesService.getRemoteServicesCount(apiEndpoint)
-        .then((value) => {
-          catalogueTmp.services = value.total;
-          this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID);
-          this.ngOnInit()
-        });
+    try {
+      let apiEndpoint = catalogueIn.apiEndpoint
+      if ((Date.now() > (catalogueIn.lastRefresh + catalogueIn.refresh)) && catalogueIn.active == "active") {
+        console.log("Refreshed!")
+        console.log(Date.now(), " > ", catalogueIn.lastRefresh, " + ", catalogueIn.refresh,
+          " = ", catalogueIn.lastRefresh + catalogueIn.refresh)
+        console.log("Delay ", Date.now() - (catalogueIn.lastRefresh + catalogueIn.refresh))
+        let catalogueTmp: CatalogueEntry = catalogueIn
+        catalogueTmp.lastRefresh = Date.now()
+        this.availableServicesService.getRemoteServicesCount(apiEndpoint)
+          .then((value) => {
+            catalogueTmp.services = value.total;
+            this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID);
+            this.ngOnInit()
+          });
+      }
+    }
+    catch {
+      console.error("API calls error")
     }
     return catalogueIn.services
   }

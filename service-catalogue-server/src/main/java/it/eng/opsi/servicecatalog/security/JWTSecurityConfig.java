@@ -23,7 +23,14 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		if (enableAuth)
 			baseConfig
-					.authorizeRequests(authz -> authz.antMatchers("/swagger-ui.html", "/swagger-ui/**", "/api-docs/**")
+					.authorizeRequests(authz -> authz.antMatchers(
+							"/swagger-ui.html",
+							"/swagger-ui/**",
+							"/api-docs/**",
+							"/api/v2/catalogues",
+							"api/v2/catalogue/**",
+							"/api/v2/catalogueDataset/**",
+							"/api/v2/catalogueDatasets")
 							.permitAll().anyRequest().authenticated())
 					.oauth2ResourceServer(oauth2 -> oauth2.jwt());
 		else

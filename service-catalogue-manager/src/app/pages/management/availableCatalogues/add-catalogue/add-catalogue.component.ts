@@ -147,7 +147,12 @@ export class AddCatalogueComponent implements OnInit {
         services,
         lastRefresh = Date.now();
 
-        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
+        try {
+          services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
+        }
+        catch{
+          services = 0;
+        }
 
         switch(this.refresh) {
           case 'Every day' : refresh = 86400000; break;

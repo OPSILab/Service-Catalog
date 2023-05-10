@@ -106,6 +106,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log("init")
     this.catalogueID = this.value.catalogueID
     this.country = this.value.country
     this.competentAuthority = this.value.competentAuthority
@@ -163,6 +164,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   translatedActionLabels(): NbMenuItem[] {
+    console.log("Translated acions label called")
     if (this.registered) {
       return [
         {
@@ -212,7 +214,12 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         services,
         lastRefresh = this.lastRefresh;
 
-        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
+        try {
+          services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
+        }
+        catch{
+          services = 0;
+        }
 
         switch(this.refresh) {
           case 'Every day' : refresh = 86400000; break;

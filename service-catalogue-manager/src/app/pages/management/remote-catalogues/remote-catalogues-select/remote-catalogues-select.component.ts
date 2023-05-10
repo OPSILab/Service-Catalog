@@ -16,6 +16,7 @@ import { AppConfig, System } from '../../../../model/appConfig';
 import { AvailableServicesService } from '../../../services/availableServices/availableServices.service';
 import { FederateCatalogueComponent } from '../federate-catalogue/federate-catalogue.component';
 import { ActionsFederateComponent } from './actions-federate/actions-federate.component';
+import { InfoRenderRemoteCatalogueComponent } from '../info-render-remote-catalogue/info-render-remote-catalogue.component';
 
 @Component({
   selector: 'remote-catalogues-select',
@@ -57,6 +58,7 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
 
   private systemConfig: System;
   private config: AppConfig;
+  detailsLabel: string;
   //availableCatalogues: CatalogueEntry[];
 
   constructor(
@@ -122,6 +124,7 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     this.statusLabel = this.translate.instant('general.catalogues.status') as string;
     this.activeLabel = this.translate.instant('general.catalogues.active') as string;
     this.servicesLabel = this.translate.instant('general.catalogues.services') as string;
+    this.detailsLabel = this.translate.instant('general.catalogues.details') as string;
 
     return {
       mode: 'external',
@@ -153,6 +156,15 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
           type: 'text',
           width: '25%',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row.homePage,
+        },
+        details: {
+          title: this.detailsLabel,
+          filter: false,
+          sort: false,
+          width: '5%',
+          type: 'custom',
+          valuePrepareFunction: (cell, row: CatalogueEntry) => row,
+          renderComponent: InfoRenderRemoteCatalogueComponent,
         },
         actions: {
           title: this.actionsLabel,

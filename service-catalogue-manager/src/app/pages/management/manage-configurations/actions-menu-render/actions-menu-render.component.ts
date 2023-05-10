@@ -90,6 +90,7 @@ export class ActionsMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log("init")
     this.catalogueDatasetID = this.value.catalogueDatasetID
     this.authenticationMethod = this.value.authenticationMethod
     this.password = this.value.password
@@ -134,6 +135,7 @@ export class ActionsMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   translatedActionLabels(): NbMenuItem[] {
+    console.log("Translated acions label called in manage configurations")
     return [
       {
         title: this.translate.instant('general.catalogues.dataset.edit') as string,
