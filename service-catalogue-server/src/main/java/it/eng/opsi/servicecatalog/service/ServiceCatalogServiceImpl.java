@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 import it.eng.opsi.servicecatalog.exception.AdapterLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotEditableException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotFoundException;
+import it.eng.opsi.servicecatalog.exception.CatalogueDatasetNotEditableException;
+import it.eng.opsi.servicecatalog.exception.CatalogueDatasetNotFoundException;
 import it.eng.opsi.servicecatalog.exception.CatalogueNotEditableException;
 import it.eng.opsi.servicecatalog.exception.CatalogueNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorLogNotFoundException;
@@ -590,7 +592,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		if (catalogue == null)
 			return catalogue;
 		Catalogue catalogueTemp = new Catalogue();
-		System.out.println(catalogue.getCatalogueID());
 		catalogueTemp.setLastRefresh(catalogue.getLastRefresh());
 		catalogueTemp.setAuthenticated(catalogue.isAuthenticated());
 		if (catalogue.getActive() != null)
@@ -762,11 +763,11 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			catalogueDatasetIn.setCatalogueDatasetID(uriBasePath + catalogueDatasetIn.getCatalogueDatasetID());
 
 		if (!decodedCatalogueDatasetID.equals(catalogueDatasetIn.getCatalogueDatasetID()))
-			throw new CatalogueNotEditableException("catalogueID in the path and the one in the body mismatch.");
+			throw new CatalogueDatasetNotEditableException("catalogueID in the path and the one in the body mismatch.");
 
 		CatalogueDataset catalogueDataset = catalogueDatasetRepo
 				.updateCatalogueDataset(decodedCatalogueDatasetID, catalogueDatasetIn).orElseThrow(
-						() -> new CatalogueNotFoundException(
+						() -> new CatalogueDatasetNotFoundException(
 								"No Catalogue description found for Catalogue Id: " + decodedCatalogueDatasetID));
 
 		if (catalogueDataset == null)

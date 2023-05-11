@@ -14,6 +14,8 @@ import com.github.andrewoma.dexx.collection.internal.adapter.Adapters;
 import it.eng.opsi.servicecatalog.exception.AdapterLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotEditableException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotFoundException;
+import it.eng.opsi.servicecatalog.exception.CatalogueDatasetNotEditableException;
+import it.eng.opsi.servicecatalog.exception.CatalogueDatasetNotFoundException;
 import it.eng.opsi.servicecatalog.exception.CatalogueNotEditableException;
 import it.eng.opsi.servicecatalog.exception.CatalogueNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ConnectorLogNotFoundException;
@@ -39,10 +41,8 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<List<Catalogue>> getCatalogues() throws CatalogueNotFoundException;
 
-	public abstract ResponseEntity<List<CatalogueDataset>> getCatalogueDatasets() throws CatalogueNotFoundException;// TODO
-																													// catalogue
-																													// dataset
-																													// exception
+	public abstract ResponseEntity<List<CatalogueDataset>> getCatalogueDatasets()
+			throws CatalogueDatasetNotFoundException;
 
 	public abstract ResponseEntity<List<ConnectorLog>> getConnectorLogs() throws ConnectorLogNotFoundException;
 
@@ -89,7 +89,7 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<CatalogueDataset> updateCatalogueDataset(String catalogueDatasetID,
 			CatalogueDataset catalogue)
-			throws CatalogueNotFoundException, CatalogueNotEditableException;
+			throws CatalogueDatasetNotFoundException, CatalogueDatasetNotEditableException;
 
 	public abstract ResponseEntity<Adapter> updateAdapter(String adapterId, Adapter adapter)
 			throws AdapterNotFoundException, AdapterNotEditableException;
@@ -106,13 +106,15 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<Object> deleteCatalogue(String identifier) throws CatalogueNotFoundException;
 
-	public abstract ResponseEntity<Object> deleteCatalogueDataset(String identifier) throws CatalogueNotFoundException;
+	public abstract ResponseEntity<Object> deleteCatalogueDataset(String identifier)
+			throws CatalogueDatasetNotFoundException;
 
 	public abstract ResponseEntity<?> getConnector(String serviceId) throws ConnectorNotFoundException;
 
 	public abstract ResponseEntity<?> getCatalogue(String catalogueID) throws CatalogueNotFoundException;
 
-	public abstract ResponseEntity<?> getCatalogueDataset(String catalogueDatasetID) throws CatalogueNotFoundException;
+	public abstract ResponseEntity<?> getCatalogueDataset(String catalogueDatasetID)
+			throws CatalogueDatasetNotFoundException;
 
 	public abstract ResponseEntity<?> getAdapter(String serviceId) throws AdapterNotFoundException;
 
