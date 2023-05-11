@@ -553,6 +553,8 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		for (Catalogue catalogue : catalogues) {
 			Catalogue catalogueTemp = new Catalogue();
 			catalogueTemp.setLastRefresh(catalogue.getLastRefresh());
+			catalogueTemp.setAuthenticated(catalogue.isAuthenticated());
+
 			if (catalogue.getActive() != null)
 				catalogueTemp.setActive(catalogue.getActive());
 			if (catalogue.getApiEndpoint() != null)
@@ -588,7 +590,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		if (catalogue == null)
 			return catalogue;
 		Catalogue catalogueTemp = new Catalogue();
+		System.out.println(catalogue.getCatalogueID());
 		catalogueTemp.setLastRefresh(catalogue.getLastRefresh());
+		catalogueTemp.setAuthenticated(catalogue.isAuthenticated());
 		if (catalogue.getActive() != null)
 			catalogueTemp.setActive(catalogue.getActive());
 		if (catalogue.getApiEndpoint() != null)
@@ -621,6 +625,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		Catalogue catalogue = catalogueRepo.save(catalogueIn);
 		Catalogue catalogueTemp = new Catalogue();
+		catalogueTemp.setAuthenticated(catalogue.isAuthenticated());
 		if (catalogue.getActive() != null)
 			catalogueTemp.setActive(catalogue.getActive());
 		if (catalogue.getApiEndpoint() != null)
@@ -664,6 +669,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 								"No Catalogue description found for Catalogue Id: " + decodedCataloguecatalogueID));
 
 		Catalogue catalogueTemp = new Catalogue();
+		catalogueTemp.setAuthenticated(catalogueUpdated.isAuthenticated());
 		if (catalogueUpdated.getActive() != null)
 			catalogueTemp.setActive(catalogueUpdated.getActive());
 		if (catalogueUpdated.getApiEndpoint() != null)

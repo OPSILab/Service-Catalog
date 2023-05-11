@@ -150,7 +150,8 @@ export class AddCatalogueComponent implements OnInit {
         try {
           services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
         }
-        catch{
+        catch(error){
+          console.error(error)
           services = 0;
         }
 

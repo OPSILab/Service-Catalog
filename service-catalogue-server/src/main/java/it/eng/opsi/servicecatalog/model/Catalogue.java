@@ -114,6 +114,11 @@ public class Catalogue {
     // @NotNull
     private String clientID;
 
+    @JsonProperty("clientSecret")
+    @Valid
+    // @NotNull
+    private String clientSecret;
+
     @JsonProperty("lastRefresh")
     @Valid
     // @NotNull

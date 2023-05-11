@@ -50,7 +50,6 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   status: string = 'inactive'
   type: string;
   authenticated: boolean;
-  oAuth2Endpoint: string;
   clientID: string;
   clientSecret: string;
   actions: NbMenuItem[];
@@ -81,6 +80,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
   @ViewChild('editCatalogue', { static: false }) editCatalogue: TemplateRef<unknown>;
   validURL: boolean;
+  oAuth2Endpoint: string;
 
   constructor(
     private http: HttpClient,

@@ -219,7 +219,10 @@
           </nb-select>
           <br>
           <br>
-          <nb-checkbox (checkedChange)="toggle($event)">
+          <nb-checkbox *ngIf="authenticated"(checkedChange)="toggle($event)" checked="true">
+            Authenticated
+          </nb-checkbox>
+          <nb-checkbox *ngIf="!authenticated"(checkedChange)="toggle($event)" checked="false">
             Authenticated
           </nb-checkbox>
           <br *ngIf="authenticated">
