@@ -111,9 +111,9 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<?> getConnector(String serviceId) throws ConnectorNotFoundException;
 
-	public abstract ResponseEntity<?> getCatalogue(String catalogueID) throws CatalogueNotFoundException;
+	public abstract ResponseEntity<?> getCatalogue(String catalogueID, String name) throws CatalogueNotFoundException;
 
-	public abstract ResponseEntity<?> getCatalogueDataset(String catalogueDatasetID)
+	public abstract ResponseEntity<?> getCatalogueDataset(String catalogueDatasetID, String name)
 			throws CatalogueDatasetNotFoundException;
 
 	public abstract ResponseEntity<?> getAdapter(String serviceId) throws AdapterNotFoundException;

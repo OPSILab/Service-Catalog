@@ -28,4 +28,6 @@ public interface CatalogueRepository extends MongoRepository<Catalogue, String>,
 	public HashMap<String, Object> getTotalCount();
 
 	public List<Catalogue> findBytype(String type);
+
+	public Catalogue findByname(String name);
 }

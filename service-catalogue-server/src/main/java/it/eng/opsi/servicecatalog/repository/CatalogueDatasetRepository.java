@@ -30,4 +30,6 @@ public interface CatalogueDatasetRepository
 	public HashMap<String, Object> getTotalCount();
 
 	public List<CatalogueDataset> findBytype(String type);
+
+	public CatalogueDataset findByname(String name);
 }

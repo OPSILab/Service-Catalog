@@ -132,7 +132,11 @@ public interface IServiceCatalogService {
 
       public abstract Catalogue getCatalogueBycatalogueID(String catalogueID);
 
+      public abstract Catalogue getCatalogueByName(String name);
+
       public abstract CatalogueDataset getCatalogueDatasetBycatalogueDatasetID(String catalogueDatasetID);
+
+      public abstract CatalogueDataset getCatalogueDatasetByName(String name);
 
       public abstract Catalogue createCatalogue(@Valid Catalogue catalogue);
 

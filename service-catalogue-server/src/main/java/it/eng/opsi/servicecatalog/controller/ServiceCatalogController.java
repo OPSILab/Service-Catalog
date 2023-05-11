@@ -287,16 +287,13 @@ public class ServiceCatalogController implements IServiceCatalogController {
 					@ApiResponse(description = "Get Catalogue description by catalogueID.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/catalogues/json", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getCatalogue(@RequestParam("catalogueID") String catalogueID)
+	public ResponseEntity<?> getCatalogue(@RequestParam(required = false) String catalogueID,
+			@RequestParam(required = false) String name)
 			throws CatalogueNotFoundException {
 
-		if (StringUtils.isBlank(catalogueID))
-			throw new IllegalArgumentException("Illegal catalogueID in input");
-
-		String decodedCataloguecatalogueID = java.net.URLDecoder.decode(catalogueID,
-				StandardCharsets.UTF_8);
-
-		return ResponseEntity.ok(catalogService.getCatalogueBycatalogueID(decodedCataloguecatalogueID));
+		if (name != null)
+			return ResponseEntity.ok(catalogService.getCatalogueByName(catalogueID));
+		return ResponseEntity.ok(catalogService.getCatalogueBycatalogueID(catalogueID));
 	}
 
 	// Dataset
@@ -305,16 +302,13 @@ public class ServiceCatalogController implements IServiceCatalogController {
 					@ApiResponse(description = "Get Catalogue dataset  description by catalogue dataset ID.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/catalogueDatasets/json", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getCatalogueDataset(@RequestParam("catalogueDatasetID") String catalogueDatasetID)
+	public ResponseEntity<?> getCatalogueDataset(@RequestParam(required = false) String catalogueDatasetID,
+			@RequestParam(required = false) String name)
 			throws CatalogueDatasetNotFoundException {
 
-		if (StringUtils.isBlank(catalogueDatasetID))
-			throw new IllegalArgumentException("Illegal catalogue dataset ID in input");
-
-		String decodedCatalogueDatasetID = java.net.URLDecoder.decode(catalogueDatasetID,
-				StandardCharsets.UTF_8);
-
-		return ResponseEntity.ok(catalogService.getCatalogueDatasetBycatalogueDatasetID(decodedCatalogueDatasetID));
+		if (name != null)
+			return ResponseEntity.ok(catalogService.getCatalogueDatasetByName(name));
+		return ResponseEntity.ok(catalogService.getCatalogueDatasetBycatalogueDatasetID(catalogueDatasetID));
 	}
 
 	@Override

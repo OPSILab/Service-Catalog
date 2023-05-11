@@ -295,7 +295,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public Long getServicesIsPersonaDataHandlingCount() {
-		// TODO Auto-generated method stub
 		return serviceModelRepo.countServicesIsPersonalDataHandling();
 	}
 
@@ -802,6 +801,66 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	public CatalogueDataset getCatalogueDatasetBycatalogueDatasetID(String catalogueDatasetID) {
 
 		CatalogueDataset catalogueDataset = catalogueDatasetRepo.findBycatalogueDatasetID(catalogueDatasetID);
+
+		if (catalogueDataset == null)
+			return catalogueDataset;
+
+		CatalogueDataset catalogueDatasetTemp = new CatalogueDataset();
+
+		if (catalogueDataset.getAuthenticationMethod() != null)
+			catalogueDatasetTemp.setAuthenticationMethod(catalogueDataset.getAuthenticationMethod());
+		if (catalogueDataset.getCatalogueDatasetID() != null)
+			catalogueDatasetTemp.setCatalogueDatasetID(catalogueDataset.getCatalogueDatasetID());
+		if (catalogueDataset.getURL() != null)
+			catalogueDatasetTemp.setURL(catalogueDataset.getURL());
+		if (catalogueDataset.getPortalURL() != null)
+			catalogueDatasetTemp.setPortalURL(catalogueDataset.getPortalURL());
+		if (catalogueDataset.getName() != null)
+			catalogueDatasetTemp.setName(catalogueDataset.getName());
+		if (catalogueDataset.getType() != null)
+			catalogueDatasetTemp.setType(catalogueDataset.getType());
+
+		return catalogueDatasetTemp;
+	}
+
+	@Override
+	public Catalogue getCatalogueByName(String name) {
+		Catalogue catalogue = catalogueRepo.findByname(name);
+		if (catalogue == null)
+			return catalogue;
+		Catalogue catalogueTemp = new Catalogue();
+		catalogueTemp.setLastRefresh(catalogue.getLastRefresh());
+		catalogueTemp.setAuthenticated(catalogue.isAuthenticated());
+		if (catalogue.getActive() != null)
+			catalogueTemp.setActive(catalogue.getActive());
+		if (catalogue.getApiEndpoint() != null)
+			catalogueTemp.setApiEndpoint(catalogue.getApiEndpoint());
+		if (catalogue.getCatalogueID() != null)
+			catalogueTemp.setCatalogueID(catalogue.getCatalogueID());
+		if (catalogue.getCategory() != null)
+			catalogueTemp.setCategory(catalogue.getCategory());
+		if (catalogue.getCompetentAuthority() != null)
+			catalogueTemp.setCompetentAuthority(catalogue.getCompetentAuthority());
+		if (catalogue.getCountry() != null)
+			catalogueTemp.setCountry(catalogue.getCountry());
+		if (catalogue.getDescription() != null)
+			catalogueTemp.setDescription(catalogue.getDescription());
+		if (catalogue.getHomePage() != null)
+			catalogueTemp.setHomePage(catalogue.getHomePage());
+		if (catalogue.getName() != null)
+			catalogueTemp.setName(catalogue.getName());
+		if (catalogue.getOAuth2Endpoint() != null)
+			catalogueTemp.setOAuth2Endpoint(catalogue.getOAuth2Endpoint());
+		catalogueTemp.setRefresh(catalogue.getRefresh());
+		catalogueTemp.setServices(catalogue.getServices());
+		if (catalogue.getType() != null)
+			catalogueTemp.setType(catalogue.getType());
+		return catalogueTemp;
+	}
+
+	@Override
+	public CatalogueDataset getCatalogueDatasetByName(String name) {
+		CatalogueDataset catalogueDataset = catalogueDatasetRepo.findByname(name);
 
 		if (catalogueDataset == null)
 			return catalogueDataset;

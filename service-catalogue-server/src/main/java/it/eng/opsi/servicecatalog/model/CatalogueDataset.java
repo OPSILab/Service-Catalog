@@ -51,7 +51,7 @@ public class CatalogueDataset {
 
     @JsonProperty("URL")
     @Valid
-    // @NotNull
+    @NotNull
     private String URL;
 
     @JsonProperty("portalURL")

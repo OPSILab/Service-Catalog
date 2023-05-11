@@ -41,7 +41,7 @@ public class Catalogue {
 
     @JsonProperty("catalogueID")
     @Valid
-    @NotNull
+    // @NotNull
     private String catalogueID;
 
     @JsonProperty("name")
@@ -76,7 +76,7 @@ public class Catalogue {
 
     @JsonProperty("apiEndpoint")
     @Valid
-    // @NotNull
+    @NotNull
     private String apiEndpoint;
 
     @JsonProperty("type")
@@ -86,42 +86,42 @@ public class Catalogue {
 
     @JsonProperty("active")
     @Valid
-    // @NotNull
+    @NotNull
     private String active;
 
     @JsonProperty("refresh")
     @Valid
-    // @NotNull
+    @NotNull
     private long refresh;
 
     @JsonProperty("authenticated")
     @Valid
-    // @NotNull
+    @NotNull
     private boolean authenticated;
 
     @JsonProperty("services")
     @Valid
-    // @NotNull
+    @NotNull
     private int services;
 
     @JsonProperty("oAuth2Endpoint")
     @Valid
-    // @NotNull
+    @NotNull
     private String oAuth2Endpoint;
 
     @JsonProperty("clientID")
     @Valid
-    // @NotNull
+    @NotNull
     private String clientID;
 
     @JsonProperty("clientSecret")
     @Valid
-    // @NotNull
+    @NotNull
     private String clientSecret;
 
     @JsonProperty("lastRefresh")
     @Valid
-    // @NotNull
+    @NotNull
     private long lastRefresh;
 
 }
