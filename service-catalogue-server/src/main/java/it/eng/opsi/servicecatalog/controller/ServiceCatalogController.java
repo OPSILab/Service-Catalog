@@ -92,7 +92,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@Operation(summary = "Get all the catalogue descriptions.", description = "Get all the catalogue descriptions saved in the Service Catalog.", tags = {
 			"Catalogue" }, responses = {
 					@ApiResponse(description = "Returns the list of all registered catalogue descriptions.", responseCode = "200") })
-	@GetMapping(value = "/catalogues", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/catalogues/public", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Catalogue>> getCatalogues()
 			throws CatalogueNotFoundException {
 		return ResponseEntity.ok(catalogService.getCatalogues());
@@ -102,7 +102,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@Operation(summary = "Get all the catalogue datasets descriptions.", description = "Get all the catalogue datasets descriptions saved in the Service Catalog.", tags = {
 			"Catalogue Dataset" }, responses = {
 					@ApiResponse(description = "Returns the list of all registered catalogue datasets descriptions.", responseCode = "200") })
-	@GetMapping(value = "/catalogueDatasets", produces = MediaType.APPLICATION_JSON_VALUE)
+	@GetMapping(value = "/catalogueDatasets/public", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CatalogueDataset>> getCatalogueDatasets()
 			throws CatalogueDatasetNotFoundException {
 		return ResponseEntity.ok(catalogService.getCatalogueDatasets());

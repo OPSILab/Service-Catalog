@@ -31,61 +31,6 @@
           [ngModelOptions]="{standalone: true}">
         <br>
         <br>
-        <label *ngIf="type=='Service Catalogue'" for="authentication method">{{ 'general.catalogues.dataset.authentication_method' | translate }}</label>
-        <nb-select *ngIf="type=='Service Catalogue'" fullWidth [placeholder]="placeholders.authenticationMethod" [(ngModel)]="authenticationMethod"
-          [ngModelOptions]="{standalone: true}">
-          <nb-option-group title="authentication method">
-            <nb-option value="Basic">Basic</nb-option>
-            <nb-option value="Oauth2">Oauth2</nb-option>
-          </nb-option-group>
-        </nb-select>
-        <br *ngIf="type=='Service Catalogue' && authenticationMethod">
-        <br *ngIf="type=='Service Catalogue'&& authenticationMethod">
-        <label *ngIf="type=='Service Catalogue' && authenticationMethod=='Basic'" for="username">{{
-          'general.catalogues.dataset.username' | translate
-          }}</label>
-        <br *ngIf="type=='Service Catalogue' && authenticationMethod=='Basic'">
-        <input *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'" type="text" nbInput fullWidth
-          fieldSize="small" [placeholder]="placeholders.username" [(ngModel)]="username"
-          [ngModelOptions]="{standalone: true}">
-        <br *ngIf="type=='Service Catalogue' && authenticationMethod=='Basic'">
-        <br *ngIf="type=='Service Catalogue' && authenticationMethod=='Basic'">
-
-        <label *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'" for="password">{{
-          'general.catalogues.dataset.password' | translate
-          }}</label>
-        <br *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'">
-        <input *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'" type="text" nbInput fullWidth
-          fieldSize="small" [placeholder]="placeholders.password" [(ngModel)]="password"
-          [ngModelOptions]="{standalone: true}">
-        <br *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'">
-        <br *ngIf="type=='Service Catalogue'&& authenticationMethod=='Basic'">
-
-        <label *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" for="portal URL">{{
-          'general.catalogues.dataset.portal_URL' | translate
-          }}</label>
-        <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
-        <input *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" type="text" nbInput fullWidth
-          fieldSize="small" [placeholder]="placeholders.portalURL" [(ngModel)]="portalURL"
-          [ngModelOptions]="{standalone: true}">
-        <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
-        <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
-        <label *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" for="Client ID">{{
-          'general.catalogues.dataset.client_ID' | translate }}</label>
-        <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
-        <input *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" type="text" nbInput fullWidth
-          fieldSize="small" [placeholder]="placeholders.clientID" [(ngModel)]="clientID"
-          [ngModelOptions]="{standalone: true}">
-        <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
-        <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
-        <label *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" for="Client Secret">{{
-          'general.catalogues.dataset.client_secret' | translate }}</label>
-        <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
-        <input *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'" type="text" nbInput fullWidth
-          fieldSize="small" [placeholder]="placeholders.clientSecret" [(ngModel)]="clientSecret"
-          [ngModelOptions]="{standalone: true}">
-        <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
-        <br *ngIf="type=='Service Catalogue'&&authenticationMethod=='Oauth2'">
         <h3>
           <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
             (click)="confirm()">

@@ -22,7 +22,7 @@ export class ManageConfigurationsService {
   getCatalogueDatasets(): CatalogueDataset[] | Promise<CatalogueDataset[]> {
     try {
       console.debug("get datasets")
-      return this.http.get<CatalogueDataset[]>(`${this.serviceRegistryUrl}/api/v2/catalogueDatasets`).toPromise();
+      return this.http.get<CatalogueDataset[]>(`${this.serviceRegistryUrl}/api/v2/catalogueDatasets/public`).toPromise();
     }
     catch (error) {
       console.log("AvailableCatalogueDatasetsService: catalogueDatasets not found")

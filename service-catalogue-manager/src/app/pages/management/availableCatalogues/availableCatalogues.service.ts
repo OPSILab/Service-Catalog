@@ -20,7 +20,7 @@ export class AvailableCataloguesService {
   }
   getCatalogues(): CatalogueEntry[] | Promise<CatalogueEntry[]> {
     try {
-      return this.http.get<CatalogueEntry[]>(`${this.serviceRegistryUrl}/api/v2/catalogues`).toPromise();
+      return this.http.get<CatalogueEntry[]>(`${this.serviceRegistryUrl}/api/v2/catalogues/public`).toPromise();
     }
     catch (error) {
       console.log("AvailableCataloguesService: catalogues not found")
@@ -33,7 +33,7 @@ export class AvailableCataloguesService {
   getRemoteCatalogues(url): CatalogueEntry[] | Promise<CatalogueEntry[]> {
     try {
       console.debug("get remote  catalogues\n", url)
-      return this.http.get<CatalogueEntry[]>(url+"/api/v2/catalogues").toPromise();
+      return this.http.get<CatalogueEntry[]>(url+"/api/v2/catalogues/public").toPromise();
     }
     catch (error) {
       console.log("AvailableCataloguesService: catalogues not found")
