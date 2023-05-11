@@ -62,6 +62,10 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<HashMap<String, Object>> getAdaptersCount();
 
+	public abstract ResponseEntity<HashMap<String, Integer>> getCataloguesCount();
+
+	public abstract ResponseEntity<HashMap<String, Integer>> getCatalogueDatasetsCount();
+
 	public abstract ResponseEntity<ServiceModel> createService(ServiceModel service);
 
 	public abstract ResponseEntity<Catalogue> createCatalogue(Catalogue catalogue);

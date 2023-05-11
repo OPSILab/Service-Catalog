@@ -882,4 +882,14 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		return catalogueDatasetTemp;
 	}
+
+	@Override
+	public HashMap<String, Integer> getCataloguesCount() {
+		return catalogueRepo.getTotalCount();
+	}
+
+	@Override
+	public HashMap<String, Integer> getCatalogueDatasetsCount() {
+		return catalogueDatasetRepo.getTotalCount();
+	}
 }

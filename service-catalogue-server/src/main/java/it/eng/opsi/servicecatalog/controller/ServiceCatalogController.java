@@ -390,6 +390,25 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
+	@Operation(summary = "Get the count of the registered Catalogues descriptions (total, public and private services).", tags = {
+			"Catalogue" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
+	@GetMapping(value = "/catalogues/count", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HashMap<String, Integer>> getCataloguesCount() {
+
+		return ResponseEntity.ok(catalogService.getCataloguesCount());
+	}
+
+	@Override
+	@Operation(summary = "Get the count of the registered CatalogueDatasets descriptions (total, public and private services).", tags = {
+			"CatalogueDataset" }, responses = {
+					@ApiResponse(description = "Returns the count.", responseCode = "200") })
+	@GetMapping(value = "/catalogueDatasets/count", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<HashMap<String, Integer>> getCatalogueDatasetsCount() {
+
+		return ResponseEntity.ok(catalogService.getCatalogueDatasetsCount());
+	}
+
+	@Override
 	@Operation(summary = "Get the count of the registered Connector descriptions.", tags = {
 			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/connectors/count", produces = MediaType.APPLICATION_JSON_VALUE)

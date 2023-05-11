@@ -150,4 +150,8 @@ public interface IServiceCatalogService {
                   @Valid CatalogueDataset catalogueDataset);
 
       public abstract void deleteCatalogueDataset(String decodedCatalogueDatasetID);
+
+      public abstract HashMap<String, Integer> getCataloguesCount();
+
+      public abstract HashMap<String, Integer> getCatalogueDatasetsCount();
 }

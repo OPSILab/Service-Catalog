@@ -21,7 +21,9 @@
       "businessEvent": "Business Event",
       "publicServices": "Public Services",
       "privateServices": "Private Services",
-      "personalDataServices": "Using Personal Data"
+      "personalDataServices": "Using Personal Data",
+      "federatedCatalogues" : "Federated Catalogues",
+      "catalogueDatasets" : "Catalogue Datasets"
     },
     "menu": {
       "dashboard": "Dashboard",

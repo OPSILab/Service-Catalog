@@ -7,6 +7,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { AvailableConnectorsService } from '../services/availableConnectors/availableConnectors.service';
 import { ServicesCount } from '../../model/services/servicesCount';
 import { AvailableAdaptersService } from '../services/available-adapters/available-adapters.service';
+import { AvailableCataloguesService } from '../management/availableCatalogues/availableCatalogues.service';
+import { ManageConfigurationsService } from '../management/manage-configurations/manage-configurations.service';
 
 
 interface CardSettings {
@@ -33,6 +35,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     private servicesService: AvailableServicesService,
     private connectorsService: AvailableConnectorsService,
+    private availableCataloguesService: AvailableCataloguesService,
+    private catalogueDatasetsService: ManageConfigurationsService,
     private router: Router,
     private translateService: TranslateService,
     private loginService: LoginService,
@@ -81,6 +85,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
           iconClass: 'nb-power',
           type: 'success',
           value: await this.connectorsService.getConnectorsCount()==null? '0': (await this.connectorsService.getConnectorsCount()).total.toString(),
+        },
+        {
+          title: this.translateService.instant('general.dashboard.catalogueDatasets') as string,
+          iconClass: 'nb-power',
+          type: 'success',
+          value: await this.availableCataloguesService.getCataloguesCount()==null? '0': (await this.availableCataloguesService.getCataloguesCount()).total.toString(),
+        },
+        {
+          title: this.translateService.instant('general.dashboard.federatedCatalogues') as string,
+          iconClass: 'nb-power',
+          type: 'success',
+          value: await this.catalogueDatasetsService.getCatalogueDatasetsCount()==null? '0': (await this.catalogueDatasetsService.getCatalogueDatasetsCount()).total.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.publicServices') as string,

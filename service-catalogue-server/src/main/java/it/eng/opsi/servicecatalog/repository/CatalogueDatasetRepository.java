@@ -27,7 +27,7 @@ public interface CatalogueDatasetRepository
 	@Aggregation(pipeline = {
 			" {$group:{'_id':'_','publicCatalogueDatasets':{$sum:{$cond:['$isPublicCatalogueDataset',1,0]}},'privateCatalogueDatasets':{$sum:{$cond:['$isPublicCatalogueDataset',0,1]}}}}",
 			"{$project:{'_id':0,'publicCatalogueDatasets':1,'privateCatalogueDatasets':1,'total':{$sum:['$publicCatalogueDatasets','$privateCatalogueDatasets']}}}" })
-	public HashMap<String, Object> getTotalCount();
+	public HashMap<String, Integer> getTotalCount();
 
 	public List<CatalogueDataset> findBytype(String type);
 

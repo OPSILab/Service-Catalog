@@ -21,7 +21,9 @@
       "event": "Eventi",
       "publicServices": "Servizi pubblici",
       "privateServices": "Servizi privati",
-      "personalDataServices": "Uso di dati personali"
+      "personalDataServices": "Uso di dati personali",
+      "federatedCatalogues" : "Cataloghi federati",
+      "catalogueDatasets" : "Dataset cataloghi"
     },
     "menu": {
       "dashboard": "Cruscotto",

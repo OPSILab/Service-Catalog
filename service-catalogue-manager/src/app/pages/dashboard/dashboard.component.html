@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-xxxl-3 col-md-6" *ngFor="let statusCard of auditCardSet">
-    <ngx-status-card [title]="statusCard.title" [type]="statusCard.type" [iconClass]="statusCard.iconClass" [value]="statusCard.value">
+    <ngx-status-card [title]="statusCard.title" [type]="statusCard.type" [iconClass]="statusCard.iconClass"
+      [value]="statusCard.value">
       <i [ngClass]="statusCard.iconClass"></i>
       <!-- <div _ngcontent-xyp-c15="" class="icon-container"><div _ngcontent-xyp-c15="" class="icon status-primary">
 
@@ -10,7 +11,6 @@
     </ngx-status-card>
   </div>
 </div>
-
 
 <div class="px-0 row d-flex justify-content-center">
   <div class="col-lg-6" *ngIf="servicesCountByLocation && (servicesCountByLocation | keyvalue)?.length">
@@ -47,6 +47,22 @@
       </nb-card-body>
     </nb-card>
   </div>
+  <!--
+  <div class="col-lg-6" *ngIf="servicesCountByThematicArea && (servicesCountByThematicArea | keyvalue)?.length">
+    <nb-card>
+      <nb-card-header>{{ 'general.dashboard.federatedCatalogues' | translate }}</nb-card-header>
+      <nb-card-body>
+        <category-pie [inputData]="servicesCountByThematicArea"></category-pie>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-6" *ngIf="servicesCountByThematicArea && (servicesCountByThematicArea | keyvalue)?.length">
+    <nb-card>
+      <nb-card-header>{{ 'general.dashboard.catalogueDatasets' | translate }}</nb-card-header>
+      <nb-card-body>
+        <category-pie [inputData]="servicesCountByThematicArea"></category-pie>
+      </nb-card-body>
+    </nb-card>
+  </div>
+-->
 </div>
-
-

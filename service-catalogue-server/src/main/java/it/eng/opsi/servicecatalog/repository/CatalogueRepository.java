@@ -25,7 +25,7 @@ public interface CatalogueRepository extends MongoRepository<Catalogue, String>,
 	@Aggregation(pipeline = {
 			" {$group:{'_id':'_','publicCatalogues':{$sum:{$cond:['$isPublicCatalogue',1,0]}},'privateCatalogues':{$sum:{$cond:['$isPublicCatalogue',0,1]}}}}",
 			"{$project:{'_id':0,'publicCatalogues':1,'privateCatalogues':1,'total':{$sum:['$publicCatalogues','$privateCatalogues']}}}" })
-	public HashMap<String, Object> getTotalCount();
+	public HashMap<String, Integer> getTotalCount();
 
 	public List<Catalogue> findBytype(String type);
 
