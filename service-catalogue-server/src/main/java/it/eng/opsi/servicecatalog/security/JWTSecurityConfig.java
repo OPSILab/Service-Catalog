@@ -31,6 +31,7 @@ public class JWTSecurityConfig extends WebSecurityConfigurerAdapter {
 							"/api/v2/catalogues/json/**",
 							"/api/v2/catalogueDatasets/json/**",
 							"/api/v2/catalogueDatasets/public/**",
+							"/api/v2/status",
 							"/api/v2//services/count/**")
 							.permitAll().anyRequest().authenticated())
 					.oauth2ResourceServer(oauth2 -> oauth2.jwt());

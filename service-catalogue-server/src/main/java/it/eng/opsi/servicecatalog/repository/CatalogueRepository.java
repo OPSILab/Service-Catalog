@@ -30,4 +30,6 @@ public interface CatalogueRepository extends MongoRepository<Catalogue, String>,
 	public List<Catalogue> findBytype(String type);
 
 	public Catalogue findByname(String name);
+
+	public List<Catalogue> findBycountry(String country);
 }

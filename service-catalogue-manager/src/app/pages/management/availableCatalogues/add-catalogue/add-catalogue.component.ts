@@ -144,16 +144,8 @@ export class AddCatalogueComponent implements OnInit {
         oAuth2Endpoint = this.oAuth2Endpoint,
         clientSecret = this.clientSecret,
         clientID = this.clientID,
-        services,
+        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total,
         lastRefresh = Date.now();
-
-        try {
-          services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
-        }
-        catch(error){
-          console.error(error)
-          services = 0;
-        }
 
         switch(this.refresh) {
           case 'Every day' : refresh = 86400000; break;

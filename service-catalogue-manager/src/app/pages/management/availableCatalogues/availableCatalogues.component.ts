@@ -31,7 +31,9 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   @Output() updateResult = new EventEmitter<unknown>();
 
   schemaDir: string;
-  loading = false;
+  loading : Boolean = false;
+  status : String = "not set";
+  statusSet = false;
   public isNew = false;
   private systemConfig: System;
   private systemLocale: string;
@@ -96,10 +98,31 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           });
       }
     }
-    catch {
+    catch (error) {
       console.error("API calls error")
+      console.log(error)
     }
     return catalogueIn.services
+  }
+
+  getStatus(row) {
+    if (!this.statusSet)
+      try {
+        this.availableCataloguesService.getStatus(row.apiEndpoint)
+          .then((value: any) => {
+            this.status = value.status;
+            this.statusSet = true;
+            console.log("row ", row , "value", value.status)
+            this.ngOnInit()
+          });
+      }
+      catch (error) {
+        console.log("errors during get status")
+        console.log(error.text)
+      }
+    else
+      console.log("row ", row , "Status set ", this.status)
+    return this.status
   }
 
   async ngOnInit() {
@@ -107,6 +130,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
       this.availableCatalogues = await this.availableCataloguesService.getCatalogues();
       void this.source.load(this.availableCatalogues);
     } catch (error) {
+      console.log("errors during ng on init")
       console.log("error:<\n", error, ">\n")
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
@@ -187,7 +211,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           filter: false,
           width: '5%',
           type: 'custom',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row.status,
+          valuePrepareFunction: async (cell, row: CatalogueEntry) => this.getStatus(row),
           renderComponent: StatusRenderComponent,
         },
         active: {

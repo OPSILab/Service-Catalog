@@ -148,10 +148,8 @@ export class FederateCatalogueComponent implements OnInit {
         oAuth2Endpoint = this.oAuth2Endpoint,
         clientSecret = this.clientSecret,
         clientID = this.clientID,
-        services,
+        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total,
         lastRefresh = Date.now();
-
-      services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
 
       switch (this.refresh) {
         case 'Every day': refresh = 86400000; break;

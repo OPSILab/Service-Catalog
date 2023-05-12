@@ -117,6 +117,8 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<?> getCatalogue(String catalogueID, String name) throws CatalogueNotFoundException;
 
+	public abstract ResponseEntity<?> getCatalogueByCountry(String country) throws CatalogueNotFoundException;
+
 	public abstract ResponseEntity<?> getCatalogueDataset(String catalogueDatasetID, String name)
 			throws CatalogueDatasetNotFoundException;
 
@@ -154,5 +156,7 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<?> getServiceCost(String serviceId) throws ServiceNotFoundException, IOException;
 
 	public abstract ResponseEntity<?> getServiceTime(String serviceId) throws ServiceNotFoundException, IOException;
+
+	public abstract ResponseEntity<?> getStatus();
 
 }

@@ -35,6 +35,7 @@ import it.eng.opsi.servicecatalog.jsonld.Serializer;
 import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.HasServiceInstance;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
+import it.eng.opsi.servicecatalog.model.Status;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Catalogue;
@@ -891,5 +892,52 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public HashMap<String, Integer> getCatalogueDatasetsCount() {
 		return catalogueDatasetRepo.getTotalCount();
+	}
+
+	@Override
+	public Status getStatus() {
+		Status status = new Status();
+		return status;
+	}
+
+	@Override
+	public List<Catalogue> getCatalogueBycountry(String country) {
+		List<Catalogue> catalogues = catalogueRepo.findBycountry(country);
+		if (catalogues == null)
+			return catalogues;
+		List<Catalogue> cataloguesTemp = new ArrayList<Catalogue>();
+
+		for (Catalogue catalogue : catalogues) {
+			Catalogue catalogueTemp = new Catalogue();
+			catalogueTemp.setLastRefresh(catalogue.getLastRefresh());
+			catalogueTemp.setAuthenticated(catalogue.isAuthenticated());
+			if (catalogue.getActive() != null)
+				catalogueTemp.setActive(catalogue.getActive());
+			if (catalogue.getApiEndpoint() != null)
+				catalogueTemp.setApiEndpoint(catalogue.getApiEndpoint());
+			if (catalogue.getCatalogueID() != null)
+				catalogueTemp.setCatalogueID(catalogue.getCatalogueID());
+			if (catalogue.getCategory() != null)
+				catalogueTemp.setCategory(catalogue.getCategory());
+			if (catalogue.getCompetentAuthority() != null)
+				catalogueTemp.setCompetentAuthority(catalogue.getCompetentAuthority());
+			if (catalogue.getCountry() != null)
+				catalogueTemp.setCountry(catalogue.getCountry());
+			if (catalogue.getDescription() != null)
+				catalogueTemp.setDescription(catalogue.getDescription());
+			if (catalogue.getHomePage() != null)
+				catalogueTemp.setHomePage(catalogue.getHomePage());
+			if (catalogue.getName() != null)
+				catalogueTemp.setName(catalogue.getName());
+			if (catalogue.getOAuth2Endpoint() != null)
+				catalogueTemp.setOAuth2Endpoint(catalogue.getOAuth2Endpoint());
+			catalogueTemp.setRefresh(catalogue.getRefresh());
+			catalogueTemp.setServices(catalogue.getServices());
+			if (catalogue.getType() != null)
+				catalogueTemp.setType(catalogue.getType());
+
+			cataloguesTemp.add(catalogue);
+		}
+		return cataloguesTemp;
 	}
 }

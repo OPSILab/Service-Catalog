@@ -11,6 +11,7 @@ import { AppConfig } from '../../../model/appConfig';
   providedIn: 'root'
 })
 export class AvailableCataloguesService {
+
   private serviceRegistryUrl: string;
   private config: AppConfig;
 
@@ -75,6 +76,10 @@ export class AvailableCataloguesService {
 
   deleteCatalogue(catalogueID: string): Promise<CatalogueEntry> {
     return this.http.delete<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogueID}`).toPromise();
+  }
+
+  getStatus(URL: string) {
+    return this.http.get<string>(`${URL}/api/v2/status`).toPromise();
   }
 }
 

@@ -282,9 +282,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getAdapterLogsByadapterId(decodedAdapterAdapterId));
 	}
 
-	@Operation(summary = "Get catalogue description by catalogueID.", tags = {
+	@Operation(summary = "Get catalogue description by catalogueID or name.", tags = {
 			"Catalogue" }, responses = {
-					@ApiResponse(description = "Get Catalogue description by catalogueID.", responseCode = "200") })
+					@ApiResponse(description = "Get Catalogue description by catalogueID or name.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/catalogues/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getCatalogue(@RequestParam(required = false) String catalogueID,
@@ -292,14 +292,25 @@ public class ServiceCatalogController implements IServiceCatalogController {
 			throws CatalogueNotFoundException {
 
 		if (name != null)
-			return ResponseEntity.ok(catalogService.getCatalogueByName(catalogueID));
+			return ResponseEntity.ok(catalogService.getCatalogueByName(name));
 		return ResponseEntity.ok(catalogService.getCatalogueBycatalogueID(catalogueID));
 	}
 
+	@Operation(summary = "Get catalogue description by country.", tags = {
+			"Catalogue" }, responses = {
+					@ApiResponse(description = "Get Catalogue description by country.", responseCode = "200") })
+	@Override
+	@GetMapping(value = "/catalogues/country", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getCatalogueByCountry(@RequestParam String country)
+			throws CatalogueNotFoundException {
+
+		return ResponseEntity.ok(catalogService.getCatalogueBycountry(country));
+	}
+
 	// Dataset
-	@Operation(summary = "Get catalogue dataset  description by catalogue dataset ID.", tags = {
+	@Operation(summary = "Get catalogue dataset  description by catalogue dataset ID or name.", tags = {
 			"Catalogue dataset " }, responses = {
-					@ApiResponse(description = "Get Catalogue dataset  description by catalogue dataset ID.", responseCode = "200") })
+					@ApiResponse(description = "Get Catalogue dataset  description by catalogue dataset ID or name.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/catalogueDatasets/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getCatalogueDataset(@RequestParam(required = false) String catalogueDatasetID,
@@ -892,5 +903,14 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	public ResponseEntity<List<HashMap<String, Object>>> getCountByLocation() {
 
 		return ResponseEntity.ok(catalogService.getCountByLocation());
+	}
+
+	@Override
+	@Operation(summary = "Get Service catalogue's status.", description = "Get Service catalogue's status.", tags = {
+			"Status" }, responses = {
+					@ApiResponse(description = "Returns the Service catalogue's status.", responseCode = "200") })
+	@GetMapping(value = "/status", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getStatus() {
+		return ResponseEntity.ok(catalogService.getStatus());
 	}
 }

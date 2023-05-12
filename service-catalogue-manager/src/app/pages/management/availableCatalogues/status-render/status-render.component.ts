@@ -20,10 +20,11 @@ import { Component, Input, OnInit } from '@angular/core';
 export class StatusRenderComponent implements OnInit {
   active: boolean = false;
 
-  @Input() value: String;
+  @Input() value;
 
   ngOnInit() {
-    this.active = this.value == "active";
+    this.active = this.value == "active" || this.value.__zone_symbol__value == "active";
+    console.log(this.active, " ", this.value)
   }
 }
 
