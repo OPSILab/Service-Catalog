@@ -245,9 +245,9 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         oAuth2Endpoint,
         services,
         lastRefresh
-      } as unknown)) as CatalogueEntry, catalogueID);
+      } as unknown)) as CatalogueEntry, catalogueID, clientSecret ? true : false);
       this.updateResult.emit(this.value);
-      this.showToast('primary', this.translate.instant('general.catalogues.catalogue_edited_message'), '');
+      this.showToast('primary', this.translate.instant('general.catalogues.catalogue_edited_message', { catalogueName: name }), '' );
     }
     catch (error) {
       let errors: Object[] = []
@@ -322,7 +322,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
       .open(this.confirmDeRegisterDialog, {
         hasScroll: false,
         context: {
-          serviceName: this.value.catalogueID,
+          serviceName: this.value.name,
         },
       })
       .onClose.subscribe((confirm) => {
@@ -334,7 +334,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
     try {
       this.value.active = this.value.active == "active" ? "inactive" : "active";
       this.value = await this.availableCataloguesService.registerCatalogue(this.value);
-      this.showToast('primary', this.translate.instant('general.catalogues.catalogue_activated_message', { catalogueName: this.value.catalogueID }), '');
+      this.showToast('primary', this.translate.instant('general.catalogues.catalogue_activated_message', { catalogueName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
       console.log("Error during activating catalogue\n", error)
@@ -348,7 +348,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
     try {
       this.value.active = this.value.active == "active" ? "inactive" : "active";
       this.value = await this.availableCataloguesService.deregisterCatalogue(this.value);
-      this.showToast('primary', this.translate.instant('general.catalogues.catalogue_deactivated_message', { catalogueName: this.value.catalogueID }), '');
+      this.showToast('primary', this.translate.instant('general.catalogues.catalogue_deactivated_message', { catalogueName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
       if (error.statusCode === '401' || error.status == 401) {
@@ -366,7 +366,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
             await this.availableCataloguesService.deleteCatalogue(this.value.catalogueID);
             this.showToast(
               'primary',
-              this.translateService.instant('general.catalogues.catalogue_deleted_message', { catalogueName: this.value.catalogueID }),
+              this.translateService.instant('general.catalogues.catalogue_deleted_message', { catalogueName: this.value.name }),
               ''
             );
             ref.close();

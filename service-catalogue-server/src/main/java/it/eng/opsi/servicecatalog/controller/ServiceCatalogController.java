@@ -3,6 +3,7 @@ package it.eng.opsi.servicecatalog.controller;
 import java.io.IOException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -487,16 +488,20 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@PostMapping(value = "/catalogues")
 	public ResponseEntity<Catalogue> createCatalogue(@RequestBody @Valid Catalogue catalogue) {
 		Catalogue result = new Catalogue();
+		System.out.println("Create new catalogue : \n");
+		System.out.println(catalogue);
 		try {
 
 			if (catalogService.getCatalogueBycatalogueID(catalogue.getCatalogueID()) != null
 					&& (catalogService
 							.getCatalogueBycatalogueID(catalogue.getCatalogueID())).getCatalogueID().equals(catalogue
-									.getCatalogueID()))
+									.getCatalogueID())) {
+				System.out.println("catalogueID already exists");
 				throw new Error("catalogueID already exists");
+			}
 
 			result = catalogService.createCatalogue(catalogue);
-		} catch (Error e) {
+		} catch (Error | NoSuchAlgorithmException e) {
 			System.out.println("Error :");
 			System.out.println(e);
 			return ResponseEntity.badRequest().body(result);
@@ -624,7 +629,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@PutMapping(value = "/catalogues", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Catalogue> updateCatalogue(
 			@RequestParam("catalogueID") String catalogueID,
-			@RequestBody @Valid Catalogue catalogue)
+			@RequestBody @Valid Catalogue catalogue,
+			@RequestParam("secretChanged") boolean secretChanged)
 			throws CatalogueNotFoundException, CatalogueNotEditableException {
 
 		if (StringUtils.isBlank(catalogueID))
@@ -634,7 +640,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				StandardCharsets.UTF_8);
 
 		return ResponseEntity.ok(catalogService.updateCatalogue(
-				decodedCataloguecatalogueID, catalogue));
+				decodedCataloguecatalogueID, catalogue, secretChanged));
 	}
 
 	// Dataset

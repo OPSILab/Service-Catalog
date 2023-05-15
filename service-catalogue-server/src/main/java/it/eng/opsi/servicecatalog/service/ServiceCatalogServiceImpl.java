@@ -2,6 +2,9 @@ package it.eng.opsi.servicecatalog.service;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -550,113 +553,47 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public List<Catalogue> getCatalogues() {
 		List<Catalogue> catalogues = catalogueRepo.findAll();
-		List<Catalogue> cataloguesWithoutAuthenticationData = new ArrayList<Catalogue>() {
-		};
 		for (Catalogue catalogue : catalogues) {
-			Catalogue catalogueTemp = new Catalogue();
-			catalogueTemp.setLastRefresh(catalogue.getLastRefresh());
-			catalogueTemp.setAuthenticated(catalogue.isAuthenticated());
-
-			if (catalogue.getActive() != null)
-				catalogueTemp.setActive(catalogue.getActive());
-			if (catalogue.getApiEndpoint() != null)
-				catalogueTemp.setApiEndpoint(catalogue.getApiEndpoint());
-			if (catalogue.getCatalogueID() != null)
-				catalogueTemp.setCatalogueID(catalogue.getCatalogueID());
-			if (catalogue.getCategory() != null)
-				catalogueTemp.setCategory(catalogue.getCategory());
-			if (catalogue.getCompetentAuthority() != null)
-				catalogueTemp.setCompetentAuthority(catalogue.getCompetentAuthority());
-			if (catalogue.getCountry() != null)
-				catalogueTemp.setCountry(catalogue.getCountry());
-			if (catalogue.getDescription() != null)
-				catalogueTemp.setDescription(catalogue.getDescription());
-			if (catalogue.getHomePage() != null)
-				catalogueTemp.setHomePage(catalogue.getHomePage());
-			if (catalogue.getName() != null)
-				catalogueTemp.setName(catalogue.getName());
-			if (catalogue.getOAuth2Endpoint() != null)
-				catalogueTemp.setOAuth2Endpoint(catalogue.getOAuth2Endpoint());
-			catalogueTemp.setRefresh(catalogue.getRefresh());
-			catalogueTemp.setServices(catalogue.getServices());
-			if (catalogue.getType() != null)
-				catalogueTemp.setType(catalogue.getType());
-			cataloguesWithoutAuthenticationData.add(catalogueTemp);
+			catalogue.setHashedSecret(null);
 		}
-		return cataloguesWithoutAuthenticationData;
+		return catalogues;
 	}
 
 	@Override
 	public Catalogue getCatalogueBycatalogueID(String catalogueID) {
 		Catalogue catalogue = catalogueRepo.findBycatalogueID(catalogueID);
-		if (catalogue == null)
-			return catalogue;
-		Catalogue catalogueTemp = new Catalogue();
-		catalogueTemp.setLastRefresh(catalogue.getLastRefresh());
-		catalogueTemp.setAuthenticated(catalogue.isAuthenticated());
-		if (catalogue.getActive() != null)
-			catalogueTemp.setActive(catalogue.getActive());
-		if (catalogue.getApiEndpoint() != null)
-			catalogueTemp.setApiEndpoint(catalogue.getApiEndpoint());
-		if (catalogue.getCatalogueID() != null)
-			catalogueTemp.setCatalogueID(catalogue.getCatalogueID());
-		if (catalogue.getCategory() != null)
-			catalogueTemp.setCategory(catalogue.getCategory());
-		if (catalogue.getCompetentAuthority() != null)
-			catalogueTemp.setCompetentAuthority(catalogue.getCompetentAuthority());
-		if (catalogue.getCountry() != null)
-			catalogueTemp.setCountry(catalogue.getCountry());
-		if (catalogue.getDescription() != null)
-			catalogueTemp.setDescription(catalogue.getDescription());
-		if (catalogue.getHomePage() != null)
-			catalogueTemp.setHomePage(catalogue.getHomePage());
-		if (catalogue.getName() != null)
-			catalogueTemp.setName(catalogue.getName());
-		if (catalogue.getOAuth2Endpoint() != null)
-			catalogueTemp.setOAuth2Endpoint(catalogue.getOAuth2Endpoint());
-		catalogueTemp.setRefresh(catalogue.getRefresh());
-		catalogueTemp.setServices(catalogue.getServices());
-		if (catalogue.getType() != null)
-			catalogueTemp.setType(catalogue.getType());
-		return catalogueTemp;
+		if (catalogue != null)
+			catalogue.setHashedSecret(null);
+		return catalogue;
 	}
 
 	@Override
-	public Catalogue createCatalogue(@Valid Catalogue catalogueIn) {
+	public Catalogue createCatalogue(@Valid Catalogue catalogueIn) throws NoSuchAlgorithmException {
+
+		System.out.println("-----------------------catalogueIn--------------------------"); // debug
+		System.out.println(catalogueIn); // debug
+
+		if (catalogueIn.getClientSecret() != null) {
+			SecureRandom random = new SecureRandom();
+			byte[] salt = new byte[16];
+			random.nextBytes(salt);
+			MessageDigest md;
+			md = MessageDigest.getInstance("SHA-512");
+			md.update(salt);
+			byte[] hashedPassword = md.digest(catalogueIn.getClientSecret().getBytes(StandardCharsets.UTF_8));
+
+			catalogueIn.setHashedSecret(hashedPassword);
+			catalogueIn.setClientSecret(null);
+		}
 
 		Catalogue catalogue = catalogueRepo.save(catalogueIn);
-		Catalogue catalogueTemp = new Catalogue();
-		catalogueTemp.setAuthenticated(catalogue.isAuthenticated());
-		if (catalogue.getActive() != null)
-			catalogueTemp.setActive(catalogue.getActive());
-		if (catalogue.getApiEndpoint() != null)
-			catalogueTemp.setApiEndpoint(catalogue.getApiEndpoint());
-		if (catalogue.getCatalogueID() != null)
-			catalogueTemp.setCatalogueID(catalogue.getCatalogueID());
-		if (catalogue.getCategory() != null)
-			catalogueTemp.setCategory(catalogue.getCategory());
-		if (catalogue.getCompetentAuthority() != null)
-			catalogueTemp.setCompetentAuthority(catalogue.getCompetentAuthority());
-		if (catalogue.getCountry() != null)
-			catalogueTemp.setCountry(catalogue.getCountry());
-		if (catalogue.getDescription() != null)
-			catalogueTemp.setDescription(catalogue.getDescription());
-		if (catalogue.getHomePage() != null)
-			catalogueTemp.setHomePage(catalogue.getHomePage());
-		if (catalogue.getName() != null)
-			catalogueTemp.setName(catalogue.getName());
-		if (catalogue.getOAuth2Endpoint() != null)
-			catalogueTemp.setOAuth2Endpoint(catalogue.getOAuth2Endpoint());
-		catalogueTemp.setRefresh(catalogue.getRefresh());
-		catalogueTemp.setLastRefresh(catalogue.getLastRefresh());
-		catalogueTemp.setServices(catalogue.getServices());
-		if (catalogue.getType() != null)
-			catalogueTemp.setType(catalogue.getType());
-		return catalogueTemp;
+		catalogue.setHashedSecret(null);
+		return catalogue;
 	}
 
 	@Override
-	public Catalogue updateCatalogue(String decodedCataloguecatalogueID, @Valid Catalogue catalogue) {
+	public Catalogue updateCatalogue(String decodedCataloguecatalogueID, @Valid Catalogue catalogue,
+			boolean secretChanged) {
 
 		if (StringUtils.isBlank(catalogue.getCatalogueID()))
 			catalogue.setCatalogueID(uriBasePath + catalogue.getCatalogueID());
@@ -664,39 +601,36 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		if (!decodedCataloguecatalogueID.equals(catalogue.getCatalogueID()))
 			throw new CatalogueNotEditableException("catalogueID in the path and the one in the body mismatch.");
 
+		Catalogue catalogueTemp = catalogueRepo.findBycatalogueID(decodedCataloguecatalogueID);
+
+		if (!secretChanged && catalogueTemp.getHashedSecret() != null) {
+			catalogue.setHashedSecret(catalogueTemp.getHashedSecret());
+		}
+
+		else if (secretChanged && catalogue.getClientSecret() != null) {
+			SecureRandom random = new SecureRandom();
+			byte[] salt = new byte[16];
+			random.nextBytes(salt);
+			MessageDigest md;
+			try {
+				md = MessageDigest.getInstance("SHA-512");
+				md.update(salt);
+				byte[] hashedPassword = md.digest(catalogue.getClientSecret().getBytes(StandardCharsets.UTF_8));
+				catalogue.setHashedSecret(hashedPassword);
+			} catch (NoSuchAlgorithmException e) {
+				System.out.println(e);
+			}
+		}
+
+		// catalogue.setHashedSecret(hashedPassword);
+
 		Catalogue catalogueUpdated = catalogueRepo.updateCatalogue(decodedCataloguecatalogueID, catalogue)
 				.orElseThrow(
 						() -> new CatalogueNotFoundException(
 								"No Catalogue description found for Catalogue Id: " + decodedCataloguecatalogueID));
 
-		Catalogue catalogueTemp = new Catalogue();
-		catalogueTemp.setAuthenticated(catalogueUpdated.isAuthenticated());
-		if (catalogueUpdated.getActive() != null)
-			catalogueTemp.setActive(catalogueUpdated.getActive());
-		if (catalogueUpdated.getApiEndpoint() != null)
-			catalogueTemp.setApiEndpoint(catalogueUpdated.getApiEndpoint());
-		if (catalogueUpdated.getCatalogueID() != null)
-			catalogueTemp.setCatalogueID(catalogueUpdated.getCatalogueID());
-		if (catalogueUpdated.getCategory() != null)
-			catalogueTemp.setCategory(catalogueUpdated.getCategory());
-		if (catalogueUpdated.getCompetentAuthority() != null)
-			catalogueTemp.setCompetentAuthority(catalogueUpdated.getCompetentAuthority());
-		if (catalogueUpdated.getCountry() != null)
-			catalogueTemp.setCountry(catalogueUpdated.getCountry());
-		if (catalogueUpdated.getDescription() != null)
-			catalogueTemp.setDescription(catalogueUpdated.getDescription());
-		if (catalogueUpdated.getHomePage() != null)
-			catalogueTemp.setHomePage(catalogueUpdated.getHomePage());
-		if (catalogueUpdated.getName() != null)
-			catalogueTemp.setName(catalogueUpdated.getName());
-		if (catalogueUpdated.getOAuth2Endpoint() != null)
-			catalogueTemp.setOAuth2Endpoint(catalogueUpdated.getOAuth2Endpoint());
-		catalogueTemp.setRefresh(catalogueUpdated.getRefresh());
-		catalogueTemp.setLastRefresh(catalogue.getLastRefresh());
-		catalogueTemp.setServices(catalogueUpdated.getServices());
-		if (catalogueUpdated.getType() != null)
-			catalogueTemp.setType(catalogueUpdated.getType());
-		return catalogueTemp;
+		catalogueUpdated.setHashedSecret(null);
+		return catalogueUpdated;
 	}
 
 	@Override
@@ -709,50 +643,13 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public List<CatalogueDataset> getCatalogueDatasets() {
-		//
-		List<CatalogueDataset> catalogueDatasets = catalogueDatasetRepo.findAll();
-		List<CatalogueDataset> catalogueDatasetsWithoutAuthenticationData = new ArrayList<CatalogueDataset>() {
-		};
-		for (CatalogueDataset catalogueDataset : catalogueDatasets) {
-			CatalogueDataset catalogueDatasetTemp = new CatalogueDataset();
-			if (catalogueDataset.getAuthenticationMethod() != null)
-				catalogueDatasetTemp.setAuthenticationMethod(catalogueDataset.getAuthenticationMethod());
-			if (catalogueDataset.getCatalogueDatasetID() != null)
-				catalogueDatasetTemp.setCatalogueDatasetID(catalogueDataset.getCatalogueDatasetID());
-			if (catalogueDataset.getURL() != null)
-				catalogueDatasetTemp.setURL(catalogueDataset.getURL());
-			if (catalogueDataset.getPortalURL() != null)
-				catalogueDatasetTemp.setPortalURL(catalogueDataset.getPortalURL());
-			if (catalogueDataset.getName() != null)
-				catalogueDatasetTemp.setName(catalogueDataset.getName());
-			if (catalogueDataset.getType() != null)
-				catalogueDatasetTemp.setType(catalogueDataset.getType());
-			catalogueDatasetsWithoutAuthenticationData.add(catalogueDatasetTemp);
-		}
-		return catalogueDatasetsWithoutAuthenticationData;
-		//
+		return catalogueDatasetRepo.findAll();
 	}
 
 	@Override
 	public CatalogueDataset createCatalogueDataset(@Valid CatalogueDataset catalogueDataset) {
 
-		catalogueDatasetRepo.save(catalogueDataset);
-		CatalogueDataset catalogueDatasetTemp = new CatalogueDataset();
-
-		if (catalogueDataset.getAuthenticationMethod() != null)
-			catalogueDatasetTemp.setAuthenticationMethod(catalogueDataset.getAuthenticationMethod());
-		if (catalogueDataset.getCatalogueDatasetID() != null)
-			catalogueDatasetTemp.setCatalogueDatasetID(catalogueDataset.getCatalogueDatasetID());
-		if (catalogueDataset.getURL() != null)
-			catalogueDatasetTemp.setURL(catalogueDataset.getURL());
-		if (catalogueDataset.getPortalURL() != null)
-			catalogueDatasetTemp.setPortalURL(catalogueDataset.getPortalURL());
-		if (catalogueDataset.getName() != null)
-			catalogueDatasetTemp.setName(catalogueDataset.getName());
-		if (catalogueDataset.getType() != null)
-			catalogueDatasetTemp.setType(catalogueDataset.getType());
-
-		return catalogueDatasetTemp;
+		return catalogueDatasetRepo.save(catalogueDataset);
 
 	}
 
@@ -765,63 +662,26 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		if (!decodedCatalogueDatasetID.equals(catalogueDatasetIn.getCatalogueDatasetID()))
 			throw new CatalogueDatasetNotEditableException("catalogueID in the path and the one in the body mismatch.");
 
-		CatalogueDataset catalogueDataset = catalogueDatasetRepo
+		return catalogueDatasetRepo
 				.updateCatalogueDataset(decodedCatalogueDatasetID, catalogueDatasetIn).orElseThrow(
 						() -> new CatalogueDatasetNotFoundException(
 								"No Catalogue description found for Catalogue Id: " + decodedCatalogueDatasetID));
 
-		if (catalogueDataset == null)
-			return catalogueDataset;
-
-		CatalogueDataset catalogueDatasetTemp = new CatalogueDataset();
-		if (catalogueDataset.getAuthenticationMethod() != null)
-			catalogueDatasetTemp.setAuthenticationMethod(catalogueDataset.getAuthenticationMethod());
-		if (catalogueDataset.getCatalogueDatasetID() != null)
-			catalogueDatasetTemp.setCatalogueDatasetID(catalogueDataset.getCatalogueDatasetID());
-		if (catalogueDataset.getURL() != null)
-			catalogueDatasetTemp.setURL(catalogueDataset.getURL());
-		if (catalogueDataset.getPortalURL() != null)
-			catalogueDatasetTemp.setPortalURL(catalogueDataset.getPortalURL());
-		if (catalogueDataset.getName() != null)
-			catalogueDatasetTemp.setName(catalogueDataset.getName());
-		if (catalogueDataset.getType() != null)
-			catalogueDatasetTemp.setType(catalogueDataset.getType());
-
-		return catalogueDatasetTemp;
 	}
 
 	@Override
-	public void deleteCatalogueDataset(String decodedCatalogueDatasetID) {
+	public CatalogueDataset deleteCatalogueDataset(String decodedCatalogueDatasetID) {
 
 		if (catalogueDatasetRepo.deleteCatalogueDatasetBycatalogueDatasetID(decodedCatalogueDatasetID) == 0L)
 			throw new ServiceNotFoundException(
 					"No Catalogue description found for Catalogue Id: " + decodedCatalogueDatasetID);
+		return catalogueDatasetRepo.deleteCatalogueDataset(decodedCatalogueDatasetID);
 	}
 
 	@Override
 	public CatalogueDataset getCatalogueDatasetBycatalogueDatasetID(String catalogueDatasetID) {
 
-		CatalogueDataset catalogueDataset = catalogueDatasetRepo.findBycatalogueDatasetID(catalogueDatasetID);
-
-		if (catalogueDataset == null)
-			return catalogueDataset;
-
-		CatalogueDataset catalogueDatasetTemp = new CatalogueDataset();
-
-		if (catalogueDataset.getAuthenticationMethod() != null)
-			catalogueDatasetTemp.setAuthenticationMethod(catalogueDataset.getAuthenticationMethod());
-		if (catalogueDataset.getCatalogueDatasetID() != null)
-			catalogueDatasetTemp.setCatalogueDatasetID(catalogueDataset.getCatalogueDatasetID());
-		if (catalogueDataset.getURL() != null)
-			catalogueDatasetTemp.setURL(catalogueDataset.getURL());
-		if (catalogueDataset.getPortalURL() != null)
-			catalogueDatasetTemp.setPortalURL(catalogueDataset.getPortalURL());
-		if (catalogueDataset.getName() != null)
-			catalogueDatasetTemp.setName(catalogueDataset.getName());
-		if (catalogueDataset.getType() != null)
-			catalogueDatasetTemp.setType(catalogueDataset.getType());
-
-		return catalogueDatasetTemp;
+		return catalogueDatasetRepo.findBycatalogueDatasetID(catalogueDatasetID);
 	}
 
 	@Override
@@ -829,59 +689,15 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		Catalogue catalogue = catalogueRepo.findByname(name);
 		if (catalogue == null)
 			return catalogue;
-		Catalogue catalogueTemp = new Catalogue();
-		catalogueTemp.setLastRefresh(catalogue.getLastRefresh());
-		catalogueTemp.setAuthenticated(catalogue.isAuthenticated());
-		if (catalogue.getActive() != null)
-			catalogueTemp.setActive(catalogue.getActive());
-		if (catalogue.getApiEndpoint() != null)
-			catalogueTemp.setApiEndpoint(catalogue.getApiEndpoint());
-		if (catalogue.getCatalogueID() != null)
-			catalogueTemp.setCatalogueID(catalogue.getCatalogueID());
-		if (catalogue.getCategory() != null)
-			catalogueTemp.setCategory(catalogue.getCategory());
-		if (catalogue.getCompetentAuthority() != null)
-			catalogueTemp.setCompetentAuthority(catalogue.getCompetentAuthority());
-		if (catalogue.getCountry() != null)
-			catalogueTemp.setCountry(catalogue.getCountry());
-		if (catalogue.getDescription() != null)
-			catalogueTemp.setDescription(catalogue.getDescription());
-		if (catalogue.getHomePage() != null)
-			catalogueTemp.setHomePage(catalogue.getHomePage());
-		if (catalogue.getName() != null)
-			catalogueTemp.setName(catalogue.getName());
-		if (catalogue.getOAuth2Endpoint() != null)
-			catalogueTemp.setOAuth2Endpoint(catalogue.getOAuth2Endpoint());
-		catalogueTemp.setRefresh(catalogue.getRefresh());
-		catalogueTemp.setServices(catalogue.getServices());
-		if (catalogue.getType() != null)
-			catalogueTemp.setType(catalogue.getType());
-		return catalogueTemp;
+
+		catalogue.setHashedSecret(null);
+		return catalogue;
 	}
 
 	@Override
 	public CatalogueDataset getCatalogueDatasetByName(String name) {
-		CatalogueDataset catalogueDataset = catalogueDatasetRepo.findByname(name);
+		return catalogueDatasetRepo.findByname(name);
 
-		if (catalogueDataset == null)
-			return catalogueDataset;
-
-		CatalogueDataset catalogueDatasetTemp = new CatalogueDataset();
-
-		if (catalogueDataset.getAuthenticationMethod() != null)
-			catalogueDatasetTemp.setAuthenticationMethod(catalogueDataset.getAuthenticationMethod());
-		if (catalogueDataset.getCatalogueDatasetID() != null)
-			catalogueDatasetTemp.setCatalogueDatasetID(catalogueDataset.getCatalogueDatasetID());
-		if (catalogueDataset.getURL() != null)
-			catalogueDatasetTemp.setURL(catalogueDataset.getURL());
-		if (catalogueDataset.getPortalURL() != null)
-			catalogueDatasetTemp.setPortalURL(catalogueDataset.getPortalURL());
-		if (catalogueDataset.getName() != null)
-			catalogueDatasetTemp.setName(catalogueDataset.getName());
-		if (catalogueDataset.getType() != null)
-			catalogueDatasetTemp.setType(catalogueDataset.getType());
-
-		return catalogueDatasetTemp;
 	}
 
 	@Override
@@ -905,39 +721,10 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		List<Catalogue> catalogues = catalogueRepo.findBycountry(country);
 		if (catalogues == null)
 			return catalogues;
-		List<Catalogue> cataloguesTemp = new ArrayList<Catalogue>();
 
 		for (Catalogue catalogue : catalogues) {
-			Catalogue catalogueTemp = new Catalogue();
-			catalogueTemp.setLastRefresh(catalogue.getLastRefresh());
-			catalogueTemp.setAuthenticated(catalogue.isAuthenticated());
-			if (catalogue.getActive() != null)
-				catalogueTemp.setActive(catalogue.getActive());
-			if (catalogue.getApiEndpoint() != null)
-				catalogueTemp.setApiEndpoint(catalogue.getApiEndpoint());
-			if (catalogue.getCatalogueID() != null)
-				catalogueTemp.setCatalogueID(catalogue.getCatalogueID());
-			if (catalogue.getCategory() != null)
-				catalogueTemp.setCategory(catalogue.getCategory());
-			if (catalogue.getCompetentAuthority() != null)
-				catalogueTemp.setCompetentAuthority(catalogue.getCompetentAuthority());
-			if (catalogue.getCountry() != null)
-				catalogueTemp.setCountry(catalogue.getCountry());
-			if (catalogue.getDescription() != null)
-				catalogueTemp.setDescription(catalogue.getDescription());
-			if (catalogue.getHomePage() != null)
-				catalogueTemp.setHomePage(catalogue.getHomePage());
-			if (catalogue.getName() != null)
-				catalogueTemp.setName(catalogue.getName());
-			if (catalogue.getOAuth2Endpoint() != null)
-				catalogueTemp.setOAuth2Endpoint(catalogue.getOAuth2Endpoint());
-			catalogueTemp.setRefresh(catalogue.getRefresh());
-			catalogueTemp.setServices(catalogue.getServices());
-			if (catalogue.getType() != null)
-				catalogueTemp.setType(catalogue.getType());
-
-			cataloguesTemp.add(catalogue);
+			catalogue.setHashedSecret(null);
 		}
-		return cataloguesTemp;
+		return catalogues;
 	}
 }

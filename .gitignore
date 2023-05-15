@@ -244,3 +244,5 @@ sync.ffs_db
 service-catalogue-server/service-catalogue-server.bat
 service-catalogue-manager/service-catalogue-manager.bat
 test/
+service-catalogue-server/.idea/
+*.hprof

@@ -29,6 +29,7 @@ import lombok.Data;
         "oAuth2Endpoint",
         "clientID",
         "clientSecret",
+        "hashedSecret",
         "services",
         "lastRefresh"
 })
@@ -106,22 +107,27 @@ public class Catalogue {
 
     @JsonProperty("oAuth2Endpoint")
     @Valid
-    @NotNull
+    // @NotNull
     private String oAuth2Endpoint;
 
     @JsonProperty("clientID")
     @Valid
-    @NotNull
+    // @NotNull
     private String clientID;
 
     @JsonProperty("clientSecret")
     @Valid
-    @NotNull
+    // @NotNull
     private String clientSecret;
+
+    @JsonProperty("hashedSecret")
+    @Valid
+    // @NotNull
+    private byte[] hashedSecret;
 
     @JsonProperty("lastRefresh")
     @Valid
-    @NotNull
+    // @NotNull
     private long lastRefresh;
 
 }

@@ -1,4 +1,5 @@
 export interface CatalogueEntry {
+  federated: boolean
   catalogueID : string
   name : string
   country : string

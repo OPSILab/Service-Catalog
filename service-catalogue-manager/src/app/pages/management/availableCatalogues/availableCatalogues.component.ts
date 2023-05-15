@@ -31,8 +31,9 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   @Output() updateResult = new EventEmitter<unknown>();
 
   schemaDir: string;
-  loading : Boolean = false;
-  status : String = "not set";
+  loading: Boolean = false;
+  status: String = "not set";
+  //refreshTry = 0;
   statusSet = false;
   public isNew = false;
   private systemConfig: System;
@@ -55,6 +56,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   private availableCatalogues: CatalogueEntry[];
   private unsubscribe: Subject<void> = new Subject();
   errorService: ErrorDialogService;
+  //refreshLimit: any;
 
   constructor(
     private loginService: LoginService,
@@ -80,8 +82,11 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   }
 
   refresh(catalogueIn) {
-
+    //console.debug("Refresh : ",this.refreshTry, "", this.refreshLimit)
+    //if (3 * this.refreshLimit - this.refreshTry > 0)
     try {
+      //this.refreshTry++;
+      console.log("Refreshing")
       let apiEndpoint = catalogueIn.apiEndpoint
       if ((Date.now() > (catalogueIn.lastRefresh + catalogueIn.refresh)) && catalogueIn.active == "active") {
         console.log("Refreshed!")
@@ -91,17 +96,25 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
         let catalogueTmp: CatalogueEntry = catalogueIn
         catalogueTmp.lastRefresh = Date.now()
         this.availableServicesService.getRemoteServicesCount(apiEndpoint)
-          .then((value) => {
+          .then(async (value) => {
             catalogueTmp.services = value.total;
-            this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID);
-            this.ngOnInit()
+            try {
+              await this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID, false);
+              this.ngOnInit();
+            }
+            catch (error) {
+              console.error(error)
+              console.error("unable to refresh services")
+            }
           });
       }
+      //this.refreshTry = 0;
     }
     catch (error) {
       console.error("API calls error")
       console.log(error)
     }
+    //else console.error("Unable to refresh service count")
     return catalogueIn.services
   }
 
@@ -112,7 +125,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           .then((value: any) => {
             this.status = value.status;
             this.statusSet = true;
-            console.log("row ", row , "value", value.status)
+            console.log("row ", row, "value", value.status)
             this.ngOnInit()
           });
       }
@@ -121,13 +134,14 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
         console.log(error.text)
       }
     else
-      console.log("row ", row , "Status set ", this.status)
+      console.log("row ", row, "Status set ", this.status)
     return this.status
   }
 
   async ngOnInit() {
     try {
       this.availableCatalogues = await this.availableCataloguesService.getCatalogues();
+      //this.refreshLimit = this.availableCatalogues.length;
       void this.source.load(this.availableCatalogues);
     } catch (error) {
       console.log("errors during ng on init")

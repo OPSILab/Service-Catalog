@@ -379,7 +379,8 @@
       "dataset": {
         "dataset_added_message": "A new catalogue dataset was added",
         "delete_dataset_message": "Are you sure to delete permanently the catalogue dataset <strong>{{catalogueDatasetName}}</strong>?\n",
-        "dataset_edited_message": "Catalogue dataset was edited",
+        "dataset_edited_message": "Catalogue dataset {{catalogueDatasetName}} was edited",
+        "dataset_deleted_message": "Catalogue dataset {{catalogueDatasetName}} deleted successfully!",
         "catalogue_dataset": "Catalogue Dataset",
         "delete_dataset": "Delete catalogue",
         "URL": "URL",
@@ -426,7 +427,7 @@
       "catalogue_activated_message": "Catalogue {{catalogueName}} activated successfully!",
       "catalogue_deactivated_message": "Catalogue {{catalogueName}} decativated successfully!",
       "deactivate_catalogue_message": "Are you sure you want to deactivate catalogue <strong>{{catalogueName}}</strong>?\n",
-      "catalogue_edited_message": "Catalogue was edited",
+      "catalogue_edited_message": "Catalogue {{catalogueName}} was edited",
       "catalogue_deleted_message": "Catalogue {{catalogueName}} deleted successfully!",
       "delete_catalogue_message": "Are you sure to delete permanently the catalogue <strong>{{catalogueName}}</strong>?\n",
       "catalogue_added_message": "A new catalogue was added",

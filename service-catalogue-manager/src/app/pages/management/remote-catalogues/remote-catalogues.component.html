@@ -6,7 +6,7 @@
   <nb-card-body>
     <div class="g-0 row mb-2">
       <div class="col-6 col-md-6 text-left">
-        <nb-select fullWidth placeholder="{{ 'general.catalogues.catalogue_dataset' | translate }}"
+        <nb-select fullWidth placeholder="{{ 'general.catalogues.dataset.catalogue_dataset' | translate }}"
           [(ngModel)]="selectedDatasetName" [ngModelOptions]="{standalone: true}">
           <nb-option-group title="Datasets">
             <nb-option *ngFor="let dataset of datasets" value={{dataset.name}}>{{dataset.name}}</nb-option>

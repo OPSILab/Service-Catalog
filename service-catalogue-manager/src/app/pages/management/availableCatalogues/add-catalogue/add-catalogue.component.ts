@@ -151,6 +151,7 @@ export class AddCatalogueComponent implements OnInit {
           case 'Every day' : refresh = 86400000; break;
           case 'Every week' : refresh = 604800000; break;
           case 'Every month' : refresh = 2629800000; break;
+          default : refresh = 604800000; break;
         }
 
 

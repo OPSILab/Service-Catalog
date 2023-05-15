@@ -88,7 +88,8 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<Connector> updateConnector(String connectorId, Connector connector)
 			throws ConnectorNotFoundException, ConnectorNotEditableException;
 
-	public abstract ResponseEntity<Catalogue> updateCatalogue(String catalogueID, Catalogue catalogue)
+	public abstract ResponseEntity<Catalogue> updateCatalogue(String catalogueID, Catalogue catalogue,
+			boolean secretChanged)
 			throws CatalogueNotFoundException, CatalogueNotEditableException;
 
 	public abstract ResponseEntity<CatalogueDataset> updateCatalogueDataset(String catalogueDatasetID,

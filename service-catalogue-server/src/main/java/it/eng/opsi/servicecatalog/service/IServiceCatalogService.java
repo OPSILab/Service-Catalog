@@ -1,6 +1,7 @@
 package it.eng.opsi.servicecatalog.service;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -139,18 +140,19 @@ public interface IServiceCatalogService {
 
       public abstract CatalogueDataset getCatalogueDatasetByName(String name);
 
-      public abstract Catalogue createCatalogue(@Valid Catalogue catalogue);
+      public abstract Catalogue createCatalogue(@Valid Catalogue catalogue) throws NoSuchAlgorithmException;
 
       public abstract CatalogueDataset createCatalogueDataset(@Valid CatalogueDataset catalogueDataset);
 
-      public abstract Catalogue updateCatalogue(String decodedCataloguecatalogueID, @Valid Catalogue catalogue);
+      public abstract Catalogue updateCatalogue(String decodedCataloguecatalogueID, @Valid Catalogue catalogue,
+                  boolean secretChanged);
 
       public abstract void deleteCatalogue(String decodedCataloguecatalogueID);
 
       public abstract CatalogueDataset updateCatalogueDataset(String decodedCatalogueDatasetID,
                   @Valid CatalogueDataset catalogueDataset);
 
-      public abstract void deleteCatalogueDataset(String decodedCatalogueDatasetID);
+      public abstract CatalogueDataset deleteCatalogueDataset(String decodedCatalogueDatasetID);
 
       public abstract HashMap<String, Integer> getCataloguesCount();
 

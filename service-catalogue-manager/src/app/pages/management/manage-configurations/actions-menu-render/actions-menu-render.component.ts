@@ -164,7 +164,7 @@ export class ActionsMenuRenderComponent implements OnInit, OnDestroy {
         authenticationMethod : this.authenticationMethod
       } as unknown)) as CatalogueDataset, this.catalogueDatasetID);
       this.updateResult.emit(this.value);
-      this.showToast('primary', this.translate.instant('general.catalogues.dataset.dataset_edited_message'), '');
+      this.showToast('primary', this.translate.instant('general.catalogues.dataset.dataset_edited_message', {catalogueDatasetName : this.name}), '');
     }
     catch (error) {
       let errors: Object[] = []
@@ -230,7 +230,7 @@ export class ActionsMenuRenderComponent implements OnInit, OnDestroy {
             await this.availableCataloguesDatasetService.deleteCatalogueDataset(this.value.catalogueDatasetID);
             this.showToast(
               'primary',
-              this.translateService.instant('general.catalogues.dataset.dataset_deleted_message', { catalogueName: this.value.catalogueDatasetID }),
+              this.translateService.instant('general.catalogues.dataset.dataset_deleted_message', { catalogueDatasetName: this.value.name }),
               ''
             );
             ref.close();

@@ -94,20 +94,23 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     //for (let i in this.selectedDataset) console.log(this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0][i])//console.log(i, "", this.selectedDataset[i])
     try { this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL); }
     catch { this.availableCatalogues = [] }
-    let notfederatedCatalogues: CatalogueEntry[] = [];
+    let notfederatedCatalogues = [];
     for (let remoteCatalogue of this.availableCatalogues) {
       let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogue(remoteCatalogue.catalogueID);
-      console.log("get catalogue by catalogue ID", cataloguesAlreadyFedarated)
+      //console.log("get catalogue by catalogue ID", cataloguesAlreadyFedarated)
       if (cataloguesAlreadyFedarated)
         //if (cataloguesAlreadyFedarated[0].catalogueID) {
-        console.log("******temp[0].catalogueID*******", cataloguesAlreadyFedarated.catalogueID)
+        remoteCatalogue.federated = true;//"******temp[0].catalogueID*******", cataloguesAlreadyFedarated.catalogueID)
       //}
-      else {
-        notfederatedCatalogues.push(remoteCatalogue)
-      }
+      //else {
+      notfederatedCatalogues.push(remoteCatalogue)
+      //}
     }
-    console.log("NOT FEDERATED CATALOGUES ", notfederatedCatalogues)
+    //console.log("NOT FEDERATED CATALOGUES ", notfederatedCatalogues)
+
     void await this.source.load(notfederatedCatalogues);
+    //void await this.source.load(this.availableCatalogues)
+
     this.updateResult.emit(this.availableCatalogues);
   }
 
@@ -118,8 +121,27 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     //console.log("changes ", changes['selectedDatasetName'])
     //console.log("changes ", changes['selectedDatasetName'].currentValue)
     //for (let i in this.selectedDataset) console.log(this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0][i])//console.log(i, "", this.selectedDataset[i])
-    this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
-    void await this.source.load(this.availableCatalogues);
+
+    try { this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL); }
+    catch { this.availableCatalogues = [] }
+    let notfederatedCatalogues = [];
+    for (let remoteCatalogue of this.availableCatalogues) {
+      let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogue(remoteCatalogue.catalogueID);
+      //console.log("get catalogue by catalogue ID", cataloguesAlreadyFedarated)
+      if (cataloguesAlreadyFedarated)
+        //if (cataloguesAlreadyFedarated[0].catalogueID) {
+        remoteCatalogue.federated = true;
+      //console.log("******temp[0].catalogueID*******", cataloguesAlreadyFedarated.catalogueID)
+      //}
+      //else {
+      notfederatedCatalogues.push(remoteCatalogue)
+      //}
+    }
+    //console.log("NOT FEDERATED CATALOGUES ", notfederatedCatalogues)
+
+    void await this.source.load(notfederatedCatalogues);
+    //void await this.source.load(this.availableCatalogues)
+
     this.updateResult.emit(this.availableCatalogues);
 
   }
@@ -186,12 +208,13 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
           width: '5%',
           filter: false,
           type: 'custom',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row,
+          valuePrepareFunction: (cell, row) => row,
           renderComponent: ActionsFederateComponent,//TODO
           onComponentInitFunction: (instance) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
             instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe(() => this.ngOnInit());
-          },
+          }//,
+          //onComponentChangeFunction: this.ngOnInit()
         },
       },
     };
