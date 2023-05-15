@@ -5,7 +5,7 @@
 </button>
 -->
 
-<!--*ngIf="!federated"-->
+<!--*ngIf="!federated"
 <button *ngIf="!value.federated" nbButton outline aria-label="Name" status="basic" (click)="this.openEditCatalogue()">
   <nb-icon icon="plus-circle-outline"></nb-icon>
 </button>
@@ -13,18 +13,22 @@
 <button *ngIf="this.checkCatalogue(value) || this.ngOnInit()" nbButton outline aria-label="Name" status="basic">
   <nb-icon icon="star"  status="warning" [options]="{ animation: { type: 'zoom' } }" pack="font-awesome"></nb-icon>
 </button>
-
-<div *ngIf="!value.federated; else notActive">
-  <button nbButton ghost shape="rectangle" size="small" status="success" (click)="this.openEditCatalogue()">
-    <i class="material-icons">check_circle</i>
+-->
+<div *ngIf="!value.federated">
+  <button nbButton outline aria-label="Name" status="basic" (click)="this.openEditCatalogue()">
+    <nb-icon icon="plus-circle-outline"></nb-icon>
   </button>
 </div>
 
+
+
+<!--
 <ng-template #notActive>
   <button nbButton ghost nbTooltip="Under Development" shape="rectangle" size="small" status="warning">
     <i class="material-icons">check_circle</i>
   </button>
 </ng-template>
+-->
 
 
 <!-- Register Catalogue modal ng-template -->
