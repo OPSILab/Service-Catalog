@@ -97,21 +97,76 @@ fields of `config.json` configuration file, located in `dist/assets/` folder.
   }
 }
 ```
-To enable other languages:
-- copy paste and rename src/assets/data/i18n/en.json file with the language label ( e.g. "de") and translate the related properties.
-- copy, paste and rename folder src/assets/data/service-schema/en for translating service model labels, by including or changing "title" and "description" for each class property. Each property should include "title" and "description" property in order to be translated:
+
+#### Enabling other languages
+
+In the Service Catalogue translations are available directly for the following parts:
+- Page Labels
+- Service Model (Title, Description, Enumeration)
+
+##### Page Labels
+Page Labels are available in 
+`service-catalogue-manager/ src/assets/data/i18n/`**LOCALE**`.json`
+
+Where **`LOCALE`** is one of the configured languages in
+
+service-catalogue-manager/src/assets/config.json file :
+```
+"i18n": { 
+       "locale": "en", 
+         "languages": ["it","en","de","el","lv"] 
+        }
+```
+
+Copy, paste and rename “en.json” file with the selected language (e.g. “el”) and translate each property value. Ex:
+
+```
+"welcome": "Welcome to Service Catalogue Manager!"
+```
+To
+```
+"welcome": " Καλώς ήρθατε στο Service Catalogue Manager! "
+```
+
+by respecting upper/low cases, Ex:
+
+```
+"services": "SERVICE REGISTRY"
+```
+to
+```
+"services": "ΜΗΤΡΏΟ ΥΠΗΡΕΣΙΏΝ",
+```
+
+##### Service Model ( in Service Editor Page)
+
+Service Model class `labels` can be translated by including or changing “title” and description for each class property. 
+Copy, paste and rename folder “en” in 
+`src/assets/data/service-schema/` with the target language (e.g. “el”)
+each file should be translated, by changing only `"title"` and `"description"` for each class property. Ex. 
 
 ```
 "property": {
-              "type": "string",
-              "title": "Property",
-              "description": "The property name of Data Concept at the Service (i.e. specific field in a form).",
-              "minLength": 1
+      "type": "string",
+      "title": "Property", <---translate this
+      "description": "The property name of <---translate this
+Data Concept at the Service
+ (i.e. specific field in a form).", 
+      "minLength": 1
             }
 ```
-Include them if not present in the specific class property.
 
-Enumerated list can be translated also by including localized "enum_titles" for each item
+Include them if not present in the specific class property.
+For some classes, e.g the ones in the first tab, if set, translate also the `“basicCategoryTitle”`
+Ex ( in *service-model.json*)
+
+```
+"basicCategoryTitle": "Catalogue Info",
+```
+
+
+`Enumerated` list can be translated also by including localized `"enum_titles"` for each item:
+Ex ( in *Event.json*)
 
 ```
 "items": {
@@ -122,7 +177,7 @@ Enumerated list can be translated also by including localized "enum_titles" for 
       "Having a child",
       .
       .
-      
+
     ],
     "options": {
       "enum_titles": [
@@ -130,9 +185,39 @@ Enumerated list can be translated also by including localized "enum_titles" for 
         "(Life) Having a child", <---translate this
         .
         .
-        
+
       ]
+    }
+
 ```
+Or  to translate the `“value”` of `“enumSource”`. 
+Ex ( *concepts.json*):
+
+```
+"enumSource": [
+    {
+      "source": [
+        {
+          "title": "",
+          "value": ""
+        },
+        {
+          "title": "Blood Glucose", <---translate this
+          "value": "blood_glucose"
+        },
+        {
+          "title": "Body Weight",
+          "value": "personal_details_body_weight"
+        },
+        ...
+```
+
+***`IMPORTANT`.*** The above *“enum”* and *“enum_tiles”* arrays must have the same length and order to have the correct association title/value in the select box in the service editor and the correct correspondence in each language. 
+Some enumeration cannot be “reduced” for an operative point of view of the service catalogue:
+- *Status* in *service-model.json* and *service-cpsv-entry.json*
+
+***`HINT`.***
+Use a JSON editor to modify the files to check at end if it is well formed otherwise the Service Catalogue cannot load them and it will cause error.
 
 
 #### IDM Configuration for OAuth2 authentication

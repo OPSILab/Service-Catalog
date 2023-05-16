@@ -571,6 +571,9 @@
                     "inputType": {
                       "type": "string"
                     },
+                    "multiple": {
+                      "type": "boolean"
+                    },
                     "required": {
                       "type": "boolean"
                     },

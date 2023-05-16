@@ -2377,6 +2377,23 @@ properties belong to ISA² CPSV-AP v2.2.1.
                         <tr>
                             <td width="30%" valign="top">
                                 <p>
+                                    <strong>multiple</strong>
+                                </p>
+                            </td>
+                            <td width="26%" valign="top">
+                                <p>
+                                    boolean
+                                </p>
+                            </td>
+                            <td width="43%" valign="top">
+                                <p>
+                                    If that property can have multiple values.
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="30%" valign="top">
+                                <p>
                                     <strong>required</strong>
                                 </p>
                             </td>

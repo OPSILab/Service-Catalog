@@ -104,60 +104,60 @@
         "title": "Distribution",
         "description": " Objects describing distribution points of the Datasets.",
         "format": "tabs",
-        "items":{
-        "type": "object",
-        "title": "Distribution",
-        "format": "categories",
-        "description": "Object describing distribution point of the Datasets.",
-        "properties": {
-          "distributionId": {
-            "type": "string",
-            "title": "Distribution ID",
-            "description": "Unique identifier of the Distribution."
-          },
-          "accessUrl": {
-            "type": "string",
-            "title": "Acces URL",
-            "description": "URL where data is available. The resource at the access URL may contain information about how to get the Dataset."
-          },
-          "description": {
-            "type": "array",
-            "title": "Description",
-            "description": "Localized description of Distribution.",
-            "format": "tabs",
-            "uniqueItems": true,
-            "items": {
-              "type": "object",
-              "title": "Locale",
-              "headerTemplate": "Locale ({{ self.locale }}) ",
-              "options": {
-                "collapsed": false
-              },
-              "properties": {
-                "locale": {
-                  "type": "string",
-                  "description": "Language used in textual description, in ISO 639-1 format.",
-                  "enumSource": "possible_langs",
-                  "watch": {
-                    "possible_langs": "root.hasInfo.language"
+        "items": {
+          "type": "object",
+          "title": "Distribution",
+          "format": "categories",
+          "description": "Object describing distribution point of the Datasets.",
+          "properties": {
+            "distributionId": {
+              "type": "string",
+              "title": "Distribution ID",
+              "description": "Unique identifier of the Distribution."
+            },
+            "accessUrl": {
+              "type": "string",
+              "title": "Acces URL",
+              "description": "URL where data is available. The resource at the access URL may contain information about how to get the Dataset."
+            },
+            "description": {
+              "type": "array",
+              "title": "Description",
+              "description": "Localized description of Distribution.",
+              "format": "tabs",
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "title": "Locale",
+                "headerTemplate": "Locale ({{ self.locale }}) ",
+                "options": {
+                  "collapsed": false
+                },
+                "properties": {
+                  "locale": {
+                    "type": "string",
+                    "description": "Language used in textual description, in ISO 639-1 format.",
+                    "enumSource": "possible_langs",
+                    "watch": {
+                      "possible_langs": "root.hasInfo.language"
+                    }
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Textual description of the Distribution in specified language.",
+                    "format": "textarea"
                   }
                 },
-                "description": {
-                  "type": "string",
-                  "description": "Textual description of the Distribution in specified language.",
-                  "format": "textarea"
-                }
-              },
-              "required": ["locale", "description"]
+                "required": ["locale", "description"]
+              }
+            },
+            "format": {
+              "type": "string",
+              "title": "Format",
+              "description": "Data format (i.e json, csv...)"
             }
-          },
-          "format": {
-            "type": "string",
-            "title": "Format",
-            "description": "Data format (i.e json, csv...)"
           }
         }
-       }
       },
       "dataMapping": {
         "type": "array",
@@ -186,7 +186,7 @@
             },
             "type": {
               "type": "string",
-              "description": "Type of Data: Text, Video, Image, Audio.",
+              "description": "Type of Data: Text, Video, Image, Audio...",
               "title": "Type",
               "format": "select2",
               "enum": ["text", "video", "image", "audio"],
@@ -203,13 +203,57 @@
               "description": "Type of input Data: text, files, dropdown list, ect",
               "title": "Input Type",
               "format": "select2",
-              "enum": ["input text", "file", "select", "text area","date", "datetime-local", "email","month", "password", "number", "range", "tel", "time", "url", "week" ],
+              "enum": [
+                "input text",
+                "file",
+                "select",
+                "radio",
+                "checkbox",
+                "text area",
+                "date",
+                "datetime-local",
+                "email",
+                "month",
+                "password",
+                "number",
+                "range",
+                "tel",
+                "time",
+                "url",
+                "week"
+              ],
               "options": {
-                "enum_titles": ["input text", "file", "select", "text area", "date", "datetime-local", "email","month", "password", "number", "range", "tel", "time", "url", "week"],
+                "enum_titles": [
+                  "input text",
+                  "file",
+                  "select",
+                  "radio button",
+                  "checkbox",
+                  "text area",
+                  "date",
+                  "datetime-local",
+                  "email",
+                  "month",
+                  "password",
+                  "number",
+                  "range",
+                  "tel",
+                  "time",
+                  "url",
+                  "week"
+                ],
                 "input_width": "85px",
                 "grid_columns": 12
               },
               "default": "input text"
+            },
+
+            "multiple": {
+              "type": "boolean",
+              "title": "Multiple",
+              "description": "If the property can have multiple values",
+              "format": "checkbox",
+              "default": false
             },
 
             "required": {
@@ -219,7 +263,7 @@
               "format": "checkbox",
               "default": false
             },
-           "source": {
+            "source": {
               "type": "string",
               "title": "Source",
               "description": "Reference to one of the Distribution class for possible values in type input (ex. select values)",
@@ -246,7 +290,7 @@
               "$ref": "../../wallet-schema/wallet-schemas.json"
             }
           },
-          "required": ["property", "name", "type", "required", "readonly", "datamap"]
+          "required": ["property", "name", "type", "multiple","required", "readonly", "datamap"]
         }
       }
     }

@@ -87,8 +87,10 @@ number or office.
 
 According to the type of channel other information should be included in
 order to access the service ( e.g Contact point or Competent Authority
-info). In particular if *RESTService* is selected several information
+info- homepage, email...). In particular if *RESTService* is selected several information
 should be provided into **Service Instance** tab.
+
+If a specific channel has an "external" link use "identifier" as URI/URL.
 
 Each channel can be associated with several inputs defined previously in
 **Input** tab

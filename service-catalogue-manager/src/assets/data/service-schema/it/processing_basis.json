@@ -216,12 +216,20 @@
         "location": {
           "type": "string",
           "title": "Storage Category",
-          "enum": ["Controller servers", "Eu", "Third countries", "Our servers", "Processor servers", "Third party"]
+          "enum": ["Controller servers", "Eu", "Third countries", "Our servers", "Processor servers", "Third party"],
+          "options": { 
+              "enum_titles": 
+              ["Controller servers", "Eu", "Third countries", "Our servers", "Processor servers", "Third party"]
+            }
         },
         "duration": {
           "type": "string",
           "title": "Storage Duration (time frame)",
-          "enum": ["Business practices", "Legal requirement", "Stated purpose", "Indefinitely"]
+          "enum": ["Business practices", "Legal requirement", "Stated purpose", "Indefinitely"],
+          "options": { 
+            "enum_titles": 
+            ["Business practices", "Legal requirement", "Stated purpose", "Indefinitely"]
+          }
         }
       }
     },
@@ -235,7 +243,11 @@
         "type": "string",
         "format": "select",
         "title": "Recipient",
-        "enum": ["Ours", "Delivery", "Same", "Other recipient", "Unrelated", "Public"]
+        "enum": ["Ours", "Delivery", "Same", "Other recipient", "Unrelated", "Public"],
+        "options": { 
+            "enum_titles": 
+            ["Ours", "Delivery", "Same", "Other recipient", "Unrelated", "Public"]
+          }
       }
     },
     "shareWith": {
@@ -262,7 +274,11 @@
             "type": "string",
             "title": "Business Type",
             "description": "Organization Business type.",
-            "enum": ["Profit", "No profit"]
+            "enum": ["Profit", "No profit"],
+            "options": { 
+              "enum_titles": 
+              ["Profit", "No profit"]
+          }
           },
           "required": {
             "type": "boolean",

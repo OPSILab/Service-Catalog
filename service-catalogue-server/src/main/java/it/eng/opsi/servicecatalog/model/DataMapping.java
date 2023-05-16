@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "name",
     "type",
     "inputType",
+    "multiple",
     "required",
     "source",
     "readonly",
@@ -54,6 +55,8 @@ public class DataMapping {
     private String type;
     @JsonProperty("inputType")
     private String inputType;
+    @JsonProperty("multiple")
+    private Boolean multiple;
     /**
      * 
      * (Required)
@@ -100,19 +103,21 @@ public class DataMapping {
      * @param datamap
      * @param property
      * @param name
+     * @param multiple
      * @param conceptId
      * @param inputType
      * @param source
      * @param type
      * @param required
      */
-    public DataMapping(String property, String conceptId, String name, String type, String inputType, Boolean required, String source, Boolean readonly, String datamap) {
+    public DataMapping(String property, String conceptId, String name, String type, String inputType, Boolean multiple, Boolean required, String source, Boolean readonly, String datamap) {
         super();
         this.property = property;
         this.conceptId = conceptId;
         this.name = name;
         this.type = type;
         this.inputType = inputType;
+        this.multiple = multiple;
         this.required = required;
         this.source = source;
         this.readonly = readonly;
@@ -207,6 +212,16 @@ public class DataMapping {
     @JsonProperty("inputType")
     public void setInputType(String inputType) {
         this.inputType = inputType;
+    }
+
+    @JsonProperty("multiple")
+    public Boolean getMultiple() {
+        return multiple;
+    }
+
+    @JsonProperty("multiple")
+    public void setMultiple(Boolean multiple) {
+        this.multiple = multiple;
     }
 
     /**
@@ -313,6 +328,10 @@ public class DataMapping {
         sb.append('=');
         sb.append(((this.inputType == null)?"<null>":this.inputType));
         sb.append(',');
+        sb.append("multiple");
+        sb.append('=');
+        sb.append(((this.multiple == null)?"<null>":this.multiple));
+        sb.append(',');
         sb.append("required");
         sb.append('=');
         sb.append(((this.required == null)?"<null>":this.required));
@@ -344,6 +363,7 @@ public class DataMapping {
         result = ((result* 31)+((this.datamap == null)? 0 :this.datamap.hashCode()));
         result = ((result* 31)+((this.property == null)? 0 :this.property.hashCode()));
         result = ((result* 31)+((this.name == null)? 0 :this.name.hashCode()));
+        result = ((result* 31)+((this.multiple == null)? 0 :this.multiple.hashCode()));
         result = ((result* 31)+((this.conceptId == null)? 0 :this.conceptId.hashCode()));
         result = ((result* 31)+((this.inputType == null)? 0 :this.inputType.hashCode()));
         result = ((result* 31)+((this.source == null)? 0 :this.source.hashCode()));
@@ -361,7 +381,7 @@ public class DataMapping {
             return false;
         }
         DataMapping rhs = ((DataMapping) other);
-        return ((((((((((this.readonly == rhs.readonly)||((this.readonly!= null)&&this.readonly.equals(rhs.readonly)))&&((this.datamap == rhs.datamap)||((this.datamap!= null)&&this.datamap.equals(rhs.datamap))))&&((this.property == rhs.property)||((this.property!= null)&&this.property.equals(rhs.property))))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.conceptId == rhs.conceptId)||((this.conceptId!= null)&&this.conceptId.equals(rhs.conceptId))))&&((this.inputType == rhs.inputType)||((this.inputType!= null)&&this.inputType.equals(rhs.inputType))))&&((this.source == rhs.source)||((this.source!= null)&&this.source.equals(rhs.source))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.required == rhs.required)||((this.required!= null)&&this.required.equals(rhs.required))));
+        return (((((((((((this.readonly == rhs.readonly)||((this.readonly!= null)&&this.readonly.equals(rhs.readonly)))&&((this.datamap == rhs.datamap)||((this.datamap!= null)&&this.datamap.equals(rhs.datamap))))&&((this.property == rhs.property)||((this.property!= null)&&this.property.equals(rhs.property))))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.multiple == rhs.multiple)||((this.multiple!= null)&&this.multiple.equals(rhs.multiple))))&&((this.conceptId == rhs.conceptId)||((this.conceptId!= null)&&this.conceptId.equals(rhs.conceptId))))&&((this.inputType == rhs.inputType)||((this.inputType!= null)&&this.inputType.equals(rhs.inputType))))&&((this.source == rhs.source)||((this.source!= null)&&this.source.equals(rhs.source))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.required == rhs.required)||((this.required!= null)&&this.required.equals(rhs.required))));
     }
 
 }
