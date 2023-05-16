@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { LocalDataSource } from 'ng2-smart-table';
-//import { CatalogueInfoRenderComponent } from './catalogue-info-render/catalogue-info-render.component';//TODO
 import { TranslateService } from '@ngx-translate/core';
 import { NgxConfigureService } from 'ngx-configure';
 import { Subject } from 'rxjs';
@@ -209,7 +208,7 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
           filter: false,
           type: 'custom',
           valuePrepareFunction: (cell, row) => row,
-          renderComponent: ActionsFederateComponent,//TODO
+          renderComponent: ActionsFederateComponent,
           onComponentInitFunction: (instance) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
             instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe(() => this.ngOnInit());

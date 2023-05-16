@@ -300,56 +300,52 @@ export class ActionsFederateComponent implements OnInit {
     catch (error) {
       let errors: Object[] = []
 
-      if (!this.name) errors.push({
-        "path": "root.name",
-        "property": "minLength",
-        "message": "Value required",
-        "errorcount": 1
-      })
-      if (!this.description) errors.push({
-        "path": "root.description",
-        "property": "minLength",
-        "message": "Value required",
-        "errorcount": 1
-      })
-      if (!this.type) errors.push({
-        "path": "root.type",
-        "property": "minLength",
-        "message": "Value required",
-        "errorcount": 1
-      })
+      if (!this.name) errors.push(this.errorTemplate("name"))
+      if (!this.apiEndpoint) errors.push(this.errorTemplate("apiEndpoint"))
+      if (!this.authenticated) errors.push(this.errorTemplate("authenticated"))
+      if (!this.active) errors.push(this.errorTemplate("active"))
+      if (!this.refresh) errors.push(this.errorTemplate("refresh"))
 
       console.log("error:", "\n", error)
-      if (error.message == "Catalogue ID must be set") {
-        console.log(error)
-        /*TODO this.errorService.openErrorDialog({
+
+      if (error.status && error.status == 400 && error.error && error.error.status == "Catalogue already exists") {
+        this.errorDialogService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
             {
               "path": "root.catalogueID",
               "property": "minLength",
-              "message": "Value required",
+              "message": "A catalogue with catalogue ID < " + this.catalogueID + " > already exists",
               "errorcount": 1
             }
           ]
-        });*/
-      }/*
-        else if (error.status && error.status == 400) {
-          if (error.error.status == "Catalogue already exists")
-            TODOthis.errorService.openErrorDialog({
-              error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
-                {
-                  "path": "root.catalogueID",
-                  "property": "minLength",
-                  "message": "A catalogue with catalogue ID < " + this.catalogueID + " > already exists",
-                  "errorcount": 1
-                }
-              ]
-            });
-          else this.errorService.openErrorDialog({
-            error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
-          });
-        }*/
+        });
+      }
+
+      else {
+        if (error.status == 404)
+          errors.push({
+            "path": "apiEndpoint",
+            "property": "not found",
+            "message": "Api endpoint returned page not found",
+            "errorcount": 1
+          })
+
+        this.errorDialogService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
+        });
+      }
     }
+  }
+
+  errorTemplate(value): Object {
+    let error = {
+      "path": "root",
+      "property": "minLength",
+      "message": "Value required",
+      "errorcount": 1
+    }
+    error.path =  error.path + "." + value
+    return error;
   }
 
   openRegisterDialog(): void {

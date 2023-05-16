@@ -9,6 +9,7 @@
     "close": "Chiudi",
     "cancel": "Annulla",
     "edit": "Modifica",
+    "errors": "Si sono verificati degli errori.",
     "dashboard": {
       "pdataCategories": "Categorie dati personali",
       "services": "Servizi disponibili",
@@ -332,7 +333,7 @@
       "connector_deleted_message": "Il connettore {{connectorName}} è stato cancellato correttamente!",
       "connector_registered_message": "Il connettore {{connectorName}} è stato registrato correttamente!",
       "connector_deregistered_message": "Il connettore {{connectorName}} è stato disabilitato correttamente!",
-      "validationErrors": "Ci sono degli errori di validazione nella descrizione del connettore inserito.",
+      "validationErrors": "Ci sono degli errori di validazione nella descrizione del connettore inserita.",
       "logs": "Log di connettori",
       "adapter": "Adattatore"
     },
@@ -436,7 +437,8 @@
       "activate_catalogue": "Attivazione catalogo",
       "deactivate_catalogue_message": "Sei sicuro di voler disattivare il catalogo <strong>{{catalogueName}}</strong>?\n",
       "activate_catalogue_message": "Sei sicuro di attivare il catalogo <strong>{{catalogueName}}</strong><br>Una volta attivato, non potrai modificarlo fino a quando non lo avrai prima disattivato."
-    }
+    ,      "validationErrors": "Ci sono degli errori di validazione nella descrizione del Catalogo inserito."
+  }
   },
   "login": {
     "enter_button": "Entra",

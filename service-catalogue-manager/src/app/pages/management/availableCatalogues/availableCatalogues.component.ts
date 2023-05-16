@@ -2,14 +2,13 @@ import { ServicesCount } from './../../../model/services/servicesCount';
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 import { LocalDataSource } from 'ng2-smart-table';
 import { AvailableCataloguesService } from './availableCatalogues.service';
-//import { CatalogueInfoRenderComponent } from './catalogue-info-render/catalogue-info-render.component';//TODO
 import { TranslateService } from '@ngx-translate/core';
 import { NgxConfigureService } from 'ngx-configure';
 import { AppConfig, System } from '../../../model/appConfig';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ActionsCatalogueMenuRenderComponent } from './actions-catalogue-menu-render/actions-catalogue-menu-render.component';//TODO
-import { CatalogueEntry } from '../../../model/catalogue/catalogueEntry';//TODO
+import { ActionsCatalogueMenuRenderComponent } from './actions-catalogue-menu-render/actions-catalogue-menu-render.component';
+import { CatalogueEntry } from '../../../model/catalogue/catalogueEntry';
 import { AddCatalogueComponent } from './add-catalogue/add-catalogue.component';
 import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
@@ -19,6 +18,7 @@ import { ConnectorStatusRenderComponent } from '../../services/availableConnecto
 import { LoginService } from '../../../auth/login/login.service';
 import { StatusRenderComponent } from './status-render/status-render.component';
 import { AvailableServicesService } from '../../services/availableServices/availableServices.service';
+import { ErrorDialogCatalogueService } from '../../error-dialog/error-dialog-catalogue/error-dialog-catalogue.service';
 
 @Component({
   selector: 'available-catalogues-smart-table',
@@ -55,7 +55,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   public source: LocalDataSource = new LocalDataSource();
   private availableCatalogues: CatalogueEntry[];
   private unsubscribe: Subject<void> = new Subject();
-  errorService: ErrorDialogService;
+  errorService: ErrorDialogCatalogueService;
   //refreshLimit: any;
 
   constructor(
@@ -244,7 +244,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           width: '5%',
           type: 'custom',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row,
-          //renderComponent: CatalogueInfoRenderComponent,//TODO
+          //renderComponent: CatalogueInfoRenderComponent,
         },*/
         actions: {
           title: this.actionsLabel,
@@ -253,7 +253,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           filter: false,
           type: 'custom',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row,
-          renderComponent: ActionsCatalogueMenuRenderComponent,//TODO
+          renderComponent: ActionsCatalogueMenuRenderComponent,
           onComponentInitFunction: (instance) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
             instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe(() => this.ngOnInit());

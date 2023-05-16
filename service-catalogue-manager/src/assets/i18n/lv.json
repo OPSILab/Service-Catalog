@@ -9,6 +9,7 @@
     "close": "Close",
     "cancel": "Cancel",
     "edit": "Edit",
+    "errors": "Some errors occurred.",
     "dashboard": {
       "pdataCategories": "Personal Data Categories",
       "services": "Available Services",

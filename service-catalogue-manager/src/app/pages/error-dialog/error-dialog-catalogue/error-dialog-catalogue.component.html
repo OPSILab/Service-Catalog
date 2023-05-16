@@ -11,17 +11,13 @@
           *ngIf="error.error && error.error !== 'EDITOR_VALIDATION_ERROR'; then genericError; else validationError">
         </ng-container>
         <ng-template #genericError>
-          {{ 'general.errors' | translate }}
-          <!--
           {{error.statusText}}
           {{error.header}}
-          {{error.message}}-->
-
-
+          {{error.message}}
           <!--{{error.error.message}}-->
         </ng-template>
         <ng-template #validationError>
-          <div class="row p-1 justify-content-center">{{ 'general.editor.validationErrors' | translate }}</div>
+          <div class="row p-1 justify-content-center">{{ 'general.catalogues.validationErrors' | translate }}</div>
         </ng-template>
       </nb-card-body>
       <nb-card-footer>
@@ -35,7 +31,7 @@
         {{ 'general.error' | translate }} :
         {{error.statusText}}
         {{error.header}}
-        <!--{{error.error.message}}-->
+        {{error.error.message}}
         <button nbButton outline status="info" class="close" (click)="closeModal(error)">{{ 'general.close' | translate
         }} </button>
       </nb-card-header>
@@ -44,10 +40,9 @@
           *ngIf="error.error && error.error !== 'EDITOR_VALIDATION_ERROR'; then genericErrorDetails; else validationErrorDetails">
         </ng-container>
         <ng-template #genericErrorDetails>
-          Status : {{error.status}} <br><br>
-          StatusText : {{error.statusText}} <br><br>
-          {{error.header ? "Header : " + error.header + "\n" : null }}
-          {{error.error.message ? "Message : " + error.error.message + "\n\n" : error.message ? "Message : " + error.message + "\n\n" : null }}
+          {{error.statusText}}
+          {{error.header}}
+          {{error.error.message}}
         </ng-template>
         <ng-template #validationErrorDetails>
           <div class="row p-3">

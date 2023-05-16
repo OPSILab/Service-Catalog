@@ -8,10 +8,11 @@ import { ErrorDialogConnectorComponent } from './error-dialog-connector.componen
 import { ErrorDialogConnectorService } from './error-dialog-connector.service';
 import { ErrorDialogAdapterComponent } from './error-dialog-adapter.component';
 import { ErrorDialogAdapterService } from './error-dialog-adapter.service';
+import { ErrorDialogCatalogueComponent } from './error-dialog-catalogue/error-dialog-catalogue.component';
 
 @NgModule({
   imports: [NbAccordionModule, CommonModule, NbCardModule, TranslateModule.forChild()],
-  declarations: [ErrorDialogComponent, ErrorDialogConnectorComponent, ErrorDialogAdapterComponent],
+  declarations: [ErrorDialogComponent, ErrorDialogConnectorComponent, ErrorDialogAdapterComponent, ErrorDialogCatalogueComponent],
   exports: [ErrorDialogComponent, ErrorDialogConnectorComponent, ErrorDialogAdapterComponent],
   entryComponents: [ErrorDialogComponent, ErrorDialogConnectorComponent, ErrorDialogAdapterComponent],
   providers: [ErrorDialogService, ErrorDialogConnectorService, ErrorDialogAdapterService, Location],

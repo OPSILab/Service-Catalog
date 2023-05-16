@@ -9,6 +9,7 @@
     "close": "Close",
     "cancel": "Cancel",
     "edit": "Edit",
+    "errors": "Some errors occurred.",
     "dashboard": {
       "pdataCategories": "Personal Data Categories",
       "services": "Available Services",
@@ -22,8 +23,8 @@
       "publicServices": "Public Services",
       "privateServices": "Private Services",
       "personalDataServices": "Using Personal Data",
-      "federatedCatalogues" : "Federated Catalogues",
-      "catalogueDatasets" : "Catalogue Datasets"
+      "federatedCatalogues": "Federated Catalogues",
+      "catalogueDatasets": "Catalogue Datasets"
     },
     "menu": {
       "dashboard": "Dashboard",
@@ -435,7 +436,8 @@
       "activate_deactivate": "Activate/deactivate",
       "download_metadata": "Download metadata",
       "activate_catalogue": "Catalogue activation",
-      "activate_catalogue_message": "Are you sure to activate the catalogue <strong>{{catalogueName}}</strong><br>Once activated, you will not be able to edit it until you disabled it first."
+      "activate_catalogue_message": "Are you sure to activate the catalogue <strong>{{catalogueName}}</strong><br>Once activated, you will not be able to edit it until you disabled it first.",
+      "validationErrors": "There are validation errors in the Catalogue description."
     }
   },
   "login": {
