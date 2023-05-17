@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class Status {
-    private String status = "active";
+    private String status;
 }

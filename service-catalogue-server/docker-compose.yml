@@ -18,7 +18,7 @@ services:
       - IDM_ISSUER_URI=https://idm.cape-suite.eu/auth/realms/Cape
       - IDM_ALLOWED_ORIGIN_PATTERNS=http://localhost:81,http://localhost,http://localhost:82,http://localhost:83
       - IDM_ALLOWED_ORIGINS=
-      
+      - STATUS=active
     networks:
       - sc-network
 

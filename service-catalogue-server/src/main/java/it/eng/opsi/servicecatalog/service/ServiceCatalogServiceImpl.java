@@ -93,6 +93,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Autowired
 	private CatalogueDatasetRepository catalogueDatasetRepo;
 
+	@Value("${spring.application.status}")
+	private String STATUS;
+
 	@Override
 	public List<ServiceModel> getServices() throws ServiceNotFoundException {
 
@@ -731,6 +734,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public Status getStatus() {
 		Status status = new Status();
+		status.setStatus(STATUS);
 		return status;
 	}
 
