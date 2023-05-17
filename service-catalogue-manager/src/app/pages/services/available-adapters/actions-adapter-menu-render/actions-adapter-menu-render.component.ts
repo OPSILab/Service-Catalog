@@ -320,13 +320,9 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
             ]
           });
         else {
-          //console.log("error:<\n", error, ">\n")
           this.errorDialogService.openErrorDialog({
             error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
           });
-          //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-          //else if (error.message) console.log("message:<\n", error.message, ">\n")
-          //else if (error.error) console.log("error.error:<\n", error.error, ">\n")
         }
       }
     }

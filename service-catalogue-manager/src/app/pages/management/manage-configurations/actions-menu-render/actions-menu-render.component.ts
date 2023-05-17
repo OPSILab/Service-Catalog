@@ -135,7 +135,6 @@ export class ActionsMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   translatedActionLabels(): NbMenuItem[] {
-    console.log("Translated acions label called in manage configurations")
     return [
       {
         title: this.translate.instant('general.catalogues.dataset.edit') as string,

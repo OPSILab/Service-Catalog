@@ -153,33 +153,6 @@ export class ActionsFederateComponent implements OnInit {
       });
   }
 
-  /*
-  async loadCatalogues() {
-    //if (!this.selectedDataset) this.selectedDataset = this.datasets[0];
-    //if (!this.selectedDatasetName) this.selectedDatasetName = this.selectedDataset.name
-    //console.log("changes ", changes['selectedDatasetName'])
-    //console.log("changes ", changes['selectedDatasetName'].currentValue)
-    //this.selectedDataset = this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0]// || this.datasets[0]
-    //for (let i in this.selectedDataset) console.log(this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0][i])//console.log(i, "", this.selectedDataset[i])
-    try { this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL); }
-    catch { this.availableCatalogues = [] }
-    let notfederatedCatalogues: CatalogueEntry[] = [];
-    for (let remoteCatalogue of this.availableCatalogues) {
-      let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogue(remoteCatalogue.catalogueID);
-      console.log("get catalogue by catalogue ID", cataloguesAlreadyFedarated)
-      if (cataloguesAlreadyFedarated)
-        //if (cataloguesAlreadyFedarated[0].catalogueID) {
-        console.log("******temp[0].catalogueID*******", cataloguesAlreadyFedarated.catalogueID)
-      //}
-      else {
-        notfederatedCatalogues.push(remoteCatalogue)
-      }
-    }
-    console.log("NOT FEDERATED CATALOGUES ", notfederatedCatalogues)
-    //void await this.source.load(notfederatedCatalogues);
-    //this.updateResult.emit(this.availableCatalogues);
-  }*/
-
   checkCatalogue(remoteCatalogue: CatalogueEntry) {
     return this.availableCataloguesService.getCatalogue(remoteCatalogue.catalogueID).then(value => {
       if (value)
@@ -187,16 +160,6 @@ export class ActionsFederateComponent implements OnInit {
           this.federated = true;
       this.ngOnInit();
     });
-    //console.log(catalogue)
-    /*
-    if (catalogue) {
-      console.log("\n\n\n\n\n\n**********\n\n\n\n\n\nALREADY FEDERATED\n\n\n\n\n\n**********\n\n\n\n\n\n")
-      return 'federated';
-    }
-    else {
-      console.log("\n\n\n\n\n\n***----***\n\n\n\n\n\nNOT FEDERATED YET\n\n\n\n\n\n***----***\n\n\n\n\n\n")
-      return 'not'
-    }*/
   }
 
   openEditCatalogue(): void {

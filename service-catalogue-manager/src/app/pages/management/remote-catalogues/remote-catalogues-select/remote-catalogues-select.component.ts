@@ -86,25 +86,16 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     if (!this.datasets) this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
     if (!this.selectedDataset) this.selectedDataset = this.datasets[0];
     if (!this.selectedDatasetName) this.selectedDatasetName = this.selectedDataset.name
-    //console.log("changes ", changes['selectedDatasetName'])
-    //console.log("changes ", changes['selectedDatasetName'].currentValue)
     this.selectedDataset = this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0]// || this.datasets[0]
-    //for (let i in this.selectedDataset) console.log(this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0][i])//console.log(i, "", this.selectedDataset[i])
     try { this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL); }
     catch { this.availableCatalogues = [] }
     let notfederatedCatalogues = [];
     for (let remoteCatalogue of this.availableCatalogues) {
       let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogue(remoteCatalogue.catalogueID);
-      //console.log("get catalogue by catalogue ID", cataloguesAlreadyFedarated)
       if (cataloguesAlreadyFedarated)
-        //if (cataloguesAlreadyFedarated[0].catalogueID) {
         remoteCatalogue.federated = true;//"******temp[0].catalogueID*******", cataloguesAlreadyFedarated.catalogueID)
-      //}
-      //else {
       notfederatedCatalogues.push(remoteCatalogue)
-      //}
     }
-    //console.log("NOT FEDERATED CATALOGUES ", notfederatedCatalogues)
 
     void await this.source.load(notfederatedCatalogues);
     //void await this.source.load(this.availableCatalogues)
@@ -116,26 +107,17 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     if (!this.datasets) this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
     if (!this.selectedDataset) this.selectedDataset = this.datasets[0];
     if (!this.selectedDatasetName) this.selectedDatasetName = this.selectedDataset.name
-    //console.log("changes ", changes['selectedDatasetName'])
-    //console.log("changes ", changes['selectedDatasetName'].currentValue)
-    //for (let i in this.selectedDataset) console.log(this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0][i])//console.log(i, "", this.selectedDataset[i])
+
 
     try { this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL); }
     catch { this.availableCatalogues = [] }
     let notfederatedCatalogues = [];
     for (let remoteCatalogue of this.availableCatalogues) {
       let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogue(remoteCatalogue.catalogueID);
-      //console.log("get catalogue by catalogue ID", cataloguesAlreadyFedarated)
       if (cataloguesAlreadyFedarated)
-        //if (cataloguesAlreadyFedarated[0].catalogueID) {
         remoteCatalogue.federated = true;
-      //console.log("******temp[0].catalogueID*******", cataloguesAlreadyFedarated.catalogueID)
-      //}
-      //else {
       notfederatedCatalogues.push(remoteCatalogue)
-      //}
     }
-    //console.log("NOT FEDERATED CATALOGUES ", notfederatedCatalogues)
 
     void await this.source.load(notfederatedCatalogues);
     //void await this.source.load(this.availableCatalogues)

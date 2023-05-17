@@ -166,7 +166,6 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   translatedActionLabels(): NbMenuItem[] {
-    console.log("Translated acions label called")
     if (this.registered) {
       return [
         {

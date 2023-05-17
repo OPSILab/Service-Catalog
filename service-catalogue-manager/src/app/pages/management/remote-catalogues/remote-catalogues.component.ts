@@ -94,12 +94,8 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
     this.loading = true;
   }
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
-    console.log("ngOnChanges", this.selectedDataset, "\n", this.selectedDatasetName, "\n", changes)
     this.selectedDataset = this.datasets.filter(dataset => dataset.name = this.selectedDatasetName)[0]
-    //console.log("ngOnChanges", this.datasets.filter(name => name = this.selectedDataset)[0], this.selectedDataset)
     await this.ngOnInit()
-    //this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
-    //void await this.source.load(this.availableCatalogues);
   }
 
   setValue() {
@@ -121,8 +117,6 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       }
-      //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      //else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
   }
 
@@ -137,12 +131,9 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
         void console.log("confirm ok", this.ngOnInit());
       });
       this.updateResult.emit(this.value);
-      //this.ngOnInit()
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
-      //if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      //else if (error.message) console.log("message:<\n", error.message, ">\n")
 
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))

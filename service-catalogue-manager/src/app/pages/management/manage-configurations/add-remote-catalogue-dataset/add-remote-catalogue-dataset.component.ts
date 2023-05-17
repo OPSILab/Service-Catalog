@@ -171,8 +171,6 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
-      //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      //else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
   }
 

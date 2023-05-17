@@ -26,8 +26,6 @@ export class AvailableCataloguesService {
     catch (error) {
       console.log("AvailableCataloguesService: catalogues not found")
       console.log("error:<\n", error, ">\n")
-      //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      //else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
   }
 
@@ -39,8 +37,6 @@ export class AvailableCataloguesService {
     catch (error) {
       console.log("AvailableCataloguesService: catalogues not found")
       console.log("error:<\n", error, ">\n")
-      //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      //else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
   }
 

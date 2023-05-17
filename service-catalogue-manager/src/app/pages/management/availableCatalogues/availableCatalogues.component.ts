@@ -82,17 +82,9 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   }
 
   refresh(catalogueIn) {
-    //console.debug("Refresh : ",this.refreshTry, "", this.refreshLimit)
-    //if (3 * this.refreshLimit - this.refreshTry > 0)
     try {
-      //this.refreshTry++;
-      console.log("Refreshing")
       let apiEndpoint = catalogueIn.apiEndpoint
       if ((Date.now() > (catalogueIn.lastRefresh + catalogueIn.refresh)) && catalogueIn.active == "active") {
-        console.log("Refreshed!")
-        console.log(Date.now(), " > ", catalogueIn.lastRefresh, " + ", catalogueIn.refresh,
-          " = ", catalogueIn.lastRefresh + catalogueIn.refresh)
-        console.log("Delay ", Date.now() - (catalogueIn.lastRefresh + catalogueIn.refresh))
         let catalogueTmp: CatalogueEntry = catalogueIn
         catalogueTmp.lastRefresh = Date.now()
         this.availableServicesService.getRemoteServicesCount(apiEndpoint)
@@ -125,7 +117,6 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           .then((value: any) => {
             this.status = value.status;
             this.statusSet = true;
-            console.log("row ", row, "value", value.status)
             this.ngOnInit()
           });
       }
@@ -133,8 +124,6 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
         console.log("errors during get status")
         console.log(error.text)
       }
-    else
-      console.log("row ", row, "Status set ", this.status)
     return this.status
   }
 
@@ -149,8 +138,6 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       }
-      //if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      //else if (error.message) console.log("message:<\n", error.message, ">\n")
     }
   }
 
@@ -169,9 +156,6 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
-      //if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      //else if (error.message) console.log("message:<\n", error.message, ">\n")
-
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       }

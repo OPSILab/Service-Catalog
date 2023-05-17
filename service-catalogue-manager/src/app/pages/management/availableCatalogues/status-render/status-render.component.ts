@@ -24,7 +24,6 @@ export class StatusRenderComponent implements OnInit {
 
   ngOnInit() {
     this.active = this.value == "active" || this.value.__zone_symbol__value == "active";
-    console.log(this.active, " ", this.value)
   }
 }
 

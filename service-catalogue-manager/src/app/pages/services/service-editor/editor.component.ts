@@ -302,7 +302,6 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
   async saveFile(name: string, exportFormat: string, serviceId: string): Promise<void> {
     this.errorDialogService;
     let model: Record<string, unknown>;
-    console.log('exportType: ' + exportFormat);
 
     try {
       switch (exportFormat) {
