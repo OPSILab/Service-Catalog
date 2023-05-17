@@ -36,7 +36,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private servicesService: AvailableServicesService,
     private connectorsService: AvailableConnectorsService,
     private availableCataloguesService: AvailableCataloguesService,
-    private catalogueDatasetsService: ManageConfigurationsService,
     private router: Router,
     private translateService: TranslateService,
     private loginService: LoginService,
@@ -87,16 +86,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
           value: await this.connectorsService.getConnectorsCount()==null? '0': (await this.connectorsService.getConnectorsCount()).total.toString(),
         },
         {
-          title: this.translateService.instant('general.dashboard.catalogueDatasets') as string,
-          iconClass: 'nb-power',
-          type: 'success',
-          value: await this.availableCataloguesService.getCataloguesCount()==null? '0': (await this.availableCataloguesService.getCataloguesCount()).total.toString(),
-        },
-        {
           title: this.translateService.instant('general.dashboard.federatedCatalogues') as string,
-          iconClass: 'nb-power',
-          type: 'success',
-          value: await this.catalogueDatasetsService.getCatalogueDatasetsCount()==null? '0': (await this.catalogueDatasetsService.getCatalogueDatasetsCount()).total.toString(),
+          iconClass: 'nb-tables',
+          type: 'danger',
+          value: await this.availableCataloguesService.getCataloguesCount()==null? '0': (await this.availableCataloguesService.getCataloguesCount()).total.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.publicServices') as string,

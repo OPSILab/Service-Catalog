@@ -31,7 +31,17 @@ export class AvailableCataloguesService {
 
   getRemoteCatalogues(url): CatalogueEntry[] | Promise<CatalogueEntry[]> {
     try {
-      return this.http.get<CatalogueEntry[]>(url+"/api/v2/catalogues/public").toPromise();
+      return this.http.get<CatalogueEntry[]>(url + "/api/v2/catalogues/public").toPromise();
+    }
+    catch (error) {
+      console.log("AvailableCataloguesService: catalogues not found")
+      console.log("error:<\n", error, ">\n")
+    }
+  }
+
+  getCataloguesFromFile(URL: any): CatalogueEntry[] | PromiseLike<CatalogueEntry[]> {
+    try {
+      return this.http.get<CatalogueEntry[]>(URL).toPromise();
     }
     catch (error) {
       console.log("AvailableCataloguesService: catalogues not found")

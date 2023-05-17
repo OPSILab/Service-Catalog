@@ -554,8 +554,13 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public List<Catalogue> getCatalogues() {
 		List<Catalogue> catalogues = catalogueRepo.findAll();
+
+		if (catalogues == null)
+			return catalogues;
+
 		for (Catalogue catalogue : catalogues) {
 			catalogue.setHashedSecret(null);
+			catalogue.setClientSecret(null);
 		}
 		return catalogues;
 	}
@@ -563,8 +568,12 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public Catalogue getCatalogueBycatalogueID(String catalogueID) {
 		Catalogue catalogue = catalogueRepo.findBycatalogueID(catalogueID);
-		if (catalogue != null)
-			catalogue.setHashedSecret(null);
+
+		if (catalogue == null)
+			return catalogue;
+		catalogue.setHashedSecret(null);
+		catalogue.setClientSecret(null);
+
 		return catalogue;
 	}
 
@@ -699,6 +708,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			return catalogue;
 
 		catalogue.setHashedSecret(null);
+		catalogue.setClientSecret(null);
 		return catalogue;
 	}
 
@@ -732,6 +742,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		for (Catalogue catalogue : catalogues) {
 			catalogue.setHashedSecret(null);
+			catalogue.setClientSecret(null);
 		}
 		return catalogues;
 	}

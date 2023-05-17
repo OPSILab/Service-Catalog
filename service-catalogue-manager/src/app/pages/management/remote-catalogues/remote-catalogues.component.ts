@@ -110,7 +110,8 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
       this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
       if (!this.selectedDataset.catalogueDatasetID) this.selectedDataset = this.datasets[0]
       if (!this.selectedDatasetName) this.selectedDatasetName = this.selectedDataset.name
-      this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
+      if (this.selectedDataset.type == "Service Catalogue") this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
+      else this.availableCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset.URL);
       void await this.source.load(this.availableCatalogues);
     } catch (error) {
       console.log("error:<\n", error, ">\n")

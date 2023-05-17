@@ -14,13 +14,6 @@
     "authenticated": true,
     "services": 31,
     "oAuth2Endpoint": "1",
-    "clientID": "2",
-    "hashedSecret": {
-      "$binary": {
-        "base64": "n1r3LCI20ug/vVPAOozUyloLOpYuk6ORjmdcCtcghTNvXlakKBuxgliXHoVINCUqhiM58UyNG1LBXlLUbCq+pg==",
-        "subType": "00"
-      }
-    },
     "lastRefresh": 1684141909661,
     "_class": "it.eng.opsi.servicecatalog.model.Catalogue"
   },
@@ -39,13 +32,6 @@
     "authenticated": true,
     "services": 31,
     "oAuth2Endpoint": "1",
-    "clientID": "2",
-    "hashedSecret": {
-      "$binary": {
-        "base64": "n1r3LCI20ug/vVPAOozUyloLOpYuk6ORjmdcCtcghTNvXlakKBuxgliXHoVINCUqhiM58UyNG1LBXlLUbCq+pg==",
-        "subType": "00"
-      }
-    },
     "lastRefresh": 1684141909661,
     "_class": "it.eng.opsi.servicecatalog.model.Catalogue"
   }

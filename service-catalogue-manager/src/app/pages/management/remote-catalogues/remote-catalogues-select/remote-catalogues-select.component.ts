@@ -87,7 +87,10 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     if (!this.selectedDataset) this.selectedDataset = this.datasets[0];
     if (!this.selectedDatasetName) this.selectedDatasetName = this.selectedDataset.name
     this.selectedDataset = this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0]// || this.datasets[0]
-    try { this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL); }
+    try {
+      if (this.selectedDataset.type == "Service Catalogue") this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
+      else this.availableCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset.URL);
+    }
     catch { this.availableCatalogues = [] }
     let notfederatedCatalogues = [];
     for (let remoteCatalogue of this.availableCatalogues) {
@@ -109,13 +112,17 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     if (!this.selectedDatasetName) this.selectedDatasetName = this.selectedDataset.name
 
 
-    try { this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL); }
+    try {
+      if (this.selectedDataset.type == "Service Catalogue") this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
+      else this.availableCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset.URL);
+    }
     catch { this.availableCatalogues = [] }
     let notfederatedCatalogues = [];
     for (let remoteCatalogue of this.availableCatalogues) {
       let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogue(remoteCatalogue.catalogueID);
       if (cataloguesAlreadyFedarated)
         remoteCatalogue.federated = true;
+      remoteCatalogue.clientID = undefined;//TODO verify if ID must be hidden
       notfederatedCatalogues.push(remoteCatalogue)
     }
 
