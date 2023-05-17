@@ -98,21 +98,16 @@ export class ActionsFederateComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    //this.federated = await this.checkCatalogue(this.value)
     let catalogue
     if (!this.called) {
-      catalogue = await this.availableCataloguesService.getCatalogue(this.value.catalogueID)//.then(value => {
+      catalogue = await this.availableCataloguesService.getCatalogue(this.value.catalogueID)
       this.called = true;
       if (catalogue)
         if (catalogue.catalogueID)
           this.federated = true;
       await this.ngOnInit();
     }
-    //this.ngOnInit();
-    //});
 
-    if (!this.federated) console.debug("*********+---------------Catalogue is not federated yet*********+---------------")
-    else console.debug("*********+---------------Catalogue FEDERATED*********+---------------")
     this.catalogueID = this.value.catalogueID
     this.country = this.value.country
     this.competentAuthority = this.value.competentAuthority
@@ -229,7 +224,6 @@ export class ActionsFederateComponent implements OnInit {
         clientID = this.clientID,
         services;
 
-      console.debug(clientSecret);
       services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
 
       switch (this.refresh) {

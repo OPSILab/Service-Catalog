@@ -31,7 +31,6 @@ export class AvailableCataloguesService {
 
   getRemoteCatalogues(url): CatalogueEntry[] | Promise<CatalogueEntry[]> {
     try {
-      console.debug("get remote  catalogues\n", url)
       return this.http.get<CatalogueEntry[]>(url+"/api/v2/catalogues/public").toPromise();
     }
     catch (error) {
