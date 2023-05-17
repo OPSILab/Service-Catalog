@@ -2,12 +2,12 @@
 
 @include nb-install-component() {
   nb-reveal-card {
-    height: 500px;
-    width: 500px;
+    height: 300px;
+    width: 300px;
   }
 
   nb-card-front {
-    height: 500px;
+    height: 300px;
   }
 
   nb-card-header {
@@ -17,11 +17,11 @@
   }
 
   nb-card {
-    height: 500px;
+    height: 300px;
   }
 
   nb-card-body {
-    height: 300px;
+    height: 180px;
   }
 
   nb-card-footer {
@@ -30,7 +30,7 @@
   }
 
   nb-card-back {
-    height: 500px;
+    height: 300px;
   }
 
   button {
