@@ -138,7 +138,7 @@ export class ActionsFederateComponent implements OnInit {
       .subscribe((event) => {
         switch (event.item.data) {
           case 'edit':
-            this.openEditCatalogue();
+            this.onEdit();
             break;
           case 'delete':
             this.openDeleteFromRegistryDialog();

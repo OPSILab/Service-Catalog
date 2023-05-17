@@ -30,7 +30,6 @@ import { ManageConfigurationsComponent } from './manage-configurations/manage-co
 import { AddRemoteCatalogueDatasetComponent } from './manage-configurations/add-remote-catalogue-dataset/add-remote-catalogue-dataset.component';
 import { ActionsMenuRenderComponent } from './manage-configurations/actions-menu-render/actions-menu-render.component';
 import { RemoteCataloguesSelectComponent } from './remote-catalogues/remote-catalogues-select/remote-catalogues-select.component';
-import { FederateCatalogueComponent } from './remote-catalogues/federate-catalogue/federate-catalogue.component';
 import { ActionsFederateComponent } from './remote-catalogues/remote-catalogues-select/actions-federate/actions-federate.component';
 import { InfoRenderRemoteCatalogueComponent } from './remote-catalogues/info-render-remote-catalogue/info-render-remote-catalogue.component';
 
@@ -68,7 +67,6 @@ import { InfoRenderRemoteCatalogueComponent } from './remote-catalogues/info-ren
     AddRemoteCatalogueDatasetComponent,
     ActionsMenuRenderComponent,
     RemoteCataloguesSelectComponent,
-    FederateCatalogueComponent,
     ActionsFederateComponent,
     InfoRenderRemoteCatalogueComponent
   ],

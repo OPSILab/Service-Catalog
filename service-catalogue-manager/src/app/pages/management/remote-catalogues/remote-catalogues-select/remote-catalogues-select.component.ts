@@ -13,7 +13,6 @@ import { CatalogueEntry } from 'c:/Users/Demetrix/Downloads/Repository/Service-C
 import { ActionsCatalogueMenuRenderComponent } from '../../availableCatalogues/actions-catalogue-menu-render/actions-catalogue-menu-render.component';
 import { AppConfig, System } from '../../../../model/appConfig';
 import { AvailableServicesService } from '../../../services/availableServices/availableServices.service';
-import { FederateCatalogueComponent } from '../federate-catalogue/federate-catalogue.component';
 import { ActionsFederateComponent } from './actions-federate/actions-federate.component';
 import { InfoRenderRemoteCatalogueComponent } from '../info-render-remote-catalogue/info-render-remote-catalogue.component';
 
