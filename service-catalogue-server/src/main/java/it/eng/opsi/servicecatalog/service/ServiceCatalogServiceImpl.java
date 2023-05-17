@@ -571,9 +571,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public Catalogue createCatalogue(@Valid Catalogue catalogueIn) throws NoSuchAlgorithmException {
 
-		System.out.println("-----------------------catalogueIn--------------------------"); // debug
-		System.out.println(catalogueIn); // debug
-
 		if (catalogueIn.getClientSecret() != null) {
 			/*
 			 * SecureRandom random = new SecureRandom();

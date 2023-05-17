@@ -488,8 +488,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@PostMapping(value = "/catalogues")
 	public ResponseEntity<Catalogue> createCatalogue(@RequestBody @Valid Catalogue catalogue) {
 		Catalogue result = new Catalogue();
-		System.out.println("Create new catalogue : \n");
-		System.out.println(catalogue);
+
 		try {
 
 			if (catalogService.getCatalogueBycatalogueID(catalogue.getCatalogueID()) != null
