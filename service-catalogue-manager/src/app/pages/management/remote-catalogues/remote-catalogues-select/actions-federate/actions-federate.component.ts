@@ -66,11 +66,6 @@ export class ActionsFederateComponent implements OnInit {
 
   ref;
 
-
-  @ViewChild('confirmDeleteDialog', { static: false }) confirmDeleteDialogTemplate: TemplateRef<unknown>;
-  @ViewChild('confirmRegisterDialog', { static: false }) confirmRegisterDialog: TemplateRef<unknown>;
-  @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
-  @ViewChild('editCatalogue', { static: false }) editCatalogue: TemplateRef<unknown>;
   validURL: boolean;
   federated = false;
 
@@ -125,27 +120,6 @@ export class ActionsFederateComponent implements OnInit {
     this.homePage = this.value.homePage
     this.lastRefresh = this.value.lastRefresh
     this.refresh = this.value.refresh == 86400000 ? 'Every day' : this.value.refresh == 604800000 ? 'Every week' : this.value.refresh == 2629800000 ? 'Every month' : undefined
-    this.actions = this.translatedActionLabels();
-    this.menuService
-      .onItemClick()
-      .pipe(takeUntil(this.unsubscribe))
-      .pipe(filter(({ tag }) => tag === 'service-context-menu' + this.value.catalogueID))
-      .subscribe((event) => {
-        switch (event.item.data) {
-          case 'edit':
-            this.onEdit();
-            break;
-          case 'delete':
-            this.openDeleteFromRegistryDialog();
-            break;
-          case 'register':
-            this.openRegisterDialog();
-            break;
-          case 'deregister':
-            this.openDeRegisterDialog();
-            break;
-        }
-      });
   }
 
   checkCatalogue(remoteCatalogue: CatalogueEntry) {
@@ -157,52 +131,10 @@ export class ActionsFederateComponent implements OnInit {
     });
   }
 
-  openEditCatalogue(): void {
-    this.ref = this.dialogService
-      .open(this.editCatalogue, {
-        hasScroll: false,
-        context: {
-          serviceName: this.value.name,
-        },
-      })
-      .onClose.subscribe(() => {
-        void console.log("confirm ok", this.ngOnInit());
-      })
-  }
-
   ngOnDestroy(): void {
     this.unsubscribe.next();
     this.unsubscribe.complete();
-  }
 
-  translatedActionLabels(): NbMenuItem[] {
-    if (this.registered) {
-      return [
-        {
-          title: this.translate.instant('general.catalogues.deactivate') as string,
-          data: 'deregister',
-        }
-      ];
-    } else {
-      return [
-        {
-          title: this.translate.instant('general.catalogues.edit') as string,
-          data: 'edit',
-        },
-        {
-          title: this.translate.instant('general.catalogues.delete') as string,
-          data: 'delete',
-        },
-        {
-          title: this.translate.instant('general.catalogues.download_metadata') as string,
-          data: 'Download metadata',
-        },
-        {
-          title: this.translate.instant('general.catalogues.activate_deactivate') as string,
-          data: 'register',
-        }
-      ];
-    }
   }
 
   async onEdit() {
@@ -253,6 +185,8 @@ export class ActionsFederateComponent implements OnInit {
       } as unknown)) as CatalogueEntry);
       this.updateResult.emit(this.value);
       this.showToast('primary', this.translate.instant('general.catalogues.catalogue_added_message'), '');
+
+      this.ngOnInit()
     }
     catch (error) {
       let errors: Object[] = []
@@ -305,83 +239,6 @@ export class ActionsFederateComponent implements OnInit {
     return error;
   }
 
-  openRegisterDialog(): void {
-    this.dialogService
-      .open(this.confirmRegisterDialog, {
-        hasScroll: false,
-        context: {
-          serviceName: this.value.catalogueID,
-        },
-      })
-      .onClose.subscribe((confirm) => {
-        if (confirm) void this.onRegisterCatalogue();
-      });
-  }
-
-  openDeRegisterDialog(): void {
-    this.dialogService
-      .open(this.confirmDeRegisterDialog, {
-        hasScroll: false,
-        context: {
-          serviceName: this.value.catalogueID,
-        },
-      })
-      .onClose.subscribe((confirm) => {
-        if (confirm) void this.onDeRegisterCatalogue();
-      });
-  }
-
-  onRegisterCatalogue = async (): Promise<void> => {
-    try {
-      this.value.active = this.value.active == "active" ? "inactive" : "active";
-      this.value = await this.availableCataloguesService.registerCatalogue(this.value);
-      this.showToast('primary', this.translate.instant('general.catalogues.catalogue_activated_message', { catalogueName: this.value.catalogueID }), '');
-      this.updateResult.emit(this.value);
-    } catch (error) {
-      console.log("Error during activating catalogue\n", error)
-      if (error.statusCode === '401' || error.status == 401) {
-        void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
-      } else this.errorDialogService.openErrorDialog(error);
-    }
-  };
-
-  onDeRegisterCatalogue = async (): Promise<void> => {
-    try {
-      this.value.active = this.value.active == "active" ? "inactive" : "active";
-      this.value = await this.availableCataloguesService.deregisterCatalogue(this.value);
-      this.showToast('primary', this.translate.instant('general.catalogues.catalogue_deactivated_message', { catalogueName: this.value.catalogueID }), '');
-      this.updateResult.emit(this.value);
-    } catch (error) {
-      if (error.statusCode === '401' || error.status == 401) {
-        void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
-      } else this.errorDialogService.openErrorDialog(error);
-    }
-  };
-
-  openDeleteFromRegistryDialog(): void {
-    const ref = this.dialogService.open(this.confirmDeleteDialogTemplate, {
-      context: {
-        serviceName: this.value.catalogueID,
-        callback: async () => {
-          try {
-            await this.availableCataloguesService.deleteCatalogue(this.value.catalogueID);
-            this.showToast(
-              'primary',
-              this.translateService.instant('general.catalogues.catalogue_deleted_message', { catalogueName: this.value.catalogueID }),
-              ''
-            );
-            ref.close();
-            this.updateResult.emit(this.value.catalogueID);
-          } catch (error) {
-            if (error.statusCode === '401' || error.status == 401) {
-              void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
-            } else this.errorDialogService.openErrorDialog(error);
-          }
-        },
-      },
-    });
-  }
-
   private showToast(type: NbComponentStatus, title: string, body: string) {
     const config = {
       status: type,
@@ -393,9 +250,5 @@ export class ActionsFederateComponent implements OnInit {
     } as Partial<NbToastrConfig>;
 
     this.toastrService.show(body, title, config);
-  }
-
-  toggle(authenticated: boolean) {
-    this.authenticated = authenticated;
   }
 }
