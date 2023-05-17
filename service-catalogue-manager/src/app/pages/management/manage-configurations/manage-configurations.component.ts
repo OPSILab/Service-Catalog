@@ -103,7 +103,7 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
         void console.log("confirm ok", this.ngOnInit());
       });
       this.updateResult.emit(this.value);
-      //this.ngOnInit()
+      await this.ngOnInit()
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")
