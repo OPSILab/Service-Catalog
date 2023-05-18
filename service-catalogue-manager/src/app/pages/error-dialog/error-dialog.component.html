@@ -1,78 +1,98 @@
-<nb-reveal-card>
-  <nb-card-front>
-    <nb-card>
-      <nb-card-header>
-        {{ 'general.error' | translate }}
-        <button nbButton outline status="info" class="close" (click)="closeModal(error)">{{ 'general.close' | translate
-          }} </button>
-      </nb-card-header>
-      <nb-card-body>
-        <ng-container
-          *ngIf="error.error && error.error !== 'EDITOR_VALIDATION_ERROR'; then genericError; else validationError">
-        </ng-container>
-        <ng-template #genericError>
-          {{ 'general.errors' | translate }}
-          <!--
+<div *ngIf="appConfig.system.detailedErrors; then detailedError; else notDetailedError"></div>
+<ng-template #detailedError>
+  <nb-reveal-card>
+    <nb-card-front>
+      <nb-card>
+        <nb-card-header>
+          {{ 'general.error' | translate }}
+          <button nbButton outline status="info" class="close" (click)="closeModal(error)">{{ 'general.close' |
+            translate
+            }} </button>
+        </nb-card-header>
+        <nb-card-body>
+          <ng-container
+            *ngIf="error.error && error.error !== 'EDITOR_VALIDATION_ERROR'; then genericError; else validationError">
+          </ng-container>
+          <ng-template #genericError>
+            {{ 'general.errors' | translate }}
+            <!--
           {{error.statusText}}
           {{error.header}}
           {{error.message}}-->
 
 
+            <!--{{error.error.message}}-->
+          </ng-template>
+          <ng-template #validationError>
+            <div class="row p-1 justify-content-center">{{ 'general.editor.validationErrors' | translate }}</div>
+          </ng-template>
+        </nb-card-body>
+        <nb-card-footer>
+          {{ 'general.editor.show_error_details' | translate }}
+        </nb-card-footer>
+      </nb-card>
+    </nb-card-front>
+    <nb-card-back>
+      <nb-card>
+        <nb-card-header>
+          {{ 'general.error' | translate }} :
+          {{error.statusText}}
+          {{error.header}}
           <!--{{error.error.message}}-->
-        </ng-template>
-        <ng-template #validationError>
-          <div class="row p-1 justify-content-center">{{ 'general.editor.validationErrors' | translate }}</div>
-        </ng-template>
-      </nb-card-body>
-      <nb-card-footer>
-        {{ 'general.editor.show_error_details' | translate }}
-      </nb-card-footer>
-    </nb-card>
-  </nb-card-front>
-  <nb-card-back>
-    <nb-card>
-      <nb-card-header>
-        {{ 'general.error' | translate }} :
-        {{error.statusText}}
-        {{error.header}}
-        <!--{{error.error.message}}-->
-        <button nbButton outline status="info" class="close" (click)="closeModal(error)">{{ 'general.close' | translate
-        }} </button>
-      </nb-card-header>
-      <nb-card-body>
-        <ng-container
-          *ngIf="error.error && error.error !== 'EDITOR_VALIDATION_ERROR'; then genericErrorDetails; else validationErrorDetails">
-        </ng-container>
-        <ng-template #genericErrorDetails>
-          Status : {{error.status}} <br><br>
-          StatusText : {{error.statusText}} <br><br>
-          {{error.header ? "Header : " + error.header + "\n" : null }}
-          {{error.error.message ? "Message : " + error.error.message + "\n\n" : error.message ? "Message : " + error.message + "\n\n" : null }}
-        </ng-template>
-        <ng-template #validationErrorDetails>
-          <div class="row p-3">
-            <table class="table table-striped">
-              <thead class="thead-light text-center">
-                <tr>
-                  <th scope="col">{{ 'general.error' | translate }}</th>
-                  <th scope="col">{{ 'general.editor.path' | translate }}</th>
-                </tr>
-              </thead>
-              <tbody class="text-center">
-                <tr *ngFor="let valError of error.validationErrors" class="">
-                  <td>{{ valError.message }}</td>
-                  <td>
-                    {{ valError.path }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </ng-template>
-      </nb-card-body>
-      <nb-card-footer>
-        {{ 'general.editor.hide_error_details' | translate }}
-      </nb-card-footer>
-    </nb-card>
-  </nb-card-back>
-</nb-reveal-card>
+          <button nbButton outline status="info" class="close" (click)="closeModal(error)">{{ 'general.close' |
+            translate
+            }} </button>
+        </nb-card-header>
+        <nb-card-body>
+          <ng-container
+            *ngIf="error.error && error.error !== 'EDITOR_VALIDATION_ERROR'; then genericErrorDetails; else validationErrorDetails">
+          </ng-container>
+          <ng-template #genericErrorDetails>
+            Status : {{error.status}} <br><br>
+            StatusText : {{error.statusText}} <br><br>
+            {{error.header ? "Header : " + error.header + "\n" : null }}
+            {{error.error.message ? "Message : " + error.error.message + "\n\n" : error.message ? "Message : " +
+            error.message + "\n\n" : null }}
+          </ng-template>
+          <ng-template #validationErrorDetails>
+            <div class="row p-3">
+              <table class="table table-striped">
+                <thead class="thead-light text-center">
+                  <tr>
+                    <th scope="col">{{ 'general.error' | translate }}</th>
+                    <th scope="col">{{ 'general.editor.path' | translate }}</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center">
+                  <tr *ngFor="let valError of error.validationErrors" class="">
+                    <td>{{ valError.message }}</td>
+                    <td>
+                      {{ valError.path }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ng-template>
+        </nb-card-body>
+        <nb-card-footer>
+          {{ 'general.editor.hide_error_details' | translate }}
+        </nb-card-footer>
+      </nb-card>
+    </nb-card-back>
+  </nb-reveal-card>
+</ng-template>
+<ng-template #notDetailedError>
+  <nb-card>
+    <nb-card-header class="d-flex align-content-center justify-content-between">
+      <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+      <h3>{{ 'general.error' | translate }}</h3>
+      <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="ref.close()">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="m-2 p-4">
+      <h3>{{ 'general.errors' | translate }}</h3>
+    </nb-card-body>
+  </nb-card>
+</ng-template>

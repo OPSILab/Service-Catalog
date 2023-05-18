@@ -54,7 +54,6 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
   public source: LocalDataSource = new LocalDataSource();
   private availableCatalogues: CatalogueDataset[];
   private unsubscribe: Subject<void> = new Subject();
-  errorService: ErrorDialogService;
   URLLabel: string;
 
   constructor(
@@ -64,6 +63,7 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
     private configService: NgxConfigureService,
     private dialogService: NbDialogService,
     private availableServicesService: AvailableServicesService,
+    private errorService: ErrorDialogService
   ) {
     this.config = this.configService.config as AppConfig;
     this.systemConfig = this.config.system;
@@ -99,11 +99,14 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
 
   async addNew(): Promise<void> {
     try {
-      this.dialogService.open(AddRemoteCatalogueDatasetComponent).onClose.subscribe(() => {
-        void console.log("confirm ok", this.ngOnInit());
-      });
-      this.updateResult.emit(this.value);
-      await this.ngOnInit()
+      this.dialogService.open(AddRemoteCatalogueDatasetComponent).onClose.subscribe(async () => {
+        void console.log("confirm ok")
+        await this.ngOnInit();
+        //this.availableCatalogues.push(this.value);
+        //void this.source.load(this.availableCatalogues)
+      }
+      );
+
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")

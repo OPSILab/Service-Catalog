@@ -17,6 +17,7 @@ export interface System {
   auth: Auth;
   mailTo:string;
   docsUrl:string;
+  detailedErrors: boolean;
 }
 
 export interface Auth {
