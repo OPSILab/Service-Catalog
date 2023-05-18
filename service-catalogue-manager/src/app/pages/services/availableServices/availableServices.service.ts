@@ -30,6 +30,15 @@ export class AvailableServicesService {
     }
   }
 
+  getRemoteServices(apiEndpoint): Promise<ServiceModel[]> {
+    try {
+      return this.http.get<ServiceModel[]>(`${apiEndpoint}/api/v2/services`).toPromise();
+    }
+    catch (error) {
+      console.log("No services found ", error)
+    }
+  }
+
   getServicesCount(): Promise<ServicesCount> {
     return this.http.get<ServicesCount>(`${this.serviceRegistryUrl}/api/v2/services/count`).toPromise();
   }

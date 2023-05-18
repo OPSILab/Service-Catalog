@@ -40,6 +40,7 @@ import { AdapterInfoRenderComponent } from './available-adapters/adapter-info-re
 import { CustomKeywordRenderComponent } from './availableServices/custom-keyword-render.component';
 import { CustomStatusRenderComponent } from './availableServices/custom-status-render.component';
 import {ConnectorStatusRenderComponent } from './availableConnectors/custom-status-render.component';
+import { CatalogueSelectComponent } from './availableServices/catalogue-select/catalogue-select.component';
 
 @NgModule({
   imports: [
@@ -83,6 +84,7 @@ import {ConnectorStatusRenderComponent } from './availableConnectors/custom-stat
     CustomKeywordRenderComponent,
     CustomStatusRenderComponent,
     ConnectorStatusRenderComponent,
+    CatalogueSelectComponent,
   ],
   providers: [AvailableServicesService, AvailableConnectorsService, AvailableAdaptersService],
   entryComponents: [

@@ -1,25 +1,25 @@
-import { AvailableCataloguesService } from './../../management/availableCatalogues/availableCatalogues.service';
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-import { Component, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
+import { Subject } from 'rxjs';
+import { NbDialogService } from '@nebular/theme';
+import { Component, Input, Output, OnInit, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
+import { CatalogueDataset } from '../../../../model/catalogue/catalogueDataset';
+import { CatalogueEntry } from 'c:/Users/Demetrix/Downloads/Repository/Service-Catalogue/service-catalogue-manager/src/app/model/catalogue/catalogueEntry';
+import { AppConfig, System } from '../../../../model/appConfig';
 import { LocalDataSource } from 'ng2-smart-table';
-import { AvailableServicesService } from './availableServices.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ServiceInfoRenderComponent } from './serviceInfoRender.component';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxConfigureService } from 'ngx-configure';
-import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { NbToastrService, NbGlobalLogicalPosition } from '@nebular/theme';
-import { ServiceModel } from '../../../model/services/serviceModel';
-import { ActionsServiceMenuRenderComponent } from './actionsServiceMenuRender.component';
-import { AppConfig } from '../../../model/appConfig';
-import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { LoginService } from '../../../auth/login/login.service';
-import { CustomKeywordRenderComponent } from './custom-keyword-render.component';
-import { CustomStatusRenderComponent } from './custom-status-render.component';
-import { Description } from '../../../model/services/description';
-
-
+import { LoginService } from '../../../../auth/login/login.service';
+import { Description } from '../../../../model/services/description';
+import { ServiceModel } from '../../../../model/services/serviceModel';
+import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
+import { ActionsServiceMenuRenderComponent } from '../actionsServiceMenuRender.component';
+import { AvailableServicesService } from '../availableServices.service';
+import { CustomKeywordRenderComponent } from '../custom-keyword-render.component';
+import { CustomStatusRenderComponent } from '../custom-status-render.component';
+import { ServiceInfoRenderComponent } from '../serviceInfoRender.component';
+import { AvailableCataloguesService } from '../../../management/availableCatalogues/availableCatalogues.service';
 
 export interface AvailableServiceRow extends ServiceModel {
   locale?: string;
@@ -29,14 +29,12 @@ export interface AvailableServiceRow extends ServiceModel {
 }
 
 @Component({
-  selector: 'available-services-smart-table',
-  templateUrl: './availableServices.component.html',
-  styleUrls: ['./availableServices.component.scss'],
+  selector: 'catalogue-select',
+  templateUrl: './catalogue-select.component.html',
+  styleUrls: ['./catalogue-select.component.css']
 })
-export class AvailableServicesComponent implements OnInit, OnDestroy {
-  @Input() value: ServiceModel;
+export class CatalogueSelectComponent implements OnInit, OnChanges {
   @Input() selectedCatalogueName: string;
-  @Input() availableServices: ServiceModel[];
   @Output() updateResult = new EventEmitter<unknown>();
 
   private serviceLabel: string;
@@ -50,9 +48,11 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   public settings: Record<string, unknown>;
   private locale: string;
   public source: LocalDataSource = new LocalDataSource();
+  private availableServices: ServiceModel[];
   private unsubscribe: Subject<void> = new Subject();
-
-  catalogues
+  catalogues: CatalogueEntry[];
+  selectedCatalogue: any;
+  services: ServiceModel[];
 
   constructor(
     private availableServicesService: AvailableServicesService,
@@ -72,12 +72,33 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   }
 
-
-
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    if (!this.catalogues) this.catalogues = await this.availableCataloguesService.getCatalogues()
+    if (!this.selectedCatalogue) this.selectedCatalogue = this.catalogues[0];
+    if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
+    this.selectedCatalogue = this.catalogues.filter(catalogue => catalogue.name == changes['selectedCatalogueName'].currentValue)[0]// || this.datasets[0]
+    try {
+      this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.apiEndpoint);
+    }
+    catch {
+      this.services = []
+    }
+    void await this.source.load(this.services);
+    this.updateResult.emit(this.services);
+  }
 
   async ngOnInit(): Promise<void> {
-    this.catalogues = await this.availableCataloguesService.getCatalogues()
-    if (!this.selectedCatalogueName) this.selectedCatalogueName = this.catalogues[0].name
+    if (!this.catalogues) this.catalogues = await this.availableCataloguesService.getCatalogues()
+    if (!this.selectedCatalogue) this.selectedCatalogue = this.catalogues[0];
+    if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
+    try {
+      this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.apiEndpoint);
+    }
+    catch {
+      this.services = []
+    }
+    void await this.source.load(this.services);
+    this.updateResult.emit(this.services);
     this.loadSource();
     this.translate.onLangChange.subscribe(() => {
       this.loadSource();
@@ -228,3 +249,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     this.source.reset();
   }
 }
+
+
+
+
+
