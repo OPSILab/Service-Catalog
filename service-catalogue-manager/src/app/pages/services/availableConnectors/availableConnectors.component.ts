@@ -44,9 +44,9 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
   public source: LocalDataSource = new LocalDataSource();
   private availableConnectors: ConnectorEntry[];
   private unsubscribe: Subject<void> = new Subject();
-  errorService: ErrorDialogService;
 
   constructor(
+    private errorService: ErrorDialogService,
     private loginService: LoginService,
     private availableConnectorsService: AvailableConnectorsService,
     private translate: TranslateService,
@@ -75,9 +75,9 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.log("error:<\n", error, ">\n")
 
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
-      }
+      this.errorService.openErrorDialog(error);
     }
   }
 
@@ -92,12 +92,13 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
         void console.log("confirm ok", this.ngOnInit());
       });
       this.updateResult.emit(this.value);
+      console.log(this.value)
       //this.ngOnInit()
     }
     catch (error) {
       console.log("error in addNew")
       console.log("error:<\n", error, ">\n")
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error));
       }
       this.errorService.openErrorDialog(error);

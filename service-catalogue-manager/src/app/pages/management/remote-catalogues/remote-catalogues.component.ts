@@ -67,10 +67,11 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
   public source: LocalDataSource = new LocalDataSource();
   //availableCatalogues: CatalogueEntry[];
   private unsubscribe: Subject<void> = new Subject();
-  errorService: ErrorDialogService;
+
   homePageLabel: string;
 
   constructor(
+    private errorService: ErrorDialogService,
     private loginService: LoginService,
     private availableCatalogueDatasetsService: ManageConfigurationsService,
     private availableCataloguesService: AvailableCataloguesService,
@@ -115,9 +116,9 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
       void await this.source.load(this.availableCatalogues);
     } catch (error) {
       console.log("error:<\n", error, ">\n")
-      if (error.statusCode === '401' || error.status == 401) {
+      if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
-      }
+        this.errorService.openErrorDialog(error);
     }
   }
 

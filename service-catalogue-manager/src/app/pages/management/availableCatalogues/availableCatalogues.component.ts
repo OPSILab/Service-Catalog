@@ -55,10 +55,10 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   public source: LocalDataSource = new LocalDataSource();
   private availableCatalogues: CatalogueEntry[];
   private unsubscribe: Subject<void> = new Subject();
-  errorService: ErrorDialogCatalogueService;
   //refreshLimit: any;
 
   constructor(
+    private errorService: ErrorDialogService,
     private loginService: LoginService,
     private availableCataloguesService: AvailableCataloguesService,
     private translate: TranslateService,
@@ -135,9 +135,9 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     } catch (error) {
       console.log("errors during ng on init")
       console.log("error:<\n", error, ">\n")
-      if (error.statusCode === '401' || error.status == 401) {
+      if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
-      }
+        this.errorService.openErrorDialog(error);
     }
   }
 

@@ -86,9 +86,9 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
       void this.source.load(this.availableCatalogues);
     } catch (error) {
       console.log("error:<\n", error, ">\n")
-      if (error.statusCode === '401' || error.status == 401) {
+      if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
-      }
+      this.errorService.openErrorDialog(error);
     }
   }
 
@@ -101,12 +101,13 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
     try {
       this.dialogService.open(AddRemoteCatalogueDatasetComponent).onClose.subscribe(async () => {
         void console.log("confirm ok")
-        await this.ngOnInit();
+        this.ngOnInit();
         //this.availableCatalogues.push(this.value);
         //void this.source.load(this.availableCatalogues)
       }
       );
-
+      console.log(this.value)
+      this.updateResult.emit(this.value);
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")

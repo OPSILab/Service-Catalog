@@ -47,13 +47,14 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
   public source: LocalDataSource = new LocalDataSource();
   private availableAdapters: AdapterEntry[];
   private unsubscribe: Subject<void> = new Subject();
-  errorService: ErrorDialogService;
+
 
   constructor(
     private loginService: LoginService,
     private availableAdaptersService: AvailableAdaptersService,
     private translate: TranslateService,
     private configService: NgxConfigureService,
+    private errorService: ErrorDialogService,
     private dialogService: NbDialogService
   ) {
     this.config = this.configService.config as AppConfig;
@@ -77,9 +78,9 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
       void this.source.load(this.availableAdapters);
     } catch (error) {
       console.log("error:<\n", error, ">\n")
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
-      }
+      this.errorService.openErrorDialog(error);
     }
   }
 
@@ -99,10 +100,10 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
     catch (error) {
       console.log("error:<\n", error, ">\n")
 
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       }
-      this.errorService.openErrorDialog(error);
+      else this.errorService.openErrorDialog(error);
     }
   }
 

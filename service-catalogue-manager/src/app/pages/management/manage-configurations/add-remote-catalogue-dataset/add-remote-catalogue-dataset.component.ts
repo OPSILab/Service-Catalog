@@ -123,7 +123,8 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
         portalURL : this.portalURL,
         authenticationMethod : this.authenticationMethod
       } as unknown)) as CatalogueDataset);
-      await this.editedValue.emit(this.value);
+      this.editedValue.emit(this.value);
+      this.ref.close()
       this.showToast('primary', this.translate.instant('general.catalogues.dataset.dataset_added_message'), '');
     }
     catch (error) {
@@ -167,7 +168,6 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
   confirm() {
     try {
       this.onSubmit()
-      this.ref.close()
     }
     catch (error) {
       console.log("error:<\n", error, ">\n")

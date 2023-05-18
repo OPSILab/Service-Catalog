@@ -6,6 +6,7 @@ import { NgxConfigureService } from 'ngx-configure';
 import 'rxjs/add/operator/toPromise';
 import { AppConfig } from '../../../model/appConfig';
 import { AdapterEntryLog } from '../../../model/adapter/adapterEntryLog';
+import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ export class AvailableAdaptersService {
   private serviceRegistryUrl: string;
   private config: AppConfig;
 
-  constructor(private configService: NgxConfigureService, private http: HttpClient) {
+  constructor(private configService: NgxConfigureService, private http: HttpClient, private errorService: ErrorDialogService
+    ) {
     this.config = this.configService.config as AppConfig;
     this.serviceRegistryUrl = this.config.serviceRegistry.url;
   }
@@ -25,6 +27,7 @@ export class AvailableAdaptersService {
     catch (error) {
       console.log("AvailableAdaptersService: adapters not found")
       console.log("error:<\n", error, ">\n")
+      this.errorService.openErrorDialog(error);
     }
   }
 
