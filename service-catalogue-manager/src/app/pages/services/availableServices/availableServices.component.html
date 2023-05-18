@@ -12,19 +12,9 @@
             <nb-option *ngFor="let catalogue of catalogues" value={{catalogue.name}}>{{catalogue.name}}</nb-option>
           </nb-option-group>
         </nb-select>
-        &nbsp;
-        <button *ngIf="selectedCatalogueName=='Local Service Catalogue'" nbButton class="" shape="rectangle" size="medium" status="primary" routerLink="/pages/services/service-editor">
-          <i class="material-icons">add</i>&nbsp;{{ 'general.services.add_new' | translate }}
-        </button>
       </div>
-
-      <div class="col-6 col-md-6 text-right">
-        <button nbButton ghost shape="rectangle" size="small" (click)="resetfilters()">
-          <i class="material-icons">cancel</i>&nbsp;{{ 'general.services.clear_filters' | translate }}
-        </button>
-      </div>
-
     </div>
+    <br>
     <catalogue-select [selectedCatalogueName]=selectedCatalogueName services=(updateResult)>
     </catalogue-select>
   </nb-card-body>
