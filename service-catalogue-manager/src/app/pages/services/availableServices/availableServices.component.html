@@ -6,13 +6,14 @@
   <nb-card-body>
     <div class="g-0 row mb-2">
       <div class="col-6 col-md-6 text-left">
-        <nb-select fullWidth placeholder="{{ 'general.catalogues.dataset.catalogue_dataset' | translate }}"
+        <nb-select style="width:500px" placeholder="{{ 'general.dashboard.federatedCatalogues' | translate }}"
           [(ngModel)]="selectedCatalogueName" [ngModelOptions]="{standalone: true}">
           <nb-option-group title="Datasets">
             <nb-option *ngFor="let catalogue of catalogues" value={{catalogue.name}}>{{catalogue.name}}</nb-option>
           </nb-option-group>
         </nb-select>
-        <button nbButton class="" shape="rectangle" size="medium" status="primary" routerLink="/pages/services/service-editor">
+        &nbsp;
+        <button *ngIf="selectedCatalogueName=='Local Service Catalogue'" nbButton class="" shape="rectangle" size="medium" status="primary" routerLink="/pages/services/service-editor">
           <i class="material-icons">add</i>&nbsp;{{ 'general.services.add_new' | translate }}
         </button>
       </div>

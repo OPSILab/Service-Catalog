@@ -53,6 +53,8 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
   catalogues: CatalogueEntry[];
   selectedCatalogue: any;
   services: ServiceModel[];
+  private config: AppConfig;
+  serviceRegistryUrl: string;
 
   constructor(
     private availableServicesService: AvailableServicesService,
@@ -68,6 +70,8 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     this.settings = this.loadTableSettings();
     // this.locale = (this.configService.config as AppConfig).i18n.locale;    // TODO change with user language preferences
     this.locale = this.translate.currentLang;
+    this.config = this.configService.config as AppConfig;
+    this.serviceRegistryUrl = this.config.serviceRegistry.url;
 
 
   }
@@ -78,13 +82,21 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
     this.selectedCatalogue = this.catalogues.filter(catalogue => catalogue.name == changes['selectedCatalogueName'].currentValue)[0]// || this.datasets[0]
     try {
-      this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.apiEndpoint);
+      if (changes['selectedCatalogueName'].currentValue == 'Local Service Catalogue') {
+      this.services = await this.availableServicesService.getServices();
+      this.selectedCatalogue = {name:'Local Service Catalogue', apiEndpoint:this.serviceRegistryUrl}
+      }
+      else this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.apiEndpoint);
     }
     catch {
       this.services = []
     }
     void await this.source.load(this.services);
     this.updateResult.emit(this.services);
+    this.loadSource(this.selectedCatalogue.apiEndpoint);
+    this.translate.onLangChange.subscribe(() => {
+      this.loadSource(this.selectedCatalogue.apiEndpoint);
+    });
   }
 
   async ngOnInit(): Promise<void> {
@@ -99,9 +111,9 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     }
     void await this.source.load(this.services);
     this.updateResult.emit(this.services);
-    this.loadSource();
+    this.loadSource(this.serviceRegistryUrl);
     this.translate.onLangChange.subscribe(() => {
-      this.loadSource();
+      this.loadSource(this.serviceRegistryUrl);
     });
   }
 
@@ -113,10 +125,10 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     }, []);
   }
 
-  private async loadSource(): Promise<void> {
+  private async loadSource(url): Promise<void> {
     try {
       this.locale = this.translate.currentLang;
-      this.availableServices = await this.availableServicesService.getServices();
+      this.availableServices = await this.availableServicesService.getRemoteServices(url);
       this.source.load(
         this.availableServices.map((availableServiceDescr) => {
           /* Get Localized Human readable description of the Service, default en */

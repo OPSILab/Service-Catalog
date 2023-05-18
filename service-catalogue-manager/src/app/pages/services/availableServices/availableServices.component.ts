@@ -53,6 +53,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<void> = new Subject();
 
   catalogues
+  serviceRegistryUrl;
+  private config: AppConfig;
 
   constructor(
     private availableServicesService: AvailableServicesService,
@@ -65,6 +67,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     private errorDialogService: ErrorDialogService,
     private toastrService: NbToastrService
   ) {
+    this.config = this.configService.config as AppConfig;
+    this.serviceRegistryUrl = this.config.serviceRegistry.url;
     this.settings = this.loadTableSettings();
     // this.locale = (this.configService.config as AppConfig).i18n.locale;    // TODO change with user language preferences
     this.locale = this.translate.currentLang;
@@ -77,7 +81,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
-    if (!this.selectedCatalogueName) this.selectedCatalogueName = this.catalogues[0].name
+    this.catalogues.push({name:'Local Service Catalogue', apiEndpoint:this.serviceRegistryUrl})
+    if (!this.selectedCatalogueName) this.selectedCatalogueName = 'Local Service Catalogue'
     this.loadSource();
     this.translate.onLangChange.subscribe(() => {
       this.loadSource();
