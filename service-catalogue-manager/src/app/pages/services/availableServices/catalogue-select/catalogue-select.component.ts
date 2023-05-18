@@ -94,8 +94,8 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     void await this.source.load(this.services);
     this.updateResult.emit(this.services);
     this.loadSource(this.selectedCatalogue.apiEndpoint);
-    this.translate.onLangChange.subscribe(() => {
-      this.loadSource(this.selectedCatalogue.apiEndpoint);
+    this.translate.onLangChange.subscribe(async () => {
+      await this.loadSource(this.selectedCatalogue.apiEndpoint);
     });
   }
 
