@@ -101,7 +101,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     if (!this.catalogues) this.catalogues = await this.availableCataloguesService.getCatalogues()
-    if (!this.selectedCatalogue) this.selectedCatalogue = this.catalogues[0];
+    if (!this.selectedCatalogue) this.selectedCatalogue = {name:'Local Service Catalogue', apiEndpoint:this.serviceRegistryUrl}
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
     try {
       this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.apiEndpoint);
@@ -112,8 +112,8 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     void await this.source.load(this.services);
     this.updateResult.emit(this.services);
     this.loadSource(this.serviceRegistryUrl);
-    this.translate.onLangChange.subscribe(() => {
-      this.loadSource(this.serviceRegistryUrl);
+    this.translate.onLangChange.subscribe(async () => {
+      await this.loadSource(this.selectedCatalogue.apiEndpoint);
     });
   }
 
