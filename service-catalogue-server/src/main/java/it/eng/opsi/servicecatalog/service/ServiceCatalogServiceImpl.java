@@ -103,6 +103,13 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		return serviceModelRepo.findAll();
 	}
 
+	public List<ServiceModel> getServices(String remoteCatalogue) throws ServiceNotFoundException {
+
+		// log.info("Reading all Service Models");
+		// TODO remote catalogue call
+		return serviceModelRepo.findAll();
+	}
+
 	@Override
 	public ServiceModel getServiceById(String serviceId) throws ServiceNotFoundException {
 
@@ -749,5 +756,12 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			catalogue.setClientSecret(null);
 		}
 		return catalogues;
+	}
+
+	@Override
+	public List<ServiceModel> getServices(String name, String location, String[] keywords, boolean completed,
+			String remoteCatalogue) {
+		// TODO remote catalogue call
+		throw new UnsupportedOperationException("Unimplemented method 'getServices'");
 	}
 }

@@ -33,6 +33,8 @@ public interface IServiceCatalogService {
 
       public abstract List<ServiceModel> getServices() throws ServiceNotFoundException;
 
+      public abstract List<ServiceModel> getServices(String remoteCatalogue) throws ServiceNotFoundException;
+
       public abstract List<Adapter> getAdapters() throws AdapterNotFoundException;
 
       public abstract List<ServiceModel> getServicesbyIds(List<String> ids) throws ServiceNotFoundException;
@@ -123,6 +125,9 @@ public interface IServiceCatalogService {
 
       public abstract List<ServiceModel> getServices(String name, String location, String[] keywords,
                   boolean completed);
+
+      public abstract List<ServiceModel> getServices(String name, String location, String[] keywords,
+                  boolean completed, String remoteCatalogue);
 
       public abstract Object getTimeByServiceId(String decodedServiceIdentifier);
 
