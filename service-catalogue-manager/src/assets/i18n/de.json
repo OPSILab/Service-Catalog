@@ -399,6 +399,7 @@
         "add": "Add catalogue",
         "actions": "Actions"
       },
+      "reset" : "Reset client ID and secret",
       "add": "Add catalogue",
       "confirm": "Confirm",
       "catalogues": "Catalogues",

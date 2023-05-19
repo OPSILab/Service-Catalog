@@ -81,18 +81,14 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@GetMapping(value = "/services", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ServiceModel>> getServices(@RequestParam(required = false) String name,
 			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords,
-			@RequestParam(required = false) boolean completed,
-			@RequestParam(required = false) String remoteCatalogue)
+			@RequestParam(required = false) boolean completed)
 			throws ServiceNotFoundException {
 
 		if (name != null || location != null || keywords != null || completed) {
-			if (remoteCatalogue != null)
-				return ResponseEntity
-						.ok(catalogService.getServices(name, location, keywords, completed, remoteCatalogue));
+
 			return ResponseEntity.ok(catalogService.getServices(name, location, keywords, completed));
 		}
-		if (remoteCatalogue != null)
-			return ResponseEntity.ok(catalogService.getServices(remoteCatalogue));
+		
 		return ResponseEntity.ok(catalogService.getServices());
 	}
 

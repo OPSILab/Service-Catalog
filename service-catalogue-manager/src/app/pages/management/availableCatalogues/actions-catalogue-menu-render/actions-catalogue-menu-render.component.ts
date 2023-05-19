@@ -36,6 +36,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   @Output() updateResult = new EventEmitter<unknown>();
   @Input() editedValue: CatalogueEntry;
   @Output() outValue = new EventEmitter<unknown>();
+  clientReset=false;
   competentAuthority: string;
   lastRefresh;
   catalogueID: string;

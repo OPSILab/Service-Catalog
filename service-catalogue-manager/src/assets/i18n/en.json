@@ -400,6 +400,7 @@
         "actions": "Actions"
       },
       "add": "Add catalogue",
+      "reset" : "Reset client ID and secret",
       "confirm": "Confirm",
       "catalogues": "Catalogues",
       "description": "Description",

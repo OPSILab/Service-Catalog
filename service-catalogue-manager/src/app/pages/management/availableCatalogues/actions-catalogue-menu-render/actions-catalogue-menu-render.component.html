@@ -234,18 +234,21 @@
             [(ngModel)]="oAuth2Endpoint" [ngModelOptions]="{standalone: true}">
           <br *ngIf="authenticated">
           <br *ngIf="authenticated">
-          <label *ngIf="authenticated" for="Client ID">{{ 'general.catalogues.client_ID' | translate }}</label>
-          <br *ngIf="authenticated">
-          <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.clientID"
+          <button *ngIf="authenticated&&!clientReset" nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="clientReset=true">
+            <i class="mx-1">{{ 'general.catalogues.reset' | translate }}</i>
+          </button>
+          <label *ngIf="authenticated&&clientReset" for="Client ID">{{ 'general.catalogues.client_ID' | translate }}</label>
+          <br *ngIf="authenticated&&clientReset">
+          <input *ngIf="authenticated&&clientReset" type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.clientID"
             [(ngModel)]="clientID" [ngModelOptions]="{standalone: true}">
-          <br *ngIf="authenticated">
-          <br *ngIf="authenticated">
-          <label *ngIf="authenticated" for="Client Secret">{{ 'general.catalogues.client_secret' | translate }}</label>
-          <br *ngIf="authenticated">
-          <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.clientSecret"
+          <br *ngIf="authenticated&&clientReset">
+          <br *ngIf="authenticated&&clientReset">
+          <label *ngIf="authenticated&&clientReset" for="Client Secret">{{ 'general.catalogues.client_secret' | translate }}</label>
+          <br *ngIf="authenticated&&clientReset">
+          <input *ngIf="authenticated&&clientReset" type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.clientSecret"
             [(ngModel)]="clientSecret" [ngModelOptions]="{standalone: true}">
-          <br *ngIf="authenticated">
-          <br *ngIf="authenticated">
+          <br *ngIf="authenticated&&clientReset">
+          <br *ngIf="authenticated&&clientReset">
           <h3>
             <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="onEdit(); ref.close()">
               <i class="mx-1">{{ 'general.catalogues.confirm' | translate }}</i>
