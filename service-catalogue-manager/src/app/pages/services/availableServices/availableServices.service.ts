@@ -30,9 +30,10 @@ export class AvailableServicesService {
     }
   }
 
-  getRemoteServices(apiEndpoint): Promise<ServiceModel[]> {
+  getRemoteServices(catalogueURL): Promise<ServiceModel[]> {
+    if (catalogueURL==this.serviceRegistryUrl) return this.getServices();
     try {
-      return this.http.get<ServiceModel[]>(`${apiEndpoint}/api/v2/services`).toPromise();
+      return this.http.get<ServiceModel[]>(`${this.serviceRegistryUrl}/api/v2/federated/services?remoteCatalogueURL=${catalogueURL}`).toPromise();
     }
     catch (error) {
       console.log("No services found ", error)

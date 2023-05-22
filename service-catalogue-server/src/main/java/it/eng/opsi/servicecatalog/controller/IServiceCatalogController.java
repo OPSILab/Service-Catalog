@@ -1,6 +1,7 @@
 package it.eng.opsi.servicecatalog.controller;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +37,11 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<List<ServiceModel>> getServices(String name, String location, String[] keywords,
 			boolean completed)
 			throws ServiceNotFoundException;
+
+	public abstract ResponseEntity<String> getFederatedServices(String name, String location,
+			String[] keywords,
+			boolean completed, String remoteCatalogueURL)
+			throws ServiceNotFoundException, URISyntaxException;
 
 	public abstract ResponseEntity<List<Adapter>> getAdapters(String type) throws AdapterNotFoundException;
 

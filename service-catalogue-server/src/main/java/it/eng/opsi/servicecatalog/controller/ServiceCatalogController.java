@@ -2,6 +2,7 @@ package it.eng.opsi.servicecatalog.controller;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -88,8 +89,28 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 			return ResponseEntity.ok(catalogService.getServices(name, location, keywords, completed));
 		}
-		
+
 		return ResponseEntity.ok(catalogService.getServices());
+	}
+
+	@Override
+	@Operation(summary = "Get all the Federated Service Model descriptions.", description = "Get all the Federated Service Model descriptions saved in the Service Catalog.", tags = {
+			"Service Model" }, responses = {
+					@ApiResponse(description = "Returns the list of all federated Service Model descriptions.", responseCode = "200") })
+	@GetMapping(value = "/federated/services", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> getFederatedServices(@RequestParam(required = false) String name,
+			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords,
+			@RequestParam(required = false) boolean completed,
+			@RequestParam(required = true) String remoteCatalogueURL)
+			throws ServiceNotFoundException, URISyntaxException {
+
+		if (name != null || location != null || keywords != null || completed) {
+
+			return ResponseEntity
+					.ok(catalogService.getFederatedServices(name, location, keywords, completed, remoteCatalogueURL));
+		}
+
+		return ResponseEntity.ok(catalogService.getFederatedServices(remoteCatalogueURL));
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package it.eng.opsi.servicecatalog.service;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
@@ -33,7 +34,8 @@ public interface IServiceCatalogService {
 
       public abstract List<ServiceModel> getServices() throws ServiceNotFoundException;
 
-      public abstract List<ServiceModel> getServices(String remoteCatalogue) throws ServiceNotFoundException;
+      public abstract String getFederatedServices(String remoteCatalogueURL)
+                  throws ServiceNotFoundException, URISyntaxException;
 
       public abstract List<Adapter> getAdapters() throws AdapterNotFoundException;
 
@@ -126,8 +128,8 @@ public interface IServiceCatalogService {
       public abstract List<ServiceModel> getServices(String name, String location, String[] keywords,
                   boolean completed);
 
-      public abstract List<ServiceModel> getServices(String name, String location, String[] keywords,
-                  boolean completed, String remoteCatalogue);
+      public abstract String getFederatedServices(String name, String location, String[] keywords,
+                  boolean completed, String remoteCatalogueURL);
 
       public abstract Object getTimeByServiceId(String decodedServiceIdentifier);
 

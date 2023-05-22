@@ -8,14 +8,14 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.5.6</version>
 		<relativePath /> <!-- lookup parent from repository -->
-		
+
 	</parent>
 	<groupId>it.eng.opsi</groupId>
 	<artifactId>service-catalogue</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>service-catalog</name>
 	<description>Demo project for Spring Boot</description>
-	
+
 	<properties>
 		<java.version>16</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -23,6 +23,15 @@
 	</properties>
 
 	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.keycloak</groupId>
+			<artifactId>keycloak-admin-client</artifactId>
+			<version>10.0.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
@@ -81,7 +90,8 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
+		<!--
+		https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-jsr310 -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
@@ -169,15 +179,15 @@
 					<!-- <goal>generate</goal> -->
 					<!-- </goals> -->
 					<!-- </execution> -->
-					
-					
-        <execution>
-            <phase>integration-test</phase>
-            <goals>
-                <goal>generate</goal>
-            </goals>
-        </execution>
-    
+
+
+					<execution>
+						<phase>integration-test</phase>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+					</execution>
+
 
 				</executions>
 				<configuration>
@@ -187,7 +197,8 @@
 				</configuration>
 			</plugin>
 
-			<!--jsonschema2pojo plugin to generate-sources from json schema -->
+			<!--jsonschema2pojo
+			plugin to generate-sources from json schema -->
 			<plugin>
 				<groupId>org.jsonschema2pojo</groupId>
 				<artifactId>jsonschema2pojo-maven-plugin</artifactId>
