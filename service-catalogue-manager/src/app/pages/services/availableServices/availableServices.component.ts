@@ -48,7 +48,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
-    this.catalogues.push({name:'Local Service Catalogue', apiEndpoint:this.serviceRegistryUrl})
+    this.catalogues.push({name:'Local Service Catalogue', catalogueID:"local"})
     if (!this.selectedCatalogueName) this.selectedCatalogueName = 'Local Service Catalogue'
   }
 

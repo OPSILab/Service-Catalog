@@ -84,27 +84,27 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     try {
       if (changes['selectedCatalogueName'].currentValue == 'Local Service Catalogue') {
       this.services = await this.availableServicesService.getServices();
-      this.selectedCatalogue = {name:'Local Service Catalogue', apiEndpoint:this.serviceRegistryUrl}
+      this.selectedCatalogue = {name:'Local Service Catalogue', catalogueID:"local"}
       }
-      else this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.apiEndpoint);
+      else this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID);
     }
     catch {
       this.services = []
     }
     void await this.source.load(this.services);
     this.updateResult.emit(this.services);
-    this.loadSource(this.selectedCatalogue.apiEndpoint);
+    this.loadSource(this.selectedCatalogue.catalogueID);
     this.translate.onLangChange.subscribe(async () => {
-      await this.loadSource(this.selectedCatalogue.apiEndpoint);
+      await this.loadSource(this.selectedCatalogue.catalogueID);
     });
   }
 
   async ngOnInit(): Promise<void> {
     if (!this.catalogues) this.catalogues = await this.availableCataloguesService.getCatalogues()
-    if (!this.selectedCatalogue) this.selectedCatalogue = {name:'Local Service Catalogue', apiEndpoint:this.serviceRegistryUrl}
+    if (!this.selectedCatalogue) this.selectedCatalogue = {name:'Local Service Catalogue', catalogueID:"local"}
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
     try {
-      this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.apiEndpoint);
+      this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID);
     }
     catch {
       this.services = []
@@ -113,7 +113,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     this.updateResult.emit(this.services);
     this.loadSource(this.serviceRegistryUrl);
     this.translate.onLangChange.subscribe(async () => {
-      await this.loadSource(this.selectedCatalogue.apiEndpoint);
+      await this.loadSource(this.selectedCatalogue.catalogueID);
     });
   }
 

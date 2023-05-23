@@ -101,16 +101,16 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	public ResponseEntity<String> getFederatedServices(@RequestParam(required = false) String name,
 			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords,
 			@RequestParam(required = false) boolean completed,
-			@RequestParam(required = true) String remoteCatalogueURL)
+			@RequestParam(required = true) String remoteCatalogueID)
 			throws ServiceNotFoundException, URISyntaxException {
 
 		if (name != null || location != null || keywords != null || completed) {
 
 			return ResponseEntity
-					.ok(catalogService.getFederatedServices(name, location, keywords, completed, remoteCatalogueURL));
+					.ok(catalogService.getFederatedServices(name, location, keywords, completed, remoteCatalogueID));
 		}
 
-		return ResponseEntity.ok(catalogService.getFederatedServices(remoteCatalogueURL));
+		return ResponseEntity.ok(catalogService.getFederatedServices(remoteCatalogueID));
 	}
 
 	@Override
