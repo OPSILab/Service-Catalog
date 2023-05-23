@@ -128,6 +128,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			throws ServiceNotFoundException, URISyntaxException {
 
 		Catalogue catalogue = catalogueRepo.findBycatalogueID(catalogueID);
+
 		catalogue.setClientSecret(Encryption.decrypt(catalogue.getClientSecret()));
 
 		// get token
