@@ -124,88 +124,31 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		return serviceModelRepo.findAll();
 	}
 
-	public String getFederatedServices(String remoteCatalogue)
+	public String getFederatedServices(String catalogueID)
 			throws ServiceNotFoundException, URISyntaxException {
 
-		// TODO remote catalogue call
+		Catalogue catalogue = catalogueRepo.findBycatalogueID(catalogueID);
+		catalogue.setClientSecret(Encryption.decrypt(catalogue.getClientSecret()));
 
-		// Pick token
+		// get token
+
 		Keycloak instance = Keycloak.getInstance("http://localhost:8081",
-				"myrealm", "myuser", "Banana33",
-				"client", "zptD2DfMBUQ1Mjny7HijtXlYjqSccNS5");
+				"myrealm", "myuser", "keycloakdemetrix",
+				catalogue.getClientID(), catalogue.getClientSecret());
 		TokenManager tokenmanager = instance.tokenManager();
 		String accessToken = tokenmanager.getAccessTokenString();
 
-		// remote catalogue request
-		System.out.println("client");
-		WebClient client = WebClient.create();
-		System.out.println("response");
+		// get remote services
 
-		// no auth
-		/*
-		 * WebClient.ResponseSpec responseSpec = client.get()
-		 * .uri(remoteCatalogue + "/api/v2/services")
-		 * .retrieve();
-		 */
+		WebClient client = WebClient.create();
 
 		String response = client.get()
-				.uri(new URI(remoteCatalogue + "/api/v2/services"))
+				.uri(new URI(catalogue.getApiEndpoint()))
 				.header("Authorization", accessToken)
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(String.class)
 				.block();
-		// System.out.println(response);
-
-		/*
-		 * HttpURLConnection connection = null;
-		 * 
-		 * try {
-		 * // Create connection
-		 * URL url = new URL(remoteCatalogue + "/api/v2/services/count");
-		 * System.out.println(url);
-		 * connection = (HttpURLConnection) url.openConnection();
-		 * connection.setRequestMethod("GET");
-		 * 
-		 * // connection.setRequestProperty("Content-Type",
-		 * // "application/x-www-form-urlencoded");
-		 * 
-		 * 
-		 * // connection.setRequestProperty("Content-Length",
-		 * // Integer.toString(urlParameters.getBytes().length));
-		 * 
-		 * // connection.setRequestProperty("Content-Language", "en-US");
-		 * 
-		 * connection.setUseCaches(false);
-		 * connection.setDoOutput(true);
-		 * 
-		 * // Send request
-		 * DataOutputStream wr = new DataOutputStream(
-		 * connection.getOutputStream());
-		 * // wr.writeBytes(urlParameters);
-		 * wr.close();
-		 * 
-		 * // Get Response
-		 * InputStream is = connection.getInputStream();
-		 * BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-		 * StringBuilder response = new StringBuilder(); // or StringBuffer if Java
-		 * version 5+
-		 * String line;
-		 * while ((line = rd.readLine()) != null) {
-		 * response.append(line);
-		 * response.append('\r');
-		 * }
-		 * rd.close();
-		 * System.out.println(response.toString());
-		 * } catch (Exception e) {
-		 * e.printStackTrace();
-		 * return null;
-		 * } finally {
-		 * if (connection != null) {
-		 * connection.disconnect();
-		 * }
-		 * }
-		 */
 		return response;
 	}
 
