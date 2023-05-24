@@ -80,6 +80,13 @@ import it.eng.opsi.servicecatalog.repository.ConnectorLogRepository;
 import it.eng.opsi.servicecatalog.repository.ConnectorModelRepository;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.IOException;
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpRequest.BodyPublishers;
+import java.net.http.HttpResponse;
+
 @Service
 @Slf4j
 public class ServiceCatalogServiceImpl implements IServiceCatalogService {
@@ -137,7 +144,29 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 				"myrealm", "myuser", "keycloakdemetrix",
 				catalogue.getClientID(), catalogue.getClientSecret());
 		TokenManager tokenmanager = instance.tokenManager();
-		String accessToken = tokenmanager.getAccessTokenString();
+		String accessToken_V1 = tokenmanager.getAccessTokenString();
+
+		// get token via oauth 2
+
+		String accessToken = "";
+		try {
+			HttpClient client = HttpClient.newHttpClient();
+
+			HttpRequest request = HttpRequest.newBuilder()
+					.uri(URI.create("http://localhost:8081/realms/myrealm/protocol/openid-connect/token"))
+					.POST(BodyPublishers.ofString(
+							"grant_type=client_credentials&redirect_uri=http://localhost:8081/oauth&client_id=client&client_secret=zptD2DfMBUQ1Mjny7HijtXlYjqSccNS5"))
+					.setHeader("Content-Type", "application/x-www-form-urlencoded")
+					.build();
+
+			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			String body = response.body();
+			// System.out.println(body);
+			body = body.substring(body.indexOf(":") + 2, body.indexOf(",") - 1);
+			// System.out.println(body);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 
 		// get remote services
 
