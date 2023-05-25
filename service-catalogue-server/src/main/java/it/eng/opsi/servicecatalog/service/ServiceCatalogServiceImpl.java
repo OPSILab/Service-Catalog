@@ -140,46 +140,68 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		// get token
 
-		Keycloak instance = Keycloak.getInstance("http://localhost:8081",
-				"myrealm", "myuser", "keycloakdemetrix",
-				catalogue.getClientID(), catalogue.getClientSecret());
-		TokenManager tokenmanager = instance.tokenManager();
-		String accessToken_V1 = tokenmanager.getAccessTokenString();
-
-		// get token via oauth 2
-
 		String accessToken = "";
 		try {
 			HttpClient client = HttpClient.newHttpClient();
 
 			HttpRequest request = HttpRequest.newBuilder()
-					.uri(URI.create("http://localhost:8081/realms/myrealm/protocol/openid-connect/token"))
+					.uri(URI.create("https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token"))
 					.POST(BodyPublishers.ofString(
-							"grant_type=client_credentials&redirect_uri=http://localhost:8081/oauth&client_id=client&client_secret=zptD2DfMBUQ1Mjny7HijtXlYjqSccNS5"))
+							"grant_type=client_credentials&redirect_uri=https://idm.cape-suite.eu/oauth&client_id=ids-usage-control&client_secret=3337d253-eb01-47f8-acb1-cf309b0a3d7b"))
 					.setHeader("Content-Type", "application/x-www-form-urlencoded")
 					.build();
 
 			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-			String body = response.body();
-			// System.out.println(body);
-			body = body.substring(body.indexOf(":") + 2, body.indexOf(",") - 1);
-			// System.out.println(body);
+
+			accessToken = response.body().split("\"access_token\":\"")[1].split("\",")[0];
+			// System.out.println(accessToken);
+			// System.out.println("\n\n\n\n\n\n\n\n\n\n");
 		} catch (Exception e) {
 			System.out.println(e);
 		}
 
 		// get remote services
+		/*
+		 * accessToken =
+		 * "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJXZE5weTBrRElLSDNaak5rUmYzQTUtcE1Wbm8xend5RTZtRktmc0Q3bzBRIn0.eyJleHAiOjE2ODUxMDkzNzIsImlhdCI6MTY4NTAyMjk3MiwianRpIjoiNmYxZTBiOTQtMGFmYy00MDdjLWE4ZmItNDhmYTUyMWUxNDdkIiwiaXNzIjoiaHR0cHM6Ly9pZG0uY2FwZS1zdWl0ZS5ldS9hdXRoL3JlYWxtcy9DYXBlIiwiYXVkIjpbImNhcGUtc2VydmljZS1zZGsiLCJjYXBlLXNlcnZlciIsImFjY291bnQiXSwic3ViIjoiM2NjMTQ2MGYtNDg1OS00ZGQzLWEwNDktZGU1NGNhNTI3OTUxIiwidHlwIjoiQmVhcmVyIiwiYXpwIjoiaWRzLXVzYWdlLWNvbnRyb2wiLCJhY3IiOiIxIiwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbIm9mZmxpbmVfYWNjZXNzIiwidW1hX2F1dGhvcml6YXRpb24iLCJkZWZhdWx0LXJvbGVzLWNhcGUiXX0sInJlc291cmNlX2FjY2VzcyI6eyJjYXBlLXNlcnZpY2Utc2RrIjp7InJvbGVzIjpbIkRBVEFfQ09OVFJPTExFUiJdfSwiY2FwZS1zZXJ2ZXIiOnsicm9sZXMiOlsiREFUQV9TVUJKRUNUIl19LCJhY2NvdW50Ijp7InJvbGVzIjpbIm1hbmFnZS1hY2NvdW50IiwibWFuYWdlLWFjY291bnQtbGlua3MiLCJ2aWV3LXByb2ZpbGUiXX19LCJzY29wZSI6Im9wZW5pZCBlbWFpbCBwcm9maWxlIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJjbGllbnRIb3N0IjoiMTg1LjE0NC4xMjAuNTAiLCJjbGllbnRJZCI6Imlkcy11c2FnZS1jb250cm9sIiwicHJlZmVycmVkX3VzZXJuYW1lIjoic2VydmljZS1hY2NvdW50LWlkcy11c2FnZS1jb250cm9sIiwiY2xpZW50QWRkcmVzcyI6IjE4NS4xNDQuMTIwLjUwIn0.CjOf0pqOqt_zrzUzgVKr8l7jwG6wid_M_05-h4Ff1b5gplA2mtFxAYnd3loH5_PQdV9s3VWVUYZPTAjfoo_5gvxaQf8Hkl7n8cVyI339qpCPJFnFTyM6wf3-wgMysiUTnrg-Mytzba8iDqn9taFsF6uXy4YNIRIwMTMcZCnZPBonvzvF2WErtH5m24PZYdqJKQjqE4YandigSIhvtV5uKYz_6yqgkOJ4L7rhELXqeh1s4cAy0YHo23xdKbk7lCyk4jTD-uM-n_TPx68OzUDe1YGxi2jgSUeEHxuizxW-IPa-F5cVVCRhm5aSbXxKU9-NrBtQAX1uHT54Xeq4-htPoQ";
+		 * WebClient client = WebClient.create();
+		 * 
+		 * String response = client.get()
+		 * .uri(new URI(catalogue.getApiEndpoint()))
+		 * .header("Authorization", accessToken)
+		 * .accept(MediaType.APPLICATION_JSON)
+		 * .retrieve()
+		 * .bodyToMono(String.class)
+		 * .block();
+		 */
+		HttpClient client = HttpClient.newBuilder()
+				.followRedirects(HttpClient.Redirect.NORMAL)
+				.build();
 
-		WebClient client = WebClient.create();
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create("http://localhost:8085/service-catalogue/api/v2/services"))
+				.GET()
+				.setHeader("Authorization",
+						"Bearer ".concat(accessToken))
+				// .setHeader("Cookie", "JSESSIONID=4506064D992D94D200B429A2E0FD6D21")
+				.build();
 
-		String response = client.get()
-				.uri(new URI(catalogue.getApiEndpoint()))
-				.header("Authorization", accessToken)
-				.accept(MediaType.APPLICATION_JSON)
-				.retrieve()
-				.bodyToMono(String.class)
-				.block();
-		return response;
+		HttpResponse<String> response;
+		try {
+			response = client.send(request, HttpResponse.BodyHandlers.ofString());
+			System.out.println(response.body());
+			System.out.println(response.body().toString());
+			return response.body().toString();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			return (e.getMessage());
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e);
+			return (e.getMessage());
+		}
+		// return "errors";
 	}
 
 	@Override
