@@ -84,7 +84,7 @@ export class AvailableCataloguesService {
   }
 
   getStatus(URL: string) {
-    return this.http.get<string>(`${URL}/api/v2/status`).toPromise();
+    return this.http.get<string>(`${URL.split("services")[0]}status`).toPromise();
   }
 }
 

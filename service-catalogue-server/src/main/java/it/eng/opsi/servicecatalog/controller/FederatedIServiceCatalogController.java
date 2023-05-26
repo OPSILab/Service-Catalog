@@ -32,11 +32,11 @@ import it.eng.opsi.servicecatalog.model.CatalogueDataset;
 import it.eng.opsi.servicecatalog.model.Connector;
 import it.eng.opsi.servicecatalog.model.ConnectorLog;
 
-public interface IServiceCatalogController {
+public interface FederatedIServiceCatalogController {
 
-	public abstract ResponseEntity<List<ServiceModel>> getServices(String name, String location, String[] keywords,
-			boolean completed)
-			throws ServiceNotFoundException;
+	public abstract ResponseEntity<String> getServices(String name, String location, String[] keywords,
+			boolean completed, String remoteCatalogueID)
+			throws ServiceNotFoundException, URISyntaxException;
 
 	public abstract ResponseEntity<List<Adapter>> getAdapters(String type) throws AdapterNotFoundException;
 

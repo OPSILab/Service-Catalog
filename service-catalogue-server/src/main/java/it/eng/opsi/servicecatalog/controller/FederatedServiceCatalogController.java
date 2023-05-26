@@ -62,9 +62,9 @@ import lombok.extern.slf4j.Slf4j;
 @OpenAPIDefinition(info = @Info(title = "Service Catalog API", description = "Service Catalog APIs used to manage CRUD for Service Model descriptions.", version = "1.0"), tags = {
 		@Tag(name = "Service Model", description = "Service Model Description APIs to get and manage service model descriptions.") })
 @RestController
-@RequestMapping("/api/v2")
+@RequestMapping("/api/v2/federated")
 @Slf4j
-public class ServiceCatalogController implements IServiceCatalogController {
+public class FederatedServiceCatalogController implements FederatedIServiceCatalogController {
 
 	@Autowired
 	IServiceCatalogService catalogService;
@@ -76,21 +76,23 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	private String uriBasePath;
 
 	@Override
-	@Operation(summary = "Get all the Service Model descriptions.", description = "Get all the Service Model descriptions saved in the Service Catalog.", tags = {
+	@Operation(summary = "Get all the Federated Service Model descriptions.", description = "Get all the Federated Service Model descriptions saved in the Service Catalog.", tags = {
 			"Service Model" }, responses = {
-					@ApiResponse(description = "Returns the list of all registered Service Model descriptions.", responseCode = "200") })
+					@ApiResponse(description = "Returns the list of all federated Service Model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<List<ServiceModel>> getServices(@RequestParam(required = false) String name,
+	public ResponseEntity<String> getServices(@RequestParam(required = false) String name,
 			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords,
-			@RequestParam(required = false) boolean completed)
-			throws ServiceNotFoundException {
+			@RequestParam(required = false) boolean completed,
+			@RequestParam(required = true) String remoteCatalogueID)
+			throws ServiceNotFoundException, URISyntaxException {
 
 		if (name != null || location != null || keywords != null || completed) {
 
-			return ResponseEntity.ok(catalogService.getServices(name, location, keywords, completed));
+			return ResponseEntity
+					.ok(catalogService.getFederatedServices(name, location, keywords, completed, remoteCatalogueID));
 		}
 
-		return ResponseEntity.ok(catalogService.getServices());
+		return ResponseEntity.ok(catalogService.getFederatedServices(remoteCatalogueID));
 	}
 
 	@Override
