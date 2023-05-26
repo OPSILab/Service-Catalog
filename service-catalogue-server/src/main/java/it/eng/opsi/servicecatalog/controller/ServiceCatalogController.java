@@ -59,8 +59,8 @@ import it.eng.opsi.servicecatalog.model.ConnectorLog;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
 import lombok.extern.slf4j.Slf4j;
 
-@OpenAPIDefinition(info = @Info(title = "Service Catalog API", description = "Service Catalog APIs used to manage CRUD for Service Model descriptions.", version = "1.0"), tags = {
-		@Tag(name = "Service Model", description = "Service Model Description APIs to get and manage service model descriptions.") })
+@OpenAPIDefinition(info = @Info(title = "Service Catalog API", description = "Service Catalog APIs used to manage CRUD for Service model descriptions.", version = "1.0"), tags = {
+		@Tag(name = "Service model", description = "Service model Description APIs to get and manage service model descriptions.") })
 @RestController
 @RequestMapping("/api/v2")
 @Slf4j
@@ -76,9 +76,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	private String uriBasePath;
 
 	@Override
-	@Operation(summary = "Get all the Service Model descriptions.", description = "Get all the Service Model descriptions saved in the Service Catalog.", tags = {
-			"Service Model" }, responses = {
-					@ApiResponse(description = "Returns the list of all registered Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get all the Service model descriptions.", description = "Get all the Service model descriptions saved in the Service Catalog.", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Returns the list of all registered Service model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ServiceModel>> getServices(@RequestParam(required = false) String name,
 			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords,
@@ -114,9 +114,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get all the Adapter Model descriptions.", description = "Get all the Adapter Model descriptions saved in the Service Catalog.", tags = {
-			"Adapter Model" }, responses = {
-					@ApiResponse(description = "Returns the list of all registered Adapter Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get all the Adapter model descriptions.", description = "Get all the Adapter model descriptions saved in the Service Catalog.", tags = {
+			"Adapter model" }, responses = {
+					@ApiResponse(description = "Returns the list of all registered Adapter model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/adapters", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Adapter>> getAdapters(@Param("type") String type) throws AdapterNotFoundException {
 		if (type != null)
@@ -126,7 +126,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get all the Connector descriptions.", description = "Get all the Connector descriptions saved in the Service Catalog.", tags = {
-			"Connector Model" }, responses = {
+			"Connector model" }, responses = {
 					@ApiResponse(description = "Returns the list of all registered Connectors descriptions.", responseCode = "200") })
 	@GetMapping(value = "/connectors", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Connector>> getConnectors() throws ConnectorNotFoundException {
@@ -136,7 +136,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get all Connectors Logs descriptions.", tags = {
-			"Connector Model" }, responses = {
+			"Connector log" }, responses = {
 					@ApiResponse(description = "Get all Connectors Logs descriptions.", responseCode = "200") })
 	@GetMapping(value = "/connectors/logs/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ConnectorLog>> getConnectorLogs() throws ConnectorLogNotFoundException {
@@ -146,7 +146,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get all Adapters Logs descriptions.", tags = {
-			"Adapter Model" }, responses = {
+			"Adapter log" }, responses = {
 					@ApiResponse(description = "Get all Adapters Logs descriptions.", responseCode = "200") })
 	@GetMapping(value = "/adapters/logs/all", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<AdapterLog>> getAdapterLogs() throws AdapterLogNotFoundException {
@@ -155,9 +155,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the Service Model description by Service Id.", description = "Get the Service Model description by Service Id.", tags = {
-			"Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Service Model description.", responseCode = "200") })
+	@Operation(summary = "Get the Service model description by Service Id.", description = "Get the Service model description by Service Id.", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Returns the requested Service model description.", responseCode = "200") })
 	@GetMapping(value = "/services/json/**", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceById(HttpServletRequest request, @RequestParam("identifier") String identifier)
 			throws ServiceNotFoundException, IOException {
@@ -179,9 +179,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
-	@Operation(summary = "Get Service Cost  by serviceId. ", tags = {
-			"Service Model" }, responses = {
-					@ApiResponse(description = "Get Service Cost records  by serviceId.", responseCode = "200") })
+	@Operation(summary = "Get Service Cost by serviceId. ", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Get Service Cost records by serviceId.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/services/cost", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceCost(@RequestParam("serviceId") String serviceId)
@@ -200,8 +200,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.notFound();
 	}
 
-	@Operation(summary = "Get Service time  by serviceId.", tags = {
-			"Service Model" }, responses = {
+	@Operation(summary = "Get Service time by serviceId.", tags = {
+			"Service model" }, responses = {
 					@ApiResponse(description = "The (estimated) time needed for executing a Public Service using the ISO8601 syntax for durations: P(n)Y(n)M(n)DT(n)H(n)M(n)S).", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/services/time", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -218,7 +218,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Get Connector description by connectorId.", tags = {
-			"Connector Model" }, responses = {
+			"Connector model" }, responses = {
 					@ApiResponse(description = "Get Connector description by connectorId.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/connectors/json", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -235,7 +235,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Get Adapter description by adapterId.", tags = {
-			"Adapter Model" }, responses = {
+			"Adapter model" }, responses = {
 					@ApiResponse(description = "Get Adapter description by adapterId.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/adapters/json", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -252,7 +252,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Get Connector Logs description by connectorId.", tags = {
-			"Connector Model" }, responses = {
+			"Connector log" }, responses = {
 					@ApiResponse(description = "Get Connector Logs description by connectorId.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/connectors/logs", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -270,7 +270,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Get Adapter Logs description by adapterId.", tags = {
-			"Adapter Model" }, responses = {
+			"Adapter log" }, responses = {
 					@ApiResponse(description = "Get Adapter Logs description by adapterId.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/adapters/logs", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -313,9 +313,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	// Dataset
-	@Operation(summary = "Get catalogue dataset  description by catalogue dataset ID or name.", tags = {
-			"Catalogue dataset " }, responses = {
-					@ApiResponse(description = "Get Catalogue dataset  description by catalogue dataset ID or name.", responseCode = "200") })
+	@Operation(summary = "Get catalogue dataset description by catalogue dataset ID or name.", tags = {
+			"Catalogue dataset model" }, responses = {
+					@ApiResponse(description = "Get Catalogue dataset description by catalogue dataset ID or name.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/catalogueDatasets/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getCatalogueDataset(@RequestParam(required = false) String catalogueDatasetID,
@@ -328,9 +328,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the Service Model descriptions by specified Service Ids.", description = "Get the Service Model descriptions by specified Service Id.", tags = {
-			"Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get the Service model descriptions by specified Service Ids.", description = "Get the Service model descriptions by specified Service Id.", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Returns the requested Service model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/**", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceByIds(HttpServletRequest request,
 			@RequestParam("identifier") List<String> identifier) throws ServiceNotFoundException, IOException {
@@ -340,9 +340,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the Service Model descriptions by specified Service Location.", description = "Get the Service Model descriptions by specified Service Location.", tags = {
-			"Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get the Service model descriptions by specified Service Location.", description = "Get the Service model descriptions by specified Service Location.", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Returns the requested Service model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/location", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ServiceModel>> getServiceByLocation(HttpServletRequest request,
 			@RequestParam("location") String location) throws ServiceNotFoundException, IOException {
@@ -352,9 +352,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the Service Model descriptions by specified Service Keywords.", description = "Get the Service Model descriptions by specified Service Keywords.", tags = {
-			"Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get the Service model descriptions by specified Service Keywords.", description = "Get the Service model descriptions by specified Service Keywords.", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Returns the requested Service model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/keyword", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ServiceModel>> getServiceByKeywords(HttpServletRequest request,
 			@RequestParam("keywords") String[] keywords) throws ServiceNotFoundException, IOException {
@@ -364,9 +364,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the Service Model descriptions by specified Service Title.", description = "Get the Service Model descriptions by specified Service Title.", tags = {
-			"Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get the Service model descriptions by specified Service Title.", description = "Get the Service model descriptions by specified Service Title.", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Returns the requested Service model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/title", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<ServiceModel>> getServiceByTitle(HttpServletRequest request,
 			@RequestParam("title") String title) throws ServiceNotFoundException, IOException {
@@ -376,9 +376,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the Service Model descriptions is handling personal data", description = "Get the Service Model descriptions is handling personal data.", tags = {
-			"Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get the Service model descriptions is handling personal data", description = "Get the Service model descriptions is handling personal data.", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Returns the requested Service model descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/isPersonalDataHandling", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceIsPersonalDataHandling(HttpServletRequest request)
 			throws ServiceNotFoundException, IOException {
@@ -388,8 +388,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the count of the  Service Model descriptions is personal data handling.", tags = {
-			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
+	@Operation(summary = "Get the count of the Service model descriptions is personal data handling.", tags = {
+			"Service model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/services/isPersonalDataHandling/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getServicesIsPersonalDataHandlingCount() {
 
@@ -397,8 +397,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the count of the registered Service Model descriptions (total, public and private services).", tags = {
-			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
+	@Operation(summary = "Get the count of the registered Service model descriptions (total, public and private services).", tags = {
+			"Service model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/services/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HashMap<String, Integer>> getServicesCount() {
 
@@ -442,8 +442,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.getAdaptersCount());
 	}
 
-	@Operation(summary = "Create a new Service Model description.", tags = { "Service Model" }, responses = {
-			@ApiResponse(description = "Returns 201 Created with the created Service Model.", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceModel.class))) })
+	@Operation(summary = "Create a new Service model description.", tags = { "Service model" }, responses = {
+			@ApiResponse(description = "Returns 201 Created with the created Service model.", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceModel.class))) })
 	@Override
 	@PostMapping(value = "/services")
 	public ResponseEntity<ServiceModel> createService(@RequestBody @Valid ServiceModel service) {
@@ -453,7 +453,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				.body(result);
 	}
 
-	@Operation(summary = "Create new Service Model descriptions.", tags = { "Service Model" }, responses = {
+	@Operation(summary = "Create new Service model descriptions.", tags = { "Service model" }, responses = {
 			@ApiResponse(description = "Returns 201 Created with the created Service Models.", responseCode = "201", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceModel.class))) })
 	@Override
 	@PostMapping(value = "/services/many")
@@ -465,7 +465,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Create a new connector.", tags = {
-			"Connector Model" }, responses = {
+			"Connector model" }, responses = {
 					@ApiResponse(description = "Create a new connector.", responseCode = "201") })
 	@Override
 	@PostMapping(value = "/connectors")
@@ -486,7 +486,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Create a new catalogue.", tags = {
-			"Catalogue Model" }, responses = {
+			"Catalogue model" }, responses = {
 					@ApiResponse(description = "Create a new catalogue.", responseCode = "201") })
 	@Override
 	@PostMapping(value = "/catalogues")
@@ -514,7 +514,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	// Dataset
 	@Operation(summary = "Create a new catalogue dataset .", tags = {
-			"Catalogue dataset  Model" }, responses = {
+			"Catalogue dataset model" }, responses = {
 					@ApiResponse(description = "Create a new catalogue dataset .", responseCode = "201") })
 	@Override
 	@PostMapping(value = "/catalogueDatasets")
@@ -540,7 +540,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Create a new connector log.", tags = {
-			"Connector Model" }, responses = {
+			"Connector log" }, responses = {
 					@ApiResponse(description = "Create a new connector.", responseCode = "201") })
 	@Override
 	@PostMapping(value = "/connectors/logs")
@@ -552,7 +552,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Create a new adapter log.", tags = {
-			"Adapter Model" }, responses = {
+			"Adapter log" }, responses = {
 					@ApiResponse(description = "Create a new adapter.", responseCode = "201") })
 	@Override
 	@PostMapping(value = "/adapters/logs")
@@ -564,7 +564,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Create a new adapter.", tags = {
-			"Adapter Model" }, responses = {
+			"Adapter model" }, responses = {
 					@ApiResponse(description = "Create a new adapter.", responseCode = "201") })
 	@Override
 	@PostMapping(value = "/adapters")
@@ -585,9 +585,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
-	@Operation(summary = "Update Service Model description, by replacing the existing one", tags = {
-			"Service Model" }, responses = {
-					@ApiResponse(description = "Returns the Model Service Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceModel.class))) })
+	@Operation(summary = "Update Service model description, by replacing the existing one", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Returns the model Service Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ServiceModel.class))) })
 	@Override
 	@PutMapping(value = "/services", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<ServiceModel> updateService(@RequestParam("identifier") String identifier,
@@ -605,8 +605,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 		return ResponseEntity.ok(catalogService.updateService(decodedServiceIdentifier, service));
 	}
 
-	@Operation(summary = "Update Connector Model description, by replacing the existing one", tags = {
-			"Connector Model" }, responses = {
+	@Operation(summary = "Update Connector model description, by replacing the existing one", tags = {
+			"Connector model" }, responses = {
 					@ApiResponse(description = "Returns the Connector Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Connector.class))) })
 	@Override
 	@PutMapping(value = "/connectors", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -625,8 +625,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				decodedConnectorConnectorId, connector));
 	}
 
-	@Operation(summary = "Update Catalogue Model description, by replacing the existing one", tags = {
-			"Catalogue Model" }, responses = {
+	@Operation(summary = "Update Catalogue model description, by replacing the existing one", tags = {
+			"Catalogue model" }, responses = {
 					@ApiResponse(description = "Returns the Catalogue Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Catalogue.class))) })
 	@Override
 	@PutMapping(value = "/catalogues", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -648,9 +648,9 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	// Dataset
 
-	@Operation(summary = "Update Catalogue dataset  Model description, by replacing the existing one", tags = {
-			"Catalogue dataset  Model" }, responses = {
-					@ApiResponse(description = "Returns the Catalogue dataset  Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CatalogueDataset.class)))
+	@Operation(summary = "Update Catalogue dataset model description, by replacing the existing one", tags = {
+			"Catalogue dataset model" }, responses = {
+					@ApiResponse(description = "Returns the Catalogue dataset Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = CatalogueDataset.class)))
 
 	})
 
@@ -671,8 +671,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				decodedCatalogueDatasetID, catalogueDataset));
 	}
 
-	@Operation(summary = "Update Adapter Model description, by replacing the existing one", tags = {
-			"Adapter Model" }, responses = {
+	@Operation(summary = "Update Adapter model description, by replacing the existing one", tags = {
+			"Adapter model" }, responses = {
 					@ApiResponse(description = "Returns the Adapter Entry.", responseCode = "200", content = @Content(mediaType = "application/json", schema = @Schema(implementation = Adapter.class))) })
 	@Override
 	@PutMapping(value = "/adapters", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -691,7 +691,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 				decodedAdapterAdapterId, adapter));
 	}
 
-	@Operation(summary = "Delete Service Model description by Service Id.", tags = { "Service Model" }, responses = {
+	@Operation(summary = "Delete Service model description by Service Id.", tags = { "Service model" }, responses = {
 			@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
 	@DeleteMapping(value = "/services")
@@ -713,8 +713,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
-	@Operation(summary = "Delete Connector Model description by connectorId.", tags = {
-			"Connector Model" }, responses = {
+	@Operation(summary = "Delete Connector model description by connectorId.", tags = {
+			"Connector model" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
 	@DeleteMapping(value = "/connectors")
@@ -732,8 +732,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
-	@Operation(summary = "Delete Catalogue Model description by catalogueID.", tags = {
-			"Catalogue Model" }, responses = {
+	@Operation(summary = "Delete Catalogue model description by catalogueID.", tags = {
+			"Catalogue model" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
 	@DeleteMapping(value = "/catalogues")
@@ -752,8 +752,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	// Dataset
-	@Operation(summary = "Delete Catalogue dataset  Model description by catalogue dataset ID.", tags = {
-			"Catalogue dataset  Model" }, responses = {
+	@Operation(summary = "Delete Catalogue dataset model description by catalogue dataset ID.", tags = {
+			"Catalogue dataset model" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
 	@DeleteMapping(value = "/catalogueDatasets")
@@ -772,8 +772,8 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
-	@Operation(summary = "Delete Adapter Model description by AdapterId.", tags = {
-			"Adapter Model" }, responses = {
+	@Operation(summary = "Delete Adapter model description by AdapterId.", tags = {
+			"Adapter model" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
 	@DeleteMapping(value = "/adapters")
@@ -792,7 +792,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Delete Connector Log description by connectorId.", tags = {
-			"Connector Model" }, responses = {
+			"Connector log" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
 	@DeleteMapping(value = "/connectors/logs")
@@ -811,7 +811,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Delete Adapter Log description by adapterId.", tags = {
-			"Adapter Model" }, responses = {
+			"Adapter log" }, responses = {
 					@ApiResponse(description = "Returns No Content.", responseCode = "204") })
 	@Override
 	@DeleteMapping(value = "/adapters/logs")
@@ -830,12 +830,12 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	// @Override
-	// @Operation(summary = "Get the Service Model description by Service Id,
-	// serialized as Json-LD.", description = "Get the Service Model description by
+	// @Operation(summary = "Get the Service model description by Service Id,
+	// serialized as Json-LD.", description = "Get the Service model description by
 	// Service Id, serialized as Json-LD.", tags = {
-	// "Service Model | JSON-LD" }, responses = {
+	// "Service model | JSON-LD" }, responses = {
 	// @ApiResponse(description = "Returns the JSON-LD of the requested Service
-	// Model description.", responseCode = "200") })
+	// model description.", responseCode = "200") })
 	// @GetMapping(value = "/services/jsonld/{serviceId}", produces =
 	// MediaType.APPLICATION_JSON_VALUE)
 
@@ -852,13 +852,13 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
-	// @Operation(summary = "Get the hasInfo part of Service Model description by
+	// @Operation(summary = "Get the hasInfo part of Service model description by
 	// Service Id, serialized as Json-LD according to CPSV-AP specification.",
-	// description = "Get the Service Model description by Service Id, serialized as
+	// description = "Get the Service model description by Service Id, serialized as
 	// Json-LD.", tags = {
-	// "Service Model | JSON-LD" }, responses = {
+	// "Service model | JSON-LD" }, responses = {
 	// @ApiResponse(description = "Returns the JSON-LD of the requested Service
-	// Model description.", responseCode = "200") })
+	// model description.", responseCode = "200") })
 	// @GetMapping(value = "/services/cpsv/jsonld/{serviceId}", produces =
 	// MediaType.APPLICATION_JSON_VALUE)
 	// @Override
@@ -876,7 +876,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get the Service Models count grouped by Sector.", description = "Get the Service Models count grouped by Sector.", tags = {
-			"Service Model" }, responses = {
+			"Service model" }, responses = {
 					@ApiResponse(description = "Return an object with count for each sector.", responseCode = "200") })
 	@GetMapping(value = "/services/count/sector", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<HashMap<String, Object>>> getCountBySector() {
@@ -886,7 +886,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get the Service Models count grouped by Thematic Area.", description = "Get the Service Models count grouped by Thematic Area.", tags = {
-			"Service Model" }, responses = {
+			"Service model" }, responses = {
 					@ApiResponse(description = "Return an object with count for each sector.", responseCode = "200") })
 	@GetMapping(value = "/services/count/thematicArea", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<HashMap<String, Object>>> getCountByThematicArea() {
@@ -896,7 +896,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get the Service Models count grouped by GroupedBy.", description = "Get the Service Models count grouped by GroupedBy.", tags = {
-			"Service Model" }, responses = {
+			"Service model" }, responses = {
 					@ApiResponse(description = "Return an object with count for each sector.", responseCode = "200") })
 	@GetMapping(value = "/services/count/groupedBy", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<HashMap<String, Object>>> getCountByGroupedBy() {
@@ -906,7 +906,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get the Service Models count grouped by Spatial.", description = "Get the Service Models count grouped by Spatial.", tags = {
-			"Service Model" }, responses = {
+			"Service model" }, responses = {
 					@ApiResponse(description = "Return an object with count for each location.", responseCode = "200") })
 	@GetMapping(value = "/services/count/location", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<HashMap<String, Object>>> getCountByLocation() {

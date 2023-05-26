@@ -34,7 +34,7 @@ public interface IServiceCatalogService {
 
       public abstract List<ServiceModel> getServices() throws ServiceNotFoundException;
 
-      public abstract String getFederatedServices(String remoteCatalogueID)
+      public abstract String getFederatedServices(String remoteCatalogueID, String relativeURL)
                   throws ServiceNotFoundException, URISyntaxException;
 
       public abstract List<Adapter> getAdapters() throws AdapterNotFoundException;

@@ -131,7 +131,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		return serviceModelRepo.findAll();
 	}
 
-	public String getFederatedServices(String catalogueID)
+	public String getFederatedServices(String catalogueID, String relativeURL)
 			throws ServiceNotFoundException, URISyntaxException {
 
 		Catalogue catalogue = catalogueRepo.findBycatalogueID(catalogueID);
@@ -169,7 +169,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		WebClient client = WebClient.create();
 
 		String response = client.get()
-				.uri(new URI(catalogue.getApiEndpoint()))
+				.uri(new URI(catalogue.getApiEndpoint().concat(relativeURL)))
 				.header("Authorization", "Bearer ".concat(accessToken))
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
