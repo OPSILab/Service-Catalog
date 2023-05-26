@@ -61,22 +61,22 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 				stringifiedParams.concat("completed=".concat("true"));
 
 			if (name != null)
-				stringifiedParams.concat(completed ? "&&name=".concat(name) : "name=".concat(name));
+				stringifiedParams.concat(completed ? "&name=".concat(name) : "name=".concat(name));
 
 			if (location != null)
-				stringifiedParams.concat(name != null || completed ? "&&".concat("location=".concat(location))
+				stringifiedParams.concat(name != null || completed ? "&".concat("location=".concat(location))
 						: "location".concat(location));
 
 			if (keywords != null) {
-				String keywordsStringified = name != null || completed || location != null ? "&&" : "";
+				String keywordsStringified = name != null || completed || location != null ? "&" : "";
 				for (String keyword : keywords)
-					keywordsStringified = keywordsStringified.concat("keyword=").concat(keyword).concat("&&");
+					keywordsStringified = keywordsStringified.concat("keywords=").concat(keyword).concat("&");
 				stringifiedParams.concat(keywordsStringified);
 			}
 
 			return ResponseEntity
 					.ok(catalogService.getFederatedServices(remoteCatalogueID, keywords != null ? stringifiedParams
-							: stringifiedParams.substring(0, stringifiedParams.length() - 3)));
+							: stringifiedParams.substring(0, stringifiedParams.length() - 1)));
 		}
 
 		return ResponseEntity.ok(catalogService.getFederatedServices(remoteCatalogueID, ""));
@@ -135,10 +135,10 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 			throws ServiceNotFoundException, IOException, URISyntaxException {
 		String identifiersStringified = "";
 		for (String identifier : identifiers)
-			identifiersStringified = identifiersStringified.concat("identifier=").concat(identifier).concat("&&");
+			identifiersStringified = identifiersStringified.concat("identifier=").concat(identifier).concat("&");
 		return ResponseEntity
 				.ok(catalogService.getFederatedServices(remoteCatalogueID, "/specified?"
-						.concat(identifiersStringified.substring(0, identifiersStringified.length() - 3))));
+						.concat(identifiersStringified.substring(0, identifiersStringified.length() - 1))));
 	}
 
 	@Override
@@ -165,12 +165,14 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 			@RequestParam("remoteCatalogueID") String remoteCatalogueID, @RequestParam("keywords") String[] keywords)
 			throws ServiceNotFoundException, IOException, URISyntaxException {
 		String keywordsStringified = "?";
+
 		for (String keyword : keywords)
-			keywordsStringified = keywordsStringified.concat("keyword=").concat(keyword).concat("&&");
+			keywordsStringified = keywordsStringified.concat("keywords=").concat(keyword.replaceAll(" ", "%20"))
+					.concat("&");
 
 		return ResponseEntity
 				.ok(catalogService.getFederatedServices(remoteCatalogueID, "/specified/keyword"
-						.concat(keywordsStringified.substring(0, keywordsStringified.length() - 3))));
+						.concat(keywordsStringified.substring(0, keywordsStringified.length() - 1))));
 
 	}
 
