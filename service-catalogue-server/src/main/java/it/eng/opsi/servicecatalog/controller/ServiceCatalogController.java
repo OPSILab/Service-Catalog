@@ -115,7 +115,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get all the catalogue descriptions.", description = "Get all the catalogue descriptions saved in the Service Catalog.", tags = {
-			"Catalogue" }, responses = {
+			"Catalogue model" }, responses = {
 					@ApiResponse(description = "Returns the list of all registered catalogue descriptions.", responseCode = "200") })
 	@GetMapping(value = "/catalogues/public", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Catalogue>> getCatalogues()
@@ -125,7 +125,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get all the catalogue datasets descriptions.", description = "Get all the catalogue datasets descriptions saved in the Service Catalog.", tags = {
-			"Catalogue Dataset" }, responses = {
+			"Catalogue dataset model" }, responses = {
 					@ApiResponse(description = "Returns the list of all registered catalogue datasets descriptions.", responseCode = "200") })
 	@GetMapping(value = "/catalogueDatasets/public", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<CatalogueDataset>> getCatalogueDatasets()
@@ -308,7 +308,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Get catalogue description by catalogueID or name.", tags = {
-			"Catalogue" }, responses = {
+			"Catalogue model" }, responses = {
 					@ApiResponse(description = "Get Catalogue description by catalogueID or name.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/catalogues/json", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -322,7 +322,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Operation(summary = "Get catalogue description by country.", tags = {
-			"Catalogue" }, responses = {
+			"Catalogue model" }, responses = {
 					@ApiResponse(description = "Get Catalogue description by country.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/catalogues/country", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -427,7 +427,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get the count of the registered Catalogues descriptions (total, public and private services).", tags = {
-			"Catalogue" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
+			"Catalogue model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/catalogues/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HashMap<String, Integer>> getCataloguesCount() {
 
@@ -436,7 +436,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get the count of the registered CatalogueDatasets descriptions (total, public and private services).", tags = {
-			"CatalogueDataset" }, responses = {
+			"Catalogue dataset model" }, responses = {
 					@ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/catalogueDatasets/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HashMap<String, Integer>> getCatalogueDatasetsCount() {
@@ -446,7 +446,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get the count of the registered Connector descriptions.", tags = {
-			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
+			"Connector model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/connectors/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HashMap<String, Object>> getConnectorsCount() {
 
@@ -455,7 +455,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	@Override
 	@Operation(summary = "Get the count of the registered Adapter descriptions.", tags = {
-			"Service Model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
+			"Adapter model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/adapters/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HashMap<String, Object>> getAdaptersCount() {
 
