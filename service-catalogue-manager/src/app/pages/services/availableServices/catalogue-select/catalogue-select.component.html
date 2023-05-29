@@ -4,8 +4,8 @@
       size="medium" status="primary" routerLink="/pages/services/service-editor">
       <i class="material-icons">add</i>&nbsp;{{ 'general.services.add_new' | translate }}
     </button> &nbsp;
-    <label *ngIf="selectedCatalogueName!=this.getLocalLabel()">{{this.translate.instant('general.catalogues.name')}} : {{this.selectedCatalogue.name}}</label>
-    <label *ngIf="selectedCatalogue.country && selectedCatalogueName!=this.getLocalLabel()">&nbsp;&nbsp;&nbsp;{{this.translate.instant('general.catalogues.country')}} : {{this.selectedCatalogue.country}}</label>
+    <!--<label *ngIf="selectedCatalogueName!=this.getLocalLabel()">{{this.translate.instant('general.catalogues.name')}} : {{this.selectedCatalogue.name}}</label>-->
+    <label *ngIf="selectedCatalogue.country && selectedCatalogueName!=this.getLocalLabel()">&nbsp;{{this.translate.instant('general.catalogues.country')}} : {{this.selectedCatalogue.country}}</label>
   </div>
 
   <div class="col-6 col-md-6 text-right">

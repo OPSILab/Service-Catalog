@@ -134,6 +134,8 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	public String getFederatedServices(String catalogueID, String relativeURL)
 			throws ServiceNotFoundException, URISyntaxException {
 
+		System.out.println(relativeURL); // TODO debug
+
 		Catalogue catalogue = catalogueRepo.findBycatalogueID(catalogueID);
 
 		catalogue.setClientSecret(Encryption.decrypt(catalogue.getClientSecret()));

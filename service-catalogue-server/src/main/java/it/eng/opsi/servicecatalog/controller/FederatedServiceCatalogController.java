@@ -55,27 +55,35 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 			throws ServiceNotFoundException, URISyntaxException {
 
 		if (name != null || location != null || keywords != null || completed) {
+
+			System.out.println("completed");// TODO debug
+
 			String stringifiedParams = "?";
 
-			if (completed)
-				stringifiedParams.concat("completed=".concat("true"));
+			if (completed) {
+				System.out.println("completed");// TODO debug
+				stringifiedParams = stringifiedParams.concat("completed=".concat("true"));
+			}
+
+			System.out.println(stringifiedParams);// TODO debug
 
 			if (name != null)
-				stringifiedParams.concat(completed ? "&name=".concat(name) : "name=".concat(name));
+				stringifiedParams = stringifiedParams.concat(completed ? "&name=".concat(name) : "name=".concat(name));
 
 			if (location != null)
-				stringifiedParams.concat(name != null || completed ? "&".concat("location=".concat(location))
-						: "location".concat(location));
+				stringifiedParams = stringifiedParams
+						.concat(name != null || completed ? "&".concat("location=".concat(location))
+								: "location".concat(location));
 
 			if (keywords != null) {
 				String keywordsStringified = name != null || completed || location != null ? "&" : "";
 				for (String keyword : keywords)
 					keywordsStringified = keywordsStringified.concat("keywords=").concat(keyword).concat("&");
-				stringifiedParams.concat(keywordsStringified);
+				stringifiedParams = stringifiedParams.concat(keywordsStringified);
 			}
 
 			return ResponseEntity
-					.ok(catalogService.getFederatedServices(remoteCatalogueID, keywords != null ? stringifiedParams
+					.ok(catalogService.getFederatedServices(remoteCatalogueID, keywords == null ? stringifiedParams
 							: stringifiedParams.substring(0, stringifiedParams.length() - 1)));
 		}
 
