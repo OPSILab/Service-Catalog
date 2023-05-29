@@ -76,6 +76,10 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
 
   }
 
+  getLocalLabel(){
+    return this.translate.instant('general.services.local') as string
+  }
+
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
     if (!this.catalogues) this.catalogues = await this.availableCataloguesService.getCatalogues()
     if (!this.selectedCatalogue) this.selectedCatalogue = this.catalogues[0];
