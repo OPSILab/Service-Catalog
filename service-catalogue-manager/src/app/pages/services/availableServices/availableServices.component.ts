@@ -45,12 +45,17 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     this.serviceRegistryUrl = this.config.serviceRegistry.url;
   }
 
+  getSelectLabel() {
+    return this.translate.instant('general.catalogues.select') as string;
+  }
 
-
+  getCountryLabel() {
+    return this.translate.instant('general.catalogues.country') as string;
+  }
 
   async ngOnInit(): Promise<void> {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
-    this.catalogues.push({name:this.translate.instant('general.services.local') as string, catalogueID:"local"})
+    this.catalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local" })
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.translate.instant('general.services.local') as string
   }
 

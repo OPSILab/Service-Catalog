@@ -5,7 +5,10 @@
       <i class="material-icons">add</i>&nbsp;{{ 'general.services.add_new' | translate }}
     </button> &nbsp;
     <!--<label *ngIf="selectedCatalogueName!=this.getLocalLabel()">{{this.translate.instant('general.catalogues.name')}} : {{this.selectedCatalogue.name}}</label>-->
-    <label *ngIf="selectedCatalogue.country && selectedCatalogueName!=this.getLocalLabel()">&nbsp;{{this.translate.instant('general.catalogues.country')}} : {{this.selectedCatalogue.country}}</label>
+    <label *ngIf="selectedCatalogue && selectedCatalogue.country && selectedCatalogueName!=this.getLocalLabel()">&nbsp;{{this.translate.instant('general.catalogues.country')}} : {{this.selectedCatalogue.country}}</label>
+    <button nbButton ghost shape="rectangle" size="small" status="primary" (click)="showCatalogueInfoModal()">
+      <i class="material-icons">info</i>
+    </button>
   </div>
 
   <div class="col-6 col-md-6 text-right">

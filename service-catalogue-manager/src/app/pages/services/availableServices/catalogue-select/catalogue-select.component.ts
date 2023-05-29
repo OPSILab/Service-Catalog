@@ -169,6 +169,10 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
       });
   }
 
+  showCatalogueInfoModal(){
+
+  }
+
 
   ngOnDestroy(): void {
     this.unsubscribe.next();
