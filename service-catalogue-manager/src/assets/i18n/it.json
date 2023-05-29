@@ -208,6 +208,7 @@
       "no_type": "Tipo non fornito"
     },
     "services": {
+      "local" : "Service Catalogue locale",
       "authority": "Autorità competente",
       "location": "Luogo",
       "channels": "Canali",

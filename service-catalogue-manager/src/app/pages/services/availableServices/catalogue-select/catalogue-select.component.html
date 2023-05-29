@@ -1,6 +1,6 @@
 <div class="g-0 row mb-2">
   <div class="col-6 col-md-6 text-left">
-    <button *ngIf="selectedCatalogueName=='Local Service Catalogue'" nbButton class="" shape="rectangle" size="medium" status="primary" routerLink="/pages/services/service-editor">
+    <button *ngIf="selectedCatalogueName=='general.services.local' | translate" nbButton class="" shape="rectangle" size="medium" status="primary" routerLink="/pages/services/service-editor">
       <i class="material-icons">add</i>&nbsp;{{ 'general.services.add_new' | translate }}
     </button>
   </div>

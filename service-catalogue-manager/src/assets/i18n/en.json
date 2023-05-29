@@ -1,6 +1,6 @@
 {
   "general": {
-    "welcome": "Welcome to Service Catalogue Manager!",
+    "welcome": "Καλώς ήρθατε στο Service Catalogue Manager!",
     "logo_text": "ACROSS",
     "home": "Home",
     "error": "Error",
@@ -31,7 +31,7 @@
       "consents_logs_group": "CONSENT REGISTRY",
       "data_event_logs": "Data&Event Logs",
       "consents": "Data Consents",
-      "services": "SERVICE REGISTRY",
+      "services": "ΜΗΤΡΏΟ ΥΠΗΡΕΣΙΏΝ",
       "availableservices": "Services",
       "editor": "Service Editor",
       "dataconnectors": "Data Connectors",
@@ -208,6 +208,7 @@
       "no_type": "Type not provided"
     },
     "services": {
+      "local" : "Local Service catalogue",
       "authority": "CompetentAuthority",
       "location": "Location",
       "channels": "Channels",
@@ -381,8 +382,8 @@
         "dataset_added_message": "A new catalogue dataset was added",
         "delete_dataset_message": "Are you sure to delete permanently the catalogue dataset <strong>{{catalogueDatasetName}}</strong>?\n",
         "dataset_edited_message": "Catalogue dataset {{catalogueDatasetName}} was edited",
-        "catalogue_dataset": "Catalogue Dataset",
         "dataset_deleted_message": "Catalogue dataset {{catalogueDatasetName}} deleted successfully!",
+        "catalogue_dataset": "Catalogue Dataset",
         "delete_dataset": "Delete catalogue",
         "URL": "URL",
         "portal_URL": "Portal URL",
@@ -399,8 +400,8 @@
         "add": "Add catalogue",
         "actions": "Actions"
       },
-      "add": "Add catalogue",
       "reset" : "Reset client ID and secret",
+      "add": "Add catalogue",
       "confirm": "Confirm",
       "catalogues": "Catalogues",
       "description": "Description",

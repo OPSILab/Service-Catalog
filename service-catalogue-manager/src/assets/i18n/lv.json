@@ -1,6 +1,6 @@
 {
   "general": {
-    "welcome": "Welcome to Service Catalogue Manager!",
+    "welcome": "Καλώς ήρθατε στο Service Catalogue Manager!",
     "logo_text": "ACROSS",
     "home": "Home",
     "error": "Error",
@@ -23,15 +23,15 @@
       "publicServices": "Public Services",
       "privateServices": "Private Services",
       "personalDataServices": "Using Personal Data",
-      "federatedCatalogues" : "Federated Catalogues",
-      "catalogueDatasets" : "Catalogue Datasets"
+      "federatedCatalogues": "Federated Catalogues",
+      "catalogueDatasets": "Catalogue Datasets"
     },
     "menu": {
       "dashboard": "Dashboard",
       "consents_logs_group": "CONSENT REGISTRY",
       "data_event_logs": "Data&Event Logs",
       "consents": "Data Consents",
-      "services": "SERVICE REGISTRY",
+      "services": "ΜΗΤΡΏΟ ΥΠΗΡΕΣΙΏΝ",
       "availableservices": "Services",
       "editor": "Service Editor",
       "dataconnectors": "Data Connectors",
@@ -208,6 +208,7 @@
       "no_type": "Type not provided"
     },
     "services": {
+      "local" : "Local Service catalogue",
       "authority": "CompetentAuthority",
       "location": "Location",
       "channels": "Channels",
@@ -381,9 +382,9 @@
         "dataset_added_message": "A new catalogue dataset was added",
         "delete_dataset_message": "Are you sure to delete permanently the catalogue dataset <strong>{{catalogueDatasetName}}</strong>?\n",
         "dataset_edited_message": "Catalogue dataset {{catalogueDatasetName}} was edited",
+        "dataset_deleted_message": "Catalogue dataset {{catalogueDatasetName}} deleted successfully!",
         "catalogue_dataset": "Catalogue Dataset",
         "delete_dataset": "Delete catalogue",
-        "dataset_deleted_message": "Catalogue dataset {{catalogueDatasetName}} deleted successfully!",
         "URL": "URL",
         "portal_URL": "Portal URL",
         "authentication_method": "Authentication method",
@@ -437,7 +438,8 @@
       "activate_deactivate": "Activate/deactivate",
       "download_metadata": "Download metadata",
       "activate_catalogue": "Catalogue activation",
-      "activate_catalogue_message": "Are you sure to activate the catalogue <strong>{{catalogueName}}</strong><br>Once activated, you will not be able to edit it until you disabled it first."
+      "activate_catalogue_message": "Are you sure to activate the catalogue <strong>{{catalogueName}}</strong><br>Once activated, you will not be able to edit it until you disabled it first.",
+      "validationErrors": "There are validation errors in the Catalogue description."
     }
   },
   "login": {

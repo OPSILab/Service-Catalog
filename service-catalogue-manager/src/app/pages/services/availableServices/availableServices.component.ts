@@ -6,6 +6,7 @@ import { NgxConfigureService } from 'ngx-configure';
 import { ServiceModel } from '../../../model/services/serviceModel';
 import { AppConfig } from '../../../model/appConfig';
 import { Subject } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -36,6 +37,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   private config: AppConfig;
 
   constructor(
+    private translate: TranslateService,
     private availableCataloguesService: AvailableCataloguesService,
     private configService: NgxConfigureService,
   ) {
@@ -48,8 +50,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
-    this.catalogues.push({name:'Local Service Catalogue', catalogueID:"local"})
-    if (!this.selectedCatalogueName) this.selectedCatalogueName = 'Local Service Catalogue'
+    this.catalogues.push({name:this.translate.instant('general.services.local') as string, catalogueID:"local"})
+    if (!this.selectedCatalogueName) this.selectedCatalogueName = this.translate.instant('general.services.local') as string
   }
 
   ngOnDestroy(): void {
