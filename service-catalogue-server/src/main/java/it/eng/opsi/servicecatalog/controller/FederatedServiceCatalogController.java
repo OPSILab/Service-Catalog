@@ -56,16 +56,12 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 
 		if (name != null || location != null || keywords != null || completed) {
 
-			System.out.println("completed");// TODO debug
-
 			String stringifiedParams = "?";
 
-			if (completed) {
-				System.out.println("completed");// TODO debug
+			if (completed)
 				stringifiedParams = stringifiedParams.concat("completed=".concat("true"));
-			}
 
-			System.out.println(stringifiedParams);// TODO debug
+			System.out.println(stringifiedParams);
 
 			if (name != null)
 				stringifiedParams = stringifiedParams.concat(completed ? "&name=".concat(name) : "name=".concat(name));
