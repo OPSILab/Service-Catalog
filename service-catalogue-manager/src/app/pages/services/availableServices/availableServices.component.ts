@@ -83,9 +83,9 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
-    this.catalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: "Italy" })
+    this.catalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local",  country: this.config.system.country})
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.translate.instant('general.services.local') as string
-    this.selectedCatalogue= { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: "Italy" }
+    this.selectedCatalogue= { name: this.translate.instant('general.services.local') as string, catalogueID: "local",  country: this.config.system.country}
   }
 
   ngOnDestroy(): void {

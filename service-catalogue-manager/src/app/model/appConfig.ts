@@ -8,6 +8,7 @@ export interface AppConfig {
 }
 
 export interface System {
+  country: string;
   sdkUrl: string;
   dataMapEnumUrl: string;
   checkConsentAtOperator: boolean;

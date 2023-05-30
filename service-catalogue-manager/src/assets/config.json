@@ -19,7 +19,8 @@
     "mailTo":"support@across.eu",
     "docsUrl":"https://service-catalogue.readthedocs.io/en/latest/",
     "dataMapEnumUrl":"http://localhost:81/assets/data/examples/dataMapEnum.json",
-    "detailedErrors" : true
+    "detailedErrors" : true,
+    "country" : "Italy"
   },
   "data_model_mapper" : {
     "default_mapper_url":"http://localhost:5500/api/mapper",
