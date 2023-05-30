@@ -68,6 +68,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   changeCountry($event:any) {
     console.log($event)
     this.selectedCatalogueCountry = $event.country || "Italy"
+    this.selectedCatalogue = $event
   }
 
   async changes(name) {
@@ -82,9 +83,9 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
-    this.catalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local" })
+    this.catalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: "Italy" })
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.translate.instant('general.services.local') as string
-    this.selectedCatalogue= this.catalogues[0]
+    this.selectedCatalogue= { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: "Italy" }
   }
 
   ngOnDestroy(): void {
