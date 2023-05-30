@@ -637,10 +637,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		if (catalogues == null)
 			return catalogues;
 
-		for (Catalogue catalogue : catalogues) {
-			catalogue.setHashedSecret(null);
+		for (Catalogue catalogue : catalogues)
 			catalogue.setClientSecret(null);
-		}
+
 		return catalogues;
 	}
 
@@ -650,7 +649,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		if (catalogue == null)
 			return catalogue;
-		catalogue.setHashedSecret(null);
+
 		catalogue.setClientSecret(null);
 
 		return catalogue;
@@ -659,25 +658,10 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public Catalogue createCatalogue(@Valid Catalogue catalogueIn) throws NoSuchAlgorithmException {
 
-		if (catalogueIn.getClientSecret() != null) {
-			/*
-			 * SecureRandom random = new SecureRandom();
-			 * byte[] salt = new byte[16];
-			 * random.nextBytes(salt);
-			 * MessageDigest md;
-			 * md = MessageDigest.getInstance("SHA-512");
-			 * md.update(salt);
-			 * byte[] hashedPassword =
-			 * md.digest(catalogueIn.getClientSecret().getBytes(StandardCharsets.UTF_8));
-			 * 
-			 * catalogueIn.setHashedSecret(hashedPassword);
-			 * catalogueIn.setClientSecret(null);
-			 */
+		if (catalogueIn.getClientSecret() != null)
 			catalogueIn.setClientSecret(Encryption.encrypt(catalogueIn.getClientSecret()));
-		}
 
 		Catalogue catalogue = catalogueRepo.save(catalogueIn);
-		catalogue.setHashedSecret(null);
 		catalogue.setClientSecret(null);
 		return catalogue;
 	}
@@ -694,37 +678,19 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		Catalogue catalogueTemp = catalogueRepo.findBycatalogueID(decodedCataloguecatalogueID);
 
-		if (!secretChanged && catalogueTemp.getClientSecret() != null) {
+		if (!secretChanged && catalogueTemp.getClientSecret() != null)
 			catalogue.setClientSecret(catalogueTemp.getClientSecret());
-		}
 
 		else if (secretChanged && catalogue.getClientSecret() != null) {
-			/*
-			 * SecureRandom random = new SecureRandom();
-			 * byte[] salt = new byte[16];
-			 * random.nextBytes(salt);
-			 * MessageDigest md;
-			 * try {
-			 * md = MessageDigest.getInstance("SHA-512");
-			 * md.update(salt);
-			 * byte[] hashedPassword =
-			 * md.digest(catalogue.getClientSecret().getBytes(StandardCharsets.UTF_8));
-			 * catalogue.setHashedSecret(hashedPassword);
-			 * } catch (NoSuchAlgorithmException e) {
-			 * System.out.println(e);
-			 * }
-			 */
+
 			catalogue.setClientSecret(Encryption.encrypt(catalogue.getClientSecret()));
 		}
-
-		// catalogue.setHashedSecret(hashedPassword);
 
 		Catalogue catalogueUpdated = catalogueRepo.updateCatalogue(decodedCataloguecatalogueID, catalogue)
 				.orElseThrow(
 						() -> new CatalogueNotFoundException(
 								"No Catalogue description found for Catalogue Id: " + decodedCataloguecatalogueID));
 
-		catalogueUpdated.setHashedSecret(null);
 		catalogueUpdated.setClientSecret(null);
 		return catalogueUpdated;
 	}
@@ -786,7 +752,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		if (catalogue == null)
 			return catalogue;
 
-		catalogue.setHashedSecret(null);
 		catalogue.setClientSecret(null);
 		return catalogue;
 	}
@@ -820,10 +785,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		if (catalogues == null)
 			return catalogues;
 
-		for (Catalogue catalogue : catalogues) {
-			catalogue.setHashedSecret(null);
+		for (Catalogue catalogue : catalogues)
 			catalogue.setClientSecret(null);
-		}
+
 		return catalogues;
 	}
 
