@@ -246,3 +246,4 @@ service-catalogue-manager/service-catalogue-manager.bat
 test/
 service-catalogue-server/.idea/
 *.hprof
+backup/

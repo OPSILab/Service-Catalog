@@ -124,6 +124,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Value("${spring.application.status}")
 	private String STATUS;
 
+	String accessToken = "";
+	Integer expires_in;
+
 	@Override
 	public List<ServiceModel> getServices() throws ServiceNotFoundException {
 
@@ -140,29 +143,33 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		// get token
 
-		String accessToken = "";
-		try {
-			HttpClient client = HttpClient.newHttpClient();
+		if (accessToken.equals(""))
+			try {
+				HttpClient client = HttpClient.newHttpClient();
 
-			String body = "grant_type=client_credentials&redirect_uri="
-					.concat(catalogue.getOAuth2Endpoint().split("auth")[0])
-					.concat("oauth&client_id=")
-					.concat(catalogue.getClientID())
-					.concat("&client_secret=")
-					.concat(catalogue.getClientSecret());
+				String body = "grant_type=client_credentials&redirect_uri="
+						.concat(catalogue.getOAuth2Endpoint().split("auth")[0])
+						.concat("oauth&client_id=")
+						.concat(catalogue.getClientID())
+						.concat("&client_secret=")
+						.concat(catalogue.getClientSecret());
 
-			HttpRequest request = HttpRequest.newBuilder()
-					.uri(URI.create(catalogue.getOAuth2Endpoint()))
-					.POST(BodyPublishers.ofString(body))
-					.setHeader("Content-Type", "application/x-www-form-urlencoded")
-					.build();
+				HttpRequest request = HttpRequest.newBuilder()
+						.uri(URI.create(catalogue.getOAuth2Endpoint()))
+						.POST(BodyPublishers.ofString(body))
+						.setHeader("Content-Type", "application/x-www-form-urlencoded")
+						.build();
 
-			HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+				HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-			accessToken = response.body().split("\"access_token\":\"")[1].split("\",")[0];
-		} catch (Exception e) {
-			System.out.println(e);
-		}
+				accessToken = response.body().split("\"access_token\":\"")[1].split("\",")[0];
+				expires_in = Integer.parseInt(response.body().split("\"expires_in\":")[1].split(",")[0]);
+				System.out.println(expires_in);// TODO debug log
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+		else
+			System.out.println("Token already set");// TODO debug log
 
 		// get remote services
 
