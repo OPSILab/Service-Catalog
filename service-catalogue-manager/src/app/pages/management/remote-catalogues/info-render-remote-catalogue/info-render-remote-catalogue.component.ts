@@ -46,7 +46,7 @@ export class InfoRenderRemoteCatalogueComponent implements OnInit {
 
   }
 
-  async showConnectorInfoModal(): Promise<void> {
+  async showCatalogueInfoModal(): Promise<void> {
     type Context = {[key: string] : any}
     let context : Context = {}
     if (this.value.name) context.modalHeader = this.value.name;

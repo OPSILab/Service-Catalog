@@ -2,6 +2,7 @@ package it.eng.opsi.servicecatalog.controller;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,20 +62,23 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 			if (completed)
 				stringifiedParams = stringifiedParams.concat("completed=".concat("true"));
 
-			System.out.println(stringifiedParams);
-
 			if (name != null)
-				stringifiedParams = stringifiedParams.concat(completed ? "&name=".concat(name) : "name=".concat(name));
+				stringifiedParams = stringifiedParams
+						.concat(completed ? "&name=".concat(java.net.URLEncoder.encode(name, StandardCharsets.UTF_8))
+								: "name=".concat(java.net.URLEncoder.encode(name, StandardCharsets.UTF_8)));
 
 			if (location != null)
 				stringifiedParams = stringifiedParams
-						.concat(name != null || completed ? "&".concat("location=".concat(location))
-								: "location".concat(location));
+						.concat(name != null || completed
+								? "&".concat("location="
+										.concat(java.net.URLEncoder.encode(location, StandardCharsets.UTF_8)))
+								: "location".concat(java.net.URLEncoder.encode(location, StandardCharsets.UTF_8)));
 
 			if (keywords != null) {
 				String keywordsStringified = name != null || completed || location != null ? "&" : "";
 				for (String keyword : keywords)
-					keywordsStringified = keywordsStringified.concat("keywords=").concat(keyword).concat("&");
+					keywordsStringified = keywordsStringified.concat("keywords=")
+							.concat(java.net.URLEncoder.encode(keyword, StandardCharsets.UTF_8)).concat("&");
 				stringifiedParams = stringifiedParams.concat(keywordsStringified);
 			}
 
@@ -95,7 +99,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 			@RequestParam("remoteCatalogueID") String remoteCatalogueID)
 			throws ServiceNotFoundException, IOException, URISyntaxException {
 		return ResponseEntity
-				.ok(catalogService.getFederatedServices(remoteCatalogueID, "/json?identifier=".concat(identifier)));
+				.ok(catalogService.getFederatedServices(remoteCatalogueID,
+						"/json?identifier=".concat(java.net.URLEncoder.encode(identifier, StandardCharsets.UTF_8))));
 	}
 
 	@Operation(summary = "Get Service Cost  by serviceId. ", tags = {
@@ -108,7 +113,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 			throws ServiceNotFoundException, IOException, URISyntaxException {
 
 		return ResponseEntity
-				.ok(catalogService.getFederatedServices(remoteCatalogueID, "/cost?serviceId=".concat(serviceId)));
+				.ok(catalogService.getFederatedServices(remoteCatalogueID,
+						"/cost?serviceId=".concat(java.net.URLEncoder.encode(serviceId, StandardCharsets.UTF_8))));
 	}
 
 	public HeadersBuilder<?> NotFound() {
@@ -125,7 +131,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 			throws ServiceNotFoundException, IOException, URISyntaxException {
 
 		return ResponseEntity
-				.ok(catalogService.getFederatedServices(remoteCatalogueID, "/time?serviceId=".concat(serviceId)));
+				.ok(catalogService.getFederatedServices(remoteCatalogueID,
+						"/time?serviceId=".concat(java.net.URLEncoder.encode(serviceId, StandardCharsets.UTF_8))));
 	}
 
 	@Override
@@ -139,7 +146,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 			throws ServiceNotFoundException, IOException, URISyntaxException {
 		String identifiersStringified = "";
 		for (String identifier : identifiers)
-			identifiersStringified = identifiersStringified.concat("identifier=").concat(identifier).concat("&");
+			identifiersStringified = identifiersStringified.concat("identifier=")
+					.concat(java.net.URLEncoder.encode(identifier, StandardCharsets.UTF_8)).concat("&");
 		return ResponseEntity
 				.ok(catalogService.getFederatedServices(remoteCatalogueID, "/specified?"
 						.concat(identifiersStringified.substring(0, identifiersStringified.length() - 1))));
@@ -156,7 +164,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 
 		return ResponseEntity
 				.ok(catalogService.getFederatedServices(remoteCatalogueID,
-						"/specified/location?location=".concat(location)));
+						"/specified/location?location="
+								.concat(java.net.URLEncoder.encode(location, StandardCharsets.UTF_8))));
 
 	}
 
@@ -171,7 +180,9 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 		String keywordsStringified = "?";
 
 		for (String keyword : keywords)
-			keywordsStringified = keywordsStringified.concat("keywords=").concat(keyword.replaceAll(" ", "%20"))
+			keywordsStringified = keywordsStringified.concat("keywords=")
+					.concat(java.net.URLEncoder.encode(keyword, StandardCharsets.UTF_8))// keyword.replaceAll(" ",
+																						// "%20"))
 					.concat("&");
 
 		return ResponseEntity
@@ -190,7 +201,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 			throws ServiceNotFoundException, IOException, URISyntaxException {
 
 		return ResponseEntity
-				.ok(catalogService.getFederatedServices(remoteCatalogueID, "/specified/title?title=".concat(title)));
+				.ok(catalogService.getFederatedServices(remoteCatalogueID,
+						"/specified/title?title=".concat(java.net.URLEncoder.encode(title, StandardCharsets.UTF_8))));
 
 	}
 
