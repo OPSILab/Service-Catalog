@@ -41,6 +41,7 @@ import { CustomKeywordRenderComponent } from './availableServices/custom-keyword
 import { CustomStatusRenderComponent } from './availableServices/custom-status-render.component';
 import {ConnectorStatusRenderComponent } from './availableConnectors/custom-status-render.component';
 import { CatalogueSelectComponent } from './availableServices/catalogue-select/catalogue-select.component';
+import { CatalogueInfoComponent } from './availableServices/catalogue-select/catalogue-info/catalogue-info.component';
 
 @NgModule({
   imports: [
@@ -85,6 +86,7 @@ import { CatalogueSelectComponent } from './availableServices/catalogue-select/c
     CustomStatusRenderComponent,
     ConnectorStatusRenderComponent,
     CatalogueSelectComponent,
+    CatalogueInfoComponent,
   ],
   providers: [AvailableServicesService, AvailableConnectorsService, AvailableAdaptersService],
   entryComponents: [

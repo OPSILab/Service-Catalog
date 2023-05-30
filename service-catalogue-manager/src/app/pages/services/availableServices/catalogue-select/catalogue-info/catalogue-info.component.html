@@ -1,0 +1,119 @@
+<button nbButton ghost shape="rectangle" size="small" status="primary" (click)="showConnectorInfoModal()">
+  <i class="material-icons">info</i>
+</button>
+
+<ng-template #availableCatalogueInfoModal let-data let-ref="dialogRef">
+
+<nb-card style="width: 60vw; height: auto; max-width: 95vw; max-height: 95vh">
+  <nb-card-header class="d-flex justify-content-between">
+
+    <!--<h5 class="h5">{{ data.modalHeader }}</h5>-->
+
+    <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
+      <i class="material-icons">close</i>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <div class="row justify-content-around align-items-sm-center">
+      <div class="col-sm py-2">
+
+        <!--
+        <img style="width: 140px; height: 100px" src="{{ data.iconUrl }}" alt="{{ data.modalHeader }}"
+          onerror="this.onerror=null;this.src = 'favicon.png';" />
+          -->
+
+
+      </div>
+    </div>
+    <br>
+    <div *ngIf="value?.name" class="row justify-content-center">
+      <div class="col-sm py-1">
+        <div class="accent">
+          <i><b>{{ 'general.catalogues.name' | translate }}:</b> {{ value?.name}}</i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="value?.description" class="row justify-content-center">
+      <div class="col-sm py-1">
+        <div class="accent">
+          <i><b>{{ 'general.catalogues.description' | translate }}:</b> {{ value?.description }}</i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="value?.country" class="row justify-content-center">
+      <div class="col-sm py-1">
+        <div class="accent">
+          <i><b>{{ 'general.catalogues.country' | translate }}:</b> {{ value?.country }}</i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="value?.category" class="row justify-content-center">
+      <div class="col-sm py-1">
+        <div class="accent">
+          <i><b>{{ 'general.catalogues.category' | translate }}:</b> {{ value?.category }}</i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="value?.status" class="row justify-content-center">
+      <div class="col-sm py-1">
+        <div class="accent">
+          <i><b>{{ 'general.catalogues.status' | translate }}:</b> {{ value?.status }}</i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="value?.active" class="row justify-content-center">
+      <div class="col-sm py-1">
+        <div class="accent">
+          <i><b>{{ 'general.catalogues.active' | translate }}:</b> {{ value?.active }}</i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="value?.services" class="row justify-content-center">
+      <div class="col-sm py-1">
+        <div class="accent">
+          <i><b>{{ 'general.catalogues.services' | translate }}:</b> {{ value?.services }}</i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="value?.type" class="row justify-content-center">
+      <div class="col-sm py-1">
+        <div class="accent">
+          <i><b>{{ 'general.catalogues.type' | translate }}:</b> {{ value?.type }}</i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="value?.refresh" class="row justify-content-center">
+      <div class="col-sm py-1">
+        <div class="accent">
+          <i><b>{{ 'general.catalogues.refresh' | translate }}:</b> {{ value?.refresh }}</i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="value?.apiEndpoint" class="row justify-content-center">
+      <div class="col-sm py-1">
+        <div class="accent">
+          <i><b>{{ 'general.catalogues.api_endpoint' | translate }}:</b> <a href="{{ value?.apiEndpoint }}"
+              target="_blank"><nb-icon icon="external-link-outline"></nb-icon></a></i>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="value?.homePage" class="row justify-content-center">
+      <div class="col-sm py-1">
+        <div class="accent">
+          <i><b>{{ 'general.catalogues.home_page' | translate }}:</b> <a href="{{ value?.homePage }}"
+              target="_blank"><nb-icon icon="external-link-outline"></nb-icon></a></i>
+        </div>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer>
+    <div class="row justify-content-center">
+      <ng-template #elseBlock>
+        <button nbButton class="mx-4" ghost shape="rectangle" size="large" status="primary" (click)="ref.close()">
+          {{ 'general.close' | translate }}
+        </button>
+      </ng-template>
+    </div>
+  </nb-card-footer>
+</nb-card>
+</ng-template>

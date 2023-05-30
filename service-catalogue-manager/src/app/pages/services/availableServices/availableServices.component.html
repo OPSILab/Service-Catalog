@@ -16,9 +16,7 @@
           </nb-option-group>
         </nb-select>
         <label> &nbsp; &nbsp; {{this.selectedCatalogueCountry}}</label>
-        <button nbButton ghost shape="rectangle" size="small" status="primary" (click)="showCatalogueInfoModal()">
-          <i class="material-icons">info</i>
-        </button>
+        <catalogue-info [value] = selectedCatalogue></catalogue-info>
       </div>
     </div>
     <br>

@@ -7,6 +7,8 @@ import { ServiceModel } from '../../../model/services/serviceModel';
 import { AppConfig } from '../../../model/appConfig';
 import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { NbDialogService } from '@nebular/theme';
+import { InfoRenderRemoteCatalogueComponent } from '../../management/remote-catalogues/info-render-remote-catalogue/info-render-remote-catalogue.component';
 
 
 
@@ -27,6 +29,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   @Input() selectedCatalogueName: string;
   //@Input()
   selectedCatalogueCountry: string = "Italy";
+  selectedCatalogue;
   @Input() availableServices: ServiceModel[];
   @Output() updateResult = new EventEmitter<unknown>();
 
@@ -42,6 +45,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private availableCataloguesService: AvailableCataloguesService,
     private configService: NgxConfigureService,
+    private dialogService: NbDialogService
   ) {
     this.config = this.configService.config as AppConfig;
     this.serviceRegistryUrl = this.config.serviceRegistry.url;
@@ -56,7 +60,9 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   }
 
   showCatalogueInfoModal() {
-
+    this.dialogService.open(InfoRenderRemoteCatalogueComponent.prototype.catalogueInfoModalRef).onClose.subscribe(() => {
+      void console.log("confirm ok", this.ngOnInit());
+    });
   }
 
   changeCountry($event:any) {
@@ -78,6 +84,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
     this.catalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local" })
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.translate.instant('general.services.local') as string
+    this.selectedCatalogue= this.catalogues[0]
   }
 
   ngOnDestroy(): void {
