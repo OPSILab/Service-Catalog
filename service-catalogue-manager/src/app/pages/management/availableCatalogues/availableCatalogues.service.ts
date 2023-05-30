@@ -72,15 +72,15 @@ export class AvailableCataloguesService {
   }
 
   registerCatalogue(catalogue: CatalogueEntry): Promise<CatalogueEntry> {
-    return this.http.put<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogue.catalogueID}&&secretChanged=${false}`, catalogue).toPromise();
+    return this.http.put<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogue.catalogueID}&secretChanged=${false}`, catalogue).toPromise();
   }
 
   deregisterCatalogue(catalogue: CatalogueEntry): Promise<CatalogueEntry> {
-    return this.http.put<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogue.catalogueID}&&secretChanged=${false}`, catalogue).toPromise();
+    return this.http.put<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogue.catalogueID}&secretChanged=${false}`, catalogue).toPromise();
   }
 
   updateCatalogue(catalogue: CatalogueEntry, catalogueID: string, secretChanged): Promise<CatalogueEntry> {
-    return this.http.put<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogue.catalogueID}&&secretChanged=${secretChanged}`, catalogue).toPromise();
+    return this.http.put<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogue.catalogueID}&secretChanged=${secretChanged}`, catalogue).toPromise();
   }
 
   deleteCatalogue(catalogueID: string): Promise<CatalogueEntry> {

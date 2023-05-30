@@ -694,8 +694,8 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		Catalogue catalogueTemp = catalogueRepo.findBycatalogueID(decodedCataloguecatalogueID);
 
-		if (!secretChanged && catalogueTemp.getHashedSecret() != null) {
-			catalogue.setHashedSecret(catalogueTemp.getHashedSecret());
+		if (!secretChanged && catalogueTemp.getClientSecret() != null) {
+			catalogue.setClientSecret(catalogueTemp.getClientSecret());
 		}
 
 		else if (secretChanged && catalogue.getClientSecret() != null) {
