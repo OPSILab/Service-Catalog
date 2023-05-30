@@ -145,45 +145,62 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		if (accessToken.equals(""))
 			try {
-				HttpClient client = HttpClient.newHttpClient();
-
-				String body = "grant_type=client_credentials&redirect_uri="
-						.concat(catalogue.getOAuth2Endpoint().split("auth")[0])
-						.concat("oauth&client_id=")
-						.concat(catalogue.getClientID())
-						.concat("&client_secret=")
-						.concat(catalogue.getClientSecret());
-
-				HttpRequest request = HttpRequest.newBuilder()
-						.uri(URI.create(catalogue.getOAuth2Endpoint()))
-						.POST(BodyPublishers.ofString(body))
-						.setHeader("Content-Type", "application/x-www-form-urlencoded")
-						.build();
-
-				HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-				accessToken = response.body().split("\"access_token\":\"")[1].split("\",")[0];
-				expires_in = Integer.parseInt(response.body().split("\"expires_in\":")[1].split(",")[0]);
-				System.out.println(expires_in);// TODO debug log
+				getToken(catalogue);
 			} catch (Exception e) {
 				System.out.println(e);
 			}
-		else
-			System.out.println("Token already set");// TODO debug log
 
 		// get remote services
 
-		WebClient client = WebClient.create();
+		String response = "";
 
-		String response = client.get()
+		try {
+			response = getFederatedServicesResponse(relativeURL, accessToken, catalogue);
+		} catch (Exception e) {
+			System.out.println(e);
+			try {
+				getToken(catalogue);
+			} catch (Exception ex) {
+				System.out.println(ex);
+			}
+		}
+
+		return response;
+	}
+
+	public void getToken(Catalogue catalogue) throws IOException, InterruptedException {
+		HttpClient client = HttpClient.newHttpClient();
+
+		String body = "grant_type=client_credentials&redirect_uri="
+				.concat(catalogue.getOAuth2Endpoint().split("auth")[0])
+				.concat("oauth&client_id=")
+				.concat(catalogue.getClientID())
+				.concat("&client_secret=")
+				.concat(catalogue.getClientSecret());
+
+		HttpRequest request = HttpRequest.newBuilder()
+				.uri(URI.create(catalogue.getOAuth2Endpoint()))
+				.POST(BodyPublishers.ofString(body))
+				.setHeader("Content-Type", "application/x-www-form-urlencoded")
+				.build();
+
+		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+		accessToken = response.body().split("\"access_token\":\"")[1].split("\",")[0];
+		expires_in = Integer.parseInt(response.body().split("\"expires_in\":")[1].split(",")[0]);
+	}
+
+	public String getFederatedServicesResponse(String relativeURL, String accessToken,
+			Catalogue catalogue) throws URISyntaxException {
+
+		WebClient client = WebClient.create();
+		return client.get()
 				.uri(new URI(catalogue.getApiEndpoint().concat(relativeURL)))
 				.header("Authorization", "Bearer ".concat(accessToken))
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(String.class)
 				.block();
-
-		return response;
 	}
 
 	@Override
