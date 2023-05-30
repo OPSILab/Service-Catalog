@@ -25,6 +25,8 @@ export interface AvailableServiceRow extends ServiceModel {
 export class AvailableServicesComponent implements OnInit, OnDestroy {
   @Input() value: ServiceModel;
   @Input() selectedCatalogueName: string;
+  //@Input()
+  selectedCatalogueCountry: string = "Italy";
   @Input() availableServices: ServiceModel[];
   @Output() updateResult = new EventEmitter<unknown>();
 
@@ -51,6 +53,25 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   getCountryLabel() {
     return this.translate.instant('general.catalogues.country') as string;
+  }
+
+  showCatalogueInfoModal() {
+
+  }
+
+  changeCountry($event:any) {
+    console.log($event)
+    this.selectedCatalogueCountry = $event.country || "Italy"
+  }
+
+  async changes(name) {
+    //if (name != this.selectedCatalogueName) this.selectedCatalogueCountry = (await this.availableCataloguesService.getCatalogueByName(name))?.country || "Italy"
+    return name
+  }
+
+  async log() {
+    console.log("click")
+    //this.selectedCatalogueCountry = (await this.availableCataloguesService.getCatalogueByName(this.selectedCatalogueName))?.country || "Italy"
   }
 
   async ngOnInit(): Promise<void> {

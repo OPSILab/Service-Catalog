@@ -35,6 +35,7 @@ export interface AvailableServiceRow extends ServiceModel {
 })
 export class CatalogueSelectComponent implements OnInit, OnChanges {
   @Input() selectedCatalogueName: string;
+  @Output() selectedCatalogueCountry= new EventEmitter<any>();
   @Output() updateResult = new EventEmitter<unknown>();
 
   private serviceLabel: string;
@@ -55,6 +56,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
   services: ServiceModel[];
   private config: AppConfig;
   serviceRegistryUrl: string;
+  country: any;
 
   constructor(
     private availableServicesService: AvailableServicesService,
@@ -89,6 +91,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
       if (changes['selectedCatalogueName'].currentValue == this.translate.instant('general.services.local') as string) {
       this.services = await this.availableServicesService.getServices();
       this.selectedCatalogue = {name:this.translate.instant('general.services.local') as string, catalogueID:"local"}
+      this.country= this.selectedCatalogue.country
       }
       else this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID);
     }
@@ -96,7 +99,9 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
       this.services = []
     }
     void await this.source.load(this.services);
-    this.updateResult.emit(this.services);
+    //this.updateResult.emit(this.services);
+    //this.selectedCatalogueCountry.emit(this.selectedCatalogue.country || "Italy")
+    this.selectedCatalogueCountry.emit(this.selectedCatalogue)
     this.loadSource(this.selectedCatalogue.catalogueID);
     this.translate.onLangChange.subscribe(async () => {
       await this.loadSource(this.selectedCatalogue.catalogueID);
@@ -114,7 +119,8 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
       this.services = []
     }
     void await this.source.load(this.services);
-    this.updateResult.emit(this.services);
+    //this.updateResult.emit(this.services);
+
     this.loadSource(this.selectedCatalogue.catalogueID);
     this.translate.onLangChange.subscribe(async () => {
       await this.loadSource(this.selectedCatalogue.catalogueID);
