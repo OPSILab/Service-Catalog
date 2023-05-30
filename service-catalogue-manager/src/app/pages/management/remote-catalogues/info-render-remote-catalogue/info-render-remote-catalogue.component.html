@@ -5,7 +5,7 @@
 <ng-template #availableCatalogueInfoModal let-data let-ref="dialogRef">
   <nb-card style="width: 60vw; height: auto; max-width: 95vw; max-height: 95vh">
     <nb-card-header class="d-flex justify-content-between">
-      <h5 class="h5">{{ data.modalHeader }}</h5>
+      <h5 class="h5">{{ value.name }}</h5>
       <button nbButton ghost shape="rectangle" size="tiny" (click)="ref.close()">
         <i class="material-icons">close</i>
       </button>

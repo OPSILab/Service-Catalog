@@ -90,7 +90,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     try {
       if (changes['selectedCatalogueName'].currentValue == this.translate.instant('general.services.local') as string) {
       this.services = await this.availableServicesService.getServices();
-      this.selectedCatalogue = {name:this.translate.instant('general.services.local') as string, catalogueID:"local"}
+      this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: "Italy" }
       this.country= this.selectedCatalogue.country
       }
       else this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID);
@@ -110,7 +110,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     if (!this.catalogues) this.catalogues = await this.availableCataloguesService.getCatalogues()
-    if (!this.selectedCatalogue) this.selectedCatalogue = {name:this.translate.instant('general.services.local') as string, catalogueID:"local"}
+    if (!this.selectedCatalogue) this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: "Italy" }
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
     try {
       this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID);
