@@ -49,6 +49,10 @@ export class AvailableCataloguesService {
     }
   }
 
+  getCatalogueByURL(apiEndpoint: string): CatalogueEntry | Promise<CatalogueEntry> {
+    return this.http.get<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues/json?apiEndpoint=${apiEndpoint}`).toPromise();
+  }
+
   getCataloguesCount(): Promise<{ total: number, publicCatalogues, privateCatalogues }> {
     return this.http.get<{ total: number, publicCatalogues, privateCatalogues }>(`${this.serviceRegistryUrl}/api/v2/catalogues/count`).toPromise();
   }

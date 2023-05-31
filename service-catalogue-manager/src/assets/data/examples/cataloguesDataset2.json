@@ -1,0 +1,98 @@
+[{
+  "_id": {
+    "$oid": "646c98c85d1c5e0146f733f4"
+  },
+  "catalogueID": "168390112984418556905353773.95Name2_locale",
+  "name": "Docker",
+  "competentAuthority": "Ca",
+  "country": "ALA-Åland Islands",
+  "category": "Municipality",
+  "description": "D",
+  "homePage": "hp",
+  "apiEndpoint": "http://localhost:8085/service-catalogue/api/v2/services",
+  "type": "Service Catalogue",
+  "active": "inactive",
+  "refresh": 86400000,
+  "authenticated": true,
+  "services": 6,
+  "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token",
+  "clientID": "ids-usage-control",
+  "clientSecret": "8tmQoHAYPjvhOJEDQwwuCqNdWFGvgrUS5ElniQV3hgfQ/ixD3cWaLHtb2aEUUNpz",
+  "lastRefresh": {
+    "$numberLong": "1685455962422"
+  },
+  "_class": "it.eng.opsi.servicecatalog.model.Catalogue"
+},
+{
+  "_id": {
+    "$oid": "646c99756e7552389dbb23dd"
+  },
+  "catalogueID": "1684141909640228968120458785.22C_locale",
+  "name": "8086",
+  "competentAuthority": "A",
+  "country": "GRC-Greece",
+  "category": "Municipality",
+  "description": "A",
+  "homePage": "A",
+  "apiEndpoint": "http://localhost:8086/service-catalogue/api/v2/services",
+  "type": "Service Catalogue",
+  "active": "inactive",
+  "refresh": 86400000,
+  "authenticated": true,
+  "services": 31,
+  "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token",
+  "clientID": "ids-usage-control",
+  "clientSecret": "8tmQoHAYPjvhOJEDQwwuCqNdWFGvgrUS5ElniQV3hgfQ/ixD3cWaLHtb2aEUUNpz",
+  "lastRefresh": {
+    "$numberLong": "1685455965079"
+  },
+  "_class": "it.eng.opsi.servicecatalog.model.Catalogue"
+},
+{
+  "_id": {
+    "$oid": "6477092b0600ac412cb6927b"
+  },
+  "catalogueID": "1685522730796104204349809245.2Remote catalogue_locale",
+  "name": "Remote catalogue edited 2",
+  "competentAuthority": "Pubblica amministrazione edited",
+  "country": "ITA_CTA-Catania",
+  "category": "Region",
+  "description": "Catalogo regionale edited",
+  "homePage": "http://localhost:81/service-catalogue-manager/pages/services",
+  "apiEndpoint": "http://localhost:8085/service-catalogue/api/v2/services",
+  "type": "Service Catalogue",
+  "active": "inactive",
+  "refresh": 86400000,
+  "authenticated": true,
+  "services": 6,
+  "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token",
+  "clientID": "ids-usage-control",
+  "clientSecret": "8tmQoHAYPjvhOJEDQwwuCqNdWFGvgrUS5ElniQV3hgfQ/ixD3cWaLHtb2aEUUNpz",
+  "lastRefresh": {
+    "$numberLong": "1685522731105"
+  },
+  "_class": "it.eng.opsi.servicecatalog.model.Catalogue"
+},
+{
+  "_id": {
+    "$oid": "647710650600ac412cb6927d"
+  },
+  "catalogueID": "1684141909640228968120458785.22B_locale",
+  "name": "B",
+  "competentAuthority": "A",
+  "country": "DEU-Germany",
+  "category": "Municipality",
+  "description": "A",
+  "homePage": "A",
+  "apiEndpoint": "http://localhost:8085/service-catalogue/api/v2/services",
+  "type": "Service Catalogue",
+  "active": "active",
+  "refresh": 86400000,
+  "authenticated": true,
+  "services": 6,
+  "oAuth2Endpoint": "http://localhost:8081",
+  "lastRefresh": {
+    "$numberLong": "1685525086328"
+  },
+  "_class": "it.eng.opsi.servicecatalog.model.Catalogue"
+}]

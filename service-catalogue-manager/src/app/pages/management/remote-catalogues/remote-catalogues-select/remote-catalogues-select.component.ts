@@ -95,7 +95,7 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
       this.remoteCatalogues = []
     }
     for (let remoteCatalogue of this.remoteCatalogues) {
-      let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogue(remoteCatalogue.catalogueID);
+      let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogueByURL(remoteCatalogue.apiEndpoint);
       if (cataloguesAlreadyFedarated)
         remoteCatalogue.federated = true;
       remoteCatalogue.clientID = undefined;//TODO verify if ID must be hidden
@@ -119,7 +119,7 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
       this.remoteCatalogues = []
     }
     for (let remoteCatalogue of this.remoteCatalogues) {
-      let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogue(remoteCatalogue.catalogueID);
+      let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogueByURL(remoteCatalogue.apiEndpoint);
       if (cataloguesAlreadyFedarated)
         remoteCatalogue.federated = true;
       remoteCatalogue.clientID = undefined;//TODO verify if ID must be hidden

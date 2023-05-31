@@ -117,7 +117,8 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<?> getConnector(String serviceId) throws ConnectorNotFoundException;
 
-	public abstract ResponseEntity<?> getCatalogue(String catalogueID, String name) throws CatalogueNotFoundException;
+	public abstract ResponseEntity<?> getCatalogue(String catalogueID, String name, String apiEndpoint)
+			throws CatalogueNotFoundException;
 
 	public abstract ResponseEntity<?> getCatalogueByCountry(String country) throws CatalogueNotFoundException;
 

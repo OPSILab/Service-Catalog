@@ -293,9 +293,11 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@Override
 	@GetMapping(value = "/catalogues/json", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getCatalogue(@RequestParam(required = false) String catalogueID,
-			@RequestParam(required = false) String name)
+			@RequestParam(required = false) String name, @RequestParam(required = false) String apiEndpoint)
 			throws CatalogueNotFoundException {
 
+		if (apiEndpoint != null)
+			return ResponseEntity.ok(catalogService.getCatalogueByApiEndpoint(apiEndpoint));
 		if (name != null)
 			return ResponseEntity.ok(catalogService.getCatalogueByName(name));
 		return ResponseEntity.ok(catalogService.getCatalogueBycatalogueID(catalogueID));

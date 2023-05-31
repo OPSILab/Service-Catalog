@@ -95,11 +95,16 @@ export class ActionsFederateComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     let catalogue
     if (!this.called) {
-      catalogue = await this.availableCataloguesService.getCatalogue(this.value.catalogueID)
+      catalogue = await this.availableCataloguesService.getCatalogueByURL(this.value.apiEndpoint)
+      console.log(catalogue)
       this.called = true;
-      if (catalogue)
-        if (catalogue.catalogueID)
+      if (catalogue) {
+        console.debug("catalogue")
+        if (catalogue.catalogueID) {
+          console.debug("not empty")
           this.federated = true;
+        }
+      }
       await this.ngOnInit();
     }
 
@@ -140,7 +145,7 @@ export class ActionsFederateComponent implements OnInit {
   async onEdit() {
     try {
       let name = this.name,
-        catalogueID = this.catalogueID,
+        catalogueID = new String(Date.now()) + JSON.stringify(Math.random() * 999999999999999) + name,
         competentAuthority = this.competentAuthority,
         country = this.country,
         category = this.category,
@@ -235,7 +240,7 @@ export class ActionsFederateComponent implements OnInit {
       "message": "Value required",
       "errorcount": 1
     }
-    error.path =  error.path + "." + value
+    error.path = error.path + "." + value
     return error;
   }
 

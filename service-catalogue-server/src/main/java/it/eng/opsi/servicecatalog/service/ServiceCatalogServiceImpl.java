@@ -821,4 +821,15 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		// TODO remote catalogue call
 		throw new UnsupportedOperationException("Unimplemented method 'getServices'");
 	}
+
+	@Override
+	public Catalogue getCatalogueByApiEndpoint(String apiEndpoint) {
+		Catalogue catalogue = catalogueRepo.findByapiEndpoint(apiEndpoint);
+		if (catalogue == null)
+			return catalogue;
+
+		catalogue.setClientSecret(null);
+
+		return catalogue;
+	}
 }
