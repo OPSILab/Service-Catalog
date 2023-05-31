@@ -1,6 +1,6 @@
 [
   {
-    "catalogueID": "1684141909640228968120458785.22B",
+    "catalogueID": "1684141909640228968120458785.22B_json",
     "name": "B",
     "competentAuthority": "A",
     "country": "DEU-Germany",
@@ -13,12 +13,12 @@
     "refresh": 86400000,
     "authenticated": true,
     "services": 31,
-    "oAuth2Endpoint": "http://localhost:8081",
+    "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token",
     "lastRefresh": 1684141909661,
     "_class": "it.eng.opsi.servicecatalog.model.Catalogue"
   },
   {
-    "catalogueID": "1684141909640228968120458785.22C",
+    "catalogueID": "1684141909640228968120458785.22C_json",
     "name": "C",
     "competentAuthority": "A",
     "country": "GRC-Greece",
@@ -31,7 +31,7 @@
     "refresh": 86400000,
     "authenticated": true,
     "services": 31,
-    "oAuth2Endpoint": "http://localhost:8081",
+    "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token",
     "lastRefresh": 1684141909661,
     "_class": "it.eng.opsi.servicecatalog.model.Catalogue"
   }
