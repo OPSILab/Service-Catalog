@@ -1,6 +1,6 @@
 {
   "general": {
-    "welcome": "Καλώς ήρθατε στο Service Catalogue Manager!",
+    "welcome": "Welcome to Service Catalogue Manager!",
     "logo_text": "ACROSS",
     "home": "Home",
     "error": "Error",
@@ -23,15 +23,15 @@
       "publicServices": "Public Services",
       "privateServices": "Private Services",
       "personalDataServices": "Using Personal Data",
-      "federatedCatalogues": "Federated Catalogues",
-      "catalogueDatasets": "Catalogue Datasets"
+      "federatedCatalogues" : "Federated Catalogues",
+      "catalogueDatasets" : "Catalogue Datasets"
     },
     "menu": {
       "dashboard": "Dashboard",
       "consents_logs_group": "CONSENT REGISTRY",
       "data_event_logs": "Data&Event Logs",
       "consents": "Data Consents",
-      "services": "ΜΗΤΡΏΟ ΥΠΗΡΕΣΙΏΝ",
+      "services": "SERVICE REGISTRY",
       "availableservices": "Services",
       "editor": "Service Editor",
       "dataconnectors": "Data Connectors",
@@ -398,7 +398,7 @@
         "edit": "Edit",
         "delete": "Delete",
         "confirm": "Confirm",
-        "add": "Add catalogue",
+        "add": "Add catalogue dataset",
         "actions": "Actions"
       },
       "reset" : "Reset client ID and secret",

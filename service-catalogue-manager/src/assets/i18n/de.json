@@ -398,7 +398,7 @@
         "edit": "Edit",
         "delete": "Delete",
         "confirm": "Confirm",
-        "add": "Add catalogue",
+        "add": "Add catalogue dataset",
         "actions": "Actions"
       },
       "reset" : "Reset client ID and secret",
