@@ -127,22 +127,13 @@ export class ActionsFederateComponent implements OnInit {
     this.refresh = this.value.refresh == 86400000 ? 'Every day' : this.value.refresh == 604800000 ? 'Every week' : this.value.refresh == 2629800000 ? 'Every month' : undefined
   }
 
-  checkCatalogue(remoteCatalogue: CatalogueEntry) {
-    return this.availableCataloguesService.getCatalogue(remoteCatalogue.catalogueID).then(value => {
-      if (value)
-        if (value.catalogueID)
-          this.federated = true;
-      this.ngOnInit();
-    });
-  }
-
   ngOnDestroy(): void {
     this.unsubscribe.next();
     this.unsubscribe.complete();
 
   }
 
-  async onEdit() {
+  async federate() {
     try {
       let name = this.name,
         catalogueID = new String(Date.now()) + JSON.stringify(Math.random() * 999999999999999) + name,
