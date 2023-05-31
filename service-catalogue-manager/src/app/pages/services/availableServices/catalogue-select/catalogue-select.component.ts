@@ -101,8 +101,8 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     void await this.source.load(this.services);
     //this.updateResult.emit(this.services);
     //this.selectedCatalogueCountry.emit(this.selectedCatalogue.country || "Italy")
-    this.selectedCatalogueCountry.emit(this.selectedCatalogue)
-    this.loadSource(this.selectedCatalogue.catalogueID);
+    this.selectedCatalogueCountry.emit(this.selectedCatalogue || { name: this.translate.instant('general.services.local') as string, catalogueID: "local",  country: this.config.system.country})
+    this.loadSource(this.selectedCatalogue?.catalogueID || "local");
     this.translate.onLangChange.subscribe(async () => {
       await this.loadSource(this.selectedCatalogue.catalogueID);
     });
@@ -135,10 +135,10 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     }, []);
   }
 
-  private async loadSource(url): Promise<void> {
+  private async loadSource(catalogueID): Promise<void> {
     try {
       this.locale = this.translate.currentLang;
-      this.availableServices = await this.availableServicesService.getRemoteServices(url);
+      this.availableServices = await this.availableServicesService.getRemoteServices(catalogueID);
       this.source.load(
         this.availableServices.map((availableServiceDescr) => {
           /* Get Localized Human readable description of the Service, default en */
