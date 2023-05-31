@@ -27,8 +27,8 @@ import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
 import lombok.extern.slf4j.Slf4j;
 
 /*
-@OpenAPIDefinition(info = @Info(title = "Service Catalog API", description = "Service Catalog APIs used to manage CRUD for Fedareted Service Model descriptions.", version = "1.0"), tags = {
-		@Tag(name = "Fedareted Service Model", description = "Fedareted Service Model Description APIs to get and manage Fedareted Service Model descriptions.") })
+@OpenAPIDefinition(info = @Info(title = "Service Catalog API", description = "Service Catalog APIs used to manage CRUD for Federated query descriptions.", version = "1.0"), tags = {
+		@Tag(name = "Federated query", description = "Federated query Description APIs to get and manage Federated query descriptions.") })
 */
 @RestController
 @RequestMapping("/api/v2/federated")
@@ -45,9 +45,9 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	private String uriBasePath;
 
 	@Override
-	@Operation(summary = "Get all the Federated Fedareted Service Model descriptions.", description = "Get all the Federated Fedareted Service Model descriptions saved in the Service Catalog.", tags = {
-			"Fedareted Service Model" }, responses = {
-					@ApiResponse(description = "Returns the list of all federated Fedareted Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get all the Federated Federated query descriptions.", description = "Get all the Federated Federated query descriptions saved in the Service Catalog.", tags = {
+			"Federated query" }, responses = {
+					@ApiResponse(description = "Returns the list of all federated Federated query descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getServices(@RequestParam(required = false) String name,
 			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords,
@@ -91,9 +91,9 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the Fedareted Service Model description by Service Id.", description = "Get the Fedareted Service Model description by Service Id.", tags = {
-			"Fedareted Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Fedareted Service Model description.", responseCode = "200") })
+	@Operation(summary = "Get the Federated query description by Service Id.", description = "Get the Federated query description by Service Id.", tags = {
+			"Federated query" }, responses = {
+					@ApiResponse(description = "Returns the requested Federated query description.", responseCode = "200") })
 	@GetMapping(value = "/services/json/**", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceById(@RequestParam("identifier") String identifier,
 			@RequestParam("remoteCatalogueID") String remoteCatalogueID)
@@ -104,7 +104,7 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Operation(summary = "Get Service Cost  by serviceId. ", tags = {
-			"Fedareted Service Model" }, responses = {
+			"Federated query" }, responses = {
 					@ApiResponse(description = "Get Service Cost records  by serviceId.", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/services/cost", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -122,7 +122,7 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Operation(summary = "Get Service time  by serviceId.", tags = {
-			"Fedareted Service Model" }, responses = {
+			"Federated query" }, responses = {
 					@ApiResponse(description = "The (estimated) time needed for executing a Public Service using the ISO8601 syntax for durations: P(n)Y(n)M(n)DT(n)H(n)M(n)S).", responseCode = "200") })
 	@Override
 	@GetMapping(value = "/services/time", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -136,9 +136,9 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the Fedareted Service Model descriptions by specified Service Ids.", description = "Get the Fedareted Service Model descriptions by specified Service Id.", tags = {
-			"Fedareted Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Fedareted Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get the Federated query descriptions by specified Service Ids.", description = "Get the Federated query descriptions by specified Service Id.", tags = {
+			"Federated query" }, responses = {
+					@ApiResponse(description = "Returns the requested Federated query descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/**", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceByIds(HttpServletRequest request,
 			@RequestParam("remoteCatalogueID") String remoteCatalogueID,
@@ -154,9 +154,9 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the Fedareted Service Model descriptions by specified Service Location.", description = "Get the Fedareted Service Model descriptions by specified Service Location.", tags = {
-			"Fedareted Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Fedareted Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get the Federated query descriptions by specified Service Location.", description = "Get the Federated query descriptions by specified Service Location.", tags = {
+			"Federated query" }, responses = {
+					@ApiResponse(description = "Returns the requested Federated query descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/location", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getServiceByLocation(HttpServletRequest request,
 			@RequestParam("remoteCatalogueID") String remoteCatalogueID, @RequestParam("location") String location)
@@ -170,9 +170,9 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the Fedareted Service Model descriptions by specified Service Keywords.", description = "Get the Fedareted Service Model descriptions by specified Service Keywords.", tags = {
-			"Fedareted Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Fedareted Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get the Federated query descriptions by specified Service Keywords.", description = "Get the Federated query descriptions by specified Service Keywords.", tags = {
+			"Federated query" }, responses = {
+					@ApiResponse(description = "Returns the requested Federated query descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/keyword", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getServiceByKeywords(HttpServletRequest request,
 			@RequestParam("remoteCatalogueID") String remoteCatalogueID, @RequestParam("keywords") String[] keywords)
@@ -192,9 +192,9 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the Fedareted Service Model descriptions by specified Service Title.", description = "Get the Fedareted Service Model descriptions by specified Service Title.", tags = {
-			"Fedareted Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Fedareted Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get the Federated query descriptions by specified Service Title.", description = "Get the Federated query descriptions by specified Service Title.", tags = {
+			"Federated query" }, responses = {
+					@ApiResponse(description = "Returns the requested Federated query descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/specified/title", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getServiceByTitle(HttpServletRequest request,
 			@RequestParam("remoteCatalogueID") String remoteCatalogueID, @RequestParam("title") String title)
@@ -207,9 +207,9 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the Fedareted Service Model descriptions is handling personal data", description = "Get the Fedareted Service Model descriptions is handling personal data.", tags = {
-			"Fedareted Service Model" }, responses = {
-					@ApiResponse(description = "Returns the requested Fedareted Service Model descriptions.", responseCode = "200") })
+	@Operation(summary = "Get the Federated query descriptions is handling personal data", description = "Get the Federated query descriptions is handling personal data.", tags = {
+			"Federated query" }, responses = {
+					@ApiResponse(description = "Returns the requested Federated query descriptions.", responseCode = "200") })
 	@GetMapping(value = "/services/isPersonalDataHandling", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getServiceIsPersonalDataHandling(
 			@RequestParam("remoteCatalogueID") String remoteCatalogueID, HttpServletRequest request)
@@ -221,8 +221,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the count of the  Fedareted Service Model descriptions is personal data handling.", tags = {
-			"Fedareted Service Model" }, responses = {
+	@Operation(summary = "Get the count of the  Federated query descriptions is personal data handling.", tags = {
+			"Federated query" }, responses = {
 					@ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/services/isPersonalDataHandling/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getServicesIsPersonalDataHandlingCount(
@@ -234,8 +234,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the Fedareted Service Models count grouped by Sector.", description = "Get the Fedareted Service Models count grouped by Sector.", tags = {
-			"Fedareted Service Model" }, responses = {
+	@Operation(summary = "Get the Federated querys count grouped by Sector.", description = "Get the Federated querys count grouped by Sector.", tags = {
+			"Federated query" }, responses = {
 					@ApiResponse(description = "Return an object with count for each sector.", responseCode = "200") })
 	@GetMapping(value = "/services/count/sector", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getCountBySector(@RequestParam("remoteCatalogueID") String remoteCatalogueID)
@@ -246,8 +246,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the Fedareted Service Models count grouped by Thematic Area.", description = "Get the Fedareted Service Models count grouped by Thematic Area.", tags = {
-			"Fedareted Service Model" }, responses = {
+	@Operation(summary = "Get the Federated querys count grouped by Thematic Area.", description = "Get the Federated querys count grouped by Thematic Area.", tags = {
+			"Federated query" }, responses = {
 					@ApiResponse(description = "Return an object with count for each sector.", responseCode = "200") })
 	@GetMapping(value = "/services/count/thematicArea", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getCountByThematicArea(@RequestParam("remoteCatalogueID") String remoteCatalogueID)
@@ -258,8 +258,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the Fedareted Service Models count grouped by GroupedBy.", description = "Get the Fedareted Service Models count grouped by GroupedBy.", tags = {
-			"Fedareted Service Model" }, responses = {
+	@Operation(summary = "Get the Federated querys count grouped by GroupedBy.", description = "Get the Federated querys count grouped by GroupedBy.", tags = {
+			"Federated query" }, responses = {
 					@ApiResponse(description = "Return an object with count for each sector.", responseCode = "200") })
 	@GetMapping(value = "/services/count/groupedBy", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getCountByGroupedBy(@RequestParam("remoteCatalogueID") String remoteCatalogueID)
@@ -270,8 +270,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the Fedareted Service Models count grouped by Spatial.", description = "Get the Fedareted Service Models count grouped by Spatial.", tags = {
-			"Fedareted Service Model" }, responses = {
+	@Operation(summary = "Get the Federated querys count grouped by Spatial.", description = "Get the Federated querys count grouped by Spatial.", tags = {
+			"Federated query" }, responses = {
 					@ApiResponse(description = "Return an object with count for each location.", responseCode = "200") })
 	@GetMapping(value = "/services/count/location", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getCountByLocation(@RequestParam("remoteCatalogueID") String remoteCatalogueID)
