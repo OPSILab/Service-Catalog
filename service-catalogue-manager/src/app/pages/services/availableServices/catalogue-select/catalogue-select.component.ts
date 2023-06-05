@@ -192,6 +192,11 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     this.unsubscribe.complete();
   }
 
+  remoteService(row: any) {
+    row.remote=true;
+    return row;
+  }
+
   loadTableSettings(): Record<string, unknown> {
     this.serviceLabel = this.translate.instant('general.services.service') as string;
     this.descriptionLabel = this.translate.instant('general.services.description') as string;
@@ -267,8 +272,10 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
           width: '5%',
           filter: false,
           type: 'custom',
-          valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
+          valuePrepareFunction: (cell, row) =>
+            this.selectedCatalogue.catalogueID == "local" ? row : this.remoteService(row),
           renderComponent: ActionsServiceMenuRenderComponent,
+
           onComponentInitFunction: (instance) => {
             // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
             instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe((updatedServiceData: unknown) => this.ngOnInit());
@@ -282,8 +289,6 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     this.source.reset();
   }
 }
-
-
 
 
 

@@ -120,7 +120,7 @@ import { ThisReceiver } from '@angular/compiler';
   `,
 })
 export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
-  @Input() value: AvailableServiceRow;
+  @Input() value: AvailableServiceRow | any;
   @Output() updateResult = new EventEmitter<unknown>();
 
   private unsubscribe: Subject<void> = new Subject();
@@ -235,7 +235,19 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   translatedActionLabels(): NbMenuItem[] {
-    if (this.registered) {
+    if (this.value.remote) {
+      return [
+        {
+          title: this.translate.instant('general.services.consents') as string,
+          data: 'consents',
+        },
+        {
+          title: this.translate.instant('general.editor.export') as string,
+          data: 'export',
+        }
+      ];
+    }
+    else if (this.registered) {
       return [
         {
           title: this.translate.instant('general.services.deregister') as string,

@@ -18,7 +18,7 @@ export class ServiceInfoRenderComponent {
     this.modalService.open(this.serviceInfoModalRef, {
       context: {
         modalHeader: this.value.title,
-        description: this.value.hasInfo.description[0].description,
+        description: this?.value?.hasInfo?.description[0]?.description,
         sector: this.value.hasInfo.sector,
         event: this.value.hasInfo.isGroupedBy,
         thematicArea: this.value.hasInfo.thematicArea,
