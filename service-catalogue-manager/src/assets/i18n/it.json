@@ -435,7 +435,6 @@
       "delete_catalogue_message" : "Sei sicuro di voler cancellare permanentemente il catalogo <strong>{{catalogueName}}</strong>?\n",
       "catalogue_added_message" : "e' stato aggiunto un nuovo catalogo",
       "delete_catalogue": "Cancella il catalogo",
-      "activate_deactivate" : "Attiva/disattiva",
       "download_metadata" : "Download metadata",
       "activate_catalogue": "Attivazione catalogo",
       "deactivate_catalogue_message": "Sei sicuro di voler disattivare il catalogo <strong>{{catalogueName}}</strong>?\n",

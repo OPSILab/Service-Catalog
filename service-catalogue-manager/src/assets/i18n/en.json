@@ -436,7 +436,6 @@
       "delete_catalogue_message": "Are you sure to delete permanently the catalogue <strong>{{catalogueName}}</strong>?\n",
       "catalogue_added_message": "A new catalogue was added",
       "delete_catalogue": "Delete catalogue",
-      "activate_deactivate": "Activate/deactivate",
       "download_metadata": "Download metadata",
       "activate_catalogue": "Catalogue activation",
       "activate_catalogue_message": "Are you sure to activate the catalogue <strong>{{catalogueName}}</strong><br>Once activated, you will not be able to edit it until you disabled it first.",

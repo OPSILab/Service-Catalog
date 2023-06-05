@@ -55,6 +55,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   public source: LocalDataSource = new LocalDataSource();
   private availableCatalogues: CatalogueEntry[];
   private unsubscribe: Subject<void> = new Subject();
+  statuses: any = {};
   //refreshLimit: any;
 
   constructor(
@@ -130,6 +131,19 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     try {
       this.availableCatalogues = await this.availableCataloguesService.getCatalogues();
+      for (let catalogue of this.availableCatalogues) {
+        //this.statuses.catalogue.catalogueID.active = catalogue.active
+        try {
+          catalogue.status = catalogue.active == "active" ?
+            (await this.availableCataloguesService.getStatus(catalogue.apiEndpoint)).status :
+            "inactive"
+        }
+        catch (error){
+          console.error(error)
+          catalogue.status = "inactive"
+        }
+      }
+      console.debug(this.availableCatalogues)
       //this.refreshLimit = this.availableCatalogues.length;
       void this.source.load(this.availableCatalogues);
     } catch (error) {
@@ -137,7 +151,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
       console.log("error:<\n", error, ">\n")
       if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
-        this.errorService.openErrorDialog(error);
+      this.errorService.openErrorDialog(error);
     }
   }
 
@@ -209,7 +223,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           filter: false,
           width: '5%',
           type: 'custom',
-          valuePrepareFunction: async (cell, row: CatalogueEntry) => this.getStatus(row),
+          valuePrepareFunction: async (cell, row: CatalogueEntry) => row.status,
           renderComponent: StatusRenderComponent,
         },
         active: {

@@ -92,7 +92,7 @@ export class AvailableCataloguesService {
   }
 
   getStatus(URL: string) {
-    return this.http.get<string>(`${URL.split("services")[0]}status`).toPromise();
+    return this.http.get<any>(`${URL.split("services")[0]}status`).toPromise();
   }
 }
 
