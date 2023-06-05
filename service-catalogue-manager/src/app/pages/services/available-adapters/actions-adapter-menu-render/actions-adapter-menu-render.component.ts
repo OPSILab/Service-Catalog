@@ -137,6 +137,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
     this.name = this.value.name
     this.context = this.value.context
     this.description = this.value.description
+    this.sourceDataType = this.value.sourceDataType
     this.url = this.value.url
     this.type = this.value.type
     this.loadMappers()
