@@ -90,7 +90,6 @@ export class ActionsMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log("init")
     this.catalogueDatasetID = this.value.catalogueDatasetID
     this.authenticationMethod = this.value.authenticationMethod
     this.password = this.value.password
@@ -183,7 +182,7 @@ export class ActionsMenuRenderComponent implements OnInit, OnDestroy {
       if (!this.type) errors.push(this.errorTemplate("apiEndpoint"))
       if (!this.URL) errors.push(this.errorTemplate("authenticated"))
 
-      console.log("error:", "\n", error)
+      console.error("error:", "\n", error)
 
       if (error.status && error.status == 400 && error.error && error.error.status == "Catalogue already exists") {
         this.errorDialogService.openErrorDialog({

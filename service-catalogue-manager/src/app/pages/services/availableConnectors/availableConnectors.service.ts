@@ -33,7 +33,7 @@ export class AvailableConnectorsService {
       return this.http.post<ConnectorEntry>(`${this.serviceRegistryUrl}/api/v2/connectors`, connector).toPromise();
     }
     catch(error){
-      console.log("error nel service", error)
+      console.error(error)
     }
   }
 

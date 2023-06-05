@@ -24,8 +24,8 @@ export class ManageConfigurationsService {
       return this.http.get<CatalogueDataset[]>(`${this.serviceRegistryUrl}/api/v2/catalogueDatasets/public`).toPromise();
     }
     catch (error) {
-      console.log("AvailableCatalogueDatasetsService: catalogueDatasets not found")
-      console.log("error:<\n", error, ">\n")
+      console.error("AvailableCatalogueDatasetsService: catalogueDatasets not found")
+      console.error("error:<\n", error, ">\n")
     }
   }
 
@@ -42,8 +42,8 @@ export class ManageConfigurationsService {
       return this.http.post<CatalogueDataset>(`${this.serviceRegistryUrl}/api/v2/catalogueDatasets`, catalogueDataset).toPromise();
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
-      console.log("message:<\n", error.error.message, ">\n")
+      console.error("error:<\n", error, ">\n")
+      console.error("message:<\n", error.error.message, ">\n")
     }
   }
 

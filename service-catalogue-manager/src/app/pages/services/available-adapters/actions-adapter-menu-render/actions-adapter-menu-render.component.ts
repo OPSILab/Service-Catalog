@@ -114,8 +114,8 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
         this.validURL = true
       }
       catch (error) {
-        console.log("Cannot get response from remote url")
-        console.log(error)
+        console.error("Cannot get response from remote url")
+        console.error(error)
         this.validURL = false
       }
     else this.validURL = false
@@ -294,7 +294,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
         "errorcount": 1
       })
 
-      console.log("error:", "\n", error)
+      console.error("error:", "\n", error)
       if (error.message == "Adapter ID must be set") {
         this.errorDialogService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: [

@@ -75,11 +75,11 @@ export class DialogAddNewPromptComponent implements OnInit {
     }
     catch (error) {
       if (error.message == "Cannot read properties of undefined (reading 'name')")
-        console.log("Add-form mode")
+        console.error("Error in add-form mode")
       else {
-        console.log("error:<\n", error, ">\n")
-        if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-        else if (error.message) console.log("message:<\n", error.message, ">\n")
+        console.error("error:<\n", error, ">\n")
+        if (error.error) if (error.error.message) console.error("message:<\n", error.error.message, ">\n")
+        else if (error.message) console.error("message:<\n", error.message, ">\n")
       }
     }
   }
@@ -104,9 +104,9 @@ export class DialogAddNewPromptComponent implements OnInit {
         this.errorService.openErrorDialog(error);
       };
     } catch (error) {
-      console.log("error:<\n", error, ">\n")
-      if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      else if (error.message) console.log("message:<\n", error.message, ">\n")
+      console.error("error:<\n", error, ">\n")
+      if (error.error) if (error.error.message) console.error("message:<\n", error.error.message, ">\n")
+      else if (error.message) console.error("message:<\n", error.message, ">\n")
       this.errorService.openErrorDialog(error);
     }
   }
@@ -116,9 +116,9 @@ export class DialogAddNewPromptComponent implements OnInit {
       this.onSubmit()
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
-      if (error.error) if (error.error.message) console.log("message:<\n", error.error.message, ">\n")
-      else if (error.message) console.log("message:<\n", error.message, ">\n")
+      console.error("error:<\n", error, ">\n")
+      if (error.error) if (error.error.message) console.error("message:<\n", error.error.message, ">\n")
+      else if (error.message) console.error("message:<\n", error.message, ">\n")
     }
   }
 
@@ -158,7 +158,7 @@ export class DialogAddNewPromptComponent implements OnInit {
         "errorcount": 1
       })
 
-      console.log("error:", "\n", error)
+      console.error("error:", "\n", error)
       if (error.message == "Connector ID must be set") {
         this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
@@ -194,7 +194,7 @@ export class DialogAddNewPromptComponent implements OnInit {
     try {
       let name = this.name, description = this.description, status = this.status, connectorId = this.connectorId, serviceId = this.serviceId, url = this.url, adapterId = this.adapterId;
       if (connectorId == '' || connectorId == null) {
-        console.log("dialog-add-new-prompt.component.ts.onSubmit(): Connector ID must be set");
+        console.error("error in dialog-add-new-prompt.component.ts.onSubmit(): Connector ID must be set");
         throw new Error("Connector ID must be set");
       }
       await this.availableConnectorService.saveConnector((({ name, description, status, connectorId, serviceId, url, adapterId } as unknown)) as ConnectorEntry);
@@ -230,7 +230,7 @@ export class DialogAddNewPromptComponent implements OnInit {
         "errorcount": 1
       })
 
-      console.log("error:", "\n", error)
+      console.error("error:", "\n", error)
       if (error.message == "Connector ID must be set") {
         this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: [

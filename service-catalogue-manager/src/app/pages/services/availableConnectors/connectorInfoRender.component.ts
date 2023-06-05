@@ -52,7 +52,7 @@ export class ConnectorInfoRenderComponent implements OnInit {
       if (this.value.serviceId) this.service = await this.availableServicesService.getService(this.value.serviceId)
     }
     catch (error) {
-      if (error.status==404) console.log("Error during services load:\nSome service with serviceId set in connector descriptions dont't exist")
+      if (error.status==404) console.error("Error during services load:\nSome service with serviceId set in connector descriptions dont't exist")
     }
     this.dialogRef = this.modalService.open(this.connectorInfoModalRef, {
       context: {

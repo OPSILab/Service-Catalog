@@ -100,7 +100,6 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
   }
 
   setValue() {
-    console.log("ngOnChanges", this.selectedDataset)
     this.selectedDataset = this.datasets.filter(dataset => dataset.name = this.selectedDatasetName)[0]
     console.log("ngOnChanges", this.datasets.filter(name => name = this.selectedDataset)[0], this.selectedDataset)
     this.ngOnInit()
@@ -115,7 +114,7 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
       else this.availableCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset.URL);
       void await this.source.load(this.availableCatalogues);
     } catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error("error:<\n", error, ">\n")
       if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
         this.errorService.openErrorDialog(error);
@@ -135,7 +134,7 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
       this.updateResult.emit(this.value);
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error("error:<\n", error, ">\n")
 
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))

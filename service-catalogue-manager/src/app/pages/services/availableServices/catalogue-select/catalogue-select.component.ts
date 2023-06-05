@@ -273,7 +273,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
           filter: false,
           type: 'custom',
           valuePrepareFunction: (cell, row) =>
-            this.selectedCatalogue.catalogueID == "local" ? row : this.remoteService(row),
+          !this.selectedCatalogue || this.selectedCatalogue.catalogueID == "local" ? row : this.remoteService(row),
           renderComponent: ActionsServiceMenuRenderComponent,
 
           onComponentInitFunction: (instance) => {

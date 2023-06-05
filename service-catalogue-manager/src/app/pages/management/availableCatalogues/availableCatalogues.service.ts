@@ -24,8 +24,8 @@ export class AvailableCataloguesService {
       return this.http.get<CatalogueEntry[]>(`${this.serviceRegistryUrl}/api/v2/catalogues/public`).toPromise();
     }
     catch (error) {
-      console.log("AvailableCataloguesService: catalogues not found")
-      console.log("error:<\n", error, ">\n")
+      console.error("AvailableCataloguesService: catalogues not found")
+      console.error("error:<\n", error, ">\n")
     }
   }
 
@@ -34,8 +34,8 @@ export class AvailableCataloguesService {
       return this.http.get<CatalogueEntry[]>(url + "/api/v2/catalogues/public").toPromise();
     }
     catch (error) {
-      console.log("AvailableCataloguesService: catalogues not found")
-      console.log("error:<\n", error, ">\n")
+      console.error("AvailableCataloguesService: catalogues not found")
+      console.error("error:<\n", error, ">\n")
     }
   }
 
@@ -44,8 +44,8 @@ export class AvailableCataloguesService {
       return this.http.get<CatalogueEntry[]>(URL).toPromise();
     }
     catch (error) {
-      console.log("AvailableCataloguesService: catalogues not found")
-      console.log("error:<\n", error, ">\n")
+      console.error("AvailableCataloguesService: catalogues not found")
+      console.error("error:<\n", error, ">\n")
     }
   }
 
@@ -70,8 +70,8 @@ export class AvailableCataloguesService {
       return this.http.post<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues`, catalogue).toPromise();
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
-      console.log("message:<\n", error.error.message, ">\n")
+      console.error("error:<\n", error, ">\n")
+      console.error("message:<\n", error.error.message, ">\n")
     }
   }
 

@@ -68,7 +68,6 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   }
 
   changeCountry($event: any) {
-    console.log($event)
     this.selectedCatalogueCountry = $event.country || "Italy"
     this.selectedCatalogue = $event
   }
@@ -76,11 +75,6 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   async changes(name) {
     //if (name != this.selectedCatalogueName) this.selectedCatalogueCountry = (await this.availableCataloguesService.getCatalogueByName(name))?.country || "Italy"
     return name
-  }
-
-  async log() {
-    console.log("click")
-    //this.selectedCatalogueCountry = (await this.availableCataloguesService.getCatalogueByName(this.selectedCatalogueName))?.country || "Italy"
   }
 
   async ngOnInit(): Promise<void> {

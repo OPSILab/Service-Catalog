@@ -25,8 +25,8 @@ export class AvailableAdaptersService {
       return this.http.get<AdapterEntry[]>(`${this.serviceRegistryUrl}/api/v2/adapters`).toPromise();
     }
     catch (error) {
-      console.log("AvailableAdaptersService: adapters not found")
-      console.log("error:<\n", error, ">\n")
+      console.error("AvailableAdaptersService: adapters not found")
+      console.error("error:<\n", error, ">\n")
       this.errorService.openErrorDialog(error);
     }
   }
@@ -44,8 +44,8 @@ export class AvailableAdaptersService {
       return this.http.post<AdapterEntry>(`${this.serviceRegistryUrl}/api/v2/adapters`, adapter).toPromise();
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
-      console.log("message:<\n", error.error.message, ">\n")
+      console.error("error:<\n", error, ">\n")
+      console.error("message:<\n", error.error.message, ">\n")
     }
   }
 

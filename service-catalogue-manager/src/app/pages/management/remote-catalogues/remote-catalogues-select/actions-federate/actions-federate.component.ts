@@ -96,15 +96,11 @@ export class ActionsFederateComponent implements OnInit {
     let catalogue
     if (!this.called) {
       catalogue = await this.availableCataloguesService.getCatalogueByURL(this.value.apiEndpoint)
-      console.log(catalogue)
       this.called = true;
-      if (catalogue) {
-        console.debug("catalogue")
-        if (catalogue.catalogueID) {
-          console.debug("not empty")
+      if (catalogue)
+        if (catalogue.catalogueID)
           this.federated = true;
-        }
-      }
+
       await this.ngOnInit();
     }
 
@@ -193,7 +189,7 @@ export class ActionsFederateComponent implements OnInit {
       if (!this.active) errors.push(this.errorTemplate("active"))
       if (!this.refresh) errors.push(this.errorTemplate("refresh"))
 
-      console.log("error:", "\n", error)
+      console.error("error:", "\n", error)
 
       if (error.status && error.status == 400 && error.error && error.error.status == "Catalogue already exists") {
         this.errorDialogService.openErrorDialog({

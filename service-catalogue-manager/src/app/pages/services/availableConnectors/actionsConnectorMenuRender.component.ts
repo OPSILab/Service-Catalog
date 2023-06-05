@@ -267,7 +267,7 @@ export class ActionsConnectorMenuRenderComponent implements OnInit, OnDestroy {
         "errorcount": 1
       })
 
-      console.log("error:", "\n", error)
+      console.error("error:", "\n", error)
       if (error.message == "Connector ID must be set") {
         this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: [

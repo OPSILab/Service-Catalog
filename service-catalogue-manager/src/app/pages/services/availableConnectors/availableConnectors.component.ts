@@ -73,7 +73,7 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
       this.availableConnectors = await this.availableConnectorsService.getConnectors();
       void this.source.load(this.availableConnectors);
     } catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error("error:<\n", error, ">\n")
 
       if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
@@ -92,12 +92,11 @@ export class AvailableConnectorsComponent implements OnInit, OnDestroy {
         void console.log("confirm ok", this.ngOnInit());
       });
       this.updateResult.emit(this.value);
-      console.log(this.value)
       //this.ngOnInit()
     }
     catch (error) {
-      console.log("error in addNew")
-      console.log("error:<\n", error, ">\n")
+      console.error("error in addNew")
+      console.error("error:<\n", error, ">\n")
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error));
       }

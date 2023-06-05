@@ -128,7 +128,7 @@ export class AddCatalogueComponent implements OnInit {
       this.onSubmit()
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error("error:<\n", error, ">\n")
     }
   }
 

@@ -107,7 +107,6 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log("init")
     this.catalogueID = this.value.catalogueID
     this.country = this.value.country
     this.competentAuthority = this.value.competentAuthority
@@ -219,8 +218,6 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   async saveFile(name: string, exportFormat: string, serviceId: string): Promise<void> {
     this.errorDialogService;
     let model: Record<string, unknown>;
-    console.log('exportType: ' + exportFormat);
-
     try {
       switch (exportFormat) {
         case 'cpsv':
@@ -391,7 +388,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
       this.showToast('primary', this.translate.instant('general.catalogues.catalogue_activated_message', { catalogueName: this.value.name }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
-      console.log("Error during activating catalogue\n", error)
+      console.error("Error during activating catalogue\n", error)
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
       } else this.errorDialogService.openErrorDialog(error);

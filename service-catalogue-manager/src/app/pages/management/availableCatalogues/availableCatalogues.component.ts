@@ -105,7 +105,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     }
     catch (error) {
       console.error("API calls error")
-      console.log(error)
+      console.error(error)
     }
     //else console.error("Unable to refresh service count")
     return catalogueIn.services
@@ -122,8 +122,8 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           });
       }
       catch (error) {
-        console.log("errors during get status")
-        console.log(error.text)
+        console.error("errors during get status")
+        console.error(error.text)
       }
     return this.status
   }
@@ -143,12 +143,11 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           catalogue.status = "inactive"
         }
       }
-      console.debug(this.availableCatalogues)
       //this.refreshLimit = this.availableCatalogues.length;
       void this.source.load(this.availableCatalogues);
     } catch (error) {
-      console.log("errors during ng on init")
-      console.log("error:<\n", error, ">\n")
+      console.error("errors during ng on init")
+      console.error("error:<\n", error, ">\n")
       if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       this.errorService.openErrorDialog(error);
@@ -169,7 +168,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
       //this.ngOnInit()
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error("error:<\n", error, ">\n")
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       }

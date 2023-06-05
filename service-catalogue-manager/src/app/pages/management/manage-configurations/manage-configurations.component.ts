@@ -85,7 +85,7 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
       this.availableCatalogues = await this.availableCatalogueDatasetsService.getCatalogueDatasets();
       void this.source.load(this.availableCatalogues);
     } catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error("error:<\n", error, ">\n")
       if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       this.errorService.openErrorDialog(error);
@@ -100,17 +100,15 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
   async addNew(): Promise<void> {
     try {
       this.dialogService.open(AddRemoteCatalogueDatasetComponent).onClose.subscribe(async () => {
-        void console.log("confirm ok")
         this.ngOnInit();
         //this.availableCatalogues.push(this.value);
         //void this.source.load(this.availableCatalogues)
       }
       );
-      console.log(this.value)
       this.updateResult.emit(this.value);
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error("error:<\n", error, ">\n")
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       }

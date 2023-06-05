@@ -26,26 +26,21 @@ export class AvailableServicesService {
       return this.http.get<ServiceModel[]>(`${this.serviceRegistryUrl}/api/v2/services`).toPromise();
     }
     catch (error) {
-      console.log("No services found ", error)
+      console.error("No services found ", error)
     }
   }
 
-  getRemoteServices(catalogueID): Promise<ServiceModel[]> | []  {
-    if (catalogueID=="local") return this.getServices();
-    //try {
-      return this.http.get<ServiceModel[]>(`${this.serviceRegistryUrl}/api/v2/federated/services?remoteCatalogueID=${catalogueID}&completed=true`).toPromise();
-    /*}
-    catch (error) {
-      console.log("No services found \n", error)
-      return [];
-    }*/
+  getRemoteServices(catalogueID): Promise<ServiceModel[]> | [] {
+    if (catalogueID == "local")
+      return this.getServices();
+    return this.http.get<ServiceModel[]>(`${this.serviceRegistryUrl}/api/v2/federated/services?remoteCatalogueID=${catalogueID}&completed=true`).toPromise();
   }
 
   getServicesCount(): Promise<ServicesCount> {
     return this.http.get<ServicesCount>(`${this.serviceRegistryUrl}/api/v2/services/count`).toPromise();
   }
 
-  getRemoteServicesCount(url : string): Promise<ServicesCount> {
+  getRemoteServicesCount(url: string): Promise<ServicesCount> {
     return this.http.get<ServicesCount>(`${url}/count`).toPromise();
   }
 

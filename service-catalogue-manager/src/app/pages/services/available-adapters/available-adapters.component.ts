@@ -77,7 +77,7 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
       this.availableAdapters = await this.availableAdaptersService.getAdapters();
       void this.source.load(this.availableAdapters);
     } catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error("error:<\n", error, ">\n")
       if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       this.errorService.openErrorDialog(error);

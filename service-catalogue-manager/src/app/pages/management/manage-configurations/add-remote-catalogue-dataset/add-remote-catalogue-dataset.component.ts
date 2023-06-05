@@ -134,7 +134,7 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
       if (!this.type) errors.push(this.errorTemplate("apiEndpoint"))
       if (!this.URL) errors.push(this.errorTemplate("authenticated"))
 
-      console.log("error:", "\n", error)
+      console.error("error:", "\n", error)
 
       if (error.status && error.status == 400 && error.error && error.error.status == "Catalogue already exists") {
         this.errorService.openErrorDialog({
@@ -170,7 +170,7 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
       this.onSubmit()
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error("error:<\n", error, ">\n")
     }
   }
 

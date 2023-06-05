@@ -91,8 +91,8 @@ export class AddAdapterComponent implements OnInit {
         this.validURL = true
       }
       catch (error) {
-        console.log("Cannot get response from remote url")
-        console.log(error)
+        console.error("Cannot get response from remote url")
+        console.error(error)
         this.validURL = false
       }
     else this.validURL = false
@@ -124,7 +124,7 @@ export class AddAdapterComponent implements OnInit {
       this.url = this.appConfig.data_model_mapper.default_mapper_url
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error("error:<\n", error, ">\n")
     }
   }
 
@@ -165,7 +165,7 @@ export class AddAdapterComponent implements OnInit {
           this.json = JSON.parse(fileReader.result as string) as Record<string, unknown>;
         } catch (error) {
           this.errorService.openErrorDialog(error);
-          console.log("error:<\n", error, ">\n")
+          console.error("error:<\n", error, ">\n")
           this.ref.close();
         }
       };
@@ -183,7 +183,7 @@ export class AddAdapterComponent implements OnInit {
       this.onSubmit()
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error("error:<\n", error, ">\n")
     }
   }
 
@@ -226,7 +226,6 @@ export class AddAdapterComponent implements OnInit {
         "message": "Value required",
         "errorcount": 1
       })
-      console.log("name : ", this.name)
       if (!this.description) errors.push({
         "path": "root.description",
         "property": "minLength",
@@ -252,7 +251,7 @@ export class AddAdapterComponent implements OnInit {
         "errorcount": 1
       })
 
-      console.log("error:", "\n", error)
+      console.error("error:", "\n", error)
       if (error.message == "Adapter ID must be set") {
         this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
