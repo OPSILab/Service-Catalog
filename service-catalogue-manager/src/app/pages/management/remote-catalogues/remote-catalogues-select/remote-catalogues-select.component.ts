@@ -176,11 +176,12 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
           width: '25%',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row.country,
         },
-        host: {
+        homePage: {
           title: this.homePageLabel,
-          type: 'text',
-          width: '25%',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row.homePage,
+          editor: {
+            type: 'textarea',
+          },
+          width: '55%',
         },
         details: {
           title: this.detailsLabel,
