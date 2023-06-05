@@ -105,6 +105,11 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     this.updateResult.emit(this.remoteCatalogues);
   }
 
+
+  resetfilters(): void {
+    this.source.reset();
+  }
+
   async ngOnInit() {
     if (!this.datasets) this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
     if (!this.selectedDataset) this.selectedDataset = this.datasets[0];

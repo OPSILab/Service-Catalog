@@ -1,1 +1,7 @@
+<div class="text-right">
+  <button nbButton ghost shape="rectangle" size="small" (click)="resetfilters()">
+    <i class="material-icons">cancel</i>&nbsp;{{ 'general.services.clear_filters' | translate }}
+  </button>
+</div>
+<br>
 <ng2-smart-table [settings]="settings" [source]="source"> </ng2-smart-table>

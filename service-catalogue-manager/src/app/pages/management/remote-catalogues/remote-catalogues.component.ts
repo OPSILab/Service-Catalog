@@ -201,9 +201,6 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
     };
   }
 
-  resetfilters(): void {
-    this.source.reset();
-  }
 }
 
 

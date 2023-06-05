@@ -13,8 +13,15 @@
     <nb-card-body>
       <div class="row justify-content-around align-items-sm-center">
         <div class="col-sm py-2">
-          <img style="width: 140px; height: 100px" src="{{ data.iconUrl }}" alt="{{ data.modalHeader }}"
-            onerror="this.onerror=null;this.src = 'favicon.png';" />
+          <img
+            style="width: 140px; height: 100px"
+            src="http://localhost:81/assets/images/app/across.png"
+            alt="{{ data.modalHeader }}"
+            onerror="this.onerror=null;this.src = 'favicon.png';"
+          />
+        </div>
+        <div class="col-sm">
+          {{value?.description ? value?.description : ""}}
         </div>
       </div>
       <br>
