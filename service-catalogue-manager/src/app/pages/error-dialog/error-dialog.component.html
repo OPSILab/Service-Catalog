@@ -9,7 +9,7 @@
       </nb-card-header>
       <nb-card-body>
         <ng-container
-          *ngIf="error.error && error.error !== 'EDITOR_VALIDATION_ERROR'; then genericError; else validationError">
+          *ngIf="!error.error || error.error !== 'EDITOR_VALIDATION_ERROR'; then genericError; else validationError">
         </ng-container>
         <ng-template #genericError>
           {{ 'general.errors' | translate }}
@@ -43,14 +43,14 @@
       </nb-card-header>
       <nb-card-body>
         <ng-container
-          *ngIf="error.error && error.error !== 'EDITOR_VALIDATION_ERROR'; then genericErrorDetails; else validationErrorDetails">
+          *ngIf="!error.error || error.error !== 'EDITOR_VALIDATION_ERROR'; then genericErrorDetails; else validationErrorDetails">
         </ng-container>
         <ng-template #genericErrorDetails>
-          Status : {{error.status}} <br><br>
-          StatusText : {{error.statusText}} <br><br>
+          {{error?.status ? "Status : " + error?.status + "\n\n" : null }}
+          {{error?.statusText ? "Status text : " + error?.statusText + "\n\n" : null }}
           {{error.header ? "Header : " + error.header + "\n" : null }}
-          {{error.error.message ? "Message : " + error.error.message + "\n\n" : error.message ? "Message : " +
-          error.message + "\n\n" : null }}
+          {{error?.error?.message ? "Message : " + error?.error?.message + "\n\n" : error?.message ? "Message : " +
+          error?.message + "\n\n" : null }}
         </ng-template>
         <ng-template #validationErrorDetails>
           <div class="row p-3">

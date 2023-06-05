@@ -35,7 +35,7 @@ export interface AvailableServiceRow extends ServiceModel {
 })
 export class CatalogueSelectComponent implements OnInit, OnChanges {
   @Input() selectedCatalogueName: string;
-  @Output() selectedCatalogueCountry= new EventEmitter<any>();
+  @Output() selectedCatalogueCountry = new EventEmitter<any>();
   @Output() updateResult = new EventEmitter<unknown>();
 
   private serviceLabel: string;
@@ -49,7 +49,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
   public settings: Record<string, unknown>;
   private locale: string;
   public source: LocalDataSource = new LocalDataSource();
-  private availableServices: ServiceModel[];
+  private availableServices: ServiceModel[] = [];
   private unsubscribe: Subject<void> = new Subject();
   catalogues: CatalogueEntry[];
   selectedCatalogue: any;
@@ -78,7 +78,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
 
   }
 
-  getLocalLabel(){
+  getLocalLabel() {
     return this.translate.instant('general.services.local') as string
   }
 
@@ -89,19 +89,24 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     this.selectedCatalogue = this.catalogues.filter(catalogue => catalogue.name == changes['selectedCatalogueName'].currentValue)[0]// || this.datasets[0]
     try {
       if (changes['selectedCatalogueName'].currentValue == this.translate.instant('general.services.local') as string) {
-      this.services = await this.availableServicesService.getServices();
-      this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local",  country: this.config.system.country}
-      this.country= this.selectedCatalogue.country
+        this.services = await this.availableServicesService.getServices();
+        this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country }
+        this.country = this.selectedCatalogue.country
       }
       else this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID);
     }
     catch {
       this.services = []
     }
-    void await this.source.load(this.services);
+    try {
+      void await this.source.load(this.services);
+    }
+    catch (error) {
+      void await this.source.load([])
+    }
     //this.updateResult.emit(this.services);
     //this.selectedCatalogueCountry.emit(this.selectedCatalogue.country || "Italy")
-    this.selectedCatalogueCountry.emit(this.selectedCatalogue || { name: this.translate.instant('general.services.local') as string, catalogueID: "local",  country: this.config.system.country})
+    this.selectedCatalogueCountry.emit(this.selectedCatalogue || { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country })
     this.loadSource(this.selectedCatalogue?.catalogueID || "local");
     this.translate.onLangChange.subscribe(async () => {
       await this.loadSource(this.selectedCatalogue.catalogueID);
@@ -110,7 +115,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
 
   async ngOnInit(): Promise<void> {
     if (!this.catalogues) this.catalogues = await this.availableCataloguesService.getCatalogues()
-    if (!this.selectedCatalogue) this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local",  country: this.config.system.country}
+    if (!this.selectedCatalogue) this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country }
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
     try {
       this.services = await this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID);
@@ -139,27 +144,29 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     try {
       this.locale = this.translate.currentLang;
       this.availableServices = await this.availableServicesService.getRemoteServices(catalogueID);
-      this.source.load(
-        this.availableServices.map((availableServiceDescr) => {
-          /* Get Localized Human readable description of the Service, default en */
-          availableServiceDescr.hasInfo.description = this.getLocalizedDescription(availableServiceDescr);
+      if (this.availableServices)
+        //if (this.availableServices && this.availableServices[0])
+        this.source.load(
+          this.availableServices.map((availableServiceDescr) => {
+            /* Get Localized Human readable description of the Service, default en */
+            availableServiceDescr.hasInfo.description = this.getLocalizedDescription(availableServiceDescr);
 
-          /* Get Localized Purposes descriptions, default en */
-          // availableServiceDescr.isPersonalDataHandling = this.getLocalizedPurposesDescription(availableServiceDescr);
+            /* Get Localized Purposes descriptions, default en */
+            // availableServiceDescr.isPersonalDataHandling = this.getLocalizedPurposesDescription(availableServiceDescr);
 
-          return {
-            ...availableServiceDescr,
-            locale: this.locale,
-            spatial: availableServiceDescr.hasInfo.spatial,
-            description: availableServiceDescr.hasInfo.description[0]?.description,
-            keywords: availableServiceDescr.hasInfo.keyword,
-          } as AvailableServiceRow;
-        })
-      );
-
+            return {
+              ...availableServiceDescr,
+              locale: this.locale,
+              spatial: availableServiceDescr.hasInfo.spatial,
+              description: availableServiceDescr.hasInfo.description[0]?.description,
+              keywords: availableServiceDescr.hasInfo.keyword,
+            } as AvailableServiceRow;
+          })
+        );
+      else throw new Error("Remote catalogue not reachable")
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-
+      console.error(error.error)
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => console.log(error));
         // this.router.navigate(['/login']);
@@ -175,7 +182,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
       });
   }
 
-  showCatalogueInfoModal(){
+  showCatalogueInfoModal() {
 
   }
 

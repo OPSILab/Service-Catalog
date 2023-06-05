@@ -105,7 +105,7 @@ export class AddCatalogueComponent implements OnInit {
       "message": "Value required",
       "errorcount": 1
     }
-    error.path =  error.path + "." + value
+    error.path = error.path + "." + value
     return error;
   }
 
@@ -137,6 +137,14 @@ export class AddCatalogueComponent implements OnInit {
   }
 
   async onSubmit() {
+    let services
+    try {
+      services = (await this.availableServicesService.getRemoteServicesCount(this.apiEndpoint)).total
+    }
+    catch (error) {
+      console.error(error.message)
+      services = 0;
+    }
     try {
       let name = this.name,
         catalogueID = new String(Date.now()) + JSON.stringify(Math.random() * 999999999999999) + name,
@@ -153,7 +161,6 @@ export class AddCatalogueComponent implements OnInit {
         oAuth2Endpoint = this.oAuth2Endpoint,
         clientSecret = this.clientSecret,
         clientID = this.clientID,
-        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total,
         lastRefresh = Date.now();
 
       switch (this.refresh) {

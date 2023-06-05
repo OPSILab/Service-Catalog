@@ -10,7 +10,7 @@
         <label>&nbsp;{{this.getCountryLabel()}}</label>
         <br>
         <nb-select style="width:500px" placeholder="{{ 'general.dashboard.federatedCatalogues' | translate }}"
-          [(ngModel)]="selectedCatalogueName" [ngModelOptions]="{standalone: true}" (click)="log()">
+          [(ngModel)]="selectedCatalogueName" [ngModelOptions]="{standalone: true}">
           <nb-option-group title="{{ 'general.dashboard.federatedCatalogues' | translate }}">
             <nb-option *ngFor="let catalogue of catalogues" value={{catalogue.name}}>{{catalogue.name}}</nb-option>
           </nb-option-group>
