@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { NbDialogService } from '@nebular/theme';
 import { InfoRenderRemoteCatalogueComponent } from '../../management/remote-catalogues/info-render-remote-catalogue/info-render-remote-catalogue.component';
+import { CatalogueEntry } from '../../../model/catalogue/catalogueEntry';
 
 
 
@@ -37,7 +38,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   public source: LocalDataSource = new LocalDataSource();
   private unsubscribe: Subject<void> = new Subject();
 
-  catalogues;
+  catalogues: any[] = [];
+  activeCatalogues: any[] = [];
   serviceRegistryUrl: string;
   private config: AppConfig;
 
@@ -65,7 +67,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     });
   }
 
-  changeCountry($event:any) {
+  changeCountry($event: any) {
     console.log($event)
     this.selectedCatalogueCountry = $event.country || "Italy"
     this.selectedCatalogue = $event
@@ -83,9 +85,13 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
-    this.catalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local",  country: this.config.system.country})
+    for (let catalogue of this.catalogues)
+      if (catalogue.active == 'active')
+        this.activeCatalogues.push(catalogue)
+    this.catalogues = this.activeCatalogues
+    this.catalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country, active:'active' })
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.translate.instant('general.services.local') as string
-    this.selectedCatalogue= { name: this.translate.instant('general.services.local') as string, catalogueID: "local",  country: this.config.system.country}
+    this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country }
   }
 
   ngOnDestroy(): void {
