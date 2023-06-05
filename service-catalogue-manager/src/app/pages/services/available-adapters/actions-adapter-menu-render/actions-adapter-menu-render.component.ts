@@ -77,6 +77,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   @ViewChild('confirmDeRegisterDialog', { static: false }) confirmDeRegisterDialog: TemplateRef<unknown>;
   @ViewChild('editAdapter', { static: false }) editAdapter: TemplateRef<unknown>;
   validURL: boolean;
+  previousUrl: string;
 
   constructor(
     private http: HttpClient,
@@ -101,7 +102,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   async loadMappers(): Promise<void> {
-    if (this.url)
+    if (this.url && (this.url != this.previousUrl) && this.appConfig.data_model_mapper.connect)
       try {
         this.mappers = await this.http.post<any>(this.url, {
           "getMapperList": true
@@ -119,6 +120,7 @@ export class ActionsAdapterMenuRenderComponent implements OnInit, OnDestroy {
         this.validURL = false
       }
     else this.validURL = false
+    this.previousUrl=this.url
   }
 
   private filterID(value: string): string[] {

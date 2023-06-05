@@ -31,6 +31,7 @@ export class AddAdapterComponent implements OnInit {
   type: string = "MODEL"
   context: string = "IMPORT"
   url: string
+  previousUrl:string
   sourceDataType: string
   inputItemFormControl: FormControl;
   textareaItemFormControl: FormControl;
@@ -78,7 +79,7 @@ export class AddAdapterComponent implements OnInit {
   async loadMappers(): Promise<void> {
     this.IDs = []
     this.names = []
-    if (this.url && this.appConfig.data_model_mapper.connect)
+    if (this.url && (this.url != this.previousUrl) && this.appConfig.data_model_mapper.connect)
       try {
         this.mappers = await this.http.post<any>(this.url, {
           "getMapperList": true
@@ -96,6 +97,7 @@ export class AddAdapterComponent implements OnInit {
         this.validURL = false
       }
     else this.validURL = false
+    this.previousUrl=this.url
   }
 
   ngOnInit(): void {
