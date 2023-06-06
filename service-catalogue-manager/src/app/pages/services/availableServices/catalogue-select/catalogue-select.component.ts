@@ -2,7 +2,6 @@ import { Subject } from 'rxjs';
 import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { CatalogueDataset } from '../../../../model/catalogue/catalogueDataset';
-import { CatalogueEntry } from 'c:/Users/Demetrix/Downloads/Repository/Service-Catalogue/service-catalogue-manager/src/app/model/catalogue/catalogueEntry';
 import { AppConfig, System } from '../../../../model/appConfig';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -20,6 +19,7 @@ import { CustomKeywordRenderComponent } from '../custom-keyword-render.component
 import { CustomStatusRenderComponent } from '../custom-status-render.component';
 import { ServiceInfoRenderComponent } from '../serviceInfoRender.component';
 import { AvailableCataloguesService } from '../../../management/availableCatalogues/availableCatalogues.service';
+import { CatalogueEntry } from '../../../../model/catalogue/catalogueEntry';
 
 export interface AvailableServiceRow extends ServiceModel {
   locale?: string;

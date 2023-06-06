@@ -9,12 +9,12 @@ import { Component, Input, Output, OnInit, EventEmitter, OnDestroy, OnChanges, S
 import { CatalogueDataset } from '../../../../model/catalogue/catalogueDataset';
 import { ManageConfigurationsService } from '../../manage-configurations/manage-configurations.service';
 import { AvailableCataloguesService } from '../../availableCatalogues/availableCatalogues.service';
-import { CatalogueEntry } from 'c:/Users/Demetrix/Downloads/Repository/Service-Catalogue/service-catalogue-manager/src/app/model/catalogue/catalogueEntry';
 import { ActionsCatalogueMenuRenderComponent } from '../../availableCatalogues/actions-catalogue-menu-render/actions-catalogue-menu-render.component';
 import { AppConfig, System } from '../../../../model/appConfig';
 import { AvailableServicesService } from '../../../services/availableServices/availableServices.service';
 import { ActionsFederateComponent } from './actions-federate/actions-federate.component';
 import { InfoRenderRemoteCatalogueComponent } from '../info-render-remote-catalogue/info-render-remote-catalogue.component';
+import { CatalogueEntry } from '../../../../model/catalogue/catalogueEntry';
 
 @Component({
   selector: 'remote-catalogues-select',

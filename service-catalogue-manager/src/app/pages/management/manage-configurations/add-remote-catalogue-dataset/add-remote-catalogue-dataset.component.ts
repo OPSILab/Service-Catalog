@@ -66,7 +66,7 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
   constructor(
     private availableCataloguesDatasetService: ManageConfigurationsService,
     private http: HttpClient,
-    protected ref: NbDialogRef<AddRemoteCatalogueDatasetComponent>,
+    private ref: NbDialogRef<AddRemoteCatalogueDatasetComponent>,
     private toastrService: NbToastrService,
     private errorService: ErrorDialogCatalogueService,
     private availableCatalogueService: AvailableCataloguesService,
@@ -90,6 +90,10 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
     this.name = this.value?.name
     this.username = this.value?.username
     this.type = this.value?.type
+  }
+
+  getRef(){
+    return this.ref
   }
 
   ngOnDestroy(): void {

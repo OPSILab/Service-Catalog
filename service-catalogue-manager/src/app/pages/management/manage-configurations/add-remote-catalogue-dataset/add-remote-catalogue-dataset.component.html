@@ -2,7 +2,7 @@
   <nb-card-header class="d-flex align-content-center justify-content-between">
     <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
     <h3>{{ 'general.catalogues.dataset.add' | translate }}</h3>
-    <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="ref.close()">
+    <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="this.getRef().close()">
       <i class="material-icons">close</i>
     </button>
   </nb-card-header>
