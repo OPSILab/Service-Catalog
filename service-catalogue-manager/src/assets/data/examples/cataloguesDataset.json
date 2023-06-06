@@ -1,38 +1,34 @@
 [
   {
     "catalogueID": "1684141909640228968120458785.22B_json",
-    "name": "B",
-    "competentAuthority": "A",
+    "name": "Catalogue A",
+    "competentAuthority": "Municipality",
     "country": "DEU-Germany",
     "category": "Municipality",
-    "description": "A",
-    "homePage": "A",
+    "description": "Description",
+    "homePage": "http://www.example.com",
     "apiEndpoint": "http://localhost:8085/service-catalogue/api/v2/services",
     "type": "Service Catalogue",
     "active": "active",
     "refresh": 86400000,
     "authenticated": true,
     "services": 31,
-    "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token",
-    "lastRefresh": 1684141909661,
-    "_class": "it.eng.opsi.servicecatalog.model.Catalogue"
+    "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token"
   },
   {
     "catalogueID": "1684141909640228968120458785.22C_json",
-    "name": "C",
-    "competentAuthority": "A",
+    "name": "Catalogue B",
+    "competentAuthority": "Municipality",
     "country": "GRC-Greece",
     "category": "Municipality",
-    "description": "A",
-    "homePage": "A",
+    "description": "Description",
+    "homePage": "http://www.example.com",
     "apiEndpoint": "http://localhost:8085/service-catalogue/api/v2/services",
     "type": "Service Catalogue",
     "active": "active",
     "refresh": 86400000,
     "authenticated": true,
     "services": 31,
-    "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token",
-    "lastRefresh": 1684141909661,
-    "_class": "it.eng.opsi.servicecatalog.model.Catalogue"
+    "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token"
   }
 ]

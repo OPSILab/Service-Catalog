@@ -1,7 +1,7 @@
 [{
   "catalogueID": "168390112984418556905353773.95Name2_locale",
   "name": "Docker",
-  "competentAuthority": "Ca",
+  "competentAuthority": "Municipality",
   "country": "ALA-Åland Islands",
   "category": "Municipality",
   "description": "D",
@@ -17,7 +17,7 @@
 {
   "catalogueID": "1684141909640228968120458785.22C_locale",
   "name": "8086",
-  "competentAuthority": "A",
+  "competentAuthority": "Province",
   "country": "GRC-Greece",
   "category": "Municipality",
   "description": "A",
@@ -32,8 +32,8 @@
 },
 {
   "catalogueID": "1685522730796104204349809245.2Remote catalogue_locale",
-  "name": "Remote catalogue edited 2",
-  "competentAuthority": "Pubblica amministrazione edited",
+  "name": "Remote catalogue",
+  "competentAuthority": "Pubblica amministrazione",
   "country": "ITA_CTA-Catania",
   "category": "Region",
   "description": "Catalogo regionale edited",
@@ -49,8 +49,8 @@
 },
 {
   "catalogueID": "1684141909640228968120458785.22B_locale",
-  "name": "B",
-  "competentAuthority": "A",
+  "name": "Catalogue C",
+  "competentAuthority": "Municipality",
   "country": "DEU-Germany",
   "category": "Municipality",
   "description": "A",
