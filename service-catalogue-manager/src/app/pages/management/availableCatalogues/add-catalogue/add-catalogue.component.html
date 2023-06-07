@@ -86,10 +86,10 @@
         <br>
         <label for="active">{{ 'general.catalogues.active' | translate }}</label>
         <br>
-        <nb-select fullWidth [placeholder]="placeholders.status" [(ngModel)]="active" [ngModelOptions]="{standalone: true}">
+        <nb-select fullWidth [(ngModel)]="active" [ngModelOptions]="{standalone: true}">
 
-            <nb-option value="active">Enable</nb-option>
-            <nb-option value="inactive">Disable</nb-option>
+            <nb-option value="active">Enabled</nb-option>
+            <nb-option value="inactive">Disabled</nb-option>
 
         </nb-select>
         <br>

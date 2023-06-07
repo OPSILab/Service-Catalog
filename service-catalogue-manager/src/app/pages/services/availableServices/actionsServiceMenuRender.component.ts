@@ -238,10 +238,6 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
     if (this.value.remote) {
       return [
         {
-          title: this.translate.instant('general.services.consents') as string,
-          data: 'consents',
-        },
-        {
           title: this.translate.instant('general.editor.export') as string,
           data: 'export',
         }

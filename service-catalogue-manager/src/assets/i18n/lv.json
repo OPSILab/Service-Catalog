@@ -411,7 +411,7 @@
       "actions": "Actions",
       "country": "Country",
       "services": "Services",
-      "active": "Active",
+      "active": "Enabled",
       "name": "Name",
       "competent_authority": "Competent Authority",
       "category": "Category",
@@ -426,8 +426,8 @@
       "ID": "ID",
       "edit": "Edit",
       "delete": "Delete",
-      "activate": "Activate",
-      "deactivate": "Deactivate",
+      "activate": "Enable",
+      "deactivate": "Disable",
       "catalogue_activated_message": "Catalogue {{catalogueName}} activated successfully!",
       "catalogue_deactivated_message": "Catalogue {{catalogueName}} decativated successfully!",
       "deactivate_catalogue_message": "Are you sure you want to deactivate catalogue <strong>{{catalogueName}}</strong>?\n",
@@ -438,7 +438,7 @@
       "delete_catalogue": "Delete catalogue",
       "download_metadata": "Download metadata",
       "activate_catalogue": "Catalogue activation",
-      "activate_catalogue_message": "Are you sure to activate the catalogue <strong>{{catalogueName}}</strong><br>Once activated, you will not be able to edit it until you disabled it first.",
+      "activate_catalogue_message": "Are you sure to activate the catalogue <strong>{{catalogueName}}</strong><br>? Once activated, you will not be able to edit it until you disabled it first.",
       "validationErrors": "There are validation errors in the Catalogue description."
     }
   },
