@@ -163,7 +163,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
             } as AvailableServiceRow;
           })
         );
-      else throw new Error("Remote catalogue not reachable")
+      else throw new Error("No services loaded. Remote catalogue was not reachable or wrong authentication parameters.")
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       console.error(error.error)

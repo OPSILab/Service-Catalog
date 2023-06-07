@@ -109,12 +109,15 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
     try {
       this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
       if (!this.selectedDataset.catalogueDatasetID) this.selectedDataset = this.datasets[0]
-      if (!this.selectedDatasetName) this.selectedDatasetName = this.selectedDataset.name
-      if (this.selectedDataset.type == "Service Catalogue") this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
-      else this.availableCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset.URL);
-      void await this.source.load(this.availableCatalogues);
+      if (!this.selectedDatasetName  && this.selectedDataset) this.selectedDatasetName = this.selectedDataset.name
+      if (this.selectedDataset?.type == "Service Catalogue") this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
+      else if (this.selectedDataset) this.availableCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset?.URL);
+      if (this.availableCatalogues) void await this.source.load(this.availableCatalogues);
     } catch (error) {
-      console.error("error:<\n", error, ">\n")
+      console.error("Remote catalogues component")
+      console.error(error)
+      if (error.statusCode === '404' || error.status == 404)
+        error.message="Remote catalogue was not reachable.\n\n" + error.message
       if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
         this.errorService.openErrorDialog(error);

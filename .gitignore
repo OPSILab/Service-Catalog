@@ -247,3 +247,4 @@ test/
 service-catalogue-server/.idea/
 *.hprof
 backup/
+service-catalogue-manager/src/assets/data/examples/cataloguesDataset3.json

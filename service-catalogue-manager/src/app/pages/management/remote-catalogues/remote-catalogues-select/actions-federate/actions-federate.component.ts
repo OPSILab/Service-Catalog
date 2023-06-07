@@ -147,8 +147,14 @@ export class ActionsFederateComponent implements OnInit {
         clientSecret = this.clientSecret,
         clientID = this.clientID,
         services;
-
-      services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
+      try {
+        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
+      }
+      catch (error) {
+        console.error("Error during services count setting")
+        console.error(error)
+        services = 0
+      }
 
       switch (this.refresh) {
         case 'Every day': refresh = 86400000; break;
