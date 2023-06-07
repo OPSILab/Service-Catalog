@@ -12,8 +12,16 @@ import { CatalogueEntry } from '../../../../../model/catalogue/catalogueEntry';
 import { AdapterStatusEnum } from '../../../../../model/services/adapter';
 import { ErrorDialogService } from '../../../../error-dialog/error-dialog.service';
 import { AvailableServicesService } from '../../../../services/availableServices/availableServices.service';
-import { Countries } from '../../../availableCatalogues/add-catalogue/countries';
+//import { Countries } from '../../../availableCatalogues/add-catalogue/countries';
 import { AvailableCataloguesService } from '../../../availableCatalogues/availableCatalogues.service';
+import * as spatials from '../../../../../../assets/data/service-schema/en/spatials.json'
+
+/*
+import * as spatials_de from '../../../../../assets/data/service-schema/de/spatials.json'
+import * as spatials_el from '../../../../../assets/data/service-schema/el/spatials.json'
+import * as spatials_lv from '../../../../../assets/data/service-schema/lv/spatials.json'
+import * as spatials_it from '../../../../../assets/data/service-schema/it/spatials.json'
+*/
 
 @Component({
   selector: 'actions-federate',
@@ -45,7 +53,7 @@ export class ActionsFederateComponent implements OnInit {
   clientSecret: string;
   actions: NbMenuItem[];
   called = false;
-  countries: string[] = Countries.countries
+  countries: string[] = spatials.enum//Countries.countries
   placeholders = {
     competentAuthority: this.translate.instant('general.catalogues.competent_authority'),
     country: this.translate.instant('general.catalogues.country'),

@@ -11,8 +11,16 @@ import { ErrorDialogCatalogueService } from '../../../error-dialog/error-dialog-
 import { AppConfig } from '../../../../model/appConfig';
 import { map, startWith, filter } from 'rxjs/operators';
 import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import { Countries } from './countries'
+//import { Countries } from './countries'
 import { AvailableServicesService } from '../../../services/availableServices/availableServices.service'
+import * as spatials from '../../../../../assets/data/service-schema/en/spatials.json'
+
+/*
+import * as spatials_de from '../../../../../assets/data/service-schema/de/spatials.json'
+import * as spatials_el from '../../../../../assets/data/service-schema/el/spatials.json'
+import * as spatials_lv from '../../../../../assets/data/service-schema/lv/spatials.json'
+import * as spatials_it from '../../../../../assets/data/service-schema/it/spatials.json'
+*/
 
 @Component({
   selector: 'add-catalogue',
@@ -43,7 +51,7 @@ export class AddCatalogueComponent implements OnInit {
   clientID: string;
   clientSecret: string;
   filteredCountryOptions$: Observable<string[]>;
-  countries: string[] = Countries.countries
+  countries : string[] = spatials.enum//Countries.countries
   placeholders = {
     competentAuthority: this.translate.instant('general.catalogues.competent_authority'),
     country: this.translate.instant('general.catalogues.country'),
