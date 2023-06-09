@@ -139,10 +139,10 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
             (await this.availableCataloguesService.getStatus(catalogue.catalogueID)).status :
             "inactive"
         }
-        catch (error){
+        catch (error) {
           console.error(error)
-          console.debug("UNKNOWN STATUS")
-          catalogue.status = "unknown"
+          if (error.statusCode === '401' || error.status == 401 || (error.error && (error.error.statusCode === '401' || error.error.status == 401))) catalogue.status = "Unauthorized"
+          else catalogue.status = "Unreachable"
         }
       }
       //this.refreshLimit = this.availableCatalogues.length;

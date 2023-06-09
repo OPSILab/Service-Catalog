@@ -433,7 +433,7 @@
       "catalogue_activated_message": "Il catalogo {{catalogueName}} è stato attivato con successo!",
       "catalogue_deactivated_message": "Il catalogo {{catalogueName}} è stato disattivato con successo!",
       "delete_catalogue_message" : "Sei sicuro di voler cancellare permanentemente il catalogo <strong>{{catalogueName}}</strong>?\n",
-      "catalogue_added_message" : "e' stato aggiunto un nuovo catalogo",
+      "catalogue_added_message" : "E' stato federato un nuovo catalogo",
       "delete_catalogue": "Cancella il catalogo",
       "download_metadata" : "Download metadata",
       "activate_catalogue": "Attivazione catalogo",

@@ -434,7 +434,7 @@
       "catalogue_edited_message": "Catalogue {{catalogueName}} was edited",
       "catalogue_deleted_message": "Catalogue {{catalogueName}} deleted successfully!",
       "delete_catalogue_message": "Are you sure to delete permanently the catalogue <strong>{{catalogueName}}</strong>?\n",
-      "catalogue_added_message": "A new catalogue was added",
+      "catalogue_added_message": "A new catalogue was federated",
       "delete_catalogue": "Delete catalogue",
       "download_metadata": "Download metadata",
       "activate_catalogue": "Catalogue activation",
