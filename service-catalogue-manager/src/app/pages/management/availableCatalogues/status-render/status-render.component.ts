@@ -11,13 +11,13 @@ import { NbDialogService } from '@nebular/theme';
     </div>
 
     <div *ngIf="active===false">
-      <button nbButton ghost nbTooltip="Under Development" shape="rectangle" size="small" status="warning">
+      <button nbButton ghost nbTooltip="Under Development" shape="rectangle" size="small" status="warning" (click)="showStatus()">
         <i class="material-icons">check_circle</i>
       </button>
     </div>
 
     <div *ngIf="active=='unknown'">
-      <button nbButton ghost nbTooltip="Under Development" shape="rectangle" size="small" status="danger">
+      <button nbButton ghost nbTooltip="Under Development" shape="rectangle" size="small" status="danger" (click)="showStatus()">
         <i class="material-icons">check_circle</i>
       </button>
     </div>
@@ -27,10 +27,9 @@ import { NbDialogService } from '@nebular/theme';
         <nb-card-header class="d-flex justify-content-between">
           <h5>{{ 'general.catalogues.status' | translate }}</h5>
         </nb-card-header>
-        <nb-card-body
-          class="p-5 text-center"
-          [innerHTML]="'general.catalogues.status' | translate : data.status"
-        ></nb-card-body>
+        <nb-card-body class="p-5 text-center">
+          {{'general.catalogues.status' | translate}} : {{data.status}}
+        </nb-card-body>
         <nb-card-footer class="d-flex justify-content-center">
           <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
             {{ 'general.close' | translate }}
