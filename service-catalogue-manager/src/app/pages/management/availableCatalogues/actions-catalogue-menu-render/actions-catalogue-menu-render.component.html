@@ -180,6 +180,12 @@
             [ngModelOptions]="{standalone: true}">
           <br>
           <br>
+          <label for="icon url">{{ 'general.catalogues.icon_url' | translate }}</label>
+          <br>
+          <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="'general.catalogues.icon_url' | translate" [(ngModel)]="iconURL"
+            [ngModelOptions]="{standalone: true}">
+          <br>
+          <br>
           <label for="API endpoint">{{ 'general.catalogues.api_endpoint' | translate }}</label>
           <br>
           <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.apiEndpoint" [(ngModel)]="apiEndpoint"

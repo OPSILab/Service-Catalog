@@ -424,6 +424,7 @@
       "client_ID": "Client ID",
       "client_secret": "Client secret",
       "ID" : "ID",
+      "icon_url": "Url icona",
       "edit": "Modifica",
       "delete" : "Cancella",
       "activate": "Abilita",

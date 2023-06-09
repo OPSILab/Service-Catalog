@@ -69,6 +69,7 @@ export class AddCatalogueComponent implements OnInit {
   }
   //countries: string[] = Object.keys(Countries).filter(value => isNaN(Number(value)) === false && JSON.stringify(value) != '0').map(key => Countries[key]);
   private appConfig: AppConfig;
+  iconURL: any;
 
   constructor(
     private http: HttpClient,
@@ -103,6 +104,7 @@ export class AddCatalogueComponent implements OnInit {
       if (this.value.country) this.country = this.value.country
       if (this.value.homePage) this.homePage = this.value.homePage
       if (this.value.lastRefresh) this.homePage = this.value.lastRefresh
+      if (this.value.iconURL) this.iconURL = this.value.iconURL
     }
   }
 
@@ -160,6 +162,7 @@ export class AddCatalogueComponent implements OnInit {
         country = this.country,
         category = this.category,
         homePage = this.homePage,
+        iconURL=this.iconURL,
         apiEndpoint = this.apiEndpoint,
         active = this.active,
         refresh,
@@ -191,6 +194,7 @@ export class AddCatalogueComponent implements OnInit {
         active,
         refresh,
         type,
+        iconURL,
         authenticated,
         clientID,
         clientSecret,

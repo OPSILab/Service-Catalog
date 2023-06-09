@@ -36,9 +36,10 @@
         </nb-autocomplete>
         -->
 
-        <nb-select fullWidth [placeholder]="placeholders.country" [(ngModel)]="country" [ngModelOptions]="{standalone: true}">
+        <nb-select fullWidth [placeholder]="placeholders.country" [(ngModel)]="country"
+          [ngModelOptions]="{standalone: true}">
 
-            <nb-option *ngFor="let country of countries" value={{country}}>{{country}}</nb-option>
+          <nb-option *ngFor="let country of countries" value={{country}}>{{country}}</nb-option>
 
         </nb-select>
 
@@ -46,40 +47,47 @@
         <br>
         <label for="category">{{ 'general.catalogues.category' | translate }}</label>
         <br>
-        <nb-select fullWidth [placeholder]="placeholders.category" [(ngModel)]="category" [ngModelOptions]="{standalone: true}">
+        <nb-select fullWidth [placeholder]="placeholders.category" [(ngModel)]="category"
+          [ngModelOptions]="{standalone: true}">
 
-            <nb-option value="Municipality">Municipality</nb-option>
-            <nb-option value="Province">Province</nb-option>
-            <nb-option value="Private Institution">Private Institution</nb-option>
-            <nb-option value="Public Body">Public Body</nb-option>
-            <nb-option value="Region">Region</nb-option>
+          <nb-option value="Municipality">Municipality</nb-option>
+          <nb-option value="Province">Province</nb-option>
+          <nb-option value="Private Institution">Private Institution</nb-option>
+          <nb-option value="Public Body">Public Body</nb-option>
+          <nb-option value="Region">Region</nb-option>
 
         </nb-select>
         <br>
         <br>
         <label for="description">{{ 'general.catalogues.description' | translate }}</label>
         <br>
-        <textarea nbInput fullWidth fieldSize="medium" [placeholder]="placeholders.description" [(ngModel)]="description"
-          [ngModelOptions]="{standalone: true}"></textarea>
+        <textarea nbInput fullWidth fieldSize="medium" [placeholder]="placeholders.description"
+          [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
         <br><br>
         <label for="home page">{{ 'general.catalogues.home_page' | translate }}</label>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.homePage" [(ngModel)]="homePage"
-          [ngModelOptions]="{standalone: true}">
+        <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.homePage"
+          [(ngModel)]="homePage" [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <label for="icon url">{{ 'general.catalogues.icon_url' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="'general.catalogues.icon_url' | translate"
+          [(ngModel)]="iconURL" [ngModelOptions]="{standalone: true}">
         <br>
         <br>
         <label for="API endpoint">{{ 'general.catalogues.api_endpoint' | translate }}</label>
         <br>
-        <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.apiEndpoint" [(ngModel)]="apiEndpoint"
-          [ngModelOptions]="{standalone: true}">
+        <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.apiEndpoint"
+          [(ngModel)]="apiEndpoint" [ngModelOptions]="{standalone: true}">
         <br>
         <br>
         <label for="type">{{ 'general.catalogues.type' | translate }}</label>
         <br>
         <nb-select fullWidth [placeholder]="placeholders.type" [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
 
-            <nb-option value="Service Catalogue">Service Catalogue</nb-option>
-            <nb-option value="Native">Native</nb-option>
+          <nb-option value="Service Catalogue">Service Catalogue</nb-option>
+          <nb-option value="Native">Native</nb-option>
 
         </nb-select>
         <br>
@@ -88,19 +96,20 @@
         <br>
         <nb-select fullWidth [(ngModel)]="active" [ngModelOptions]="{standalone: true}">
 
-            <nb-option value=true>Enabled</nb-option>
-            <nb-option value=false>Disabled</nb-option>
+          <nb-option value=true>Enabled</nb-option>
+          <nb-option value=false>Disabled</nb-option>
 
         </nb-select>
         <br>
         <br>
         <label for="refresh">{{ 'general.catalogues.refresh' | translate }}</label>
         <br>
-        <nb-select fullWidth [placeholder]="placeholders.refresh" [(ngModel)]="refresh" [ngModelOptions]="{standalone: true}">
+        <nb-select fullWidth [placeholder]="placeholders.refresh" [(ngModel)]="refresh"
+          [ngModelOptions]="{standalone: true}">
 
-            <nb-option value="Every day">Every day</nb-option>
-            <nb-option value="Every week">Every week</nb-option>
-            <nb-option value="Every month">Every month</nb-option>
+          <nb-option value="Every day">Every day</nb-option>
+          <nb-option value="Every week">Every week</nb-option>
+          <nb-option value="Every month">Every month</nb-option>
 
         </nb-select>
         <br>
@@ -113,20 +122,21 @@
         <label *ngIf="authenticated" for="oauth2 endpoint">{{ 'general.catalogues.oauth2_endpoint' | translate
           }}</label>
         <br *ngIf="authenticated">
-        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.oAuth2Endpoint"
-          [(ngModel)]="oAuth2Endpoint" [ngModelOptions]="{standalone: true}">
+        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small"
+          [placeholder]="placeholders.oAuth2Endpoint" [(ngModel)]="oAuth2Endpoint"
+          [ngModelOptions]="{standalone: true}">
         <br *ngIf="authenticated">
         <br *ngIf="authenticated">
         <label *ngIf="authenticated" for="Client ID">{{ 'general.catalogues.client_ID' | translate }}</label>
         <br *ngIf="authenticated">
-        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.clientID"
-          [(ngModel)]="clientID" [ngModelOptions]="{standalone: true}">
+        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small"
+          [placeholder]="placeholders.clientID" [(ngModel)]="clientID" [ngModelOptions]="{standalone: true}">
         <br *ngIf="authenticated">
         <br *ngIf="authenticated">
         <label *ngIf="authenticated" for="Client Secret">{{ 'general.catalogues.client_secret' | translate }}</label>
         <br *ngIf="authenticated">
-        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.clientSecret"
-          [(ngModel)]="clientSecret" [ngModelOptions]="{standalone: true}">
+        <input *ngIf="authenticated" type="text" nbInput fullWidth fieldSize="small"
+          [placeholder]="placeholders.clientSecret" [(ngModel)]="clientSecret" [ngModelOptions]="{standalone: true}">
         <br *ngIf="authenticated">
         <br *ngIf="authenticated">
         <h3>

@@ -89,6 +89,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   @ViewChild('editCatalogue', { static: false }) editCatalogue: TemplateRef<unknown>;
   validURL: boolean;
   oAuth2Endpoint: string;
+  iconURL: any;
 
   constructor(
     private http: HttpClient,
@@ -130,6 +131,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
     this.status = this.value.status
     this.homePage = this.value.homePage
     this.lastRefresh = this.value.lastRefresh
+    this.iconURL = this.value.iconURL
     this.refresh = this.value.refresh == 86400000 ? 'Every day' : this.value.refresh == 604800000 ? 'Every week' : this.value.refresh == 2629800000 ? 'Every month' : undefined
     this.actions = this.translatedActionLabels();
     this.menuService
@@ -280,6 +282,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         refresh,
         description = this.description,
         type = this.type,
+        iconURL=this.iconURL,
         authenticated = this.authenticated,
         oAuth2Endpoint = this.oAuth2Endpoint,
         clientSecret = this.clientSecret,
@@ -312,6 +315,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         active,
         refresh,
         type,
+        iconURL,
         authenticated,
         clientID,
         clientSecret,
