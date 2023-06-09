@@ -91,8 +91,8 @@ export class AvailableCataloguesService {
     return this.http.delete<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues?catalogueID=${catalogueID}`).toPromise();
   }
 
-  getStatus(URL: string) {
-    return this.http.get<any>(`${URL.split("services")[0]}status`).toPromise();
+  getStatus(catalogueID: string) {
+    return this.http.get<any>(`${this.serviceRegistryUrl}/api/v2/federated/status?catalogueID=${catalogueID}`).toPromise();
   }
 }
 

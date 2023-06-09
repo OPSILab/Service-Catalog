@@ -115,6 +115,8 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
   async onSubmit() {
     try {
 
+      await this.availableCatalogueService.getRemoteCatalogues(this.URL);
+
       await this.availableCataloguesDatasetService.saveCatalogueDataset((({
         name :  this.name,
         catalogueDatasetID : new String(Date.now())+ JSON.stringify(Math.random()*999999999999999)+ this.name,

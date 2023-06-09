@@ -378,7 +378,7 @@
       "source_data_type" : "Tipo di dato in ingresso"
     },
     "catalogues": {
-      "select" : "Seleziona catalogo remoto",
+      "select" : "Seleziona catalogo",
       "dataset": {
         "dataset_added_message" : "Un nuovo dataset di cataloghi è stato aggiunto",
         "delete_dataset_message" : "Sei sicuro di voler cancellare permanentemente il dataset cataloghi <strong>{{catalogueDatasetName}}</strong>?\n",

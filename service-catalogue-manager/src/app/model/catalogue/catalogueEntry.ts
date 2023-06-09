@@ -5,7 +5,7 @@ export interface CatalogueEntry {
   country : string
   services : number
   status : string
-  active : string
+  active : boolean
   description :string
   competentAuthority : string
   category : string
@@ -17,5 +17,6 @@ export interface CatalogueEntry {
   clientSecret : string
   clientID : string
   oAuth2Endpoint : string,
-  lastRefresh
+  lastRefresh,
+  iconURL
 }

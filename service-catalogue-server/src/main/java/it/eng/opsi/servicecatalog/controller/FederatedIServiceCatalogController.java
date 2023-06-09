@@ -59,4 +59,7 @@ public interface FederatedIServiceCatalogController {
 
 	public abstract ResponseEntity<?> getServiceTime(String remoteCatalogueID, String serviceId)
 			throws ServiceNotFoundException, IOException, URISyntaxException;
+
+	public abstract ResponseEntity<?> getStatus(String catalogueID);
+
 }

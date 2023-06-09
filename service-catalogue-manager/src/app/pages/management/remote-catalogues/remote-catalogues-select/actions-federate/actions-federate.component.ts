@@ -41,7 +41,7 @@ export class ActionsFederateComponent implements OnInit {
   category: string;
   homePage: string;
   apiEndpoint: string;
-  active: string;
+  active: boolean;
   refresh: any;
   name: string;
   description: string;
@@ -97,7 +97,7 @@ export class ActionsFederateComponent implements OnInit {
   }
 
   get registered(): boolean {
-    return this.value.active == AdapterStatusEnum.Active ? true : false;
+    return this.value.active
   }
 
   async ngOnInit(): Promise<void> {
@@ -200,7 +200,7 @@ export class ActionsFederateComponent implements OnInit {
       if (!this.name) errors.push(this.errorTemplate("name"))
       if (!this.apiEndpoint) errors.push(this.errorTemplate("apiEndpoint"))
       if (!this.authenticated) errors.push(this.errorTemplate("authenticated"))
-      if (!this.active) errors.push(this.errorTemplate("active"))
+      if (this.active===undefined) errors.push(this.errorTemplate("active"))
       if (!this.refresh) errors.push(this.errorTemplate("refresh"))
 
       console.error("error:", "\n", error)

@@ -51,7 +51,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   category: string;
   homePage: string;
   apiEndpoint: string;
-  active: string;
+  active: boolean;
   refresh: any;
   name: string;
   description: string;
@@ -110,7 +110,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   get registered(): boolean {
-    return this.value.active == AdapterStatusEnum.Active ? true : false;
+    return this.value.active;
   }
 
   ngOnInit(): void {
@@ -328,7 +328,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
       if (!this.name) errors.push(this.errorTemplate("name"))
       if (!this.apiEndpoint) errors.push(this.errorTemplate("apiEndpoint"))
       if (!this.authenticated) errors.push(this.errorTemplate("authenticated"))
-      if (!this.active) errors.push(this.errorTemplate("active"))
+      if (this.active === undefined) errors.push(this.errorTemplate("active"))
       if (!this.refresh) errors.push(this.errorTemplate("refresh"))
 
       console.log("error:", "\n", error)
@@ -390,7 +390,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
 
   onRegisterCatalogue = async (): Promise<void> => {
     try {
-      this.value.active = this.value.active == "active" ? "inactive" : "active";
+      this.value.active = !this.value.active;
       this.value = await this.availableCataloguesService.registerCatalogue(this.value);
       this.showToast('primary', this.translate.instant('general.catalogues.catalogue_activated_message', { catalogueName: this.value.name }), '');
       this.updateResult.emit(this.value);
@@ -404,7 +404,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
 
   onDeRegisterCatalogue = async (): Promise<void> => {
     try {
-      this.value.active = this.value.active == "active" ? "inactive" : "active";
+      this.value.active = !this.value.active;
       this.value = await this.availableCataloguesService.deregisterCatalogue(this.value);
       this.showToast('primary', this.translate.instant('general.catalogues.catalogue_deactivated_message', { catalogueName: this.value.name }), '');
       this.updateResult.emit(this.value);

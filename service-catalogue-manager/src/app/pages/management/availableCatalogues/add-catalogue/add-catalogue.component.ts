@@ -40,7 +40,7 @@ export class AddCatalogueComponent implements OnInit {
   category: string;
   homePage: string;
   apiEndpoint: string;
-  active: string;
+  active: boolean;
   refresh: any;
   name: string;
   description: string;
@@ -93,7 +93,7 @@ export class AddCatalogueComponent implements OnInit {
       if (this.value.description) this.description = this.value.description
       if (this.value.status) this.status = this.value.status
       if (this.value.competentAuthority) this.competentAuthority = this.value.competentAuthority
-      if (this.value.active) this.active = this.value.active
+      if (this.value.active!=undefined) this.active = this.value.active
       if (this.value.apiEndpoint) this.apiEndpoint = this.value.apiEndpoint
       if (this.value.authenticated) this.authenticated = this.value.authenticated
       if (this.value.catalogueID) this.catalogueID = this.value.catalogueID
@@ -209,7 +209,7 @@ export class AddCatalogueComponent implements OnInit {
       if (!this.name) errors.push(this.errorTemplate("name"))
       if (!this.apiEndpoint) errors.push(this.errorTemplate("apiEndpoint"))
       if (!this.authenticated) errors.push(this.errorTemplate("authenticated"))
-      if (!this.active) errors.push(this.errorTemplate("active"))
+      if (this.active===undefined) errors.push(this.errorTemplate("active"))
       if (!this.refresh) errors.push(this.errorTemplate("refresh"))
 
       console.log("error:", "\n", error)

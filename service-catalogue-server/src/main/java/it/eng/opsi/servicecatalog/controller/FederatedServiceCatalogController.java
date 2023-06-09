@@ -280,4 +280,12 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 		return ResponseEntity
 				.ok(catalogService.getFederatedServices(remoteCatalogueID, "/count/location"));
 	}
+	@Override
+	@Operation(summary = "Get Service catalogue's status.", description = "Get Service catalogue's status.", tags = {
+			"Status" }, responses = {
+					@ApiResponse(description = "Returns the Service catalogue's status.", responseCode = "200") })
+	@GetMapping(value = "/status", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getStatus(@RequestParam("catalogueID") String catalogueID) {
+		return ResponseEntity.ok(catalogService.getFederatedStatus(catalogueID));
+	}
 }

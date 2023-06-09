@@ -167,6 +167,8 @@ public interface IServiceCatalogService {
 
       public abstract Status getStatus();
 
+      public abstract String getFederatedStatus(String catalogueID);
+
       public abstract List<Catalogue> getCatalogueBycountry(String country);
 
       public abstract Catalogue getCatalogueByApiEndpoint(String apiEndpoint);

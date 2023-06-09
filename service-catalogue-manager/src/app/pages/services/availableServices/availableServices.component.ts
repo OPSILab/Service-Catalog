@@ -42,6 +42,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
   activeCatalogues: any[] = [];
   serviceRegistryUrl: string;
   private config: AppConfig;
+  remote: boolean;
 
   constructor(
     private translate: TranslateService,
@@ -79,26 +80,38 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
-    for (let catalogue of this.catalogues){
+    for (let catalogue of this.catalogues) {
 
-      try{
-        catalogue.status = (await this.availableCataloguesService.getStatus(catalogue.apiEndpoint)).status
-        console.debug((await this.availableCataloguesService.getStatus(catalogue.apiEndpoint)).status)
+      try {
+        catalogue.status = (await this.availableCataloguesService.getStatus(catalogue.catalogueID)).status
+        console.debug((await this.availableCataloguesService.getStatus(catalogue.catalogueID)).status)
       }
-      catch(error){
+      catch (error) {
         console.error(error)
         catalogue.status = "not reachable"
       }
 
       console.debug(catalogue.status)
-      if (catalogue.active == 'active' && catalogue.status=='active')
+      if (catalogue.active && catalogue.status == 'active')
         this.activeCatalogues.push(catalogue)
     }
 
     this.catalogues = this.activeCatalogues
-    this.activeCatalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country, active:'active' })
+    this.activeCatalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country, active: 'active' })
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.translate.instant('general.services.local') as string
     this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country }
+  }
+
+  getActiveCatalogues() {
+    let remoteActiveCatalogues = []
+    for (let catalogue of this.activeCatalogues)
+      if (catalogue.catalogueID != "local") remoteActiveCatalogues.push(catalogue)
+    return remoteActiveCatalogues
+  }
+
+  toggle(remote: boolean) {
+    if (!remote) this.selectedCatalogueName = this.translate.instant('general.services.local') as string
+    this.remote = remote;
   }
 
   ngOnDestroy(): void {

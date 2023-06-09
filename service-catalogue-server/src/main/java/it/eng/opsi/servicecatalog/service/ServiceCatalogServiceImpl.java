@@ -832,4 +832,38 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		return catalogue;
 	}
+
+	@Override
+	public String getFederatedStatus(String catalogueID) {
+		Catalogue catalogue = catalogueRepo.findBycatalogueID(catalogueID);
+
+		catalogue.setClientSecret(Encryption.decrypt(catalogue.getClientSecret()));
+
+		// get token
+
+		if (accessToken.equals(""))
+			try {
+				getToken(catalogue);
+			} catch (Exception e) {
+				System.out.println(e);
+			}
+
+		// get remote services
+
+		String response = "";
+
+		try {
+			catalogue.setApiEndpoint(catalogue.getApiEndpoint().split("services")[0]);
+			response = getFederatedServicesResponse("status", accessToken, catalogue);
+		} catch (Exception e) {
+			System.out.println(e);
+			try {
+				getToken(catalogue);
+			} catch (Exception ex) {
+				System.out.println(ex);
+			}
+		}
+
+		return response;
+	}
 }

@@ -53,7 +53,7 @@ export class InfoRenderRemoteCatalogueComponent implements OnInit {
     if (this.value.country) context.country = this.value.country;
     if (this.value.services) context.services = this.value.services;
     if (this.value.status) context.status = this.value.status;
-    if (this.value.active) context.active = this.value.active || "Not found";
+    if (this.value.active) context.active = this.value.active != undefined ? this.value.active : "Not specified";
     if (this.value.description) context.description = this.value.description;
     if (this.value.competentAuthority) context.competentAuthority = this.value.competentAuthority;
     if (this.value.category) context.category = this.value.category;

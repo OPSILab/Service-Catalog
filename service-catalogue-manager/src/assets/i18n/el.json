@@ -378,7 +378,7 @@
       "source_data_type": "Source Data Type"
     },
     "catalogues": {
-      "select" : "Select remote catalogue",
+      "select" : "Select catalogue",
       "dataset": {
         "dataset_added_message": "A new catalogue dataset was added",
         "delete_dataset_message": "Are you sure to delete permanently the catalogue dataset <strong>{{catalogueDatasetName}}</strong>?\n",

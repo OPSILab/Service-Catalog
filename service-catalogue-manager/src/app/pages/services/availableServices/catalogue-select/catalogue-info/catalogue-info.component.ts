@@ -54,7 +54,7 @@ export class CatalogueInfoComponent implements OnInit {
     if (this.value.country) context.country = this.value.country;
     if (this.value.services) context.services = this.value.services;
     if (this.value.status) context.status = this.value.status;
-    if (this.value.active) context.active = this.value.active || "Not found";
+    if (this.value.active!=undefined) context.active = this.value.active;
     if (this.value.description) context.description = this.value.description;
     if (this.value.competentAuthority) context.competentAuthority = this.value.competentAuthority;
     if (this.value.category) context.category = this.value.category;

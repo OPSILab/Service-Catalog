@@ -85,7 +85,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   refresh(catalogueIn) {
     try {
       let apiEndpoint = catalogueIn.apiEndpoint
-      if ((Date.now() > (catalogueIn.lastRefresh + catalogueIn.refresh)) && catalogueIn.active == "active") {
+      if ((Date.now() > (catalogueIn.lastRefresh + catalogueIn.refresh)) && catalogueIn.active) {
         let catalogueTmp: CatalogueEntry = catalogueIn
         catalogueTmp.lastRefresh = Date.now()
         this.availableServicesService.getRemoteServicesCount(apiEndpoint)
@@ -111,10 +111,11 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     return catalogueIn.services
   }
 
+  /*
   getStatus(row) {
     if (!this.statusSet)
       try {
-        this.availableCataloguesService.getStatus(row.apiEndpoint)
+        this.availableCataloguesService.getStatus(row.catalogueID)
           .then((value: any) => {
             this.status = value.status;
             this.statusSet = true;
@@ -126,7 +127,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
         console.error(error.text)
       }
     return this.status
-  }
+  }*/
 
   async ngOnInit() {
     try {
@@ -134,13 +135,14 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
       for (let catalogue of this.availableCatalogues) {
         //this.statuses.catalogue.catalogueID.active = catalogue.active
         try {
-          catalogue.status = catalogue.active == "active" ?
-            (await this.availableCataloguesService.getStatus(catalogue.apiEndpoint)).status :
+          catalogue.status = catalogue.active == true ?
+            (await this.availableCataloguesService.getStatus(catalogue.catalogueID)).status :
             "inactive"
         }
         catch (error){
           console.error(error)
-          catalogue.status = "inactive"
+          console.debug("UNKNOWN STATUS")
+          catalogue.status = "unknown"
         }
       }
       //this.refreshLimit = this.availableCatalogues.length;

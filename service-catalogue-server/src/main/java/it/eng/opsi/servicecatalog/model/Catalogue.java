@@ -31,7 +31,8 @@ import lombok.Data;
         "clientSecret",
         "hashedSecret",
         "services",
-        "lastRefresh"
+        "lastRefresh",
+        "iconURL"
 })
 
 @Data
@@ -88,7 +89,7 @@ public class Catalogue {
     @JsonProperty("active")
     @Valid
     @NotNull
-    private String active;
+    private boolean active;
 
     @JsonProperty("refresh")
     @Valid
@@ -119,6 +120,11 @@ public class Catalogue {
     @Valid
     // @NotNull
     private String clientSecret;
+
+    @JsonProperty("iconURL")
+    @Valid
+    // @NotNull
+    private String iconURL;
 
     @JsonProperty("hashedSecret")
     @Valid
