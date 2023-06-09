@@ -42,21 +42,21 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
   password: string;
   name: string;
   username: string;
-  type: string;
+  type: string = 'Service Catalogue';
   portalURL: string;
   clientID: string;
   clientSecret: string;
   URL;
   placeholders = {
-    URL : this.translate.instant('general.catalogues.dataset.URL'),
-    authenticationMethod : this.translate.instant('general.catalogues.dataset.authentication_method'),
-    password : this.translate.instant('general.catalogues.dataset.password'),
-    username : this.translate.instant('general.catalogues.dataset.username'),
-    clientID : this.translate.instant('general.catalogues.dataset.client_ID'),
-    clientSecret : this.translate.instant('general.catalogues.dataset.client_secret'),
-    name : this.translate.instant('general.catalogues.dataset.name'),
-    type : this.translate.instant('general.catalogues.dataset.type'),
-    portalURL : this.translate.instant('general.catalogues.dataset.portal_URL')
+    URL: this.translate.instant('general.catalogues.dataset.URL'),
+    authenticationMethod: this.translate.instant('general.catalogues.dataset.authentication_method'),
+    password: this.translate.instant('general.catalogues.dataset.password'),
+    username: this.translate.instant('general.catalogues.dataset.username'),
+    clientID: this.translate.instant('general.catalogues.dataset.client_ID'),
+    clientSecret: this.translate.instant('general.catalogues.dataset.client_secret'),
+    name: this.translate.instant('general.catalogues.dataset.name'),
+    type: this.translate.instant('general.catalogues.dataset.type'),
+    portalURL: this.translate.instant('general.catalogues.dataset.portal_URL')
   }
   private appConfig: AppConfig;
   private unsubscribe: Subject<void> = new Subject();
@@ -89,10 +89,10 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
     this.portalURL = this.value?.portalURL
     this.name = this.value?.name
     this.username = this.value?.username
-    this.type = this.value?.type
+    this.type = this.value?.type || 'Service Catalogue'
   }
 
-  getRef(){
+  getRef() {
     return this.ref
   }
 
@@ -108,26 +108,27 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
       "message": "Value required",
       "errorcount": 1
     }
-    error.path =  error.path + "." + value
+    error.path = error.path + "." + value
     return error;
   }
 
   async onSubmit() {
     try {
 
-      await this.availableCatalogueService.getRemoteCatalogues(this.URL);
+      if (this.type == 'Json') await this.availableCatalogueService.getCataloguesFromFile(this.URL);
+      else await this.availableCatalogueService.getRemoteCatalogues(this.URL)
 
       await this.availableCataloguesDatasetService.saveCatalogueDataset((({
-        name :  this.name,
-        catalogueDatasetID : new String(Date.now())+ JSON.stringify(Math.random()*999999999999999)+ this.name,
-        type : this.type,
-        clientSecret : this.clientSecret,
-        clientID : this.clientID,
-        username : this.username,
-        password : this.password,
-        URL : this.URL,
-        portalURL : this.portalURL,
-        authenticationMethod : this.authenticationMethod
+        name: this.name,
+        catalogueDatasetID: new String(Date.now()) + JSON.stringify(Math.random() * 999999999999999) + this.name,
+        type: this.type,
+        clientSecret: this.clientSecret,
+        clientID: this.clientID,
+        username: this.username,
+        password: this.password,
+        URL: this.URL,
+        portalURL: this.portalURL,
+        authenticationMethod: this.authenticationMethod
       } as unknown)) as CatalogueDataset);
       this.editedValue.emit(this.value);
       this.ref.close()
@@ -137,8 +138,8 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
       let errors: Object[] = []
 
       if (!this.name) errors.push(this.errorTemplate("name"))
-      if (!this.type) errors.push(this.errorTemplate("apiEndpoint"))
-      if (!this.URL) errors.push(this.errorTemplate("authenticated"))
+      if (!this.type) errors.push(this.errorTemplate("type"))
+      if (!this.URL) errors.push(this.errorTemplate("URL"))
 
       console.error("error:", "\n", error)
 
@@ -156,18 +157,28 @@ export class AddRemoteCatalogueDatasetComponent implements OnInit, OnDestroy {
       }
 
       else {
-        if (error.status == 404)
+        if (error.status && error.status == 404)
           errors.push({
             "path": "apiEndpoint",
             "property": "not found",
             "message": "Api endpoint returned page not found",
             "errorcount": 1
           })
-
+        else
+          errors.push({
+            "path": "apiEndpoint",
+            "property": "not found",
+            "message": error.name,
+            "errorcount": 1
+          })
         this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
         });
       }
+      //else
+      //this.errorService.openErrorDialog(error);
+
+
     }
   }
 
