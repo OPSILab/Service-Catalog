@@ -11,8 +11,6 @@
         </nb-checkbox>
         <br><br>
         <label *ngIf="remote" style="width:330px">&nbsp;{{this.getSelectLabel()}}</label>
-        <label *ngIf="remote">&nbsp;{{this.getCountryLabel()}}:</label>
-        <label *ngIf="remote"> &nbsp; &nbsp; {{this.selectedCatalogueCountry}}</label>
         <br *ngIf="remote">
         <nb-select *ngIf="remote" style="width:500px"
           placeholder="{{ 'general.dashboard.federatedCatalogues' | translate }}" [(ngModel)]="selectedCatalogueName"
@@ -26,7 +24,11 @@
               value={{catalogue.name}}>{{catalogue.name}}</nb-option>
           </nb-option-group>
         </nb-select>
+
+        <label *ngIf="remote">&nbsp;&nbsp;{{this.getCountryLabel()}}:</label>
+        <label *ngIf="remote"> &nbsp; &nbsp; {{this.selectedCatalogueCountry}}</label>
         <catalogue-info *ngIf="remote" [value]=selectedCatalogue></catalogue-info>
+        <br *ngIf="remote">
       </div>
     </div>
     <br>
