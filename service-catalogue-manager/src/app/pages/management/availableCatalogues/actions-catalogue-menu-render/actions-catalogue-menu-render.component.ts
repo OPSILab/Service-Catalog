@@ -391,6 +391,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   onRegisterCatalogue = async (): Promise<void> => {
     try {
       this.value.active = !this.value.active;
+      this.value.lastRefresh=0
       this.value = await this.availableCataloguesService.registerCatalogue(this.value);
       this.showToast('primary', this.translate.instant('general.catalogues.catalogue_activated_message', { catalogueName: this.value.name }), '');
       this.updateResult.emit(this.value);
