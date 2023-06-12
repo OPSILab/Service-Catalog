@@ -84,10 +84,10 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
       try {
         catalogue.status = (await this.availableCataloguesService.getStatus(catalogue.catalogueID)).status
-        console.debug((await this.availableCataloguesService.getStatus(catalogue.catalogueID)).status)
       }
       catch (error) {
-        console.error(error)
+        console.error("Error during get status, ngOnInit")
+        if (error.message != "Cannot read properties of null (reading 'status')")console.error(error.message)
         catalogue.status = "not reachable"
       }
 
