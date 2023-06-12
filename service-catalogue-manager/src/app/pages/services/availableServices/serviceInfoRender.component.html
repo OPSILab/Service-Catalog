@@ -14,12 +14,8 @@
     <nb-card-body>
       <div class="row justify-content-around align-items-sm-center">
         <div class="col-sm py-2">
-          <img
-            style="width: 100px; height: 100px"
-            src="{{ data.iconUrl }}"
-            alt="{{ data.modalHeader }}"
-            onerror="this.onerror=null;this.src = 'favicon.png';"
-          />
+          <img style="max-width: 100px; max-height: 100px" ; src="{{ data.iconUrl }}" alt="{{ data.modalHeader }}"
+            onerror="this.onerror=null;this.src = 'favicon.png';" />
         </div>
         <div class="col-sm">
           {{ data.description }}
@@ -29,27 +25,21 @@
       <div class="row justify-content-center">
         <div class="col-sm py-1">
           <div class="accent">
-            <i
-              ><b>{{ 'general.services.provider' | translate }}:</b> {{ data.provider }}</i
-            >
+            <i><b>{{ 'general.services.provider' | translate }}:</b> {{ data.provider }}</i>
           </div>
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-sm py-1">
           <div class="accent">
-            <i
-              ><b>{{ 'general.services.authority' | translate }}:</b> {{ data.competentAuthority.prefLabel }}</i
-            >
+            <i><b>{{ 'general.services.authority' | translate }}:</b> {{ data.competentAuthority.prefLabel }}</i>
           </div>
         </div>
       </div>
       <div class="row justify-content-center">
         <div class="col-sm py-1">
           <div class="accent">
-            <i
-              ><b>{{ 'general.services.location' | translate }}:</b> {{ data.location }}</i
-            >
+            <i><b>{{ 'general.services.location' | translate }}:</b> {{ data.location }}</i>
           </div>
         </div>
       </div>
@@ -59,7 +49,8 @@
             <i>
               <b>{{ 'general.services.channels' | translate }}: </b>
             </i>
-            <div class="mx-1 p-1 badge badge-primary" *ngFor="let channel of data.channel; let i = index" [attr.data-index]="i">
+            <div class="mx-1 p-1 badge badge-primary" *ngFor="let channel of data.channel; let i = index"
+              [attr.data-index]="i">
               <i>{{ channel.type }}</i>
             </div>
           </div>
@@ -71,7 +62,8 @@
             <i>
               <b>{{ 'general.services.sector' | translate }}: </b>
             </i>
-            <div class="mx-1 p-1 badge badge-warning" *ngFor="let sector of data.sector; let i = index" [attr.data-index]="i">
+            <div class="mx-1 p-1 badge badge-warning" *ngFor="let sector of data.sector; let i = index"
+              [attr.data-index]="i">
               <i>{{ sector }}</i>
             </div>
           </div>
@@ -83,7 +75,8 @@
             <i>
               <b>{{ 'general.services.event' | translate }}: </b>
             </i>
-            <div class="mx-1 p-1 badge badge-success" *ngFor="let event of data.event; let i = index" [attr.data-index]="i">
+            <div class="mx-1 p-1 badge badge-success" *ngFor="let event of data.event; let i = index"
+              [attr.data-index]="i">
               <i>{{ event }}</i>
             </div>
           </div>
@@ -92,14 +85,12 @@
       <div class="row justify-content-center">
         <div class="col-sm py-1">
           <div class="">
-            <i
-              ><b>{{ 'general.services.link' | translate }}: </b>
-              <a href="{{ data.serviceUri }}" target="_blank"><nb-icon icon="external-link-outline"></nb-icon></a
-            ></i>
+            <i><b>{{ 'general.services.link' | translate }}: </b>
+              <a href="{{ data.serviceUri }}" target="_blank"><nb-icon icon="external-link-outline"></nb-icon></a></i>
           </div>
         </div>
       </div>
-<!--
+      <!--
       <nb-tabset class="mt-2" fullWidth status="success">
         <nb-tab [responsive]="true" tabTitle="{{ 'general.services.data_processing' | translate }}">
 
@@ -215,15 +206,9 @@
 
     <nb-card-footer>
       <div class="row justify-content-center">
-        <button
-          nbButton
-          class="mx-4"
-          shape="rectangle"
-          size="large"
-          status="primary"
+        <button nbButton class="mx-4" shape="rectangle" size="large" status="primary"
           [routerLink]="['/pages/services/service-editor', { serviceId: data.serviceId, readOnly: true }]"
-          (click)="ref.close()"
-        >
+          (click)="ref.close()">
           <i class="material-icons">info</i>&nbsp;{{ 'general.services.view_editor' | translate }}
         </button>
         <button nbButton class="mx-4" ghost shape="rectangle" size="large" status="primary" (click)="ref.close()">

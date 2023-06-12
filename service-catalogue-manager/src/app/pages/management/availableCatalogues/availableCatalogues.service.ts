@@ -29,6 +29,16 @@ export class AvailableCataloguesService {
     }
   }
 
+  getIcon(url): any {
+    try {
+      return this.http.get<any>(url).toPromise();
+    }
+    catch (error) {
+      console.error("AvailableCataloguesService: catalogues not found")
+      console.error("error:<\n", error, ">\n")
+    }
+  }
+
   getRemoteCatalogues(url): CatalogueEntry[] | Promise<CatalogueEntry[]> {
     try {
       return this.http.get<CatalogueEntry[]>(url + "/api/v2/catalogues/public").toPromise();

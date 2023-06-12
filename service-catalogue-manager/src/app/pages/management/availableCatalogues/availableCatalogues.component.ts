@@ -19,6 +19,7 @@ import { LoginService } from '../../../auth/login/login.service';
 import { StatusRenderComponent } from './status-render/status-render.component';
 import { AvailableServicesService } from '../../services/availableServices/availableServices.service';
 import { ErrorDialogCatalogueService } from '../../error-dialog/error-dialog-catalogue/error-dialog-catalogue.service';
+import { IconComponent } from './iconRender/icon.component';
 
 @Component({
   selector: 'available-catalogues-smart-table',
@@ -56,6 +57,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   private availableCatalogues: CatalogueEntry[];
   private unsubscribe: Subject<void> = new Subject();
   statuses: any = {};
+  iconURLabel: string;
   //refreshLimit: any;
 
   constructor(
@@ -186,6 +188,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     this.statusLabel = this.translate.instant('general.catalogues.status') as string;
     this.activeLabel = this.translate.instant('general.catalogues.active') as string;
     this.servicesLabel = this.translate.instant('general.catalogues.services') as string;
+    this.iconURLabel = this.translate.instant('general.catalogues.icon') as string;
 
     return {
       mode: 'external',
@@ -217,6 +220,15 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           type: 'text',
           width: '25%',
           valuePrepareFunction: (cell, row: CatalogueEntry) => this.refresh(row),
+        },
+        iconURL: {
+          title: this.iconURLabel,
+          sort: false,
+          filter: false,
+          width: '5%',
+          type: 'custom',
+          valuePrepareFunction: (cell, row: CatalogueEntry) => row,
+          renderComponent: IconComponent,
         },
         status: {
           title: this.statusLabel,
