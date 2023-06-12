@@ -858,12 +858,31 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		} catch (Exception e) {
 			System.out.println(e);
 			try {
-				getToken(catalogue);
+				catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/"));
+				response = getFederatedServicesResponse("status", accessToken, catalogue);
 			} catch (Exception ex) {
 				System.out.println(ex);
+				try {
+					getToken(catalogue);
+				} catch (IOException e1) {
+					System.out.println(e1);
+				} catch (InterruptedException e1) {
+					System.out.println(e1);
+				}
+				try {
+					catalogue.setApiEndpoint(catalogue.getApiEndpoint().split("services")[0]);
+					response = getFederatedServicesResponse("status", accessToken, catalogue);
+				} catch (Exception exc) {
+					System.out.println(exc);
+					try {
+						catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/"));
+						response = getFederatedServicesResponse("status", accessToken, catalogue);
+					} catch (Exception exce) {
+						System.out.println(exce);
+					}
+				}
 			}
 		}
-
 		return response;
 	}
 }
