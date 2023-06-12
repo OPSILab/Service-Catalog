@@ -113,24 +113,6 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     return catalogueIn.services
   }
 
-  /*
-  getStatus(row) {
-    if (!this.statusSet)
-      try {
-        this.availableCataloguesService.getStatus(row.catalogueID)
-          .then((value: any) => {
-            this.status = value.status;
-            this.statusSet = true;
-            this.ngOnInit()
-          });
-      }
-      catch (error) {
-        console.error("errors during get status")
-        console.error(error.text)
-      }
-    return this.status
-  }*/
-
   async ngOnInit() {
     try {
       this.availableCatalogues = await this.availableCataloguesService.getCatalogues();
