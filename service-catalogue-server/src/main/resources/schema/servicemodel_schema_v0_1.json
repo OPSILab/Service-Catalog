@@ -335,6 +335,30 @@
               "hoursAvailable": {
                 "type": "string"
               },
+              "language": {
+		          "type": "array",
+		          "items": {
+		            "type": "string"
+		          }
+              },
+              "description": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "locale": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": ["locale", "description", "title"]
+              },
               "hasInput": {
                 "type": "array",
                 "items": {

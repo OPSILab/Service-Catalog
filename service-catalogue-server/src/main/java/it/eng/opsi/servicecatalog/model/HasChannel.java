@@ -17,6 +17,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "type",
     "openingHours",
     "hoursAvailable",
+    "language",
+    "description",
     "hasInput"
 })
 public class HasChannel {
@@ -47,6 +49,12 @@ public class HasChannel {
     private String openingHours;
     @JsonProperty("hoursAvailable")
     private String hoursAvailable;
+    @JsonProperty("language")
+    @Valid
+    private List<String> language = new ArrayList<String>();
+    @JsonProperty("description")
+    @Valid
+    private List<Description> description = new ArrayList<Description>();
     @JsonProperty("hasInput")
     @Valid
     private List<String> hasInput = new ArrayList<String>();
@@ -62,16 +70,20 @@ public class HasChannel {
      * 
      * @param identifier
      * @param hoursAvailable
+     * @param description
      * @param openingHours
+     * @param language
      * @param type
      * @param hasInput
      */
-    public HasChannel(String identifier, String type, String openingHours, String hoursAvailable, List<String> hasInput) {
+    public HasChannel(String identifier, String type, String openingHours, String hoursAvailable, List<String> language, List<Description> description, List<String> hasInput) {
         super();
         this.identifier = identifier;
         this.type = type;
         this.openingHours = openingHours;
         this.hoursAvailable = hoursAvailable;
+        this.language = language;
+        this.description = description;
         this.hasInput = hasInput;
     }
 
@@ -145,6 +157,26 @@ public class HasChannel {
         this.hoursAvailable = hoursAvailable;
     }
 
+    @JsonProperty("language")
+    public List<String> getLanguage() {
+        return language;
+    }
+
+    @JsonProperty("language")
+    public void setLanguage(List<String> language) {
+        this.language = language;
+    }
+
+    @JsonProperty("description")
+    public List<Description> getDescription() {
+        return description;
+    }
+
+    @JsonProperty("description")
+    public void setDescription(List<Description> description) {
+        this.description = description;
+    }
+
     @JsonProperty("hasInput")
     public List<String> getHasInput() {
         return hasInput;
@@ -175,6 +207,14 @@ public class HasChannel {
         sb.append('=');
         sb.append(((this.hoursAvailable == null)?"<null>":this.hoursAvailable));
         sb.append(',');
+        sb.append("language");
+        sb.append('=');
+        sb.append(((this.language == null)?"<null>":this.language));
+        sb.append(',');
+        sb.append("description");
+        sb.append('=');
+        sb.append(((this.description == null)?"<null>":this.description));
+        sb.append(',');
         sb.append("hasInput");
         sb.append('=');
         sb.append(((this.hasInput == null)?"<null>":this.hasInput));
@@ -192,7 +232,9 @@ public class HasChannel {
         int result = 1;
         result = ((result* 31)+((this.identifier == null)? 0 :this.identifier.hashCode()));
         result = ((result* 31)+((this.hoursAvailable == null)? 0 :this.hoursAvailable.hashCode()));
+        result = ((result* 31)+((this.description == null)? 0 :this.description.hashCode()));
         result = ((result* 31)+((this.openingHours == null)? 0 :this.openingHours.hashCode()));
+        result = ((result* 31)+((this.language == null)? 0 :this.language.hashCode()));
         result = ((result* 31)+((this.type == null)? 0 :this.type.hashCode()));
         result = ((result* 31)+((this.hasInput == null)? 0 :this.hasInput.hashCode()));
         return result;
@@ -207,7 +249,7 @@ public class HasChannel {
             return false;
         }
         HasChannel rhs = ((HasChannel) other);
-        return ((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.hoursAvailable == rhs.hoursAvailable)||((this.hoursAvailable!= null)&&this.hoursAvailable.equals(rhs.hoursAvailable))))&&((this.openingHours == rhs.openingHours)||((this.openingHours!= null)&&this.openingHours.equals(rhs.openingHours))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.hasInput == rhs.hasInput)||((this.hasInput!= null)&&this.hasInput.equals(rhs.hasInput))));
+        return ((((((((this.identifier == rhs.identifier)||((this.identifier!= null)&&this.identifier.equals(rhs.identifier)))&&((this.hoursAvailable == rhs.hoursAvailable)||((this.hoursAvailable!= null)&&this.hoursAvailable.equals(rhs.hoursAvailable))))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.openingHours == rhs.openingHours)||((this.openingHours!= null)&&this.openingHours.equals(rhs.openingHours))))&&((this.language == rhs.language)||((this.language!= null)&&this.language.equals(rhs.language))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.hasInput == rhs.hasInput)||((this.hasInput!= null)&&this.hasInput.equals(rhs.hasInput))));
     }
 
 }

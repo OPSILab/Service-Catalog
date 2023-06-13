@@ -26,8 +26,7 @@
       "enum": ["Completed", "Deprecated", "UnderDevelopment", "WithDrawn"],
       "options": {
         "hidden": true,
-        "enum_titles": 
-        ["Completed", "Deprecated", "Under Development", "Withdrawn"]
+        "enum_titles": ["Completed", "Deprecated", "Under Development", "Withdrawn"]
       }
     },
     "keyword": {
@@ -35,10 +34,10 @@
       "title": "Keyword",
       "description": "Keyword tags",
       "uniqueItems": true,
-      "format":"tabs",
-       "items": {
+      "format": "tabs",
+      "items": {
         "type": "string",
-        "title": "Keyword"        
+        "title": "Keyword"
       }
     },
 
@@ -103,7 +102,7 @@
             }
           }
         },
-        "required": ["locale", "description","title"]
+        "required": ["locale", "description", "title"]
       }
     },
     "isDescribedAt": {
@@ -167,13 +166,13 @@
     "requires": {
       "title": "Requires",
       "type": "array",
-      "format":"tabs",
+      "format": "tabs",
       "items": {
         "type": "string",
-        "title":"Service",
+        "title": "Service",
         "headerTemplate": "{{ self}}",
         "format": "autocomplete",
-        "description": "Service Catalogue Id or URI", 
+        "description": "Service Catalogue Id or URI",
         "options": {
           "grid_columns": 6,
           "autocomplete": {
@@ -217,33 +216,33 @@
             "format": "tabs",
             "uniqueItems": true,
             "items": {
-            "type": "object",
-            "headerTemplate": "Locale ({{ self.locale }}) ",
-            "properties": {
-              "locale": {
-                "type": "string",
-                "title":"Locale",
-                "description": "Language used in textual description, in ISO 639-1 format.",
-                "enumSource": "possible_langs",
-                "watch": {
-                  "possible_langs": "root.hasInfo.language"
+              "type": "object",
+              "headerTemplate": "Locale ({{ self.locale }}) ",
+              "properties": {
+                "locale": {
+                  "type": "string",
+                  "title": "Locale",
+                  "description": "Language used in textual description, in ISO 639-1 format.",
+                  "enumSource": "possible_langs",
+                  "watch": {
+                    "possible_langs": "root.hasInfo.language"
+                  }
+                },
+                "title": {
+                  "type": "string",
+                  "title": "Title",
+                  "description": "Localized Title"
+                },
+                "description": {
+                  "type": "string",
+                  "title": "Description",
+                  "description": "Textual description in specified language.",
+                  "format": "textarea"
                 }
               },
-              "title": {
-                "type": "string",
-                "title":"Title",
-                "description": "Localized Title"
-              },
-              "description": {
-                "type": "string",
-                "title":"Description",
-                "description": "Textual description in specified language.",
-                "format": "textarea"
-              }
-            },
-            "required": ["locale", "description","title"]
-          }
-        },
+              "required": ["locale", "description", "title"]
+            }
+          },
           "type": {
             "type": "array",
             "title": "Type of Input",
@@ -253,9 +252,9 @@
             "items": {
               "type": "string",
               "enum": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"],
-              "options": { 
+              "options": {
                 "enum_titles": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
-               }
+              }
             }
           },
           "language": {
@@ -322,34 +321,34 @@
             "format": "tabs",
             "uniqueItems": true,
             "items": {
-            "type": "object",
-            "title": "Description",
-            "headerTemplate": "Locale ({{ self.locale }}) ",
-            "properties": {
-              "locale": {
-                "type": "string",
-                "title":"Locale",
-                "description": "Language used in textual description, in ISO 639-1 format.",
-                "enumSource": "possible_langs",
-                "watch": {
-                  "possible_langs": "root.hasInfo.language"
+              "type": "object",
+              "title": "Description",
+              "headerTemplate": "Locale ({{ self.locale }}) ",
+              "properties": {
+                "locale": {
+                  "type": "string",
+                  "title": "Locale",
+                  "description": "Language used in textual description, in ISO 639-1 format.",
+                  "enumSource": "possible_langs",
+                  "watch": {
+                    "possible_langs": "root.hasInfo.language"
+                  }
+                },
+                "title": {
+                  "type": "string",
+                  "title": "Title",
+                  "description": "Localized Title"
+                },
+                "description": {
+                  "type": "string",
+                  "title": "Description",
+                  "description": "Textual description  in specified language.",
+                  "format": "textarea"
                 }
               },
-              "title": {
-                "type": "string",
-                "title":"Title",
-                "description": "Localized Title"
-              },
-              "description": {
-                "type": "string",
-                "title":"Description",
-                "description": "Textual description  in specified language.",
-                "format": "textarea"
-              }
-            },
-            "required": ["locale", "description","title"]
-          }
-        },
+              "required": ["locale", "description", "title"]
+            }
+          },
           "type": {
             "type": "array",
             "title": "Type of Output",
@@ -359,9 +358,9 @@
             "items": {
               "type": "string",
               "enum": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"],
-              "options": { 
+              "options": {
                 "enum_titles": ["Declaration", "Physical object", "Code", "Financial obligation", "Financial benefit", "Recognition", "Permit"]
-               }
+              }
             }
           }
         }
@@ -423,10 +422,75 @@
             "type": "string",
             "title": "Type of channel",
             "description": "Type of channel",
-            "enum": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location", "Citizen Service Centres"],
-            "options": { 
-                "enum_titles": ["RESTService","AsyncRESTService","E-mail", "Homepage", "Fax", "Assistant", "Telephone", "Mobile App", "Digital TV", "Mail", "Service Bureau", "Client's Location", "Citizen Service Centres"]
-               }
+            "enum": [
+              "RESTService",
+              "AsyncRESTService",
+              "E-mail",
+              "Homepage",
+              "Fax",
+              "Assistant",
+              "Telephone",
+              "Mobile App",
+              "Digital TV",
+              "Mail",
+              "Service Bureau",
+              "Client's Location",
+              "Citizen Service Centres"
+            ],
+            "options": {
+              "enum_titles": [
+                "RESTService",
+                "AsyncRESTService",
+                "E-mail",
+                "Homepage",
+                "Fax",
+                "Assistant",
+                "Telephone",
+                "Mobile App",
+                "Digital TV",
+                "Mail",
+                "Service Bureau",
+                "Client's Location",
+                "Citizen Service Centres"
+              ]
+            }
+          },
+          "language": {
+            "$ref": "./locale.json"
+          },
+          "description": {
+            "type": "array",
+            "title": "Description",
+            "description": " Array of localized textual descriptions.",
+            "format": "tabs",
+            "uniqueItems": true,
+            "items": {
+              "type": "object",
+              "headerTemplate": "Locale ({{ self.locale }}) ",
+              "properties": {
+                "locale": {
+                  "type": "string",
+                  "title": "Locale",
+                  "description": "Language used in textual description, in ISO 639-1 format.",
+                  "enumSource": "possible_langs",
+                  "watch": {
+                    "possible_langs": "root.hasInfo.language"
+                  }
+                },
+                "title": {
+                  "type": "string",
+                  "title": "Title",
+                  "description": "Localized Title"
+                },
+                "description": {
+                  "type": "string",
+                  "title": "Description",
+                  "description": "Textual description in specified language.",
+                  "format": "textarea"
+                }
+              },
+              "required": ["locale", "description", "title"]
+            }
           },
           "openingHours": {
             "type": "string",
@@ -478,9 +542,9 @@
             "title": "Currency Code",
             "description": "Currency Code",
             "enum": ["EUR", "BGN", "CZK", "DKK", "HUF", "PLN", "RON", "SEK", "CHF", "TRY", "NOK"],
-            "options": { 
-                "enum_titles": ["EUR", "BGN", "CZK", "DKK", "HUF", "PLN", "RON", "SEK", "CHF", "TRY", "NOK"]
-               }
+            "options": {
+              "enum_titles": ["EUR", "BGN", "CZK", "DKK", "HUF", "PLN", "RON", "SEK", "CHF", "TRY", "NOK"]
+            }
           },
           "hasCost": {
             "type": "string",
@@ -508,29 +572,29 @@
             "format": "tabs",
             "uniqueItems": true,
             "items": {
-            "type": "object",
-            "title": "Description",
-            "headerTemplate": "Locale ({{ self.locale }}) ",
-            "properties": {
-              "locale": {
-                "type": "string",
-                "title":"Locale",
-                "description": "Language used in textual description, in ISO 639-1 format.",
-                "enumSource": "possible_langs",
-                "watch": {
-                  "possible_langs": "root.hasInfo.language"
+              "type": "object",
+              "title": "Description",
+              "headerTemplate": "Locale ({{ self.locale }}) ",
+              "properties": {
+                "locale": {
+                  "type": "string",
+                  "title": "Locale",
+                  "description": "Language used in textual description, in ISO 639-1 format.",
+                  "enumSource": "possible_langs",
+                  "watch": {
+                    "possible_langs": "root.hasInfo.language"
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "title": "Description",
+                  "description": "Textual description in specified language.",
+                  "format": "textarea"
                 }
               },
-              "description": {
-                "type": "string",
-                "title": "Description",
-                "description": "Textual description in specified language.",
-                "format": "textarea"
-              }
-            },
-            "required": ["locale", "description"]
+              "required": ["locale", "description"]
+            }
           }
-        }
         }
       }
     }

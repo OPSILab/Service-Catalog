@@ -10,10 +10,13 @@
  * Do not edit the class manually.
  */
 
+import { Description2 } from './description2';
 
 export interface HasChannel { 
     identifier: string;
     type: string;
+    language?: Array<string>;
+    description?: Array<Description2>;
     openingHours: string;
     hoursAvailable?: string;
     hasInput?:string[];

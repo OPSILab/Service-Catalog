@@ -1045,6 +1045,40 @@ properties belong to ISA² CPSV-AP v2.2.1.
                         <tr>
                             <td width="108" valign="top">
                                 <p>
+                                    <strong>language</strong>
+                                </p>
+                            </td>
+                            <td width="108" valign="top">
+                                <p>
+                                    Array [String]
+                                </p>
+                            </td>
+                            <td width="164" valign="top">
+                                <p>
+                                    available languages for this channel
+                                </p>
+                            </td>
+                        </tr>
+                         <tr>
+                            <td width="108" valign="top">
+                                <p>
+                                    <strong>description</strong>
+                                </p>
+                            </td>
+                            <td width="108" valign="top">
+                                <p>
+                                    Array [Description]
+                                </p>
+                            </td>
+                            <td width="164" valign="top">
+                                <p>
+                                   localized descriptions
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="108" valign="top">
+                                <p>
                                     <strong>openingHours</strong>
                                 </p>
                             </td>
@@ -3713,6 +3747,30 @@ The Class diagram representation described above will imply in pratices the gene
               },
               "hoursAvailable": {
                 "type": "string"
+              },
+              "language": {
+		          "type": "array",
+		          "items": {
+		            "type": "string"
+		          }
+              },
+              "description": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "locale": {
+                      "type": "string"
+                    },
+                    "description": {
+                      "type": "string"
+                    },
+                    "title": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "required": ["locale", "description", "title"]
               },
               "hasInput": {
                 "type": "array",
