@@ -91,7 +91,6 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
         catalogue.status = "not reachable"
       }
 
-      console.debug(catalogue.status)
       if (catalogue.active && catalogue.status == 'active')
         this.activeCatalogues.push(catalogue)
     }

@@ -252,7 +252,6 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	@GetMapping(value = "/services/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getServicesCount(@RequestParam("remoteCatalogueID") String remoteCatalogueID) throws ServiceNotFoundException, URISyntaxException {
 
-		System.out.println(remoteCatalogueID);
 		return ResponseEntity
 				.ok(catalogService.getFederatedServices(remoteCatalogueID, "/count"));
 	}

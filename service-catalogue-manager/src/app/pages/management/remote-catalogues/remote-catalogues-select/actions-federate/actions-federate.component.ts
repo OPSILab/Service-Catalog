@@ -174,9 +174,6 @@ export class ActionsFederateComponent implements OnInit {
         default: refresh = 604800000; break;
       }
 
-      console.debug("\nDEBUG\n",iconURL)
-      console.debug("\nDEBUG\n",this.value)
-
       await this.availableCataloguesService.saveCatalogue((({
         catalogueID,
         name,

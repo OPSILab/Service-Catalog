@@ -102,7 +102,6 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
         let cataloguesAlreadyFedarated
         try {
           cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogueByURL(remoteCatalogue.apiEndpoint)
-          console.debug(cataloguesAlreadyFedarated?.length || 0)
         }
         catch (error) {
           console.error(error.message)
@@ -128,8 +127,8 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     let remoteDatasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
     for (let dataset of remoteDatasets)
       try {
-        if (dataset.type == "Service Catalogue") console.log(await this.availableCataloguesService.getRemoteCatalogues(dataset.URL))
-        else console.log(await this.availableCataloguesService.getCataloguesFromFile(dataset.URL))
+        if (dataset.type == "Service Catalogue") await this.availableCataloguesService.getRemoteCatalogues(dataset.URL)
+        else await this.availableCataloguesService.getCataloguesFromFile(dataset.URL)
         this.datasets.push(dataset)
       }
       catch (error) {
@@ -157,7 +156,6 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
         let cataloguesAlreadyFedarated
         try {
           cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogueByURL(remoteCatalogue.apiEndpoint)
-          console.debug(cataloguesAlreadyFedarated?.length || 0)
         }
         catch (error) {
           console.error(error.message)

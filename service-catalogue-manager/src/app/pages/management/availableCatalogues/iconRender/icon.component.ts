@@ -12,8 +12,7 @@ export class IconComponent implements OnInit {
   constructor(private catalogueService : AvailableCataloguesService) { }
 
   async ngOnInit(): Promise<void> {
-    console.debug(this.value)
-    //console.debug (await this.catalogueService.getIcon(this.value.iconURL))
+
   }
 
 }
