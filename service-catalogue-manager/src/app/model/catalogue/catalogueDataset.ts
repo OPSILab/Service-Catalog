@@ -1,4 +1,5 @@
 export interface CatalogueDataset {
+  status: any
   name
   type
   URL

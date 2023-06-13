@@ -43,6 +43,7 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
     username: undefined,
     clientSecret: '',
     clientID: '',
+    status: '',
     catalogueDatasetID: undefined
   };
   schemaDir: string;

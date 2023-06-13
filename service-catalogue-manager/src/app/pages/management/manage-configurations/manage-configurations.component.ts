@@ -57,6 +57,7 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
   URLLabel: string;
 
   constructor(
+    private availableCatalogueService: AvailableCataloguesService,
     private loginService: LoginService,
     private availableCatalogueDatasetsService: ManageConfigurationsService,
     private translate: TranslateService,
@@ -80,9 +81,25 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
     this.loading = true;
   }
 
+  async activeDatasetsFilter() {
+    //this.datasets=[]
+    //let remoteDatasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
+    for (let dataset of this.availableCatalogues)
+      try {
+        if (dataset.type == 'Json') await this.availableCatalogueService.getCataloguesFromFile(dataset.URL);
+        else await this.availableCatalogueService.getRemoteCatalogues(dataset.URL)
+        dataset.status = "active"
+      }
+      catch (error) {
+        console.error("Error during get remote dataset ", dataset.name)
+        console.error(error.message)
+      }
+  }
+
   async ngOnInit() {
     try {
       this.availableCatalogues = await this.availableCatalogueDatasetsService.getCatalogueDatasets();
+      await this.activeDatasetsFilter()
       void this.source.load(this.availableCatalogues);
     } catch (error) {
       console.error("error:<\n", error, ">\n")
@@ -120,6 +137,7 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
     this.nameLabel = this.translate.instant('general.catalogues.dataset.name') as string;
     this.actionsLabel = this.translate.instant('general.catalogues.dataset.actions') as string;
     this.URLLabel = this.translate.instant('general.catalogues.dataset.URL') as string;
+    this.statusLabel = this.translate.instant('general.catalogues.status') as string;
 
     return {
       mode: 'external',
@@ -145,6 +163,15 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
           type: 'text',
           width: '25%',
           valuePrepareFunction: (cell, row: CatalogueDataset) => row.URL,
+        },
+        status: {
+          title: this.statusLabel,
+          sort: false,
+          filter: false,
+          width: '5%',
+          type: 'custom',
+          valuePrepareFunction: async (cell, row: CatalogueDataset) => row.status,
+          renderComponent: StatusRenderComponent,
         },
         actions: {
           title: this.actionsLabel,
