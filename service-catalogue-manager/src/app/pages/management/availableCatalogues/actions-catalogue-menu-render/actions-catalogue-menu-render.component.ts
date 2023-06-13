@@ -43,7 +43,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   @Output() updateResult = new EventEmitter<unknown>();
   @Input() editedValue: CatalogueEntry;
   @Output() outValue = new EventEmitter<unknown>();
-  clientReset=false;
+  clientReset = false;
   competentAuthority: string;
   lastRefresh;
   catalogueID: string;
@@ -152,6 +152,9 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
           case 'deregister':
             this.openDeRegisterDialog();
             break;
+          case 'refresh':
+            this.refreshNow();
+            break;
           case 'Download metadata':
             this.saveAsFile()
         }
@@ -178,6 +181,10 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
     if (this.registered) {
       return [
         {
+          title: this.translate.instant('general.catalogues.refresh') as string,
+          data: 'refresh',
+        },
+        {
           title: this.translate.instant('general.catalogues.deactivate') as string,
           data: 'deregister',
         }
@@ -195,6 +202,10 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         {
           title: this.translate.instant('general.catalogues.download_metadata') as string,
           data: 'Download metadata',
+        },
+        {
+          title: this.translate.instant('general.catalogues.refresh') as string,
+          data: 'refresh',
         },
         {
           title: this.translate.instant('general.catalogues.activate') as string,
@@ -222,6 +233,18 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
       .open(DialogExportPromptComponent)
       .onClose.subscribe((result) => result && this.saveFile(result.name, result.exportFormat, this.value.identifier));
       */
+  }
+
+  async refreshNow() {
+    try {
+      this.value.services = (await this.availableServicesService.getRemoteServicesCount(this.value.catalogueID)).total
+      await this.availableCataloguesService.updateCatalogue(this.value, this.value.catalogueID, false);
+    }
+    catch (error) {
+      console.error("Unable to refresh\n", error.message)
+    }
+    this.updateResult.emit(this.value);
+    //this.showToast('primary', this.translate.instant('general.catalogues.catalogue_refreshed_message', { catalogueName: name }), '');
   }
 
   async saveFile(name: string, exportFormat: string, serviceId: string): Promise<void> {
@@ -282,7 +305,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         refresh,
         description = this.description,
         type = this.type,
-        iconURL=this.iconURL,
+        iconURL = this.iconURL,
         authenticated = this.authenticated,
         oAuth2Endpoint = this.oAuth2Endpoint,
         clientSecret = this.clientSecret,
@@ -395,7 +418,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   onRegisterCatalogue = async (): Promise<void> => {
     try {
       this.value.active = !this.value.active;
-      this.value.lastRefresh=0
+      this.value.lastRefresh = 0
       this.value = await this.availableCataloguesService.registerCatalogue(this.value);
       this.showToast('primary', this.translate.instant('general.catalogues.catalogue_activated_message', { catalogueName: this.value.name }), '');
       this.updateResult.emit(this.value);

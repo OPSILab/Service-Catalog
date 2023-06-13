@@ -184,7 +184,16 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
       },
 
       columns: {
-        id: {
+        iconURL: {
+          //title: this.iconURLabel,
+          sort: false,
+          filter: false,
+          width: '5%',
+          type: 'custom',
+          valuePrepareFunction: (cell, row: CatalogueEntry) => row,
+          renderComponent: IconComponent,
+        },
+        name: {
           title: this.nameLabel,
           type: 'text',
           width: '25%',
@@ -201,15 +210,6 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           type: 'text',
           width: '25%',
           valuePrepareFunction: (cell, row: CatalogueEntry) => this.refresh(row),
-        },
-        iconURL: {
-          title: this.iconURLabel,
-          sort: false,
-          filter: false,
-          width: '5%',
-          type: 'custom',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row,
-          renderComponent: IconComponent,
         },
         status: {
           title: this.statusLabel,
