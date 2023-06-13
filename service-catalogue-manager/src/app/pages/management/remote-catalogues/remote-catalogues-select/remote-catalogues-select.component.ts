@@ -114,6 +114,7 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
 
       void await this.source.load(this.remoteCatalogues);
     }
+    else void await this.source.load([]);
     this.updateResult.emit(this.remoteCatalogues);
   }
 
