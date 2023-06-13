@@ -76,6 +76,7 @@ export class ActionsFederateComponent implements OnInit {
 
   validURL: boolean;
   federated = false;
+  iconURL: any;
 
   constructor(
     private http: HttpClient,
@@ -113,6 +114,7 @@ export class ActionsFederateComponent implements OnInit {
     }
 
     this.catalogueID = this.value.catalogueID
+    this.iconURL = this.value.iconURL,
     this.country = this.value.country
     this.competentAuthority = this.value.competentAuthority
     this.category = this.value.category
@@ -147,6 +149,7 @@ export class ActionsFederateComponent implements OnInit {
         homePage = this.homePage,
         apiEndpoint = this.apiEndpoint,
         active = this.active,
+        iconURL = this.iconURL,
         refresh,
         description = this.description,
         type = this.type,
@@ -156,7 +159,7 @@ export class ActionsFederateComponent implements OnInit {
         clientID = this.clientID,
         services;
       try {
-        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
+        services = (await this.availableServicesService.getRemoteServicesCount(catalogueID)).total
       }
       catch (error) {
         console.error("Error during services count setting")
@@ -170,6 +173,9 @@ export class ActionsFederateComponent implements OnInit {
         case 'Every month': refresh = 2629800000; break;
         default: refresh = 604800000; break;
       }
+
+      console.debug("\nDEBUG\n",iconURL)
+      console.debug("\nDEBUG\n",this.value)
 
       await this.availableCataloguesService.saveCatalogue((({
         catalogueID,
@@ -187,6 +193,7 @@ export class ActionsFederateComponent implements OnInit {
         clientID,
         clientSecret,
         oAuth2Endpoint,
+        iconURL,
         services
       } as unknown)) as CatalogueEntry);
       this.updateResult.emit(this.value);

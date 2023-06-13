@@ -90,7 +90,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
       if ((Date.now() > (catalogueIn.lastRefresh + catalogueIn.refresh)) && catalogueIn.active) {
         let catalogueTmp: CatalogueEntry = catalogueIn
         catalogueTmp.lastRefresh = Date.now()
-        this.availableServicesService.getRemoteServicesCount(apiEndpoint)
+        this.availableServicesService.getRemoteServicesCount(catalogueIn.catalogueID)
           .then(async (value) => {
             catalogueTmp.services = value.total;
             try {
@@ -116,7 +116,9 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     try {
       this.availableCatalogues = await this.availableCataloguesService.getCatalogues();
+      console.debug(this.availableCatalogues.length)
       for (let catalogue of this.availableCatalogues) {
+        console.debug(catalogue.apiEndpoint)
         //this.statuses.catalogue.catalogueID.active = catalogue.active
         try {
           catalogue.status = catalogue.active == true ?

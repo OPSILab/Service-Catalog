@@ -3,6 +3,7 @@ package it.eng.opsi.servicecatalog.controller;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -246,6 +247,17 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
+	@Operation(summary = "Get the count of the registered Service model descriptions (total, public and private services).", tags = {
+			"Service model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
+	@GetMapping(value = "/services/count", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<String> getServicesCount(@RequestParam("remoteCatalogueID") String remoteCatalogueID) throws ServiceNotFoundException, URISyntaxException {
+
+		System.out.println(remoteCatalogueID);
+		return ResponseEntity
+				.ok(catalogService.getFederatedServices(remoteCatalogueID, "/count"));
+	}
+
+	@Override
 	@Operation(summary = "Get the Federated querys count grouped by Thematic Area.", description = "Get the Federated querys count grouped by Thematic Area.", tags = {
 			"Federated query" }, responses = {
 					@ApiResponse(description = "Return an object with count for each sector.", responseCode = "200") })
@@ -280,6 +292,7 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 		return ResponseEntity
 				.ok(catalogService.getFederatedServices(remoteCatalogueID, "/count/location"));
 	}
+
 	@Override
 	@Operation(summary = "Get Service catalogue's status.", description = "Get Service catalogue's status.", tags = {
 			"Status" }, responses = {

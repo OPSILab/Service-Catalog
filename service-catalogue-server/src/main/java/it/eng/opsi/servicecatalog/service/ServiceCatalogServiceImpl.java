@@ -193,6 +193,12 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	public String getFederatedServicesResponse(String relativeURL, String accessToken,
 			Catalogue catalogue) throws URISyntaxException {
 
+		if (!catalogue.getApiEndpoint().contains("/api/v2/services"))
+			if (relativeURL.contains("status"))
+				catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/"));
+			else
+				catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/services"));
+
 		WebClient client = WebClient.create();
 		return client.get()
 				.uri(new URI(catalogue.getApiEndpoint().concat(relativeURL)))

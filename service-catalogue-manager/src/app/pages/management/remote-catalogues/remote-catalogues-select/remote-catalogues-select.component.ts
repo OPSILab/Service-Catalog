@@ -83,21 +83,30 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     this.loading = true;
   }
   async ngOnChanges(changes: SimpleChanges): Promise<void> {
-    if (!this.datasets) this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
+    if (!this.datasets) await this.activeDatasetsFilter()
     if (!this.selectedDataset) this.selectedDataset = this.datasets[0];
     if (!this.selectedDatasetName && this.selectedDataset) this.selectedDatasetName = this.selectedDataset.name
     this.selectedDataset = this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0]// || this.datasets[0]
     try {
-      if (this.selectedDataset.type == "Service Catalogue") this.remoteCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
-      else this.remoteCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset.URL);
+      if (this.selectedDataset)
+        if (this.selectedDataset?.type == "Service Catalogue") this.remoteCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
+        else this.remoteCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset.URL);
+      else this.remoteCatalogues = []
     }
     catch (error) {
       console.error(error)
-      this.remoteCatalogues = []
+      //this.remoteCatalogues = []
     }
     if (this.remoteCatalogues && this.remoteCatalogues[0]) {
       for (let remoteCatalogue of this.remoteCatalogues) {
-        let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogueByURL(remoteCatalogue.apiEndpoint);
+        let cataloguesAlreadyFedarated
+        try {
+          cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogueByURL(remoteCatalogue.apiEndpoint)
+          console.debug(cataloguesAlreadyFedarated?.length || 0)
+        }
+        catch (error) {
+          console.error(error.message)
+        }
         if (cataloguesAlreadyFedarated)
           remoteCatalogue.federated = true;
         remoteCatalogue.clientID = undefined;//TODO verify if ID must be hidden
@@ -113,23 +122,45 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     this.source.reset();
   }
 
+  async activeDatasetsFilter() {
+    this.datasets = []
+    let remoteDatasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
+    for (let dataset of remoteDatasets)
+      try {
+        if (dataset.type == "Service Catalogue") console.log(await this.availableCataloguesService.getRemoteCatalogues(dataset.URL))
+        else console.log(await this.availableCataloguesService.getCataloguesFromFile(dataset.URL))
+        this.datasets.push(dataset)
+      }
+      catch (error) {
+        console.error("Error during get remote dataset ", dataset.name)
+        console.error(error.message)
+      }
+  }
+
   async ngOnInit() {
-    if (!this.datasets) this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
+    if (!this.datasets) await this.activeDatasetsFilter()
     if (!this.selectedDataset) this.selectedDataset = this.datasets[0];
     if (!this.selectedDatasetName && this.selectedDataset) this.selectedDatasetName = this.selectedDataset.name
-
-
     try {
-      if (this.selectedDataset.type == "Service Catalogue") this.remoteCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
-      else this.remoteCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset.URL);
+      if (this.selectedDataset)
+        if (this.selectedDataset.type == "Service Catalogue") this.remoteCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
+        else this.remoteCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset.URL);
+      else this.remoteCatalogues = []
     }
     catch (error) {
       console.error(error)
-      this.remoteCatalogues = []
+      //this.remoteCatalogues = []
     }
     if (this.remoteCatalogues && this.remoteCatalogues[0]) {
       for (let remoteCatalogue of this.remoteCatalogues) {
-        let cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogueByURL(remoteCatalogue.apiEndpoint);
+        let cataloguesAlreadyFedarated
+        try {
+          cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogueByURL(remoteCatalogue.apiEndpoint)
+          console.debug(cataloguesAlreadyFedarated?.length || 0)
+        }
+        catch (error) {
+          console.error(error.message)
+        }
         if (cataloguesAlreadyFedarated)
           remoteCatalogue.federated = true;
         remoteCatalogue.clientID = undefined;//TODO verify if ID must be hidden

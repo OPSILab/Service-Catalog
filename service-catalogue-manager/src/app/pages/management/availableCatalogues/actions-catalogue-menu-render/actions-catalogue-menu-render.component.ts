@@ -291,7 +291,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         lastRefresh = this.lastRefresh;
 
       try {
-        services = (await this.availableServicesService.getRemoteServicesCount(apiEndpoint)).total
+        services = (await this.availableServicesService.getRemoteServicesCount(catalogueID)).total
       }
       catch {
         services = 0;

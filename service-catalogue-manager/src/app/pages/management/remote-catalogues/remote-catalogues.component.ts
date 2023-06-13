@@ -105,11 +105,27 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
     this.ngOnInit()
   }
 
+  async activeDatasetsFilter(){
+    this.datasets=[]
+      let remoteDatasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
+      for (let dataset of remoteDatasets)
+        try {
+          if (dataset.type=="Service Catalogue") console.log(await this.availableCataloguesService.getRemoteCatalogues(dataset.URL))
+          else console.log(await this.availableCataloguesService.getCataloguesFromFile(dataset.URL))
+          this.datasets.push(dataset)
+        }
+        catch (error) {
+          console.error("Error during get remote dataset ", dataset.name)
+          console.error(error.message)
+        }
+  }
+
   async ngOnInit() {
     try {
-      this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
+      await this.activeDatasetsFilter()
+      //this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
       if (!this.selectedDataset.catalogueDatasetID) this.selectedDataset = this.datasets[0]
-      if (!this.selectedDatasetName  && this.selectedDataset) this.selectedDatasetName = this.selectedDataset.name
+      if (!this.selectedDatasetName && this.selectedDataset) this.selectedDatasetName = this.selectedDataset.name
       if (this.selectedDataset?.type == "Service Catalogue") this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
       else if (this.selectedDataset) this.availableCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset?.URL);
       if (this.availableCatalogues) void await this.source.load(this.availableCatalogues);
@@ -117,10 +133,10 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
       console.error("Remote catalogues component")
       console.error(error)
       if (error.statusCode === '404' || error.status == 404)
-        error.message="Remote catalogue was not reachable.\n\n" + error.message
+        error.message = "Remote catalogue was not reachable.\n\n" + error.message
       if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
-        this.errorService.openErrorDialog(error);
+      this.errorService.openErrorDialog(error);
     }
   }
 

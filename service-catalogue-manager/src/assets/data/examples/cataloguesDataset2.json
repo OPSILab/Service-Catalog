@@ -6,12 +6,13 @@
   "category": "Municipality",
   "description": "D",
   "homePage": "hp",
-  "apiEndpoint": "http://localhost:8085/service-catalogue/api/v2/services",
+  "apiEndpoint": "http://localhost:8085/service-catalogue",
   "type": "Service Catalogue",
   "active": false,
   "refresh": 86400000,
   "authenticated": true,
   "services": 6,
+  "iconURL" : "https://angular.io/assets/images/logos/angular/angular.png",
   "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token"
 },
 {
@@ -22,7 +23,7 @@
   "category": "Municipality",
   "description": "A",
   "homePage": "A",
-  "apiEndpoint": "http://localhost:8086/service-catalogue/api/v2/services",
+  "apiEndpoint": "http://localhost:8086/service-catalogue",
   "type": "Service Catalogue",
   "active": false,
   "refresh": 86400000,
@@ -38,12 +39,13 @@
   "category": "Region",
   "description": "Catalogo regionale edited",
   "homePage": "http://localhost:81/service-catalogue-manager/pages/services",
-  "apiEndpoint": "http://localhost:8085/service-catalogue/api/v2/services",
+  "apiEndpoint": "http://localhost:8085/service-catalogue",
   "type": "Service Catalogue",
   "active": false,
   "refresh": 86400000,
   "authenticated": true,
   "services": 6,
+  "iconURL" : "https://angular.io/assets/images/logos/angular/angular.png",
   "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token"
 
 },
@@ -55,11 +57,12 @@
   "category": "Municipality",
   "description": "A",
   "homePage": "A",
-  "apiEndpoint": "http://localhost:8085/service-catalogue/api/v2/services",
+  "apiEndpoint": "http://localhost:8085/service-catalogue",
   "type": "Service Catalogue",
   "active": true,
   "refresh": 86400000,
   "authenticated": true,
   "services": 6,
+  "iconURL" : "https://angular.io/assets/images/logos/angular/angular.png",
   "oAuth2Endpoint": "http://localhost:8081"
 }]

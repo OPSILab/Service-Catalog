@@ -148,13 +148,7 @@ export class AddCatalogueComponent implements OnInit {
 
   async onSubmit() {
     let services
-    try {
-      services = (await this.availableServicesService.getRemoteServicesCount(this.apiEndpoint)).total
-    }
-    catch (error) {
-      console.error(error.message)
-      services = 0;
-    }
+
     try {
       let name = this.name,
         catalogueID = new String(Date.now()) + JSON.stringify(Math.random() * 999999999999999) + name,
@@ -181,6 +175,13 @@ export class AddCatalogueComponent implements OnInit {
         default: refresh = 604800000; break;
       }
 
+      try {
+        services = (await this.availableServicesService.getRemoteServicesCount(catalogueID)).total
+      }
+      catch (error) {
+        console.error(error.message)
+        services = 0;
+      }
 
       await this.availableCatalogueService.saveCatalogue((({
         catalogueID,

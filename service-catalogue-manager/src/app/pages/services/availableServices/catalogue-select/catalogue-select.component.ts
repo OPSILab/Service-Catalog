@@ -144,6 +144,8 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     try {
       this.locale = this.translate.currentLang;
       this.availableServices = await this.availableServicesService.getRemoteServices(catalogueID);
+      console.debug("DEBUG\n")
+      console.debug(this.availableServices)
       if (this.availableServices)
         //if (this.availableServices && this.availableServices[0])
         this.source.load(

@@ -7,12 +7,13 @@
     "category": "Municipality",
     "description": "Description",
     "homePage": "http://www.example.com",
-    "apiEndpoint": "http://localhost:8085/service-catalogue/api/v2/services",
+    "apiEndpoint": "http://localhost:8085/service-catalogue",
     "type": "Service Catalogue",
     "active": true,
     "refresh": 86400000,
     "authenticated": true,
     "services": 31,
+    "iconURL" : "https://angular.io/assets/images/logos/angular/angular.png",
     "oAuth2Endpoint": "https://idm.cape-suite.eu/auth/realms/Cape/protocol/openid-connect/token"
   },
   {
@@ -23,7 +24,7 @@
     "category": "Municipality",
     "description": "Description",
     "homePage": "http://www.example.com",
-    "apiEndpoint": "http://localhost:8085/service-catalogue/api/v2/services",
+    "apiEndpoint": "http://localhost:8085/service-catalogue",
     "type": "Service Catalogue",
     "active": true,
     "refresh": 86400000,

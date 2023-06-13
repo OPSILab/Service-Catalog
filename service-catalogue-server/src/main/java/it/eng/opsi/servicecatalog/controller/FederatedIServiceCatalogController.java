@@ -26,6 +26,9 @@ public interface FederatedIServiceCatalogController {
 	public abstract ResponseEntity<String> getCountBySector(String remoteCatalogueID)
 			throws ServiceNotFoundException, URISyntaxException;
 
+	public abstract ResponseEntity<String> getServicesCount(String remoteCatalogueID)
+			throws ServiceNotFoundException, URISyntaxException;
+
 	public abstract ResponseEntity<String> getCountByThematicArea(String remoteCatalogueID)
 			throws ServiceNotFoundException, URISyntaxException;
 
