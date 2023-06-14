@@ -28,7 +28,7 @@ In order to accomplish this:
     described below.
 	
      (**ONLY AFTER COMPLETING FOLLOWING CONFIGURATION SECTION**) 
-	 
+	
 	 Run the docker-compose file with:
 
 ```bash
@@ -94,6 +94,13 @@ If Service Catalogue Manager is going to be deployed in a different domain (e.g.
   - **IDM_ALLOWED_ORIGINS**
 
 in order to correctly enable CORS requests between the Dashboard and Server APIs.
+
+### Catalogue Configuration
+
+If the catalogue is abled to be called, it has to be set as **`active`** (instead **`inactive`**):
+
+ - **spring.application.status**
+ 
 
 ---
 ## Applying configuration

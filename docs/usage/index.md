@@ -24,15 +24,27 @@ Keycloak the user can access to several sections.
 
 ## Service dashboard
 
-The section \"Dashboards\" provides and extensible page of graphical dashboard cards providing some summaries about the inserted services.
+The section \"Dashboards\" provides and extensible page of graphical dashboard cards providing some summaries about the inserted services, connectors, adapter and catalogues.
 
 ![](dashboards.png)
 
 ## Services section
  In this section user can view the list of already inserted services by having a first look
-about their basic information (name, status, description\...), filter them, or to be redirected to the \"Details\" page.
+about their basic information (name, status, description\...), filter them, or to be redirected to the \"Details\" page. 
 
 ![](service-list.png)
+
+The user can also chose a remote catalogue as source of services (only with status `COMPLETED`) by checking the relatetd box.
+
+![](checkbox.png)
+
+As clicked, the select list will appear
+
+![](catalogue-select-service.png)
+
+The info button , if clicked, will open a catalogue info dialog
+
+![](catalogue-info.png)
 
 From \"Actions\" the user can perform several actions in accordance with
 the status of service
@@ -51,7 +63,8 @@ the status of service
     after a de-registration.
 
 -   *Export.* User can export the description of Service by selecting
-    different formats: JSON, JSON-LD, CPSV-AP Model (json-ld)
+    different formats: JSON, JSON-LD, CPSV-AP Model (json-ld). 
+    If the catalogue is remote, this is the only action available
 
 -   *Publish.* By this action the Service Catalogue provides the
     availability to call a customizable publish action. It lets to
@@ -107,7 +120,37 @@ sections it is possible to edit their metadata or register new ones.
 ![](add-connector.png)
 
 
- 
+
+---
+
+## Connectors & Adapters sections
+
+
+The **Administration** section provides the:
+
+ - federated catalogues page : This is a page showing federated catalogues where federated query can be done in order to obtain remote services list
+
+![](federated-catalogues.png)
+
+![](add-catalogue.png)
+
+![](add-catalogue-2.png)
+
+ - remote catalogues page : This is a page showing remote catalogues tht can be federated. A select list shows the list of dataset containing the catalogues showed in the list
+
+ ![](remote-catalogues.png)
+
+ ![](dataset-select.png)
+
+ This is the federate button 
+
+ ![](federate.png)
+
+ - configuration page : In this page , datasets containing a list of catalogues can be added to the service catalogue.
+
+ ![](configuration.png)
+
+  ![](add-dataset.png)
 ---
 ## Data Consents Section
 
@@ -129,17 +172,17 @@ Each row can be filtered out by following columns values:
  - User (Surrogate ID involved in the Consent)
  - Processing purpose of the Service (Sink service in case of Consent for data sharing between services)
  - Consent Status (Active, Disabled, Withdrawn)
- 
+
  Clicking the (i) button, Consent details popup will appear showing the following information (if configured with CaPe):
 
  - **Purpose and Processing**: details on processing made by the Service (the single Service or the Sink one) involved in Consent (the same of its Service Description)
                            In particular, Data Concepts in the datasets being part of the generated Resource Set for that consent.
- 
+
  - **Consent History**: history of the status and data concepts changes made by End User during Consent lifecycle.
- 
+
  - **Consent hash and Notarization**: visualize the value of the JWS signature of that Consent Record, made with the private key of the Cape User Account.
                                        The Account's key public part (retrieved through Account Manager API) can be used with the Consent Record Payload to verify that signature.
- 
+
  - **Consent raw data**: visualize the whole Consent Record in JSON format.									   
 									   
 									   

@@ -87,6 +87,36 @@ fields of `config.json` configuration file, located in `dist/assets/` folder.
     "serviceEditorUrl": "http://localhost/service-manager",
 ```   
 
+- **`system.detailedErrors`**: the supported value are `true` or `false`. If `true`, it enables detailed error on error dialog.
+
+```   
+    "detailedErrors": true,
+```  
+
+- **`system.country`**: Set this value as the country location of the service catalogue instance.
+
+```   
+    "country": "Italy",
+```  
+
+- **`data_model_mapper.default_mapper_url`**: The default url called in order to obtain mapper list.
+
+```   
+    "default_mapper_url": "http://localhost:5500/api/mapper",
+```  
+
+- **`data_model_mapper.default_map_ID`**: The ID associated to the default mapper.
+
+```   
+    "default_map_ID": "map_1",
+``` 
+
+- **`data_model_mapper.connect`**: If enabled (`true`) it allows the Service Catalogue to connect to the mapper and load the mapper list in adapter form. When list is loaded, an autocomplete form helps the user suggesting a name and a map_id from the names and map_ids in the mapper list. `false` if you don't want any name or map_id suggestion.
+
+```   
+    "connect": true,
+```
+
 - **`i18n.locale`**: with locale ( `en` allowed as default) enabling internazionalization on Dashboard pages. 
 
 ```

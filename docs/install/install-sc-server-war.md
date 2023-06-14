@@ -5,8 +5,8 @@ the WAR packages from source code. After completing the build process, the
 following artefact can be deployed on the Apache Tomcat Server natively installed on host machine:
 
 -   **`service-catalogue.war`**
- 
- 
+
+
 ### Prerequisites
 
 In order to build and deploy correctly the packages, the following tools should be properly
@@ -71,7 +71,7 @@ the default `value`. This is the wanted behaviour in case of [Installation with 
 Service Catalogue Server will communicate with an Identity Manager acting as Oauth2 Authorization Server (e.g. **Keycloak**)  to:
 
  - Verify token issued when calling component APIs:
-    
+   
     Modify **`spring.security.oauth2.resourceserver.jwt.issuer-uri`** with the JWT Issuer Uri of installed Idm (e.g. `https://IDM_HOST/auth/realms/<realm_name>`)
 
 **Note**. This endpoint will be used to verify token issued for the Oauth2 client application registered during Idm/Keycloak installation [(see this section)](./index.md#identity-manager).
@@ -86,6 +86,14 @@ If the Service Catalogue Manager is going to be deployed in a different domain (
  - **cors.allowed-origins**
 
 in order to correctly enable CORS requests between the Service Catalogue Manager and Service Catalogue Server.
+
+### Catalogue Configuration
+
+If the catalogue is abled to be called, it has to be set as **`active`** (instead **`inactive`**):
+
+ - **spring.application.status**
+
+
 
 ---
 ### Applying configuration
