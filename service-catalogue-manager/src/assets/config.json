@@ -24,9 +24,6 @@
   },
   "data_model_mapper" : {
     "default_mapper_url":"http://localhost:5500/api/mapper",
-    "default_mapper_name" : "ServiceModelMap",
-    "default_data_model_name" : "ServiceModel",
-    "default_data_model_ID" : "service_1",
     "default_map_ID" : "map_1",
     "connect" : true
   },
