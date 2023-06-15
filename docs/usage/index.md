@@ -108,50 +108,140 @@ Service Provider can perform following operations on a Service Description Page:
 ---
 ## Connectors & Adapters sections
 
-
 The \"Connectors\" and "Adapters" sections provide quick information
 about the registered connectors and their status and logs. From these
 sections it is possible to edit their metadata or register new ones.
 
-![](connector.png)
+This is the connectors table
+
+![](connectors.png)
+
+By clicking the add new button , a form with connector fields will appear and, when each required field is set by the user, a click on the confirm button will save the connector
+
+![](add-connector.png)
+
+From \"Actions\" the user can perform several actions in accordance with
+the status of connector
+
+![](actions-connector.png)
+
+-   *Edit*. User can modify or complete connector description, by showing 
+    the edit connector form dialog
+
+-   *Register*. This action changes the status of connector description
+    into \"active\". 
+
+-   *Delete.* User can delete a connector description. The action can be
+    performed if the service is in the status of \"inactive\" or
+    after a de-registration.
+
+This is the adapters table
 
 ![](adapter.png)
 
-![](add-connector.png)
+By clicking the add new button , a form with adapter fields will appear and, when each required field is set by the user, a click on the confirm button will save the adapter
+
+![](add-adapter.png)
+
+From \"Actions\" the user can perform several actions in accordance with
+the status of connector
+
+![](actions-adapter.png)
+
+-   *Edit*. User can modify or complete adapter description, by showing 
+    the edit adapter form dialog
+
+-   *Register*. This action changes the status of adapter description
+    into \"active\". 
+
+-   *Delete.* User can delete a adapter description. The action can be
+    performed if the service is in the status of \"inactive\" or
+    after a de-registration.
 
 
 
 ---
 
-## Connectors & Adapters sections
+## Administration section
 
+The **Administration** section provides sections providing federate catalogues services and datasets settings There are three pages in this section:
 
-The **Administration** section provides the:
+-   *Federate catalogues*
 
- - federated catalogues page : This is a page showing federated catalogues where federated query can be done in order to obtain remote services list
+-   *Remote catalogues*
 
-![](federated-catalogues.png)
+-   *Manage configuration*
+
+## Federated catalogues page
+
+This is a page showing federated catalogues where federated query can be done in order to obtain remote services list
+
+![](federated-catalogue.png)
+
+By clicking the add new button , a form with catalogue fields will appear and, when each required field is set by the user, a click on the confirm button will save the catalogue
 
 ![](add-catalogue.png)
 
 ![](add-catalogue-2.png)
 
- - remote catalogues page : This is a page showing remote catalogues tht can be federated. A select list shows the list of dataset containing the catalogues showed in the list
+From \"Actions\" the user can perform several actions in accordance with
+the status of catalogue
+
+![](actions-catalogue-1.png)
+
+![](actions-catalogue-2.png)
+
+-   *Edit*. User can modify or complete adapter description, by showing 
+    the edit catalogue form dialog
+
+-   *Enable*. This action changes the status of catalogue description
+    into \"enabled\". 
+
+-   *Disable*. This action changes the status of catalogue description
+    into \"disabled\". 
+
+-   *Delete.* User can delete a catalogue description. The action can be
+    performed if the service is in the status of \"disabled\".
+
+-   *Download metadata.* User can download the catalogue description.
+
+-   *Refresh.* Refresh the catalogue status.
+
+ ## Remote catalogues page 
+ 
+ This is a page showing remote catalogues tht can be federated. 
 
  ![](remote-catalogues.png)
 
+ A select list shows the list of dataset containing the catalogues showed in the list
+
  ![](dataset-select.png)
 
- This is the federate button 
+ This is the federate button , that federate the catalogue in order to obtain its service list by federated queries
 
  ![](federate.png)
 
- - configuration page : In this page , datasets containing a list of catalogues can be added to the service catalogue.
+ ## Configuration page 
+ 
+ In this page , datasets containing a list of catalogues can be added to the service catalogue.
 
  ![](configuration.png)
 
-  ![](add-dataset.png)
+By clicking the add new button , a form with catalogue fields will appear and, when each required field is set by the user, a click on the confirm button will save the catalogue
+
+![](add-dataset.png)
+
+From \"Actions\" the user can perform two actions
+
+![](actions-dataset.png)
+
+-   *Edit*. User can modify or complete dataset description, by showing 
+    the edit dataset form dialog
+
+-   *Delete.* User can delete a dataset description.
+
 ---
+
 ## Data Consents Section
 
 The \"Data Consents\" page provides, if the authenticated user has
