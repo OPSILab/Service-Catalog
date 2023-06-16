@@ -100,7 +100,7 @@ In order to get Keycloak ready to be used by Service Catalogue, following steps 
 
  - Create for client a Mapper of type User Client Role and set `roles` as Token Claim Name, in order to map client roles to the `roles` field of the generated Access Token. 
 
-  - Enable oauth2 authentication and create a client id and a client secret in order to allow remote access for federated query. 
+  - Enable oauth2 authentication and create a client id and a client secret in order to allow remote access for federated query [Federation](../usage/federation-how-to.md). 
 
 ---
 
