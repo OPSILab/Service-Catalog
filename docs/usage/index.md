@@ -34,7 +34,7 @@ about their basic information (name, status, description\...), filter them, or t
 
 ![](service-list.png)
 
-The user can also chose a remote catalogue as source of services (only with status `COMPLETED`) by checking the relatetd box.
+The user can also choose a remote catalogue as source of services (see [Federation section](./federation-how-to.md) to know how to add other sources of services). If the \"Remote catalogue\" checkbox is checked and a remote catalogue source is selected, only services with status `COMPLETED` will be shown.
 
 ![](checkbox.png)
 
@@ -164,13 +164,15 @@ the status of connector
 
 ## Administration section
 
-The **Administration** section provides sections providing federate catalogues services and datasets settings There are three pages in this section:
+The **Administration** section provides sections to manage the available list of remote catalogues and their federation(see [Federation section](./federation-how-to.md) to know what is a federated catalogue and how to federate a catalogue).
+This section is available only for CATALOGUE_MANAGER type user.
+There are three pages in this section:
 
 -   *Federate catalogues*
 
 -   *Remote catalogues*
 
--   *Manage configuration*
+-   *Configuration*
 
 ## Federated catalogues page
 
@@ -183,6 +185,38 @@ By clicking the add new button , a form with catalogue fields will appear and, w
 ![](add-catalogue.png)
 
 ![](add-catalogue-2.png)
+
+You'll see these fields : 
+
+-   *Name*. A name of the catalogue.
+
+-   *Competent authority*. The competent authority related to the catalogue.
+
+-   *Country*. The country where the catalogue is located and related to.
+
+-   *Category*. the category to which the catalog belongs.
+
+-   *Description*. A description of the catalogue.
+
+-   *Home page*. The home page of the site of the catalogue.
+
+-   *Icon URL*. The icon's URL address of the catalogue.
+
+-   *API endpoint*. The base URL of the remote service catalog server.
+
+-   *Type*. The type of the catalogue. .
+
+-   *Enabled*. If \"Enabled\" it will be shown in the list of remote catalogues in the Services table section.
+
+-   *Refresh*. The refresh time of the catalogue. .
+
+-   *Authenticated*. This is a checkbox. If checked, the authentication fields will be showed.
+
+-   *oAuth2 endpoint*. The address URL used for oAuth2 authentication in the remote Service catalogue.
+
+-   *Client ID*. A client ID is an authentication param required for oAuth2 authentication method.
+
+-   *Client secret*. A client secret is an authentication param required for oAuth2 authentication method.
 
 From \"Actions\" the user can perform several actions in accordance with
 the status of catalogue
@@ -208,8 +242,8 @@ the status of catalogue
 -   *Refresh.* Refresh the catalogue status.
 
  ## Remote catalogues page 
- 
- This is a page showing remote catalogues tht can be federated. 
+
+ This is a page showing remote catalogues that can be federated. 
 
  ![](remote-catalogues.png)
 
@@ -222,12 +256,12 @@ the status of catalogue
  ![](federate.png)
 
  ## Configuration page 
- 
+
  In this page , datasets containing a list of catalogues can be added to the service catalogue.
 
  ![](configuration.png)
 
-By clicking the add new button , a form with catalogue fields will appear and, when each required field is set by the user, a click on the confirm button will save the catalogue
+By clicking the add new button , a form with dataset fields will appear and, when each required field is set by the user, a click on the confirm button will save the catalogue
 
 ![](add-dataset.png)
 
