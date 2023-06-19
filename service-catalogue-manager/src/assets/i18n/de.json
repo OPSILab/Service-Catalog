@@ -48,7 +48,7 @@
       "administration": "ADMINISTRATION",
       "federated_catalogues": "Federated Catalogues",
       "remote_catalogues": "Remote Catalogues",
-      "manage_configurations": "Manage configurations"
+      "manage_configurations": "Manage catalogue configurations"
     },
     "consents": {
       "legalbasis": "Legal basis",

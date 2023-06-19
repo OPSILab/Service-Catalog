@@ -210,7 +210,7 @@ You'll see these fields :
 
 -   *Refresh*. The refresh time of the catalogue. .
 
--   *Authenticated*. This is a checkbox. If checked, the authentication fields will be showed.
+-   *Authenticated*. This is a checkbox. If checked, the authentication fields will be shown.
 
 -   *oAuth2 endpoint*. The address URL used for oAuth2 authentication in the remote Service catalogue.
 

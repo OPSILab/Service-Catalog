@@ -47,7 +47,7 @@
       "administration": "GESTIONE CATALOGO",
       "federated_catalogues": "Cataloghi Federati",
       "remote_catalogues":"Cataloghi remoti",
-      "manage_configurations" : "Gestisci configurazioni"
+      "manage_configurations" : "Gestisci configurazioni cataloghi"
     },
     "consents": {
       "legalbasis": "Base giuridica",

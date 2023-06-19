@@ -72,11 +72,11 @@ Service Catalogue  interacts with any Identity Manager that supports [OpenId Con
 
 **Note.** Service Catalogue uses the [Keycloak IdM](https://www.keycloak.org/) as default, which will be used as reference for the configuration sections of this installation guide.
 
-Service Catalogue Manager will use the Open Id Connect protocol upon the OAuth2 Authentication workflow (Authorization Code grant), in order to perform User authentication and obtain an Access Token (JWT), which will be used to grant access to Service Catalogue APIs.
+Service Catalogue Manager will use the Open Id Connect protocol upon the OAuth2 Authentication workflow (Authorization Code grant), in order to perform User authentication and obtain an Access Token (JWT), which will be used to grant access to Service Catalogue APIs. 
 
 This Access Token will be used by the Service Catalogue Manager dashboard to call the APIs exposed  by **Service Catalogue Server** component.
 
-In the same way, an external client application/service that wants to interact with Service Catalogue APIs must perform one of the available OAuth2 flows (Authorization Code, Client Credentials and Password grants) against the IdM (e.g. Keycloak), in order to get an Access Token and then use it in the API requests.
+In the same way, an external client application/service that wants to interact with Service Catalogue APIs must perform one of the available OAuth2 flows (Authorization Code, Client Credentials and Password grants) against the IdM (e.g. Keycloak), in order to get an Access Token and then use it in the API requests. In that case, you must enable oauth2 authentication and create a client id and a client secret in order to allow remote access for federated query (see [Federation](../usage/federation-how-to.md))
 
 ### Keycloak Identity Manager installation
 
@@ -100,7 +100,7 @@ In order to get Keycloak ready to be used by Service Catalogue, following steps 
 
  - Create for client a Mapper of type User Client Role and set `roles` as Token Claim Name, in order to map client roles to the `roles` field of the generated Access Token. 
 
-  - Enable oauth2 authentication and create a client id and a client secret in order to allow remote access for federated query [Federation](../usage/federation-how-to.md). 
+  - Enable oauth2 authentication and create a client id and a client secret in order to allow remote access for federated query (see [Federation](../usage/federation-how-to.md)). 
 
 ---
 
