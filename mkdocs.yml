@@ -15,6 +15,6 @@ nav:
   - 'User Guide':
      - 'Service Catalogue Manager': 'usage/index.md'
      - 'How to describe a service': 'usage/service-description-howto.md'
-     - 'How to describe a service': 'usage/federation-how-to.md'
+     - 'How to federate a catalogue': 'usage/federation-how-to.md'
   - 'API Documentation' : 'api/index.md'
   - 'Service Model Documentation': 'model/service-model.md'
