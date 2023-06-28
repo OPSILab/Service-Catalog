@@ -134,13 +134,16 @@ Finally, if the catalogue needs authentication params, go to the page \"Federate
 
 ![](federated-catalogue.png)
 
-click the actions button and click \"edit\". 
+Click the actions button and click \"edit\". 
+An edit form will appear and you'll have to check the \"authenticated\" check box. Click the "Reset client id and secret" button
 
-![](actions-catalogue-1.png)
+![](edit-catalogue-1.png)
 
-An edit form will appear and you'll have to check the \"authenticated\" check box. Fill the `Client ID` and `Client secret` fields with authentication params as mentioned in Method 1.
+![](edit-catalogue-2.png)
 
-![](add-catalogue-2.png)
+and fill the `Client ID` and `Client secret` fields with authentication params as mentioned in Method 1.
+
+![](edit-catalogue-3.png)
 
 Then click the \"confirm\" button and a toast (notification) will be shown if the editing catalogue process went fine, instead you'll see an error dialog.
 
