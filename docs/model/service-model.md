@@ -62,7 +62,7 @@ Property                   | Type           | Description
   createdByUserId|             String 0..1)|    User Id (if any)of Service Editor
   serviceDescriptionVersion|   String(0..1) |   Service description version number
   serviceIconUrl|              String(0..1)|    URL pointing to service's icon (if available)
-  status |                     String(0..1)|    Status of Service \[\"Completed\",      \"Deprecated\", \"UnderDevelopment\",\"WithDrawn\"\]
+  status |                     String(0..1)|    Status of Service [Completed,      Deprecated, UnderDevelopment,WithDrawn]
   isPublicService |            Boolean(1..1)|   If service is public or not
   hasInfo  |                   Object(1..1) |   Object describing Service informationsection.
   hasServiceInstance |         Object(1..1)|    Object describing Service information  section.
