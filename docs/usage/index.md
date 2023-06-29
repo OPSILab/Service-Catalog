@@ -24,17 +24,17 @@ Keycloak the user can access to several sections.
 
 ## Service dashboard
 
-The section \"Dashboards\" provides and extensible page of graphical dashboard cards providing some summaries about the inserted services, connectors, adapter and catalogues.
+The section **Dashboards** provides and extensible page of graphical dashboard cards providing some summaries about the inserted services, connectors, adapter and catalogues.
 
 ![](dashboards.png)
 
 ## Services section
  In this section user can view the list of already inserted services by having a first look
-about their basic information (name, status, description\...), filter them, or to be redirected to the \"Details\" page. 
+about their basic information (name, status, description\...), filter them, or to be redirected to the **Details** page. 
 
 ![](service-list.png)
 
-The user can also choose a remote catalogue as source of services (see [Federation section](./federation-how-to.md) to know how to add other sources of services). If the \"Remote catalogue\" checkbox is checked and a remote catalogue source is selected, only services with status `COMPLETED` will be shown.
+The user can also choose a remote catalogue as source of services (see [Federation section](./federation-how-to.md) to know how to add other sources of services). If the **Remote catalogue** checkbox is checked and a remote catalogue source is selected, only services with status `COMPLETED` will be shown.
 
 ![](checkbox.png)
 
@@ -46,7 +46,7 @@ The info button , if clicked, will open a catalogue info dialog
 
 ![](catalogue-info.png)
 
-From \"Actions\" the user can perform several actions in accordance with
+From **Actions** the user can perform several actions in accordance with
 the status of service
 
 ![](service-list-actions.png)
@@ -55,11 +55,11 @@ the status of service
     in edit mode page
 
 -   *Register*. This action changes the status of service description
-    into \"completed\". Once completed the service is searchable, by
+    into **completed**. Once completed the service is searchable, by
     means of APIs exposed by the Service Catalogue.
 
 -   *Delete.* User can delete a service description. The action can be
-    performed if the service is in the status of \"UnderDevelopment\" or
+    performed if the service is in the status of **UnderDevelopment** or
     after a de-registration.
 
 -   *Export.* User can export the description of Service by selecting
@@ -73,7 +73,7 @@ the status of service
 
 -   *View Connector.* It lets to switch to the related connector page.
 
-From the list page the user can add a new service description by clicking on \"Add new\" button. The user is redirected to Service Editor
+From the list page the user can add a new service description by clicking on **Add new** button. The user is redirected to Service Editor
 page. 
 
 ## Service Description Editor section
@@ -108,7 +108,7 @@ Service Provider can perform following operations on a Service Description Page:
 ---
 ## Connectors & Adapters sections
 
-The \"Connectors\" and "Adapters" sections provide quick information
+The **Connectors** and "Adapters" sections provide quick information
 about the registered connectors and their status and logs. From these
 sections it is possible to edit their metadata or register new ones.
 
@@ -120,7 +120,7 @@ By clicking the add new button , a form with connector fields will appear and, w
 
 ![](add-connector.png)
 
-From \"Actions\" the user can perform several actions in accordance with
+From **Actions** the user can perform several actions in accordance with
 the status of connector
 
 ![](actions-connector.png)
@@ -129,10 +129,10 @@ the status of connector
     the edit connector form dialog
 
 -   *Register*. This action changes the status of connector description
-    into \"active\". 
+    into **active**. 
 
 -   *Delete.* User can delete a connector description. The action can be
-    performed if the service is in the status of \"inactive\" or
+    performed if the service is in the status of **inactive** or
     after a de-registration.
 
 This is the adapters table
@@ -143,7 +143,7 @@ By clicking the add new button , a form with adapter fields will appear and, whe
 
 ![](add-adapter.png)
 
-From \"Actions\" the user can perform several actions in accordance with
+From **Actions** the user can perform several actions in accordance with
 the status of connector
 
 ![](actions-adapter.png)
@@ -152,10 +152,10 @@ the status of connector
     the edit adapter form dialog
 
 -   *Register*. This action changes the status of adapter description
-    into \"active\". 
+    into **active**. 
 
 -   *Delete.* User can delete a adapter description. The action can be
-    performed if the service is in the status of \"inactive\" or
+    performed if the service is in the status of **inactive** or
     after a de-registration.
 
 
@@ -206,7 +206,7 @@ You'll see these fields :
 
 -   *Type*. The type of the catalogue. .
 
--   *Enabled*. If \"Enabled\" it will be shown in the list of remote catalogues in the Services table section.
+-   *Enabled*. If **Enabled** it will be shown in the list of remote catalogues in the Services table section.
 
 -   *Refresh*. The refresh time of the catalogue. .
 
@@ -218,7 +218,7 @@ You'll see these fields :
 
 -   *Client secret*. A client secret is an authentication param required for oAuth2 authentication method.
 
-From \"Actions\" the user can perform several actions in accordance with
+From **Actions** the user can perform several actions in accordance with
 the status of catalogue
 
 ![](actions-catalogue-1.png)
@@ -229,13 +229,13 @@ the status of catalogue
     the edit catalogue form dialog
 
 -   *Enable*. This action changes the status of catalogue description
-    into \"enabled\". 
+    into **enabled**. 
 
 -   *Disable*. This action changes the status of catalogue description
-    into \"disabled\". 
+    into **disabled**. 
 
 -   *Delete.* User can delete a catalogue description. The action can be
-    performed if the service is in the status of \"disabled\".
+    performed if the service is in the status of **disabled**.
 
 -   *Download metadata.* User can download the catalogue description.
 
@@ -265,7 +265,7 @@ By clicking the add new button , a form with dataset fields will appear and, whe
 
 ![](add-dataset.png)
 
-From \"Actions\" the user can perform two actions
+From **Actions** the user can perform two actions
 
 ![](actions-dataset.png)
 
@@ -278,8 +278,8 @@ From \"Actions\" the user can perform two actions
 
 ## Data Consents Section
 
-The \"Data Consents\" page provides, if the authenticated user has
-\"data-controller\" role, a registry of consents collected. It is a
+The **Data Consents** page provides, if the authenticated user has
+**data-controller** role, a registry of consents collected. It is a
 front-end client of the APIs provided by the Consent Manager component
 or if configured to be used with [CaPe
 solution](https://github.com/OPSILab/Cape).
