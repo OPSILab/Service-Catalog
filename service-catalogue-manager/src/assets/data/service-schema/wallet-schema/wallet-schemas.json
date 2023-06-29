@@ -8,7 +8,7 @@
       },
       {
         "$ref": "./natural-person.json",
-        "title": "eIDAS Natual Person"
+        "title": "eIDAS Natural Person"
       },
       {
         "$ref": "./legal-person.json",

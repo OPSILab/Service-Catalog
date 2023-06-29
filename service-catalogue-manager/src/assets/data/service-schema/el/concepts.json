@@ -459,7 +459,7 @@
           "value": "months_at_residence"
         },
         {
-          "title": "Gem Name",
+          "title": "previous address nick",
           "value": "previous_address_nick"
         },
         {
@@ -811,7 +811,7 @@
           "value": "work_current_employer_state"
         },
         {
-          "title": "Gem Name",
+          "title": "Account nickname",
           "value": "account_nickname"
         },
         {
@@ -823,7 +823,7 @@
           "value": "drivers_license_expiration_date.day"
         },
         {
-          "title": "Gem Name",
+          "title": "Card nickname",
           "value": "card_nickname"
         },
         {
@@ -1001,10 +1001,6 @@
         {
           "title": "Other Languages Spoken",
           "value": "personal_details_other_language_spoken"
-        },
-        {
-          "title": "Gem Name",
-          "value": "my_gem_name"
         },
         {
           "title": "Charity Notes",
@@ -1631,7 +1627,7 @@
           "value": "instructions_for_opening"
         },
         {
-          "title": "Gem Name",
+          "title": "Account logins nickname",
           "value": "account_logins_nickname"
         },
         {
@@ -1763,7 +1759,7 @@
           "value": "household_indoor_allergies"
         },
         {
-          "title": "Gem Name",
+          "title": "Instant messaging name",
           "value": "instant_messaging_name"
         },
         {
@@ -2095,11 +2091,11 @@
           "value": "heating_system"
         },
         {
-          "title": "Gem Name",
+          "title": "Property nickname",
           "value": "property_nickname"
         },
         {
-          "title": "Gem Name",
+          "title": "Bill name",
           "value": "bill_name"
         },
         {
@@ -2327,7 +2323,7 @@
           "value": "vehicle_expiration_date.month"
         },
         {
-          "title": "Gem Name",
+          "title": "My car basic nickname",
           "value": "my_car_basic_nickname"
         },
         {
@@ -2683,11 +2679,11 @@
           "value": "health_record_relationship"
         },
         {
-          "title": "Gem Name",
+          "title": "Loan nickname",
           "value": "loan_nickname"
         },
         {
-          "title": "Gem Name",
+          "title": "Secure note title",
           "value": "secure_note_title"
         },
         {
@@ -3315,39 +3311,19 @@
           "value": "retirement_preferences_health_wellness"
         },
         {
-          "title": "Gem Name",
-          "value": "parts_name"
+          "title": "Wifi Name",
+          "value": "wi_fi_name"
         },
         {
-          "title": "Gem Name",
-          "value": "charity_gem_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "education_gem_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "wi_fi_gem_name"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Drivers license nickname",
           "value": "drivers_license_nickname"
         },
         {
-          "title": "Gem Name",
-          "value": "birthday_gem_name"
+          "title": "Travel rewards name",
+          "value": "travel_rewards_name"
         },
         {
-          "title": "Gem Name",
-          "value": "travel_rewards_gem_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "vehicle_value_name"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Brokerage account nickname",
           "value": "brokerage_account_nickname"
         },
         {
@@ -4691,271 +4667,147 @@
           "value": "size_men_glove_size"
         },
         {
-          "title": "Gem Name",
-          "value": "alcoholic_beverage_gem_name"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Bio Name",
           "value": "bio_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Dental Record",
           "value": "dental_record"
         },
         {
-          "title": "Gem Name",
-          "value": "dodcac_gem_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "mens_clothing_preferences_nickname"
-        },
-        {
-          "title": "Gem Name",
-          "value": "revenue_income_gem_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "size_womens_clothing_nickname"
-        },
-        {
-          "title": "Gem Name",
-          "value": "vehicle_paperwork_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "womens_clothing_nickname"
-        },
-        {
-          "title": "Gem Name",
-          "value": "work_gem_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "womens_health_history_name"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Birth certificate nickname",
           "value": "birth_certificate_nickname"
         },
         {
-          "title": "Gem Name",
+          "title": "Contact info name",
           "value": "contact_info_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Health record name",
           "value": "health_record_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Insurance nickname",
           "value": "insurance_nickname"
         },
         {
-          "title": "Gem Name",
+          "title": "Passport nickname",
           "value": "passport_nickname"
         },
         {
-          "title": "Gem Name",
-          "value": "occasions_name"
+          "title": "Pet name",
+          "value": "pet_name"
         },
         {
-          "title": "Gem Name",
-          "value": "pet_gem_name"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Phone name",
           "value": "phone_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Renters insurance policy name",
           "value": "renters_insurance_policy_name"
         },
         {
-          "title": "Gem Name",
-          "value": "review_name"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Scholarship name",
           "value": "scholarship_gem_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Social security card nickname",
           "value": "social_security_card_nickname"
         },
         {
-          "title": "Gem Name",
-          "value": "size_mens_clothing_preferences_nickname"
-        },
-        {
-          "title": "Gem Name",
-          "value": "warranty_product"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Trusted traveler",
           "value": "trusted_traveler"
         },
         {
-          "title": "Gem Name",
+          "title": "Accident nickname",
           "value": "accident_nickname"
         },
         {
-          "title": "Gem Name",
+          "title": "food preference name",
           "value": "food_preferences_food_preference_name"
         },
         {
-          "title": "Gem Name",
-          "value": "company_detail_gem_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "grant_gem_name"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Health history name",
           "value": "health_history_name"
         },
         {
-          "title": "Gem Name",
-          "value": "id_card_gem"
+          "title": "Id card",
+          "value": "id_card"
         },
         {
-          "title": "Gem Name",
+          "title": "Medication record",
           "value": "medication_record_for"
         },
         {
-          "title": "Gem Name",
-          "value": "note_title"
-        },
-        {
-          "title": "Gem Name",
-          "value": "pet_vaccinations_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "shoe_preference_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "routine_childs_nickname"
-        },
-        {
-          "title": "Gem Name",
-          "value": "testscore_gem_name"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Tracker name",
           "value": "tracker_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Alarm username",
           "value": "alarm_username"
         },
         {
-          "title": "Gem Name",
+          "title": "Beverage preference name",
           "value": "beverage_preference_name"
         },
         {
-          "title": "Gem Name",
-          "value": "cred_rep_nickname"
-        },
-        {
-          "title": "Gem Name",
-          "value": "immunizations_screenings_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "girls_clothing_nickname"
-        },
-        {
-          "title": "Gem Name",
-          "value": "kid_pers_childs_nickname"
-        },
-        {
-          "title": "Gem Name",
-          "value": "instructions_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "life_insurance_policy_name"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Location name",
           "value": "location_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Lock name",
           "value": "lock_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Motorcycle basic nickname",
           "value": "motorcycle_basic_nickname"
         },
         {
-          "title": "Gem Name",
+          "title": "Security question name",
           "value": "security_question_name"
         },
         {
-          "title": "Gem Name",
-          "value": "retirement_preferences_name"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Suegery record name",
           "value": "suegery_record_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Vehicle accident witnesses name",
           "value": "vehicle_accident_witnesses_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Tax income name",
           "value": "tax_income_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Veteran health identification card",
           "value": "veteran_health_identification_card"
         },
         {
-          "title": "Gem Name",
-          "value": "vision_decord_for"
+          "title": "Funeral preferences",
+          "value": "funeral_preferences"
         },
         {
-          "title": "Gem Name",
-          "value": "allergies_nickname"
-        },
-        {
-          "title": "Gem Name",
-          "value": "funeral_preferences_gem"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Health insurance name",
           "value": "health_insurance_name"
         },
         {
-          "title": "Gem Name",
+          "title": "Home nickname",
           "value": "home_nickname"
         },
         {
-          "title": "Gem Name",
-          "value": "legal_documents_gem"
+          "title": "legal documents",
+          "value": "legal_documents"
         },
         {
-          "title": "Gem Name",
+          "title": "Personal details name",
           "value": "personal_details_name"
         },
         {
-          "title": "Gem Name",
+          "title": "My car insurance nickname",
           "value": "my_car_insurance_nickname"
         },
         {
-          "title": "Gem Name",
-          "value": "pet_health_name"
-        },
-        {
-          "title": "Gem Name",
-          "value": "size_girls_clothing_nickname"
-        },
-        {
-          "title": "Gem Name",
+          "title": "Vehicles involved in accident_name",
           "value": "vehicles_involved_in_accident_name"
         },
         {
