@@ -113,7 +113,10 @@ export class AvailableServicesService {
       "sourceDataType": type,
       "sourceData": source,
       "adapterID": adapter.adapterId,
-      "csvDelimiter": ";"
+      "config": {
+        "delimiter": ";",
+        "NGSI_entity" : false
+      }
     }).toPromise();
   }
 }
