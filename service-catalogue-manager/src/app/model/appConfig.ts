@@ -35,6 +35,7 @@ export interface I18n {
 }
 
 export interface DataModelMapper {
+  default_mapper_base_url: string;
   default_mapper_url: string,
   default_map_ID: string,
   connect: boolean

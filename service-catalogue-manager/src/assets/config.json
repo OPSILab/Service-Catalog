@@ -24,6 +24,7 @@
   },
   "data_model_mapper" : {
     "default_mapper_url":"http://localhost:5500/api/map/transform",
+    "default_mapper_base_url":"http://localhost:5500/api",
     "default_map_ID" : "map_1",
     "connect" : true
   },
