@@ -77,7 +77,7 @@
 
   <nb-card-footer  >
     <!--Map Editor accordion-->
-      
+
 <nb-accordion multi>
   <nb-accordion-item>
     <nb-accordion-item-header>
@@ -93,7 +93,7 @@
           <nb-option value="csv">CSV</nb-option>
           <nb-option value="json">JSON</nb-option>
         </nb-select>
-        
+
       </div>
       <div class="mb-1" style="display:none;" id="json-input">
         <div class="mb-2">
@@ -105,10 +105,10 @@
             <nb-option value="">root.</nb-option>
             <nb-option *ngFor="let path of paths" value={{path}}>.{{path}}</nb-option>
           </nb-select>
-         
-        </div>  
+
+        </div>
         <div id="jsoneditor"></div>
-        
+
       </div>
       <div class="mb-2" id="csv-input"  style="display:none;">
         <div class="mb-2">
@@ -124,25 +124,25 @@
             <nb-option value="\t">Tab separator</nb-option>
           </nb-select>
 
-          
+
         </div>
-         
-       
-        
+
+
+
         <div class="mb-3" id="csveditor">
-          
+
            <nb-tabset>
             <nb-tab tabTitle="CSV text">
               <textarea id="textarea" nbInput rows="10" fullWidth=true  placeholder="Enter CVS text..." [(ngModel)]="csvSourceData"></textarea>
             </nb-tab>
             <nb-tab id="csv-table" tabTitle="CSV Table">
-          
-            
-            </nb-tab>              
+
+
+            </nb-tab>
             </nb-tabset>
-        </div>       
+        </div>
       </div>
-    
+
     </nb-accordion-item-body>
   </nb-accordion-item>
 
@@ -152,11 +152,8 @@
     </nb-accordion-item-header>
     <nb-accordion-item-body>
       <div class="mb-2">
-      <nb-select placeholder="Select Json Schema" size="small">
-        <nb-option value=""></nb-option>
-        <nb-option value="model1">Model1</nb-option>
-        <nb-option value="nested" selected>NestedModel</nb-option>
-        <nb-option value="model3" >Model3</nb-option>
+      <nb-select placeholder="Select Json Schema" size="small" [(ngModel)] = selectedSchema (ngModelChange)="schemaChanged($event)">
+        <nb-option *ngFor="let schema of schemas" value={{schema.id}}>{{schema.name}}</nb-option>
       </nb-select>
     </div>
       <div class="mb-1">Or load from file: </div>
@@ -164,7 +161,7 @@
           <input type="file" id="loadSchema" value="Load" />
       </div>
 
-      <div id="jsoneditor2"></div> 
+      <div id="jsoneditor2"></div>
     </nb-accordion-item-body>
   </nb-accordion-item>
 
@@ -178,10 +175,10 @@
   </nb-accordion-item>
 </nb-accordion>
 <!--End Map Editor accordion-->
-    
+
   </nb-card-footer>
-  
-  
+
+
 </nb-card>
 
 <ng-template #contentTemplate >
