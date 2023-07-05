@@ -165,13 +165,14 @@ export class DMMComponent implements OnInit, OnChanges {
   getAllNestedProperties(obj) {
     let properties = {};
 
-    console.debug("TYPE")
-    console.debug(obj.type)
-    console.debug("PROPERTIES")
-    console.debug(obj.properties)
+    //console.debug("TYPE")
+    //console.debug(obj.type)
+    //console.debug("PROPERTIES")
+    //console.debug(obj.properties)
 
     if (obj.properties)
       for (let key in obj.properties) {
+        /*
         console.debug("KEY")
         console.debug(key)
         console.debug("PROPERTIES")
@@ -180,6 +181,7 @@ export class DMMComponent implements OnInit, OnChanges {
         console.debug(typeof obj[key])
         console.debug("OBJ KEY")
         console.debug(obj[key])
+        */
         if (typeof obj.properties[key] == 'object' || (obj.properties[key] && obj.properties[key].properties)) //{
           properties[key] = this.getAllNestedProperties(obj.properties[key]);
         else
@@ -256,7 +258,7 @@ export class DMMComponent implements OnInit, OnChanges {
 
       onCreateMenu: function (items, node) {
         const path = node.path
-        console.debug("M OPTIONS\n", mOptions)
+        console.debug("M OPTIONS\n", this.mapOptions)
         console.debug("PATH\n", path)
 
         // log the current items and node for inspection
@@ -267,7 +269,7 @@ export class DMMComponent implements OnInit, OnChanges {
 
           dialogService
             .open(DialogDataMapComponent, {
-              context: { mapOptions: mOptions, selectPath: selectPath },
+              context: { mapOptions: this.mapOptions || mOptions, selectPath: selectPath },
             }).onClose.subscribe((value) => {
               console.debug("UPDATE MAPPER")
               console.debug(this)
@@ -318,7 +320,8 @@ export class DMMComponent implements OnInit, OnChanges {
 
     };
 
-    editor2 = new JSONEditor(this.container2, options2, json2);
+    if (!editor2) editor2 = new JSONEditor(this.container2, options2, json2);
+    else editor2.update(json2)
   }
 
   saveAsFile(): void {
@@ -359,6 +362,8 @@ export class DMMComponent implements OnInit, OnChanges {
 
 
   selectMapJsonOptions(content: string, path: string): string[] {
+    console.debug("CONTENT\n", content)
+    console.debug("PATH\n", path)
 
     return this.getKeys(_.get(JSON.parse(content), path + '[0]', JSON.parse(content)), true, true)
 
