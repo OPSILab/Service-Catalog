@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { CommonModule } from '@angular/common';
@@ -15,31 +15,37 @@ import { NgxConfigureService } from 'ngx-configure';
 })
 export class DialogDataMapComponent implements OnInit {
   private appConfig: AppConfig;
- 
+
   selectedProp: string //= 'Json';
-  selectedItem:string;
-  
+  selectedItem: string;
+  dataMap
+
   @Input() mapOptions: string[];
   @Input() selectPath: string;
-  
+  @Output() editedValue = new EventEmitter<unknown>();
+
 
   constructor(private http: HttpClient, protected ref: NbDialogRef<DialogDataMapComponent>,
-    private errorService: ErrorDialogService, 
-    ) {
-    
+    private errorService: ErrorDialogService,
+  ) {
+
   }
 
   cancel(): void {
     this.ref.close();
   }
 
-
-  async ngOnInit() {
-    console.log(this.mapOptions)
-    
+  confirm() {
+    this.ref.close(this.selectedProp);
+    this.editedValue.emit(this.selectedProp);
   }
 
-  
+  async ngOnInit() {
+    console.log("MAP OPTIONS\n", this.mapOptions)
 
- 
+  }
+
+
+
+
 }

@@ -28,11 +28,13 @@ import { DialogImportComponent } from './dialog-import/dialog-import.component';
 import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.component';
 import { AvailableServicesService } from '../services/availableServices/availableServices.service';
 
+let json2, editor2
 @Component({
   selector: 'app-root',
   templateUrl: './dmm.component.html',
   styleUrls: ['./dmm.component.scss'],
 })
+
 export class DMMComponent implements OnInit, OnChanges {
   @ViewChild('contentTemplate') contentTemplate: TemplateRef<any>;
 
@@ -78,16 +80,16 @@ export class DMMComponent implements OnInit, OnChanges {
   ) { }
 
   schemaChanged($event) {
-    console.debug($event)
+    //console.debug($event)
     if (this.selectedSchema)
       this.json3 = [
         this.schema()
       ];
     if (!this.editor3) this.editor3 = new JSONEditor(this.container3, this.options3, this.json3);
     else this.editor3.update(this.json3)
-    this.json2 = this.getAllNestedProperties(this.json3[0]);
-    //console.debug("Line 88",this.editor2)
-    this.editor2.update(this.json2)
+    json2 = this.getAllNestedProperties(this.json3[0]);
+    //console.debug("Line 88",editor2)
+    editor2.update(json2)
     //this.onUpdatePathForDataMap("");
   }
 
@@ -95,7 +97,7 @@ export class DMMComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.debug(changes);
+    //console.debug(changes);
   }
 
 
@@ -119,7 +121,16 @@ export class DMMComponent implements OnInit, OnChanges {
     };
 
     const json = {
-      json1: 1
+      first: "first",
+      second: 2,
+      third: [1, 2, 3],
+      fourth: ["a", "b", "c"],
+      fith: {
+        first: "first",
+        second: 2,
+        third: [1, 2, 3],
+        fourth: ["a", "b", "c"]
+      }
     };
 
     this.editor = new JSONEditor(this.container, options, json);
@@ -140,7 +151,7 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   schema() {
-    return this.schemas.filter(filteredSchema => filteredSchema.id == this.selectedSchema)[0].dataModel.properties
+    return this.schemas.filter(filteredSchema => filteredSchema.id == this.selectedSchema)[0].dataModel
   }
 
   async loadMapperList() {
@@ -154,16 +165,32 @@ export class DMMComponent implements OnInit, OnChanges {
   getAllNestedProperties(obj) {
     let properties = {};
 
-    for (let key in obj) {
+    console.debug("TYPE")
+    console.debug(obj.type)
+    console.debug("PROPERTIES")
+    console.debug(obj.properties)
 
-      if (typeof obj[key] === 'object') //{
-        properties[key] = this.getAllNestedProperties(obj[key]);
-      else
-        properties[key] = "";
-      //properties = properties.concat(nestedProps.map((prop) => prop));
-      //}
-    }
-    console.debug(properties)
+    if (obj.properties)
+      for (let key in obj.properties) {
+        console.debug("KEY")
+        console.debug(key)
+        console.debug("PROPERTIES")
+        console.debug(obj.properties)
+        console.debug("TYPEOF")
+        console.debug(typeof obj[key])
+        console.debug("OBJ KEY")
+        console.debug(obj[key])
+        if (typeof obj.properties[key] == 'object' || (obj.properties[key] && obj.properties[key].properties)) //{
+          properties[key] = this.getAllNestedProperties(obj.properties[key]);
+        else
+          properties[key] = "";
+        //properties = properties.concat(nestedProps.map((prop) => prop));
+        //}
+      }
+
+    else
+      return ""
+    //console.debug(properties)
     return properties;
 
 
@@ -203,6 +230,8 @@ export class DMMComponent implements OnInit, OnChanges {
     }
   }
 
+
+
   onUpdatePathForDataMap(event) {
     console.log(event);
     console.log(typeof event)
@@ -225,9 +254,10 @@ export class DMMComponent implements OnInit, OnChanges {
 
       },
 
-
       onCreateMenu: function (items, node) {
         const path = node.path
+        console.debug("M OPTIONS\n", mOptions)
+        console.debug("PATH\n", path)
 
         // log the current items and node for inspection
         console.log('items:', items, 'node:', node)
@@ -238,7 +268,13 @@ export class DMMComponent implements OnInit, OnChanges {
           dialogService
             .open(DialogDataMapComponent, {
               context: { mapOptions: mOptions, selectPath: selectPath },
-            })
+            }).onClose.subscribe((value) => {
+              console.debug("UPDATE MAPPER")
+              console.debug(this)
+              updateMapper(selectPath, value)
+              //json2[path] = value
+              //editor2.update(json2)
+            });
 
 
         }
@@ -282,8 +318,7 @@ export class DMMComponent implements OnInit, OnChanges {
 
     };
 
-    console.debug()
-    this.editor2 = new JSONEditor(this.container2, options2, this.json2);
+    editor2 = new JSONEditor(this.container2, options2, json2);
   }
 
   saveAsFile(): void {
@@ -372,4 +407,8 @@ export class DMMComponent implements OnInit, OnChanges {
 
 }
 
-
+function updateMapper(path, value) {
+  console.debug("UPDATE MAPPER")
+  json2[path] = value
+  editor2.update(json2)
+}
