@@ -27,6 +27,7 @@ import { DOCUMENT } from '@angular/common';
 import { DialogImportComponent } from './dialog-import/dialog-import.component';
 import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.component';
 import { AvailableServicesService } from '../services/availableServices/availableServices.service';
+import { AddAdapterComponent } from '../services/available-adapters/add-adapter/add-adapter.component';
 
 let json2, editor2
 @Component({
@@ -330,6 +331,12 @@ export class DMMComponent implements OnInit, OnChanges {
       this.contentTemplate,
       { title: 'Window content from template', context: { text: 'some text to pass into template' } },
     );
+  }
+
+  saveAdapter(){
+    this.dialogService.open(AddAdapterComponent).onClose.subscribe((adapter) => {
+      this.dmmService.saveMap(adapter, json2, this.json3);
+    });
   }
 
   importSource(typeSource: string): void {

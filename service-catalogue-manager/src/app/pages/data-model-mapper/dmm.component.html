@@ -162,6 +162,9 @@
       </div>
 
       <div id="jsoneditor2"></div>
+
+      <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="saveAdapter()">
+        <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i> </button>
     </nb-accordion-item-body>
   </nb-accordion-item>
 
@@ -170,6 +173,7 @@
       Output
     </nb-accordion-item-header>
     <nb-accordion-item-body>
+
       <div id="jsoneditor3"></div>
     </nb-accordion-item-body>
   </nb-accordion-item>
