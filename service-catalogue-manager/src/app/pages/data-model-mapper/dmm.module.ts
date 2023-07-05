@@ -12,6 +12,7 @@ import {
   NbWindowModule,
   NbCheckboxModule,
   NbUserModule,
+  NbAutocompleteModule,
 } from '@nebular/theme';
 import { CommonModule } from '@angular/common';
 import { DMMRoutingModule } from './dmm-routing.module';
@@ -23,6 +24,7 @@ import { NgbDropdownModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap
 import { DMMService } from './dmm.service';
 import { HttpClient } from '@angular/common/http';
 import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.component';
+import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-map-and-adapter.component';
 
 
 
@@ -48,13 +50,14 @@ import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.componen
     NbCheckboxModule,
     NbUserModule,
     TranslateModule.forChild({}),
+    NbAutocompleteModule
   ],
-  declarations: [DMMComponent,DialogImportComponent,DialogDataMapComponent,],
+  declarations: [DMMComponent,DialogImportComponent,DialogDataMapComponent, CreateMapAndAdapterComponent,],
   providers: [DMMService],
   entryComponents: [
     DialogImportComponent,
     DialogDataMapComponent
-    
+
   ]
 })
 export class DMMModule {}

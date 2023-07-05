@@ -29,7 +29,7 @@ export class DMMService {
      id : adapter.adapterId,
      name : adapter.name,
      map : map,
-     dataModel: schema
+     dataModel: schema[0]
     }).toPromise();
   }
 

@@ -1,0 +1,302 @@
+import { HttpClient } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { NbDialogRef, NbToastrService, NbComponentStatus, NbGlobalPhysicalPosition, NbToastrConfig } from '@nebular/theme';
+import { TranslateService } from '@ngx-translate/core';
+import { NgxConfigureService } from 'ngx-configure';
+import { Observable, of } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
+import { AdapterEntry } from '../../../model/adapter/adapterEntry';
+import { Mapper } from '../../../model/adapter/mapper';
+import { AppConfig } from '../../../model/appConfig';
+import { ErrorDialogAdapterService } from '../../error-dialog/error-dialog-adapter.service';
+import { AddAdapterComponent } from '../../services/available-adapters/add-adapter/add-adapter.component';
+import { AvailableAdaptersService } from '../../services/available-adapters/available-adapters.service';
+
+@Component({
+  selector: 'create-map-and-adapter',
+  templateUrl: './create-map-and-adapter.component.html',
+  styleUrls: ['./create-map-and-adapter.component.scss']
+})
+export class CreateMapAndAdapterComponent implements OnInit {
+
+  @Input() value: any;
+  @Output() editedValue = new EventEmitter<unknown>();
+  adapterId: string
+  name: string = ''
+  description: string = ''
+  status: string = "inactive"
+  type: string = "MODEL"
+  context: string = "IMPORT"
+  url: string
+  previousUrl: string
+  sourceDataType: string
+  inputItemFormControl: FormControl;
+  textareaItemFormControl: FormControl;
+  selectedFile: File;
+  json: Record<string, unknown>;
+  selectedItem = 'Json';
+  loaded = false
+  mappers: Mapper[];
+  validURL = true
+  IDs: string[] = [];
+  filteredControlIDOptions$: Observable<string[]>;
+  filteredIDOptions$: Observable<string[]>;
+  IDFormControl: FormControl;
+  NameFormControl: FormControl;
+  filteredControlNameOptions$: Observable<string[]>;
+  filteredNameOptions$: Observable<string[]>;
+  names: string[] = [];
+  placeholders = {
+    adapterId: this.translate.instant('general.adapters.adapterId'),
+    status: this.translate.instant('general.adapters.status'),
+    url: this.translate.instant('general.adapters.status'),
+    sourceDataType: this.translate.instant('general.adapters.source_data_type'),
+    description: this.translate.instant('general.adapters.description'),
+    type: this.translate.instant('general.adapters.type'),
+    context: this.translate.instant('general.adapters.context'),
+  }
+  private appConfig: AppConfig;
+
+  constructor(
+    private http: HttpClient,
+    protected ref: NbDialogRef<AddAdapterComponent>,
+    private toastrService: NbToastrService,
+    private errorService: ErrorDialogAdapterService,
+    private availableAdapterService: AvailableAdaptersService,
+    private translate: TranslateService,
+    private configService: NgxConfigureService
+  ) {
+    this.appConfig = this.configService.config as AppConfig
+    console.debug(this)
+  }
+
+  cancel(): void {
+    this.ref.close();
+  }
+
+  async loadMappers(): Promise<void> {
+    this.IDs = []
+    this.names = []
+    if (this.url && (this.url != this.previousUrl) && this.appConfig.data_model_mapper.connect)
+      try {
+        this.mappers = await this.http.post<any>(this.url, {
+          "getMapperList": true
+        }).toPromise();
+        for (let mapper of this.mappers) {
+          this.IDs.push(mapper.id);
+          this.names.push(mapper.name);
+        }
+        this.loaded = true
+        this.validURL = true
+      }
+      catch (error) {
+        console.error("Cannot get response from remote url")
+        console.error(error)
+        this.validURL = false
+      }
+    else this.validURL = false
+    this.previousUrl = this.url
+  }
+
+  ngOnInit(): void {
+    console.debug(this)
+    this.loaded = false
+    this.url = this.appConfig.data_model_mapper.default_mapper_url
+    this.loadMappers()
+    this.filteredControlIDOptions$ = of(this.IDs);
+    this.filteredControlNameOptions$ = of(this.names);
+    this.IDFormControl = new FormControl();
+    this.NameFormControl = new FormControl();
+    this.filteredControlIDOptions$ = this.IDFormControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(filterString => this.filterID(filterString)),
+      );
+    this.filteredControlNameOptions$ = this.NameFormControl.valueChanges
+      .pipe(
+        startWith(''),
+        map(filterString => this.filterID(filterString)),
+      );
+    try {
+      this.inputItemFormControl = new FormControl();
+      this.textareaItemFormControl = new FormControl();
+      if (this.value && this.value.adapterId) this.adapterId = this.value.adapterId
+      this.url = this.appConfig.data_model_mapper.default_mapper_url
+    }
+    catch (error) {
+      console.error("error:<\n", error, ">\n")
+    }
+  }
+
+  private filterID(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.IDs.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+  }
+
+  private filterName(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.names.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
+  }
+
+  getFilteredOptions(value: string): Observable<string[]> {
+    return of(value).pipe(
+      map(filterString => this.filterID(filterString)),
+    );
+  }
+
+  onAdapterIDChange(ID: string) {
+    this.filteredIDOptions$ = of(this.filterID(ID));
+    this.adapterId = ID
+    this.name = this.names[this.IDs.indexOf(ID)]
+  }
+
+  onNameChange(name: string) {
+    this.filteredNameOptions$ = of(this.filterName(name));
+    this.name = name
+  }
+
+  onFileChanged(event: Event): void {
+    try {
+      this.selectedFile = (<HTMLInputElement>event.target).files[0];
+      const fileReader = new FileReader();
+      fileReader.readAsText(this.selectedFile, 'UTF-8');
+      fileReader.onload = () => {
+        try {
+          this.json = JSON.parse(fileReader.result as string) as Record<string, unknown>;
+        } catch (error) {
+          this.errorService.openErrorDialog(error);
+          console.error("error:<\n", error, ">\n")
+          this.ref.close();
+        }
+      };
+
+      fileReader.onerror = (error) => {
+        this.errorService.openErrorDialog(error);
+      };
+    } catch (error) {
+      this.errorService.openErrorDialog(error);
+    }
+  }
+
+  confirm() {
+    try {
+      this.onSubmit()
+    }
+    catch (error) {
+      console.error("error:<\n", error, ">\n")
+    }
+  }
+
+  async onSubmit() {
+    try {
+
+      let name = this.name,
+        description = this.description,
+        status = this.status,
+        adapterId = this.adapterId ? this.adapterId : this.value ? this.value : null,
+        type = this.type,
+        url = this.url,
+        context = this.context,
+        sourceDataType = this.sourceDataType
+
+      if (adapterId == '' || adapterId == null)
+        throw new Error("Adapter ID must be set");
+
+      await this.availableAdapterService.saveAdapter(((
+        type == "MODEL" ?
+          { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
+          { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry);
+
+      this.ref.close(type == "MODEL" ?
+      { name, description, status, adapterId, type, url, context, sourceDataType }:
+      { name, description, status, adapterId, type, url, sourceDataType });
+      this.editedValue.emit(this.value);
+      this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
+    }
+    catch (error) {
+      let errors: Object[] = []
+
+      if (!this.adapterId) errors.push({
+        "path": "root.adapterId",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.name) errors.push({
+        "path": "root.name",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.description) errors.push({
+        "path": "root.description",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.url) errors.push({
+        "path": "root.url",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (!this.type) errors.push({
+        "path": "root.type",
+        "property": "minLength",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (this.type == "MODEL" && !this.context) errors.push({
+        "path": "root.context",
+        "property": "minLength",
+        "message": "Value required for adapter type model",
+        "errorcount": 1
+      })
+
+      console.error("error:", "\n", error)
+      if (error.message == "Adapter ID must be set") {
+        this.errorService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+            {
+              "path": "root.adapterId",
+              "property": "minLength",
+              "message": "Value required",
+              "errorcount": 1
+            }
+          ]
+        });
+      }
+      else if (error.status && error.status == 400) {
+        if (error.error.status == "Adapter already exists")
+          this.errorService.openErrorDialog({
+            error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+              {
+                "path": "root.adapterId",
+                "property": "minLength",
+                "message": "A adapter with adapter ID < " + this.adapterId + " > already exists",
+                "errorcount": 1
+              }
+            ]
+          });
+        else this.errorService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
+        });
+      }
+    }
+  }
+
+  private showToast(type: NbComponentStatus, title: string, body: string) {
+    const config = {
+      status: type,
+      destroyByClick: true,
+      duration: 2500,
+      hasIcon: true,
+      position: NbGlobalPhysicalPosition.BOTTOM_RIGHT,
+      preventDuplicates: true,
+    } as Partial<NbToastrConfig>;
+
+    this.toastrService.show(body, title, config);
+  }
+}
+

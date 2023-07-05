@@ -1,5 +1,3 @@
-
-
 <!-- Save Service modal ng-template -->
 <ng-template #confirmSaveDialog let-data let-ref="dialogRef">
   <nb-card status="primary">
@@ -49,143 +47,144 @@
 <nb-card>
   <nb-card-header class="h3"> Data Model Mapper </nb-card-header>
 
-  <nb-card-body  class="row justify-content-center">
+  <nb-card-body class="row justify-content-center">
     <ng-container *ngIf="!isNew; then updateButton; else createButton"> </ng-container>
 
     <ng-template #createButton>
       <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
-        (click)="openSaveToRegistryDialog()" >
+        (click)="openSaveToRegistryDialog()">
         {{ 'general.save' | translate }}
         <i class="mx-1 material-icons">save</i>
       </button>
     </ng-template>
     <ng-template #updateButton>
-      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"  >
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary">
         {{ 'general.editor.update' | translate }}
         <i class="mx-1 material-icons">save</i>
       </button>
     </ng-template>
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning"    >
+    <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning">
       {{ 'general.editor.export' | translate }}
       <i class="mx-1 fas fa-file-export fa-lg"></i>
     </button>
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger"   >
+    <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger">
       {{ 'general.editor.import' | translate }}
       <i class="mx-1 fas fa-file-import fa-lg"></i>
     </button>
   </nb-card-body>
 
-  <nb-card-footer  >
+  <nb-card-footer>
     <!--Map Editor accordion-->
 
-<nb-accordion multi>
-  <nb-accordion-item>
-    <nb-accordion-item-header>
-      Source
-    </nb-accordion-item-header>
-    <nb-accordion-item-body>
-      <p>To get started, select the type of input (CSV or JSON) and upload or paste your data.
-      </p>
-      <p *ngIf="sourceRef!==''&&sourceRefFormat==='url'">URL: <a class="mb-3" href={{sourceRef}} target="_blank"> <i>{{sourceRef}}</i></a></p>
-      <p *ngIf="sourceRef!==''&&sourceRefFormat==='file'">File:  <i>{{sourceRef}}</i></p>
-      <div class="mb-2">
-        <nb-select placeholder="Select Input Type" size="small" (selectedChange)="onUpdateInputType($event)">
-          <nb-option value="csv">CSV</nb-option>
-          <nb-option value="json">JSON</nb-option>
-        </nb-select>
+    <nb-accordion multi>
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Source
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <p>To get started, select the type of input (CSV or JSON) and upload or paste your data.
+          </p>
+          <p *ngIf="sourceRef!==''&&sourceRefFormat==='url'">URL: <a class="mb-3" href={{sourceRef}} target="_blank">
+              <i>{{sourceRef}}</i></a></p>
+          <p *ngIf="sourceRef!==''&&sourceRefFormat==='file'">File: <i>{{sourceRef}}</i></p>
+          <div class="mb-2">
+            <nb-select placeholder="Select Input Type" size="small" (selectedChange)="onUpdateInputType($event)">
+              <nb-option value="csv">CSV</nb-option>
+              <nb-option value="json">JSON</nb-option>
+            </nb-select>
 
-      </div>
-      <div class="mb-1" style="display:none;" id="json-input">
-        <div class="mb-2">
-          <button nbButton  class="mr-2" shape="rectangle" size="small"  (click)="importSource('json')">
-            {{ 'general.editor.import' | translate }}
-            <i class="mx-1 fas fa-file-import fa-lg"></i>
-          </button>
-          <nb-select  placeholder="Select path" size="small" (selectedChange)="onUpdatePathForDataMap($event)">
-            <nb-option value="">root.</nb-option>
-            <nb-option *ngFor="let path of paths" value={{path}}>.{{path}}</nb-option>
-          </nb-select>
+          </div>
+          <div class="mb-1" style="display:none;" id="json-input">
+            <div class="mb-2">
+              <button nbButton class="mr-2" shape="rectangle" size="small" (click)="importSource('json')">
+                {{ 'general.editor.import' | translate }}
+                <i class="mx-1 fas fa-file-import fa-lg"></i>
+              </button>
+              <nb-select placeholder="Select path" size="small" (selectedChange)="onUpdatePathForDataMap($event)">
+                <nb-option value="">root.</nb-option>
+                <nb-option *ngFor="let path of paths" value={{path}}>.{{path}}</nb-option>
+              </nb-select>
 
-        </div>
-        <div id="jsoneditor"></div>
+            </div>
+            <div id="jsoneditor"></div>
 
-      </div>
-      <div class="mb-2" id="csv-input"  style="display:none;">
-        <div class="mb-2">
+          </div>
+          <div class="mb-2" id="csv-input" style="display:none;">
+            <div class="mb-2">
 
-          <button nbButton class="mr-2"  shape="rectangle" size="small"  (click)="importSource('csv')">
-            {{ 'general.editor.import' | translate }}
-            <i class="mx-1 fas fa-file-import fa-lg"></i>
-          </button>
+              <button nbButton class="mr-2" shape="rectangle" size="small" (click)="importSource('csv')">
+                {{ 'general.editor.import' | translate }}
+                <i class="mx-1 fas fa-file-import fa-lg"></i>
+              </button>
 
-          <nb-select placeholder="Separator" size="small" [(selected)]="separatorItem">
-            <nb-option value=",">Comma separator</nb-option>
-            <nb-option value=";">Semi-colon separator</nb-option>
-            <nb-option value="\t">Tab separator</nb-option>
-          </nb-select>
-
-
-        </div>
+              <nb-select placeholder="Separator" size="small" [(selected)]="separatorItem">
+                <nb-option value=",">Comma separator</nb-option>
+                <nb-option value=";">Semi-colon separator</nb-option>
+                <nb-option value="\t">Tab separator</nb-option>
+              </nb-select>
 
 
-
-        <div class="mb-3" id="csveditor">
-
-           <nb-tabset>
-            <nb-tab tabTitle="CSV text">
-              <textarea id="textarea" nbInput rows="10" fullWidth=true  placeholder="Enter CVS text..." [(ngModel)]="csvSourceData"></textarea>
-            </nb-tab>
-            <nb-tab id="csv-table" tabTitle="CSV Table">
+            </div>
 
 
-            </nb-tab>
-            </nb-tabset>
-        </div>
-      </div>
 
-    </nb-accordion-item-body>
-  </nb-accordion-item>
+            <div class="mb-3" id="csveditor">
 
-  <nb-accordion-item>
-    <nb-accordion-item-header>
-      Mapper
-    </nb-accordion-item-header>
-    <nb-accordion-item-body>
-      <div class="mb-2">
-      <nb-select placeholder="Select Json Schema" size="small" [(ngModel)] = selectedSchema (ngModelChange)="schemaChanged($event)">
-        <nb-option *ngFor="let schema of schemas" value={{schema.id}}>{{schema.name}}</nb-option>
-      </nb-select>
-    </div>
-      <div class="mb-1">Or load from file: </div>
+              <nb-tabset>
+                <nb-tab tabTitle="CSV text">
+                  <textarea id="textarea" nbInput rows="10" fullWidth=true placeholder="Enter CVS text..."
+                    [(ngModel)]="csvSourceData"></textarea>
+                </nb-tab>
+                <nb-tab id="csv-table" tabTitle="CSV Table">
+
+
+                </nb-tab>
+              </nb-tabset>
+            </div>
+          </div>
+
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Mapper
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="mb-2">
+            <nb-select placeholder="Select Json Schema" size="small" [(ngModel)]=selectedSchema
+              (ngModelChange)="schemaChanged($event)">
+              <nb-option *ngFor="let schema of schemas" value={{schema.id}}>{{schema.name}}</nb-option>
+            </nb-select>
+          </div>
+          <div class="mb-1">Or load from file: </div>
           <div class="mb-2" id="load-json-schema">
-          <input type="file" id="loadSchema" value="Load" />
-      </div>
+            <input type="file" id="loadSchema" value="Load" />
+          </div>
 
-      <div id="jsoneditor2"></div>
+          <div id="jsoneditor2"></div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
 
-      <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="saveAdapter()">
-        <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i> </button>
-    </nb-accordion-item-body>
-  </nb-accordion-item>
+      <nb-accordion-item>
+        <nb-accordion-item-header>
+          Output
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
 
-  <nb-accordion-item>
-    <nb-accordion-item-header>
-      Output
-    </nb-accordion-item-header>
-    <nb-accordion-item-body>
-
-      <div id="jsoneditor3"></div>
-    </nb-accordion-item-body>
-  </nb-accordion-item>
-</nb-accordion>
-<!--End Map Editor accordion-->
-
+          <div id="jsoneditor3"></div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+    <!--End Map Editor accordion-->
+    <br>
+    <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="saveAdapter()">
+      <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i> </button>
   </nb-card-footer>
 
 
 </nb-card>
 
-<ng-template #contentTemplate >
+<ng-template #contentTemplate>
   <p>Here is the text provided via config</p>
 </ng-template>
-

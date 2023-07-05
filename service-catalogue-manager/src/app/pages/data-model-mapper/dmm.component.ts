@@ -28,6 +28,7 @@ import { DialogImportComponent } from './dialog-import/dialog-import.component';
 import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.component';
 import { AvailableServicesService } from '../services/availableServices/availableServices.service';
 import { AddAdapterComponent } from '../services/available-adapters/add-adapter/add-adapter.component';
+import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-map-and-adapter.component';
 
 let json2, editor2
 @Component({
@@ -334,7 +335,7 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   saveAdapter(){
-    this.dialogService.open(AddAdapterComponent).onClose.subscribe((adapter) => {
+    this.dialogService.open(CreateMapAndAdapterComponent, {context: {sourceDataType:this.inputType || "json"}}).onClose.subscribe((adapter) => {
       this.dmmService.saveMap(adapter, json2, this.json3);
     });
   }
