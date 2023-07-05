@@ -68,6 +68,7 @@ export class DMMComponent implements OnInit, OnChanges {
   editor3: any;
   options3: any;
   json2
+  sourceJson: any;
 
   toggleView() {
     this.flipped = !this.flipped;
@@ -122,6 +123,7 @@ export class DMMComponent implements OnInit, OnChanges {
       onModeChange: function (newMode, oldMode) { },
     };
 
+    /*
     const json = {
       first: "first",
       second: 2,
@@ -133,9 +135,9 @@ export class DMMComponent implements OnInit, OnChanges {
         third: [1, 2, 3],
         fourth: ["a", "b", "c"]
       }
-    };
+    };*/
 
-    this.editor = new JSONEditor(this.container, options, json);
+    if (this.sourceJson) this.editor = new JSONEditor(this.container, options, this.sourceJson);
 
     this.options3 = {
       mode: 'view',
@@ -334,8 +336,8 @@ export class DMMComponent implements OnInit, OnChanges {
     );
   }
 
-  saveAdapter(){
-    this.dialogService.open(CreateMapAndAdapterComponent, {context: {sourceDataType:this.inputType || "json"}}).onClose.subscribe((adapter) => {
+  saveAdapter() {
+    this.dialogService.open(CreateMapAndAdapterComponent, { context: { sourceDataType: this.inputType || "json" } }).onClose.subscribe((adapter) => {
       this.dmmService.saveMap(adapter, json2, this.json3);
     });
   }
@@ -356,7 +358,15 @@ export class DMMComponent implements OnInit, OnChanges {
             this.mapOptions = this.csvSourceData.slice(0, this.csvSourceData.indexOf("\n")).split(this.separatorItem);
 
           } else {
-            this.editor.setText(result.content);
+            if (!this.editor)
+              this.editor = new JSONEditor(this.container, {
+                mode: 'view',
+                modes: ['view', 'code'], // allowed modes
+                onModeChange: function (newMode, oldMode) { },
+              }, JSON.parse(result.content));
+
+            else
+              this.editor.setText(result.content);
 
             //this.mapOptions = this.getAllNestedProperties(JSON.parse(result.content));
             this.paths = this.selectMapJsonOptions(result.content, '')
