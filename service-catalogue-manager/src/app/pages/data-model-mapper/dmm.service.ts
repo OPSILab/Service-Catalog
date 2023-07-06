@@ -33,18 +33,19 @@ export class DMMService {
     }).toPromise();
   }
 
-  /*
-  getAdaptedService(type: string, source: string, adapter: AdapterEntry): Promise<ServiceModel[]> {
-    return this.http.post<ServiceModel[]>(adapter.url, {
+
+ test(type: string, source: string, mapper, schema, delimiter): Promise<any[]> {
+    return this.http.post<any[]>(this.config.data_model_mapper.default_mapper_url, {
       "sourceDataType": type,
       "sourceData": source,
-      "adapterID": adapter.adapterId,
+      "mapData": mapper,
+      "dataModel" : schema,
       "config": {
-        "delimiter": ";",
+        "delimiter": delimiter,
         "NGSI_entity" : false
       }
     }).toPromise();
-  }*/
+  }
 
 
 }

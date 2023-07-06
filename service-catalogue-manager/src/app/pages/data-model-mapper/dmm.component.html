@@ -96,7 +96,7 @@
           </div>
           <div class="mb-1" style="display:none;" id="json-input">
             <div class="mb-2">
-              <button nbButton class="mr-2" shape="rectangle" size="small" (click)="importSource('json')">
+              <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','json')">
                 {{ 'general.editor.import' | translate }}
                 <i class="mx-1 fas fa-file-import fa-lg"></i>
               </button>
@@ -112,7 +112,7 @@
           <div class="mb-2" id="csv-input" style="display:none;">
             <div class="mb-2">
 
-              <button nbButton class="mr-2" shape="rectangle" size="small" (click)="importSource('csv')">
+              <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','csv')">
                 {{ 'general.editor.import' | translate }}
                 <i class="mx-1 fas fa-file-import fa-lg"></i>
               </button>
@@ -158,8 +158,12 @@
             </nb-select>
           </div>
           <div class="mb-1">Or load from file: </div>
+          <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('schema','json')">
+            {{ 'general.editor.import' | translate }}
+            <i class="mx-1 fas fa-file-import fa-lg"></i>
+          </button>
           <div class="mb-2" id="load-json-schema">
-            <input type="file" id="loadSchema" value="Load" />
+            <input [(ngModel)]="schemaFromFile" type="file" id="loadSchema" value="Load" (ngModelChange)="setSchemaFromFile($event)" />
           </div>
 
           <div id="jsoneditor2"></div>
@@ -178,6 +182,9 @@
     </nb-accordion>
     <!--End Map Editor accordion-->
     <br>
+    <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="testAdapter()">
+      <i class="mx-1">{{ 'general.dmm.preview' | translate }}</i> </button>
+      &nbsp;
     <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="saveAdapter()">
       <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i> </button>
   </nb-card-footer>
