@@ -30,7 +30,7 @@ import { AvailableServicesService } from '../services/availableServices/availabl
 import { AddAdapterComponent } from '../services/available-adapters/add-adapter/add-adapter.component';
 import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-map-and-adapter.component';
 
-let json2, editor2
+let json2, editor2, mapOptions: string[]
 @Component({
   selector: 'app-root',
   templateUrl: './dmm.component.html',
@@ -56,13 +56,14 @@ export class DMMComponent implements OnInit, OnChanges {
   flipped = false;
   csvtable: any;
   sourceRefFormat: string;
-  mapOptions: string[];
+  //mapOptions: string[];
   paths: string[];
   editor2: any;
   maps: any;
   mapper
   schemas
   selectedSchema
+  //selectedPath
 
   json3: any[];
   editor3: any;
@@ -137,7 +138,21 @@ export class DMMComponent implements OnInit, OnChanges {
       }
     };*/
 
-    if (this.sourceJson) this.editor = new JSONEditor(this.container, options, this.sourceJson);
+    this.sourceJson = {
+      first: "first",
+      second: 2,
+      third: [1, 2, 3],
+      fourth: ["a", "b", "c"],
+      fith: {
+        first: "first",
+        second: 2,
+        third: [1, 2, 3],
+        fourth: ["a", "b", "c"]
+      }
+    }
+
+    //if (this.sourceJson)
+    this.editor = new JSONEditor(this.container, options, this.sourceJson);
 
     this.options3 = {
       mode: 'view',
@@ -177,14 +192,14 @@ export class DMMComponent implements OnInit, OnChanges {
     if (obj.properties)
       for (let key in obj.properties) {
         /*
-        console.debug("KEY")
-        console.debug(key)
-        console.debug("PROPERTIES")
-        console.debug(obj.properties)
-        console.debug("TYPEOF")
-        console.debug(typeof obj[key])
-        console.debug("OBJ KEY")
-        console.debug(obj[key])
+        //console.debug("KEY")
+        //console.debug(key)
+        //console.debug("PROPERTIES")
+        //console.debug(obj.properties)
+        //console.debug("TYPEOF")
+        //console.debug(typeof obj[key])
+        //console.debug("OBJ KEY")
+        //console.debug(obj[key])
         */
         if (typeof obj.properties[key] == 'object' || (obj.properties[key] && obj.properties[key].properties)) //{
           properties[key] = this.getAllNestedProperties(obj.properties[key]);
@@ -223,7 +238,7 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   onUpdateInputType(event) {
-    console.log(event);
+    //console.log(event);
     const divJsonElement = document.getElementById('json-input');
     const divCSVElement = document.getElementById('csv-input');
 
@@ -239,18 +254,20 @@ export class DMMComponent implements OnInit, OnChanges {
 
 
   onUpdatePathForDataMap(event) {
-    console.log(event);
-    console.log(typeof event)
-    console.log(this.editor.getText());
-    this.mapOptions = this.selectMapJsonOptions(this.editor.getText(), event);
-    console.log(this.mapOptions);
+    console.debug("ON UPDATE PATH FOR DATA MAP")
+    console.debug("EVENT\n", event);
+    console.debug("TYPEOF EVENT\n", typeof event)
+    //console.log(this.editor.getText());
+    mapOptions = this.selectMapJsonOptions(this.editor.getText(), event);
+    console.log("---------------",mapOptions);
     this.setMapEditor();
   }
+
   setMapEditor() {
 
     var dialogService = this.dialogService;
-    var mOptions = this.mapOptions
-    console.log(mOptions);
+    var mOptions = mapOptions
+    console.debug("M OPTIONS, \n",mOptions);
 
     const options2 = {
       mode: 'tree',
@@ -262,21 +279,21 @@ export class DMMComponent implements OnInit, OnChanges {
 
       onCreateMenu: function (items, node) {
         const path = node.path
-        console.debug("M OPTIONS\n", this.mapOptions)
+        //console.debug("M OPTIONS\n", mapOptions)
         console.debug("PATH\n", path)
 
         // log the current items and node for inspection
-        console.log('items:', items, 'node:', node)
+        //console.log('items:', items, 'node:', node)
 
         var selectPath = path;
         function pathToMap() {
-
+          //console.debug(this.editor)
           dialogService
             .open(DialogDataMapComponent, {
-              context: { mapOptions: this.mapOptions || mOptions, selectPath: selectPath },
+              context: { mapOptions: mapOptions || mOptions, selectPath: selectPath },
             }).onClose.subscribe((value) => {
-              console.debug("UPDATE MAPPER")
-              console.debug(this)
+              //console.debug("UPDATE MAPPER")
+              //console.debug(this)
               updateMapper(selectPath, value)
               //json2[path] = value
               //editor2.update(json2)
@@ -349,15 +366,16 @@ export class DMMComponent implements OnInit, OnChanges {
         context: { type: typeSource },
       })
       .onClose.subscribe((result: { content: string; source: string; format: string }) => {
-        if (result?.content) {
+        if (result && result.content) {
           this.sourceRef = result?.source;
           this.sourceRefFormat = result?.format;
           if (typeSource == 'csv') {
             this.csvSourceData = result.content;
             this.displayCSV(this.csvSourceData, this.csvtable, this.separatorItem);
-            this.mapOptions = this.csvSourceData.slice(0, this.csvSourceData.indexOf("\n")).split(this.separatorItem);
+            mapOptions = this.csvSourceData.slice(0, this.csvSourceData.indexOf("\n")).split(this.separatorItem);
 
           } else {
+
             if (!this.editor)
               this.editor = new JSONEditor(this.container, {
                 mode: 'view',
@@ -368,10 +386,14 @@ export class DMMComponent implements OnInit, OnChanges {
             else
               this.editor.setText(result.content);
 
-            //this.mapOptions = this.getAllNestedProperties(JSON.parse(result.content));
+            mapOptions = this.selectMapJsonOptions(this.editor.getText(), "");
+            //this.setMapEditor();
+            console.debug("----THIS MAP OPTIONS-----\n", mapOptions)
+            //mapOptions = this.getAllNestedProperties(JSON.parse(result.content));
             this.paths = this.selectMapJsonOptions(result.content, '')
 
-            console.log(this.paths);
+            //console.log(this.paths);
+            this.onUpdatePathForDataMap("")
           }
         }
       });
@@ -380,8 +402,8 @@ export class DMMComponent implements OnInit, OnChanges {
 
 
   selectMapJsonOptions(content: string, path: string): string[] {
-    console.debug("CONTENT\n", content)
-    console.debug("PATH\n", path)
+    //console.debug("CONTENT\n", content)
+    //console.debug("PATH\n", path)
 
     return this.getKeys(_.get(JSON.parse(content), path + '[0]', JSON.parse(content)), true, true)
 
@@ -431,7 +453,7 @@ export class DMMComponent implements OnInit, OnChanges {
 }
 
 function updateMapper(path, value) {
-  console.debug("UPDATE MAPPER")
+  //console.debug("UPDATE MAPPER")
   json2[path] = value
   editor2.update(json2)
 }
