@@ -124,13 +124,6 @@ export class PagesComponent implements OnInit, OnDestroy {
         link: '/pages/management/manageConfigurations',
         hidden: this.hideManageMenu,
       },
-      {
-        title: 'Data model mapper',
-        icon: 'settings-outline',
-        link: '/pages/dmm',
-        hidden: this.hideManageMenu,
-      },
-
     ];
 
     // if put on constructor it will doing twice when refresh a page.

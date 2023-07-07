@@ -63,9 +63,4 @@ export const MENU_ITEMS: NbMenuItem[] = [
     icon: 'link-2-outline',
     link: '/pages/management/manageConfigurations',
   },
-  {
-    title: 'Data model mapper',
-    icon: 'link-2-outline',
-    link: '/pages/dmm',
-  },
 ];
