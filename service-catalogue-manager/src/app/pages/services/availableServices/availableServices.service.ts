@@ -6,6 +6,7 @@ import { ServiceModel } from '../../../model/services/serviceModel';
 import { AppConfig } from '../../../model/appConfig';
 import { ServicesCount } from '../../../model/services/servicesCount';
 import { AdapterEntry } from '../../../model/adapter/adapterEntry';
+var urlencode = require('urlencode');
 
 @Injectable({ providedIn: 'root' })
 export class AvailableServicesService {
@@ -70,34 +71,34 @@ export class AvailableServicesService {
   }
 
   getService(serviceId: string): Promise<ServiceModel> {
-    return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/json?identifier=${serviceId}`).toPromise();
+    return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/json?identifier=${urlencode(serviceId)}`).toPromise();
   }
 
   getJsonldService(serviceId: string): Promise<Record<string, unknown>> {
-    return this.http.get<Record<string, unknown>>(`${this.serviceRegistryUrl}/api/v2/services/json/jsonld?identifier=${serviceId}`).toPromise();
+    return this.http.get<Record<string, unknown>>(`${this.serviceRegistryUrl}/api/v2/services/json/jsonld?identifier=${urlencode(serviceId)}`).toPromise();
   }
 
   getCpsvService(serviceId: string): Promise<Record<string, unknown>> {
-    return this.http.get<Record<string, unknown>>(`${this.serviceRegistryUrl}/api/v2/services/json/cpsv/jsonld?identifier=${serviceId}`).toPromise();
+    return this.http.get<Record<string, unknown>>(`${this.serviceRegistryUrl}/api/v2/services/json/cpsv/jsonld?identifier=${urlencode(serviceId)}`).toPromise();
   }
   saveService(service: ServiceModel): Promise<ServiceModel> {
     return this.http.post<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services`, service).toPromise();
   }
 
   registerService(service: ServiceModel, serviceId: string): Promise<ServiceModel> {
-    return this.http.put<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${serviceId}`, service).toPromise();
+    return this.http.put<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${urlencode(serviceId)}`, service).toPromise();
   }
 
   deregisterService(service: ServiceModel, serviceId: string): Promise<ServiceModel> {
-    return this.http.put<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${serviceId}`, service).toPromise();
+    return this.http.put<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${urlencode(serviceId)}`, service).toPromise();
   }
 
   updateService(service: ServiceModel, serviceId: string): Promise<ServiceModel> {
-    return this.http.put<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${serviceId}`, service).toPromise();
+    return this.http.put<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${urlencode(serviceId)}`, service).toPromise();
   }
 
   deleteService(serviceId: string): Promise<ServiceModel> {
-    return this.http.delete<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${serviceId}`).toPromise();
+    return this.http.delete<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${urlencode(serviceId)}`).toPromise();
   }
 
   findService(name: string): Promise<ServiceModel> {
