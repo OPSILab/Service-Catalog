@@ -181,9 +181,9 @@ export class DMMComponent implements OnInit, OnChanges {
     console.log("THIS IS THE OUTPUT\n\n\n\n")
     let m = JSON.parse(mapperEditor.getText())
     m["targetDataModel"] = "DataModelTemp"
-    let o = await this.dmmService.test("json", JSON.parse(this.sourceEditor.getText()), m, this.schemaJson[0], ";")
-    if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, o);
-    else this.outputEditor.update(o)
+    let output = await this.dmmService.test("json", JSON.parse(this.sourceEditor.getText()), m, this.schemaJson[0], ";")
+    if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, output);
+    else this.outputEditor.update(output)
   }
 
   getAllNestedProperties(obj) {
@@ -256,8 +256,6 @@ export class DMMComponent implements OnInit, OnChanges {
     }
   }
 
-
-
   onUpdatePathForDataMap(event) {
     console.debug("ON UPDATE PATH FOR DATA MAP")
     console.debug("EVENT\n", event);
@@ -278,8 +276,6 @@ export class DMMComponent implements OnInit, OnChanges {
       mode: 'tree',
       modes: ['tree', 'code', 'view', 'preview'], // allowed modes
       onModeChange: function (newMode, oldMode) {
-
-
       },
 
       onCreateMenu: function (items, node) {
@@ -303,8 +299,6 @@ export class DMMComponent implements OnInit, OnChanges {
               //json2[path] = value
               //editor2.update(json2)
             });
-
-
         }
 
         if (path) {
@@ -343,7 +337,6 @@ export class DMMComponent implements OnInit, OnChanges {
         // will be empty.
         return items
       }
-
     };
 
     if (!mapperEditor) mapperEditor = new JSONEditor(this.mapperEditorContainer, options2, map);
@@ -351,7 +344,6 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   saveAsFile(): void {
-
     this.windowService.open(
       this.contentTemplate,
       { title: 'Window content from template', context: { text: 'some text to pass into template' } },
@@ -360,7 +352,7 @@ export class DMMComponent implements OnInit, OnChanges {
 
   saveAdapter() {
     this.dialogService.open(CreateMapAndAdapterComponent, { context: { sourceDataType: this.inputType || "json" } }).onClose.subscribe((adapter) => {
-      this.dmmService.saveMap(adapter, map, this.schemaJson);
+      this.dmmService.saveMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
     });
   }
 
