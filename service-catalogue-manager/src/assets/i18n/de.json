@@ -442,6 +442,9 @@
       "activate_catalogue": "Catalogue activation",
       "activate_catalogue_message": "Are you sure to activate the catalogue <strong>{{catalogueName}}</strong><br>? Once activated, you will not be able to edit it until you disabled it first.",
       "validationErrors": "There are validation errors in the Catalogue description."
+    },
+    "dmm" : {
+      "preview" : "Preview"
     }
   },
   "login": {

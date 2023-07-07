@@ -163,7 +163,8 @@
             <i class="mx-1 fas fa-file-import fa-lg"></i>
           </button>
           <div class="mb-2" id="load-json-schema">
-            <input [(ngModel)]="schemaFromFile" type="file" id="loadSchema" value="Load" (ngModelChange)="setSchemaFromFile($event)" />
+            <input [(ngModel)]="schemaFromFile" type="file" id="loadSchema" value="Load"
+              (ngModelChange)="setSchemaFromFile($event)" />
           </div>
 
           <div id="jsoneditor2"></div>
@@ -182,11 +183,13 @@
     </nb-accordion>
     <!--End Map Editor accordion-->
     <br>
-    <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="testAdapter()">
-      <i class="mx-1">{{ 'general.dmm.preview' | translate }}</i> </button>
+    <div class="center">
+      <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="testAdapter()">
+        <i class="mx-1">{{ 'general.dmm.preview' | translate }}</i> </button>
       &nbsp;
-    <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="saveAdapter()">
-      <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i> </button>
+      <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="saveAdapter()">
+        <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i> </button>
+    </div>
   </nb-card-footer>
 
 
