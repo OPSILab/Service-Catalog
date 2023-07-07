@@ -30,7 +30,7 @@ import { AvailableServicesService } from '../services/availableServices/availabl
 import { AddAdapterComponent } from '../services/available-adapters/add-adapter/add-adapter.component';
 import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-map-and-adapter.component';
 
-let json2, editor2, mapOptions: string[]
+let map, mapperEditor, mapOptions: string[]
 @Component({
   selector: 'app-root',
   templateUrl: './dmm.component.html',
@@ -40,11 +40,11 @@ let json2, editor2, mapOptions: string[]
 export class DMMComponent implements OnInit, OnChanges {
   @ViewChild('contentTemplate') contentTemplate: TemplateRef<any>;
 
-  editor: any;
+  sourceEditor: any;
   //editor2:any;
-  container: any;
-  container2: any;
-  container3: any;
+  sourceEditorContainer: any;
+  mapperEditorContainer: any;
+  outputEditorContainer: any;
   selectBox: any;
   inputType: any;
   public isNew = false;
@@ -58,16 +58,16 @@ export class DMMComponent implements OnInit, OnChanges {
   sourceRefFormat: string;
   //mapOptions: string[];
   paths: string[];
-  editor2: any;
+  mapperEditor: any;
   maps: any;
   mapper
   schemas
   selectedSchema
   //selectedPath
 
-  json3: any[];
-  editor3: any;
-  options3: any;
+  schemaJson: any[];
+  outputEditor: any;
+  outputEditorOptions: any;
   //json2
   sourceJson: any;
   schemaFromFile
@@ -87,14 +87,14 @@ export class DMMComponent implements OnInit, OnChanges {
   schemaChanged($event) {
     //console.debug($event)
     if (this.selectedSchema)
-      this.json3 = [
+      this.schemaJson = [
         this.schema()
       ];
-    if (!this.editor3) this.editor3 = new JSONEditor(this.container3, this.options3, this.json3);
-    else this.editor3.update(this.json3)
-    json2 = this.getAllNestedProperties(this.json3[0]);
+    //if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, this.schemaJson);
+    //else this.outputEditor.update(this.schemaJson)
+    map = this.getAllNestedProperties(this.schemaJson[0]);
     //console.debug("Line 88",editor2)
-    editor2.update(json2)
+    mapperEditor.update(map)
     //this.onUpdatePathForDataMap("");
   }
 
@@ -104,22 +104,22 @@ export class DMMComponent implements OnInit, OnChanges {
 
   setSchemaFromFile($event) {
     this.schemaFromFile = $event
-    this.json3 = [
+    this.schemaJson = [
       this.schemaFromFile
     ]
-    if (!this.editor3) this.editor3 = new JSONEditor(this.container3, this.options3, this.json3);
-    else this.editor3.update(this.json3)
-    json2 = this.getAllNestedProperties(this.json3[0]);
+    //if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, this.schemaJson);
+    //else this.outputEditor.update(this.schemaJson)
+    map = this.getAllNestedProperties(this.schemaJson[0]);
     //console.debug("Line 88",editor2)
-    editor2.update(json2)
+    mapperEditor.update(map)
   }
 
 
 
   async ngOnInit(): Promise<void> {
-    this.container = this.document.getElementById('jsoneditor');
-    this.container2 = this.document.getElementById('jsoneditor2');
-    this.container3 = this.document.getElementById('jsoneditor3');
+    this.sourceEditorContainer = this.document.getElementById('jsoneditor');
+    this.mapperEditorContainer = this.document.getElementById('jsoneditor2');
+    this.outputEditorContainer = this.document.getElementById('jsoneditor3');
     this.selectBox = <HTMLInputElement>this.document.getElementById('input-type');
     this.csvtable = this.document.getElementById('csv-table');
 
@@ -133,20 +133,6 @@ export class DMMComponent implements OnInit, OnChanges {
       modes: ['view', 'code'], // allowed modes
       onModeChange: function (newMode, oldMode) { },
     };
-
-    /*
-    const json = {
-      first: "first",
-      second: 2,
-      third: [1, 2, 3],
-      fourth: ["a", "b", "c"],
-      fith: {
-        first: "first",
-        second: 2,
-        third: [1, 2, 3],
-        fourth: ["a", "b", "c"]
-      }
-    };*/
 
     this.sourceJson = {
       first: "first",
@@ -162,20 +148,20 @@ export class DMMComponent implements OnInit, OnChanges {
     }
 
     //if (this.sourceJson)
-    this.editor = new JSONEditor(this.container, options, this.sourceJson);
+    this.sourceEditor = new JSONEditor(this.sourceEditorContainer, options, this.sourceJson);
 
-    this.options3 = {
+    this.outputEditorOptions = {
       mode: 'view',
       modes: ['view', 'preview'], // allowed modes
       onModeChange: function (newMode, oldMode) { },
     };
 
     if (this.selectedSchema)
-      this.json3 = [
+      this.schemaJson = [
         this.schema()
       ];
 
-    if (this.json3) this.editor3 = new JSONEditor(this.container3, this.options3, this.json3);
+    //if (this.schemaJson) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, this.schemaJson);
 
   }
 
@@ -193,9 +179,11 @@ export class DMMComponent implements OnInit, OnChanges {
 
   async testAdapter() {
     console.log("THIS IS THE OUTPUT\n\n\n\n")
-    let m = JSON.parse(editor2.getText())
+    let m = JSON.parse(mapperEditor.getText())
     m["targetDataModel"] = "DataModelTemp"
-    console.log(await this.dmmService.test("json", JSON.parse(this.editor.getText()), m, JSON.parse(this.editor3.getText())[0], ";"))
+    let o = await this.dmmService.test("json", JSON.parse(this.sourceEditor.getText()), m, this.schemaJson[0], ";")
+    if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, o);
+    else this.outputEditor.update(o)
   }
 
   getAllNestedProperties(obj) {
@@ -275,7 +263,7 @@ export class DMMComponent implements OnInit, OnChanges {
     console.debug("EVENT\n", event);
     console.debug("TYPEOF EVENT\n", typeof event)
     //console.log(this.editor.getText());
-    mapOptions = this.selectMapJsonOptions(this.editor.getText(), event);
+    mapOptions = this.selectMapJsonOptions(this.sourceEditor.getText(), event);
     console.log("---------------", mapOptions);
     this.setMapEditor();
   }
@@ -358,8 +346,8 @@ export class DMMComponent implements OnInit, OnChanges {
 
     };
 
-    if (!editor2) editor2 = new JSONEditor(this.container2, options2, json2);
-    else editor2.update(json2)
+    if (!mapperEditor) mapperEditor = new JSONEditor(this.mapperEditorContainer, options2, map);
+    else mapperEditor.update(map)
   }
 
   saveAsFile(): void {
@@ -372,7 +360,7 @@ export class DMMComponent implements OnInit, OnChanges {
 
   saveAdapter() {
     this.dialogService.open(CreateMapAndAdapterComponent, { context: { sourceDataType: this.inputType || "json" } }).onClose.subscribe((adapter) => {
-      this.dmmService.saveMap(adapter, json2, this.json3);
+      this.dmmService.saveMap(adapter, map, this.schemaJson);
     });
   }
 
@@ -393,17 +381,17 @@ export class DMMComponent implements OnInit, OnChanges {
 
           } else if (field=='source') {
 
-            if (!this.editor)
-              this.editor = new JSONEditor(this.container, {
+            if (!this.sourceEditor)
+              this.sourceEditor = new JSONEditor(this.sourceEditorContainer, {
                 mode: 'view',
                 modes: ['view', 'code'], // allowed modes
                 onModeChange: function (newMode, oldMode) { },
               }, JSON.parse(result.content));
 
             else
-              this.editor.setText(result.content);
+              this.sourceEditor.setText(result.content);
 
-            mapOptions = this.selectMapJsonOptions(this.editor.getText(), "");
+            mapOptions = this.selectMapJsonOptions(this.sourceEditor.getText(), "");
             //this.setMapEditor();
             console.debug("----THIS MAP OPTIONS-----\n", mapOptions)
             //mapOptions = this.getAllNestedProperties(JSON.parse(result.content));
@@ -474,6 +462,6 @@ export class DMMComponent implements OnInit, OnChanges {
 
 function updateMapper(path, value) {
   //console.debug("UPDATE MAPPER")
-  json2[path] = value
-  editor2.update(json2)
+  map[path] = value
+  mapperEditor.update(map)
 }
