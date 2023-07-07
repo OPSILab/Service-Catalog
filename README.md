@@ -141,6 +141,7 @@ Service Catalogue Suite uses following libraries and frameworks.
 | [Maven](https://maven.apache.org)                                                                              | >=3.5.0              | Apache License 2.0                      |
 | [JsonEditor](https://www.npmjs.com/package/jsoneditor)                                                                              | 9.10.0              | Apache License 2.0                      |
 | [Lodash](https://www.npmjs.com/package/lodash)                                                                              | 4.17.21              | MIT                      |
+| [urlencode](https://github.com/node-modules/urlencode)                                                                              | 1.1.0             | MIT                      |
 ---
 
 ### External Components
