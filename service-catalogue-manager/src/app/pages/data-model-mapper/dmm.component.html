@@ -162,11 +162,6 @@
             {{ 'general.editor.import' | translate }}
             <i class="mx-1 fas fa-file-import fa-lg"></i>
           </button>
-          <div class="mb-2" id="load-json-schema">
-            <input [(ngModel)]="schemaFromFile" type="file" id="loadSchema" value="Load"
-              (ngModelChange)="setSchemaFromFile($event)" />
-          </div>
-
           <div id="jsoneditor2"></div>
         </nb-accordion-item-body>
       </nb-accordion-item>
