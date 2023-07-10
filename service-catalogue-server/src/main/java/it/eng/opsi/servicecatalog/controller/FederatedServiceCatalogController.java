@@ -52,11 +52,12 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	@GetMapping(value = "/services", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getServices(@RequestParam(required = false) String name,
 			@RequestParam(required = false) String location, @RequestParam(required = false) String[] keywords,
-			@RequestParam(required = false) boolean completed,
 			@RequestParam(required = true) String remoteCatalogueID)
 			throws ServiceNotFoundException, URISyntaxException {
 
-		if (name != null || location != null || keywords != null || completed) {
+		boolean completed = true;
+
+		if (name != null || location != null || keywords != null) {
 
 			String stringifiedParams = "?";
 
@@ -88,7 +89,7 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 							: stringifiedParams.substring(0, stringifiedParams.length() - 1)));
 		}
 
-		return ResponseEntity.ok(catalogService.getFederatedServices(remoteCatalogueID, ""));
+		return ResponseEntity.ok(catalogService.getFederatedServices(remoteCatalogueID, "?completed=true"));
 	}
 
 	@Override
