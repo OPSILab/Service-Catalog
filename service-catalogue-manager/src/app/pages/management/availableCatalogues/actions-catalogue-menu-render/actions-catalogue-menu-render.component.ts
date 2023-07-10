@@ -185,6 +185,10 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
           data: 'refresh',
         },
         {
+          title: this.translate.instant('general.catalogues.download_metadata') as string,
+          data: 'Download metadata',
+        },
+        {
           title: this.translate.instant('general.catalogues.deactivate') as string,
           data: 'deregister',
         }
