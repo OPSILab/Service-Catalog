@@ -135,15 +135,9 @@ export class DMMComponent implements OnInit, OnChanges {
     };
 
     this.sourceJson = {
-      first: "first",
-      second: 2,
-      third: [1, 2, 3],
-      fourth: ["a", "b", "c"],
-      fith: {
-        first: "first",
-        second: 2,
-        third: [1, 2, 3],
-        fourth: ["a", "b", "c"]
+      "a": "a",
+      "b": {
+        "c": "c"
       }
     }
 
@@ -371,7 +365,7 @@ export class DMMComponent implements OnInit, OnChanges {
             this.displayCSV(this.csvSourceData, this.csvtable, this.separatorItem);
             mapOptions = this.csvSourceData.slice(0, this.csvSourceData.indexOf("\n")).split(this.separatorItem);
 
-          } else if (field=='source') {
+          } else if (field == 'source') {
 
             if (!this.sourceEditor)
               this.sourceEditor = new JSONEditor(this.sourceEditorContainer, {
@@ -392,7 +386,7 @@ export class DMMComponent implements OnInit, OnChanges {
             //console.log(this.paths);
             this.onUpdatePathForDataMap("")
           }
-          else if (field == 'schema'){
+          else if (field == 'schema') {
             this.setSchemaFromFile(JSON.parse(result.content))
           }
         }
