@@ -93,7 +93,7 @@ export class DialogDataMapComponent implements OnInit {
   confirm() {
     if (this.selectedItem.static)
       this.selectedProp = "static:" + this.selectedProp
-      if (this.selectedItem.concat)
+      if (this.selectedItem.concat || this.selectedItem.array)
       this.selectedProp = this.selectedProps
     this.ref.close(this.selectedProp);
     this.editedValue.emit(this.selectedProp);

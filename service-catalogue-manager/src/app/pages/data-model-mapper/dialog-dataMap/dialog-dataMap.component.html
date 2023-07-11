@@ -25,7 +25,7 @@
       <input fullWidth [ngModel]="selectedProp" nbInput type="text" style="width:400px;clear:both;float:none"
         [ngModelOptions]="{standalone: true}" />
     </div>
-    <div fullWidth *ngIf="selectedItem.concat" class="container-fluid col-xs-12">
+    <div fullWidth *ngIf="selectedItem.concat || selectedItem.array" class="container-fluid col-xs-12">
       <div class="row">
 
         <div style = "padding-top: 10px">
