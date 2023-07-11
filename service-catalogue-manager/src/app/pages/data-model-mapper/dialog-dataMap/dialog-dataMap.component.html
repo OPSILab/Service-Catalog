@@ -25,6 +25,21 @@
       <input fullWidth [ngModel]="selectedProp" nbInput type="text" style="width:400px;clear:both;float:none"
         [ngModelOptions]="{standalone: true}" />
     </div>
+    <div fullWidth *ngIf="selectedItem.concat" class="row justify-content-left p-3"
+      style="width:400px;clear:both;float:none">
+      <br>
+      <div>
+        <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+          (click)="elements.push('')">
+          <i class="mx-1">{{ 'general.dmm.add' | translate }}</i>
+        </button>
+      </div>
+      <br/>
+      <div *ngFor="let element of elements">
+        <input fullWidth [ngModel]="selectedProp" nbInput type="text" style="width:400px;clear:both;float:none"
+          [ngModelOptions]="{standalone: true}" />
+      </div>
+    </div>
 
   </nb-card-body>
   <nb-card-footer>

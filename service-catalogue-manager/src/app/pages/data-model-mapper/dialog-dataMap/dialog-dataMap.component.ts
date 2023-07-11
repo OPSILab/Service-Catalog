@@ -31,6 +31,8 @@ export class DialogDataMapComponent implements OnInit {
     array: false
   };
 
+  elements = [""]
+
   dataMap
 
   @Input() mapOptions: string[];
