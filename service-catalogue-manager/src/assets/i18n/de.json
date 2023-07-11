@@ -444,7 +444,9 @@
       "validationErrors": "There are validation errors in the Catalogue description."
     },
     "dmm" : {
-      "preview" : "Preview"
+      "preview" : "Preview",
+      "add_element" : "Add element",
+      "map" : "Map"
     }
   },
   "login": {

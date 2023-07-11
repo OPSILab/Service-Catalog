@@ -444,7 +444,9 @@
       "validationErrors": "Ci sono degli errori di validazione nella descrizione del Catalogo inserito."
     },
     "dmm": {
-      "preview": "Anteprima"
+      "preview": "Anteprima",
+      "add_element" : "Aggiungi elemento",
+      "map" : "Mappa"
     }
   },
   "login": {

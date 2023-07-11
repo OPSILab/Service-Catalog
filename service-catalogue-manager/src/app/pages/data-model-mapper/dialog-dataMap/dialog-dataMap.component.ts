@@ -21,7 +21,8 @@ import { takeUntil } from 'rxjs/operators';
 export class DialogDataMapComponent implements OnInit {
   private appConfig: AppConfig;
 
-  selectedProp: string //= 'Json';
+  selectedProp //= 'Json';
+  selectedProps = []
   public settings: unknown;
 
   selectedItem = {
@@ -31,7 +32,7 @@ export class DialogDataMapComponent implements OnInit {
     array: false
   };
 
-  elements = [""]
+  elements = [0]
 
   dataMap
 
@@ -84,9 +85,16 @@ export class DialogDataMapComponent implements OnInit {
     this.ref.close();
   }
 
+  concat(){
+    this.elements.push(this.elements.length)
+    console.debug(this.selectedProps)
+  }
+
   confirm() {
     if (this.selectedItem.static)
       this.selectedProp = "static:" + this.selectedProp
+      if (this.selectedItem.concat)
+      this.selectedProp = this.selectedProps
     this.ref.close(this.selectedProp);
     this.editedValue.emit(this.selectedProp);
   }

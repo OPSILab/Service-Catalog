@@ -1,6 +1,6 @@
 <nb-card style="width:470px;min-height:460px">
   <nb-card-header class="d-flex align-content-center justify-content-between">
-    <h5 class="">{{ 'general.mapper.map' | translate }}</h5>
+    <h5 class="">{{ 'general.dmm.map' | translate }}</h5>
     <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
       <i class="material-icons">close</i>
     </button>
@@ -25,19 +25,20 @@
       <input fullWidth [ngModel]="selectedProp" nbInput type="text" style="width:400px;clear:both;float:none"
         [ngModelOptions]="{standalone: true}" />
     </div>
-    <div fullWidth *ngIf="selectedItem.concat" class="row justify-content-left p-3"
-      style="width:400px;clear:both;float:none">
-      <br>
-      <div>
-        <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
-          (click)="elements.push('')">
-          <i class="mx-1">{{ 'general.dmm.add' | translate }}</i>
-        </button>
-      </div>
-      <br/>
-      <div *ngFor="let element of elements">
-        <input fullWidth [ngModel]="selectedProp" nbInput type="text" style="width:400px;clear:both;float:none"
-          [ngModelOptions]="{standalone: true}" />
+    <div fullWidth *ngIf="selectedItem.concat" class="container-fluid col-xs-12">
+      <div class="row">
+
+        <div style = "padding-top: 10px">
+          <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+            (click)="concat()">
+            <i class="mx-1">{{ 'general.dmm.add_element' | translate }}</i>
+          </button>
+        </div>
+
+        <div *ngFor="let element of elements" style = "padding-top: 10px">
+          <input fullWidth [(ngModel)]="this.selectedProps[this.selectedProps.length]" nbInput type="text" style="width:400px;clear:both;float:none"
+            [ngModelOptions]="{standalone: true}" />
+        </div>
       </div>
     </div>
 
