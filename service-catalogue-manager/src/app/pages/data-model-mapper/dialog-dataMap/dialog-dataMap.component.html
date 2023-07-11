@@ -13,7 +13,7 @@
     <nb-checkbox [(ngModel)]="selectedItem.concat" style="float:left; margin-left:15px">&nbsp;Concat</nb-checkbox>
     <br><br>
     <div fullWidth *ngIf="selectedItem.static" style="width:400px;clear:both;float:none">
-      <input [(ngModel)]="dataMap" fullWidth style="width:400px;clear:both;float:none" nbInput
+      <input [(ngModel)]="selectedProp" fullWidth style="width:400px;clear:both;float:none" nbInput
         placeholder="Put static data" />
     </div>
     <div fullWidth *ngIf="selectedItem.direct" class="row justify-content-left p-3"

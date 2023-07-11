@@ -74,11 +74,17 @@ export class DialogDataMapComponent implements OnInit {
     this.selectedProp = event.data
   }
 
+  static(value) {
+    this.selectedProp = "static:" + value
+  }
+
   cancel(): void {
     this.ref.close();
   }
 
   confirm() {
+    if (this.selectedItem.static)
+      this.selectedProp = "static:" + this.selectedProp
     this.ref.close(this.selectedProp);
     this.editedValue.emit(this.selectedProp);
   }
