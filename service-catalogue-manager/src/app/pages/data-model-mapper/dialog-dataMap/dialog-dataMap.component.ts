@@ -74,26 +74,38 @@ export class DialogDataMapComponent implements OnInit {
   }
 
   onUserRowSelect(event): void {
-    this.selectedProp = event.data
+    //if (this.selectedItem.concat || this.selectedItem.array)
+      //this.selectedProps[this.selectedProps.length] = event.data
+    //else
+      this.selectedProp = event.data
   }
 
-  static(value) {
+  onChangeStatic(value) {
     this.selectedProp = "static:" + value
+  }
+
+  static() {
+    this.selectedProps.push("static:" + this.selectedProp)
   }
 
   cancel(): void {
     this.ref.close();
   }
 
-  concat(){
-    this.elements.push(this.elements.length)
-    console.debug(this.selectedProps)
+  concat() {
+    if (this.selectedItem.static)
+      this.selectedProps.push("static:" + this.selectedProp)
+    else
+      this.selectedProps.push(this.selectedProp)
+    this.selectedProp = ""
+    //console.debug(this.selectedProps)
+
   }
 
   confirm() {
     if (this.selectedItem.static)
       this.selectedProp = "static:" + this.selectedProp
-      if (this.selectedItem.concat || this.selectedItem.array)
+    if (this.selectedItem.concat || this.selectedItem.array)
       this.selectedProp = this.selectedProps
     this.ref.close(this.selectedProp);
     this.editedValue.emit(this.selectedProp);

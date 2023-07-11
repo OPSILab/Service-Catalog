@@ -13,8 +13,14 @@
     <nb-checkbox [(ngModel)]="selectedItem.concat" style="float:left; margin-left:15px">&nbsp;Concat</nb-checkbox>
     <br><br>
     <div fullWidth *ngIf="selectedItem.static" style="width:400px;clear:both;float:none">
-      <input [(ngModel)]="selectedProp" fullWidth style="width:400px;clear:both;float:none" nbInput
-        placeholder="Put static data" />
+      <!--
+      <input placeholder="Put static data" *ngIf="selectedItem.concat || selectedItem.array" fullWidth
+        [(ngModel)]="this.selectedProps[this.selectedProps.length-1]" nbInput type="text"
+        style="width:400px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
+        -->
+      <input placeholder="Put static data" fullWidth
+        [(ngModel)]="selectedProp" nbInput type="text" style="width:400px;clear:both;float:none"
+        [ngModelOptions]="{standalone: true}" />
     </div>
     <div fullWidth *ngIf="selectedItem.direct" class="row justify-content-left p-3"
       style="width:400px;clear:both;float:none">
@@ -22,9 +28,12 @@
         (userRowSelect)="onUserRowSelect($event)">
       </ng2-smart-table>
       <br>
-      <input fullWidth [ngModel]="selectedProp" nbInput type="text" style="width:400px;clear:both;float:none"
-        [ngModelOptions]="{standalone: true}" />
+
+      <input fullWidth [(ngModel)]="selectedProp" nbInput type="text"
+        style="width:400px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
     </div>
+
+    <!--
     <div fullWidth *ngIf="selectedItem.concat || selectedItem.array" class="container-fluid col-xs-12">
       <div class="row">
 
@@ -42,8 +51,20 @@
       </div>
     </div>
 
+    -->
+
   </nb-card-body>
   <nb-card-footer>
+    <div fullWidth *ngIf="selectedItem.concat || selectedItem.array" class="container-fluid col-xs-12">
+      <div class="row">
+
+        <div style="padding-top: 10px">
+          <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="concat()">
+            <i class="mx-1">{{ 'general.dmm.add_element' | translate }}</i>
+          </button>
+        </div>
+      </div>
+    </div>
     <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
       <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i>
     </button>
