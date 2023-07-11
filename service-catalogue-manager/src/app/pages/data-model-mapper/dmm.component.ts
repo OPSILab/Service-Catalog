@@ -30,7 +30,7 @@ import { AvailableServicesService } from '../services/availableServices/availabl
 import { AddAdapterComponent } from '../services/available-adapters/add-adapter/add-adapter.component';
 import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-map-and-adapter.component';
 
-let map, mapperEditor, mapOptions: string[]
+let map = {}, mapperEditor, mapOptions: string[]
 @Component({
   selector: 'app-root',
   templateUrl: './dmm.component.html',
@@ -154,6 +154,11 @@ export class DMMComponent implements OnInit, OnChanges {
       this.schemaJson = [
         this.schema()
       ];
+
+    this.setMapEditor();
+
+    if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, {"preview" : "set the source, set the json map and click preview to see the output json preview"});
+    else this.outputEditor.update({"preview" : "set the source, set the json map and click preview to see the output json preview"})
 
     //if (this.schemaJson) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, this.schemaJson);
 
