@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card style="width:470px;min-height:460px">
   <nb-card-header class="d-flex align-content-center justify-content-between">
     <h5 class="">{{ 'general.mapper.map' | translate }}</h5>
     <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
@@ -6,34 +6,28 @@
     </button>
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
-    <div class="row justify-content-left p-3">Select operator </div>
-    <nb-select fullWidth placeholder="Select source" [(ngModel)]="selectedItem">
-
-        <nb-option value="direct">Direct</nb-option>
-        <nb-option value="static">Static</nb-option>
-        <nb-option value="array">Array</nb-option>
-        <nb-option value="concat">Concat</nb-option>
-
-
-    </nb-select>
-    <div *ngIf="selectedItem === 'static'" class="row justify-content-left p-3">
-
-      <input [(ngModel)]="dataMap" nbInput placeholder="Put static data" />
-
+    <div class="row justify-content-left p-3">Select operator</div>
+    <nb-checkbox [(ngModel)]="selectedItem.direct" style="float:left; margin-left:15px">&nbsp;Direct</nb-checkbox>&nbsp;
+    <nb-checkbox [(ngModel)]="selectedItem.static" style="float:left; margin-left:15px">&nbsp;Static</nb-checkbox>&nbsp;
+    <nb-checkbox style="float:left; margin-left:15px" [(ngModel)]="selectedItem.array">&nbsp;Array</nb-checkbox>&nbsp;
+    <nb-checkbox [(ngModel)]="selectedItem.concat" style="float:left; margin-left:15px">&nbsp;Concat</nb-checkbox>
+    <br><br>
+    <div fullWidth *ngIf="selectedItem.static" style="width:400px;clear:both;float:none">
+      <input [(ngModel)]="dataMap" fullWidth style="width:400px;clear:both;float:none" nbInput
+        placeholder="Put static data" />
     </div>
-    <div *ngIf="selectedItem === 'direct'" class="row justify-content-left p-3">
-
-      <nb-select fullWidth placeholder="Select source attribute" [(ngModel)]="selectedProp">
-        <nb-option *ngFor="let mapOption of mapOptions" value={{mapOption}}>
-          {{mapOption}}
-        </nb-option>
-
-      </nb-select>
-
+    <div fullWidth *ngIf="selectedItem.direct" class="row justify-content-left p-3"
+      style="width:400px;clear:both;float:none">
+      <ng2-smart-table fullWidth style="width:400px;clear:both;float:none" [settings]="settings" [source]="source"
+        (userRowSelect)="onUserRowSelect($event)">
+      </ng2-smart-table>
+      <br>
+      <input fullWidth [ngModel]="selectedProp" nbInput type="text" style="width:400px;clear:both;float:none"
+        [ngModelOptions]="{standalone: true}" />
     </div>
 
   </nb-card-body>
-  <nb-card-footer >
+  <nb-card-footer>
     <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
       <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i>
     </button>

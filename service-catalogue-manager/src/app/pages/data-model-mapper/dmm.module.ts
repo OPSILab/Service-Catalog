@@ -25,11 +25,15 @@ import { DMMService } from './dmm.service';
 import { HttpClient } from '@angular/common/http';
 import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.component';
 import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-map-and-adapter.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { AddKeyComponent } from './dialog-dataMap/add-key/add-key.component';
+
 
 
 
 @NgModule({
   imports: [
+    Ng2SmartTableModule,
     CommonModule,
     DMMRoutingModule,
     NbAccordionModule,
@@ -52,7 +56,7 @@ import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-ma
     TranslateModule.forChild({}),
     NbAutocompleteModule
   ],
-  declarations: [DMMComponent,DialogImportComponent,DialogDataMapComponent, CreateMapAndAdapterComponent,],
+  declarations: [DMMComponent,DialogImportComponent,DialogDataMapComponent, CreateMapAndAdapterComponent, AddKeyComponent,],
   providers: [DMMService],
   entryComponents: [
     DialogImportComponent,
