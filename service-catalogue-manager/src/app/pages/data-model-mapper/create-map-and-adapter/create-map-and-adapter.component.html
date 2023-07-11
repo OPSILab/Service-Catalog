@@ -13,25 +13,12 @@
       <form>
         <label for="adapterId" fullWidth>{{ 'general.adapters.adapterId' | translate }}</label>
         <br>
-        <input [ngModel]="adapterId" (ngModelChange)="onAdapterIDChange($event)" (click)="loadMappers()" nbInput
-          type="text" fullWidth [placeholder] = placeholders.adapterId [nbAutocomplete]="IDautoComplete"
-          [ngModelOptions]="{standalone: true}" />
-        <nb-autocomplete #IDautoComplete>
-          <nb-option *ngFor="let option of filteredIDOptions$ | async" [value]="option">
-            {{ option }}
-          </nb-option>
-        </nb-autocomplete>
+        <input [(ngModel)]="adapterId" nbInput type="text" fullWidth [placeholder] = placeholders.adapterId [ngModelOptions]="{standalone: true}" />
         <br>
         <br>
         <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
         <br>
-        <input [ngModel]="name" (ngModelChange)="onNameChange($event)" (click)="loadMappers()" nbInput type="text"
-            fullWidth placeholder="{{ 'general.adapters.name' | translate }}" [nbAutocomplete]="nameAutoComplete" [ngModelOptions]="{standalone: true}"/>
-        <nb-autocomplete #nameAutoComplete>
-          <nb-option *ngFor="let n of filteredNameOptions$ | async" [value]="n">
-            {{ n }}
-          </nb-option>
-        </nb-autocomplete>
+        <input [(ngModel)]="name" nbInput type="text" fullWidth placeholder="{{ 'general.adapters.name' | translate }}" [ngModelOptions]="{standalone: true}"/>
         <br><br>
         <label for="status">{{ 'general.adapters.status' | translate }}</label>
         <br>
