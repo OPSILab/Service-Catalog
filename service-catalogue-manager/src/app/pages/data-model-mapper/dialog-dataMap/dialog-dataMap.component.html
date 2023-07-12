@@ -6,11 +6,32 @@
     </button>
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
-    <div class="row justify-content-left p-3">Select operator</div>
+    <div class="row justify-content-left p-3" *ngIf="selectedItem.concat==undefined">Single or multi input</div>
+    <nb-radio-group [(ngModel)]="selectedItem.concat" *ngIf="selectedItem.concat==undefined">
+      <nb-radio [value]=true>
+        {{ "multi" }}
+      </nb-radio>
+      <nb-radio [value]=false>
+        {{ "single" }}
+      </nb-radio>
+    </nb-radio-group>
+    <div class="row justify-content-left p-3" *ngIf="selectedItem.concat!=undefined">Direct or static input</div>
+    <nb-radio-group [(ngModel)]="selectedItem.direct" (ngModelChange)="selectedItem.static = !selectedItem.direct"
+      *ngIf="selectedItem.concat!=undefined">
+      <nb-radio [value]=true>
+        {{ "direct" }}
+      </nb-radio>
+      <nb-radio [value]=false>
+        {{ "static" }}
+      </nb-radio>
+    </nb-radio-group>
+
+    <!--
     <nb-checkbox [(ngModel)]="selectedItem.direct" style="float:left; margin-left:15px">&nbsp;Direct</nb-checkbox>&nbsp;
     <nb-checkbox [(ngModel)]="selectedItem.static" style="float:left; margin-left:15px">&nbsp;Static</nb-checkbox>&nbsp;
     <nb-checkbox style="float:left; margin-left:15px" [(ngModel)]="selectedItem.array">&nbsp;Array</nb-checkbox>&nbsp;
     <nb-checkbox [(ngModel)]="selectedItem.concat" style="float:left; margin-left:15px">&nbsp;Concat</nb-checkbox>
+    -->
     <br><br>
     <div fullWidth *ngIf="selectedItem.static" style="width:400px;clear:both;float:none">
       <!--
@@ -18,9 +39,13 @@
         [(ngModel)]="this.selectedProps[this.selectedProps.length-1]" nbInput type="text"
         style="width:400px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
         -->
-      <input placeholder="Put static data" fullWidth
-        [(ngModel)]="selectedProp" nbInput type="text" style="width:400px;clear:both;float:none"
-        [ngModelOptions]="{standalone: true}" />
+      <input placeholder="Put static data" [(ngModel)]="selectedProp" nbInput type="text"
+        style="width: 250px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
+
+      <button style = "float: right" *ngIf="selectedItem.concat || selectedItem.array" nbButton appearance="outline" shape="semi-round"
+        size="medium" status="info" (click)="concat()">
+        <i class="mx-1">{{ 'general.dmm.add_element' | translate }}</i>
+      </button>
     </div>
     <div fullWidth *ngIf="selectedItem.direct" class="row justify-content-left p-3"
       style="width:400px;clear:both;float:none">
@@ -29,8 +54,8 @@
       </ng2-smart-table>
       <br>
 
-      <input fullWidth [(ngModel)]="selectedProp" nbInput type="text"
-        style="width:400px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
+      <input fullWidth [(ngModel)]="selectedProp" nbInput type="text" style="width:400px;clear:both;float:none"
+        [ngModelOptions]="{standalone: true}" />
     </div>
 
     <!--
@@ -55,17 +80,14 @@
 
   </nb-card-body>
   <nb-card-footer>
-    <div fullWidth *ngIf="selectedItem.concat || selectedItem.array" class="container-fluid col-xs-12">
-      <div class="row">
 
-        <div style="padding-top: 10px">
-          <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="concat()">
-            <i class="mx-1">{{ 'general.dmm.add_element' | translate }}</i>
-          </button>
-        </div>
-      </div>
-    </div>
-    <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
+    <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+      (click)="selectedItem.concat=undefined">
+      <i class="mx-1">{{ 'general.dmm.back' | translate }}</i>
+    </button>
+    &nbsp;
+    <button style="float: right" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+      (click)="confirm()">
       <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i>
     </button>
   </nb-card-footer>

@@ -26,11 +26,18 @@ export class DialogDataMapComponent implements OnInit {
   public settings: unknown;
 
   selectedItem = {
-    direct: false,
-    concat: false,
-    static: false,
-    array: false
+    direct: undefined,
+    concat: undefined,
+    static: undefined,
+    array: undefined
   };
+
+  options = [ "direct",
+    "concat",
+    "static",
+    "array"]
+
+    selectedOption
 
   elements = [0]
 

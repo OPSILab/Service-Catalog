@@ -446,7 +446,8 @@
     "dmm": {
       "preview": "Anteprima",
       "add_element" : "Aggiungi elemento",
-      "map" : "Mappa"
+      "map" : "Mappa",
+      "back" : "Indietro"
     }
   },
   "login": {
