@@ -70,12 +70,12 @@ export class DialogDataMapComponent implements OnInit {
         delete: false,
       },
       columns: {
-        serviceName: {
+        option: {
           title: "Select the source key",
           type: 'text',
-          filter: false,
+          //filter: false,
           width: '100%',
-          valuePrepareFunction: (cell, row: any) => row
+          valuePrepareFunction: (cell, row: any) => row.option
         }
       },
     };
@@ -85,7 +85,7 @@ export class DialogDataMapComponent implements OnInit {
     //if (this.selectedItem.concat || this.selectedItem.array)
     //this.selectedProps[this.selectedProps.length] = event.data
     //else
-    this.selectedProp = event.data
+    this.selectedProp = event.data.option
   }
 
   onChangeStatic(value) {
@@ -123,8 +123,12 @@ export class DialogDataMapComponent implements OnInit {
   }
 
   async ngOnInit() {
+    let sourceMapOptions = []
     console.log("MAP OPTIONS\n", this.mapOptions)
-    void this.source.load(this.mapOptions)
+    for (let option in this.mapOptions)
+      sourceMapOptions[option] = { option: this.mapOptions[option] }
+
+    void this.source.load(sourceMapOptions)
   }
 
   onUpdate($event) { this.filteredMapOptions$ = of(this.filterMapOption($event)) };
