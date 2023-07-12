@@ -48,19 +48,20 @@
   <nb-card-header class="h3"> Data Model Mapper </nb-card-header>
 
   <nb-card-body class="row justify-content-center">
-    <ng-container *ngIf="!isNew; then updateButton; else createButton"> </ng-container>
+    <ng-container *ngIf="isNew; then updateButton; else createButton"> </ng-container>
 
     <ng-template #createButton>
       <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
-        (click)="openSaveToRegistryDialog()">
+        (click)="saveAdapter()">
         {{ 'general.save' | translate }}
         <i class="mx-1 material-icons">save</i>
       </button>
     </ng-template>
     <ng-template #updateButton>
-      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary">
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
+      (click)="updateAdapter()">
         {{ 'general.editor.update' | translate }}
-        <i class="mx-1 material-icons">save</i>
+        <i class="mx-1 material-icons">update</i>
       </button>
     </ng-template>
     <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning">

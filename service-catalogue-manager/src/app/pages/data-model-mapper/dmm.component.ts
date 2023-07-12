@@ -47,7 +47,7 @@ export class DMMComponent implements OnInit, OnChanges {
   outputEditorContainer: any;
   selectBox: any;
   inputType: any;
-  public isNew = false;
+  isNew = false;
   separatorItem = ';';
   csvSourceData: string;
   sourceRef: string = '';
