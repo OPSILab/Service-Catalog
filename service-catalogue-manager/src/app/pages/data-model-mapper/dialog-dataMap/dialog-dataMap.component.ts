@@ -100,9 +100,9 @@ export class DialogDataMapComponent implements OnInit {
     this.ref.close();
   }
 
-  back(){
+  back() {
     for (const [key, value] of Object.entries(this.selectedItem))
-      this.selectedItem[key]=undefined
+      this.selectedItem[key] = undefined
   }
 
   concat() {
@@ -119,10 +119,10 @@ export class DialogDataMapComponent implements OnInit {
   }
 
   confirm() {
-    if (this.selectedItem.static)
-      this.selectedProp = "static:" + this.selectedProp
     if (this.selectedItem.concat || this.selectedItem.array)
       this.selectedProp = this.selectedProps
+    else if (this.selectedItem.static)
+      this.selectedProp = "static:" + this.selectedProp
     this.ref.close(this.selectedProp);
     this.editedValue.emit(this.selectedProp);
   }

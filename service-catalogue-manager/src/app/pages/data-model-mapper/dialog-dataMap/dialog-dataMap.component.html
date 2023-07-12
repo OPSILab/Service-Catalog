@@ -47,26 +47,32 @@
         <i class="mx-1">{{ 'general.dmm.add_element' | translate }}</i>
       </button>
       <div style="padding-top: 20px;"></div>
-      <input fullWidth style="width:400px;clear:both;float:none" [(ngModel)]="spreadProps"
-        nbInput type="text" [ngModelOptions]="{standalone: true}" />
+      <input *ngIf="selectedItem.concat || selectedItem.array" fullWidth style="width:400px;clear:both;float:none" [(ngModel)]="spreadProps" nbInput type="text"
+        [ngModelOptions]="{standalone: true}" disabled/>
+
+      <input *ngIf="!selectedItem.concat && !selectedItem.array" fullWidth style="width:400px;clear:both;float:none" [(ngModel)]="selectedProp" nbInput type="text"
+        [ngModelOptions]="{standalone: true}" placeholder="Put static value"/>
     </div>
-    <div fullWidth *ngIf="selectedItem.direct"
-      style="width:400px;clear:both;float:none">
+    <div fullWidth *ngIf="selectedItem.direct" style="width:400px;clear:both;float:none">
       <ng2-smart-table fullWidth style="width:400px;clear:both;float:none" [settings]="settings" [source]="source"
         (userRowSelect)="onUserRowSelect($event)">
       </ng2-smart-table>
       <br>
 
-      <input *ngIf="selectedItem.concat || selectedItem.array" placeholder="Put input field name" [(ngModel)]="selectedProp"
-        nbInput type="text" style="width: 250px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
+      <input *ngIf="selectedItem.concat || selectedItem.array" placeholder="Put input field name"
+        [(ngModel)]="selectedProp" nbInput type="text" style="width: 250px;clear:both;float:none"
+        [ngModelOptions]="{standalone: true}" />
 
       <button style="float: right" *ngIf="selectedItem.concat || selectedItem.array" nbButton appearance="outline"
         shape="semi-round" size="medium" status="info" (click)="concat()">
         <i class="mx-1">{{ 'general.dmm.add_element' | translate }}</i>
       </button>
       <div style="padding-top: 20px;"></div>
-      <input fullWidth style="width:400px;clear:both;float:none" [(ngModel)]="spreadProps"
-        nbInput type="text" [ngModelOptions]="{standalone: true}" />
+      <input *ngIf="selectedItem.concat || selectedItem.array" fullWidth style="width:400px;clear:both;float:none" [(ngModel)]="spreadProps" nbInput type="text"
+        [ngModelOptions]="{standalone: true}" disabled/>
+
+      <input *ngIf="!selectedItem.concat && !selectedItem.array" fullWidth style="width:400px;clear:both;float:none" [(ngModel)]="selectedProp" nbInput type="text"
+        [ngModelOptions]="{standalone: true}" placeholder="Put input field name"/>
     </div>
 
     <!--
@@ -92,8 +98,7 @@
   </nb-card-body>
   <nb-card-footer>
 
-    <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
-      (click)="back()">
+    <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="back()">
       <i class="mx-1">{{ 'general.dmm.back' | translate }}</i>
     </button>
     &nbsp;
