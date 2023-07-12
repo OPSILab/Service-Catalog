@@ -362,6 +362,8 @@ export class DMMComponent implements OnInit, OnChanges {
 
   updateCSVTable(){
     this.displayCSV(this.csvSourceData, this.csvtable, this.separatorItem)
+    mapOptions = this.csvSourceData.slice(0, this.csvSourceData.indexOf("\n")).split(this.separatorItem)
+    this.setMapEditor();
   }
 
   import(field, typeSource: string): void {
