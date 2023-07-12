@@ -130,7 +130,7 @@
 
             <div class="mb-3" id="csveditor">
 
-              <nb-tabset>
+              <nb-tabset (click)="updateCSVTable()">
                 <nb-tab tabTitle="CSV text">
                   <textarea id="textarea" nbInput rows="10" fullWidth=true placeholder="Enter CVS text..."
                     [(ngModel)]="csvSourceData"></textarea>

@@ -52,6 +52,7 @@ export class DMMComponent implements OnInit, OnChanges {
   csvSourceData: string;
   sourceRef: string = '';
   typeSource: string;
+  table
 
   flipped = false;
   csvtable: any;
@@ -71,6 +72,7 @@ export class DMMComponent implements OnInit, OnChanges {
   //json2
   sourceJson: any;
   schemaFromFile
+  divElement;
 
   toggleView() {
     this.flipped = !this.flipped;
@@ -82,7 +84,10 @@ export class DMMComponent implements OnInit, OnChanges {
     private windowService: NbWindowService,
     private availableServicesService: AvailableServicesService,
     private dmmService: DMMService,
-  ) { }
+  ) {
+    this.divElement = document.createElement('div')
+    this.table = document.createElement('table');
+  }
 
   schemaChanged($event) {
     //console.debug($event)
@@ -355,6 +360,10 @@ export class DMMComponent implements OnInit, OnChanges {
     });
   }
 
+  updateCSVTable(){
+    //this.displayCSV(this.csvSourceData, this.csvtable, this.separatorItem)
+  }
+
   import(field, typeSource: string): void {
     this.typeSource = typeSource;
     this.dialogService
@@ -413,15 +422,15 @@ export class DMMComponent implements OnInit, OnChanges {
 
   displayCSV(csvData: string, element: HTMLElement, separator: string) {
     // Split the CSV data into an array of rows
-    var divElement = document.createElement('div');
-    divElement.style.overflowY = "auto";
-    divElement.style.height = "200px";
+    //var divElement = document.createElement('div');
+    this.divElement.style.overflowY = "auto";
+    this.divElement.style.height = "200px";
 
     const rows = csvData.split('\n');
 
     // Create a table element
-    var table = document.createElement('table');
-    table.className = 'table table-striped';
+    //var table = document.createElement('table');
+    this.table.className = 'table table-striped';
 
     // Loop through each row in the CSV data
     rows.forEach((rowData, index) => {
@@ -440,12 +449,15 @@ export class DMMComponent implements OnInit, OnChanges {
       });
 
       // Add the row to the table
-      table.appendChild(row);
+      this.table.appendChild(row);
     });
 
     // Add the table to the document
-    divElement.appendChild(table);
-    element.appendChild(divElement);
+    console.debug(this.divElement)
+
+    this.divElement.appendChild(this.table);
+    element.setAttribute("csv-table",this.divElement)
+    //element.appendChild(this.divElement);
   }
 
 
