@@ -52,7 +52,7 @@ export class DMMComponent implements OnInit, OnChanges {
   csvSourceData: string;
   sourceRef: string = '';
   typeSource: string;
-  table
+  //table
 
   flipped = false;
   csvtable: any;
@@ -72,7 +72,7 @@ export class DMMComponent implements OnInit, OnChanges {
   //json2
   sourceJson: any;
   schemaFromFile
-  divElement;
+  //divElement;
 
   toggleView() {
     this.flipped = !this.flipped;
@@ -85,8 +85,8 @@ export class DMMComponent implements OnInit, OnChanges {
     private availableServicesService: AvailableServicesService,
     private dmmService: DMMService,
   ) {
-    this.divElement = document.createElement('div')
-    this.table = document.createElement('table');
+    //divElement = document.createElement('div')
+    //table = document.createElement('table');
   }
 
   schemaChanged($event) {
@@ -361,7 +361,7 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   updateCSVTable(){
-    //this.displayCSV(this.csvSourceData, this.csvtable, this.separatorItem)
+    this.displayCSV(this.csvSourceData, this.csvtable, this.separatorItem)
   }
 
   import(field, typeSource: string): void {
@@ -422,15 +422,15 @@ export class DMMComponent implements OnInit, OnChanges {
 
   displayCSV(csvData: string, element: HTMLElement, separator: string) {
     // Split the CSV data into an array of rows
-    //var divElement = document.createElement('div');
-    this.divElement.style.overflowY = "auto";
-    this.divElement.style.height = "200px";
+    var divElement = document.createElement('div');
+    divElement.style.overflowY = "auto";
+    divElement.style.height = "200px";
 
     const rows = csvData.split('\n');
 
     // Create a table element
-    //var table = document.createElement('table');
-    this.table.className = 'table table-striped';
+    var table = document.createElement('table');
+    table.className = 'table table-striped';
 
     // Loop through each row in the CSV data
     rows.forEach((rowData, index) => {
@@ -449,15 +449,17 @@ export class DMMComponent implements OnInit, OnChanges {
       });
 
       // Add the row to the table
-      this.table.appendChild(row);
+      table.appendChild(row);
     });
 
     // Add the table to the document
-    console.debug(this.divElement)
+    console.debug(element)
 
-    this.divElement.appendChild(this.table);
-    element.setAttribute("csv-table",this.divElement)
-    //element.appendChild(this.divElement);
+    divElement.appendChild(table);
+    element.textContent = ""
+    console.debug(element)
+    console.debug(divElement)
+    element.appendChild(divElement);
   }
 
 
