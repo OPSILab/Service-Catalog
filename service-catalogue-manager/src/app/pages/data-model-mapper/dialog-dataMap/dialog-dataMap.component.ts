@@ -22,6 +22,7 @@ export class DialogDataMapComponent implements OnInit {
   private appConfig: AppConfig;
 
   selectedProp //= 'Json';
+  spreadProps = ""
   selectedProps = []
   public settings: unknown;
 
@@ -32,12 +33,12 @@ export class DialogDataMapComponent implements OnInit {
     array: undefined
   };
 
-  options = [ "direct",
+  options = ["direct",
     "concat",
     "static",
     "array"]
 
-    selectedOption
+  selectedOption
 
   elements = [0]
 
@@ -82,9 +83,9 @@ export class DialogDataMapComponent implements OnInit {
 
   onUserRowSelect(event): void {
     //if (this.selectedItem.concat || this.selectedItem.array)
-      //this.selectedProps[this.selectedProps.length] = event.data
+    //this.selectedProps[this.selectedProps.length] = event.data
     //else
-      this.selectedProp = event.data
+    this.selectedProp = event.data
   }
 
   onChangeStatic(value) {
@@ -105,6 +106,9 @@ export class DialogDataMapComponent implements OnInit {
     else
       this.selectedProps.push(this.selectedProp)
     this.selectedProp = ""
+    this.spreadProps = ""
+    for (let prop of this.selectedProps)
+      this.spreadProps += prop + ", "
     //console.debug(this.selectedProps)
 
   }
