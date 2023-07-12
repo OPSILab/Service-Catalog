@@ -100,6 +100,11 @@ export class DialogDataMapComponent implements OnInit {
     this.ref.close();
   }
 
+  back(){
+    for (const [key, value] of Object.entries(this.selectedItem))
+      this.selectedItem[key]=undefined
+  }
+
   concat() {
     if (this.selectedItem.static)
       this.selectedProps.push("static:" + this.selectedProp)
