@@ -30,7 +30,8 @@ export class DialogDataMapComponent implements OnInit {
     direct: undefined,
     concat: undefined,
     static: undefined,
-    array: undefined
+    array: undefined,
+    base64: undefined
   };
 
   options = ["direct",
@@ -119,7 +120,9 @@ export class DialogDataMapComponent implements OnInit {
   }
 
   confirm() {
-    if (this.selectedItem.concat || this.selectedItem.array)
+    if (this.selectedItem.base64)
+      this.selectedProp = "encode:base64:" + JSON.stringify(this.selectedProps)
+    else if (this.selectedItem.concat || this.selectedItem.array)
       this.selectedProp = this.selectedProps
     else if (this.selectedItem.static)
       this.selectedProp = "static:" + this.selectedProp
@@ -136,6 +139,12 @@ export class DialogDataMapComponent implements OnInit {
     void this.source.load(sourceMapOptions)
   }
 
+  encodeChange($event){
+    if ($event) {
+      this.selectedItem.concat = false
+      this.selectedItem.array = false
+    }
+  }
   onUpdate($event) { this.filteredMapOptions$ = of(this.filterMapOption($event)) };
 
 
