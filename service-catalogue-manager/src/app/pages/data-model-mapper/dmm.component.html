@@ -51,19 +51,21 @@
     <ng-container *ngIf="isNew; then updateButton; else createButton"> </ng-container>
 
     <ng-template #createButton>
-      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
-        (click)="saveAdapter()">
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary" (click)="saveAdapter()">
         {{ 'general.save' | translate }}
         <i class="mx-1 material-icons">save</i>
       </button>
     </ng-template>
     <ng-template #updateButton>
-      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
-      (click)="updateAdapter()">
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary" (click)="updateAdapter()">
         {{ 'general.editor.update' | translate }}
         <i class="mx-1 material-icons">update</i>
       </button>
     </ng-template>
+    <button nbButton class="mx-4" shape="rectangle" size="medium" status="success" (click)="testAdapter()">
+      {{ 'general.dmm.preview' | translate }}
+    </button>
+    <!--
     <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning">
       {{ 'general.editor.export' | translate }}
       <i class="mx-1 fas fa-file-export fa-lg"></i>
@@ -72,6 +74,7 @@
       {{ 'general.editor.import' | translate }}
       <i class="mx-1 fas fa-file-import fa-lg"></i>
     </button>
+    -->
   </nb-card-body>
 
   <nb-card-footer>
@@ -107,7 +110,8 @@
               </nb-select>
 
             </div>
-            <div style = "height:500px" id="jsoneditor" (click)="onUpdatePathForDataMap('')" (focusout)="onUpdatePathForDataMap('')" (blur)="onUpdatePathForDataMap('')"></div>
+            <div style="height:500px" id="jsoneditor" (click)="onUpdatePathForDataMap('')"
+              (focusout)="onUpdatePathForDataMap('')" (blur)="onUpdatePathForDataMap('')"></div>
 
           </div>
           <div class="mb-2" id="csv-input" style="display:none;">
@@ -163,7 +167,7 @@
             {{ 'general.editor.import' | translate }}
             <i class="mx-1 fas fa-file-import fa-lg"></i>
           </button>
-          <div style = "height:500px" id="jsoneditor2"></div>
+          <div style="height:500px" id="jsoneditor2"></div>
         </nb-accordion-item-body>
       </nb-accordion-item>
 
@@ -173,18 +177,20 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body>
 
-          <div style = "height:500px" id="jsoneditor3"></div>
+          <div style="height:500px" id="jsoneditor3"></div>
         </nb-accordion-item-body>
       </nb-accordion-item>
     </nb-accordion>
     <!--End Map Editor accordion-->
     <br>
     <div class="center">
+      <!--
       <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="testAdapter()">
         <i class="mx-1">{{ 'general.dmm.preview' | translate }}</i> </button>
       &nbsp;
       <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="saveAdapter()">
         <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i> </button>
+      -->
     </div>
   </nb-card-footer>
 
