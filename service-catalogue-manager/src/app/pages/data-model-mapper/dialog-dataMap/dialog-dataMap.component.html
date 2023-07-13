@@ -45,16 +45,18 @@
     <nb-checkbox [(ngModel)]="selectedItem.static" style="float:left; margin-left:15px">&nbsp;Static</nb-checkbox>&nbsp;
     <nb-checkbox style="float:left; margin-left:15px" [(ngModel)]="selectedItem.array">&nbsp;Array</nb-checkbox>&nbsp;
     <nb-checkbox [(ngModel)]="selectedItem.concat" style="float:left; margin-left:15px">&nbsp;Concat</nb-checkbox>
-    -->
-    <br><br>
+
+    <br><br>-->
     <div fullWidth *ngIf="selectedItem.static" style="width:400px;clear:both;float:none">
       <!--
       <input placeholder="Put static data" *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" fullWidth
         [(ngModel)]="this.selectedProps[this.selectedProps.length-1]" nbInput type="text"
         style="width:400px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
         -->
+        <p>Insert your static value
+        </p>
       <div *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" style="padding-top: 20px;"></div>
-      <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" placeholder="Put static data"
+      <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64 && !selectedItem.direct" placeholder="Put static data"
         [(ngModel)]="selectedProp" nbInput type="text" style="width: 250px;clear:both;float:none"
         [ngModelOptions]="{standalone: true}" />
 
@@ -63,10 +65,12 @@
         <i class="mx-1">{{ 'general.dmm.add_element' | translate }}</i>
       </button>
       <div style="padding-top: 20px;"></div>
-      <div *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" style="padding-top: 80px;"></div>
+      <div *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" style="padding-top: 50px;"></div>
+      <p *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64">Values inserted
+      </p>
       <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" fullWidth
         style="width:400px;clear:both;" [(ngModel)]="spreadProps" nbInput type="text"
-        [ngModelOptions]="{standalone: true}" disabled />
+        [ngModelOptions]="{standalone: true}" disabled placeholder="Insert your values above and click add element"/>
 
       <input *ngIf="!selectedItem.concat && !selectedItem.array && !selectedItem.base64" fullWidth
         style="width:400px;clear:both;float:none" [(ngModel)]="selectedProp" nbInput type="text"
