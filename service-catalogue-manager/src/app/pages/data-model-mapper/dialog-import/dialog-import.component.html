@@ -1,11 +1,11 @@
-<nb-card style="width:400px;height:400px">
+<nb-card style="width:400px;height:450px; overflow-y: hidden">
   <nb-card-header class="d-flex align-content-center justify-content-between">
     <h5 class="">{{ 'general.editor.import' | translate }}</h5>
     <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
       <i class="material-icons">close</i>
     </button>
   </nb-card-header>
-  <nb-card-body class="m-2 p-4">
+  <nb-card-body class="m-2 p-4" style="overflow-y: hidden">
     <div class="row justify-content-left p-3">Select {{type}} data </div>
     <nb-radio-group [(ngModel)]="selectedItem">
       <nb-radio value="file">
@@ -35,9 +35,12 @@
       </button>
     </div>
   </nb-card-body>
-  <nb-card-footer *ngIf="selectedFile">
+  <nb-card-footer style="height:60px">
     <p *ngIf="selectedFile">
       <b>{{ 'general.editor.selected' | translate }}:&nbsp;</b> <i> {{ selectedFile.name }}</i>
+    </p>
+    <p *ngIf="!selectedFile">
+
     </p>
   </nb-card-footer>
 </nb-card>
