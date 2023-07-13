@@ -12,7 +12,6 @@
     </nb-card-footer>
   </nb-card>
 </ng-template>
-
 <!-- Update Service modal ng-template -->
 <ng-template #confirmUpdateDialog let-data let-ref="dialogRef">
   <nb-card status="primary">
@@ -27,7 +26,6 @@
     </nb-card-footer>
   </nb-card>
 </ng-template>
-
 <!-- Existing Service modal - Ask overwrite ng-template -->
 <ng-template #confirmOverwriteDialog let-data let-ref="dialogRef">
   <nb-card status="primary">
@@ -42,14 +40,10 @@
     </nb-card-footer>
   </nb-card>
 </ng-template>
-
-
 <nb-card>
   <nb-card-header class="h3"> Data Model Mapper </nb-card-header>
-
   <nb-card-body class="row justify-content-center">
     <ng-container *ngIf="isNew; then updateButton; else createButton"> </ng-container>
-
     <ng-template #createButton>
       <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary" (click)="saveAdapter()">
         {{ 'general.save' | translate }}
@@ -76,10 +70,8 @@
     </button>
     -->
   </nb-card-body>
-
   <nb-card-footer>
     <!--Map Editor accordion-->
-
     <nb-accordion multi>
       <nb-accordion-item expanded="true">
         <nb-accordion-item-header>
@@ -96,7 +88,6 @@
               <nb-option value="csv">CSV</nb-option>
               <nb-option value="json">JSON</nb-option>
             </nb-select>
-
           </div>
           <div class="mb-1" style="display:none;" id="json-input">
             <div class="mb-2">
@@ -109,11 +100,9 @@
                 <nb-option value="">root.</nb-option>
                 <nb-option *ngFor="let path of paths" value={{path}}>.{{path}}</nb-option>
               </nb-select>
-
             </div>
             <div style="height:500px" id="jsoneditor" (click)="onUpdatePathForDataMap('')"
               (focusout)="onUpdatePathForDataMap('')" (blur)="onUpdatePathForDataMap('')"></div>
-
           </div>
           <div class="mb-2" id="csv-input" style="display:none;">
             <div class="mb-2">
@@ -122,36 +111,25 @@
                 {{ 'general.editor.import' | translate }}
                 <i class="mx-1 fas fa-file-import fa-lg"></i>
               </button>
-
               <nb-select placeholder="Separator" size="small" [(selected)]="separatorItem">
                 <nb-option value=",">Comma separator</nb-option>
                 <nb-option value=";">Semi-colon separator</nb-option>
                 <nb-option value="\t">Tab separator</nb-option>
               </nb-select>
-
-
             </div>
-
-
-
             <div class="mb-3" id="csveditor">
-
               <nb-tabset (click)="updateCSVTable()" (focusout)="updateCSVTable()" (blur)="updateCSVTable()">
                 <nb-tab tabTitle="CSV text">
                   <textarea id="textarea" nbInput rows="10" fullWidth=true placeholder="Enter CVS text..."
                     [(ngModel)]="csvSourceData"></textarea>
                 </nb-tab>
                 <nb-tab id="csv-table" tabTitle="CSV Table">
-
-
                 </nb-tab>
               </nb-tabset>
             </div>
           </div>
-
         </nb-accordion-item-body>
       </nb-accordion-item>
-
       <nb-accordion-item expanded="true">
         <nb-accordion-item-header>
           Mapper
@@ -175,7 +153,6 @@
           <div style="height:500px" id="jsoneditor2"></div>
         </nb-accordion-item-body>
       </nb-accordion-item>
-
       <nb-accordion-item expanded="true">
         <nb-accordion-item-header>
           Output
@@ -198,10 +175,7 @@
       -->
     </div>
   </nb-card-footer>
-
-
 </nb-card>
-
 <ng-template #contentTemplate>
   <p>Here is the text provided via config</p>
 </ng-template>

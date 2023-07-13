@@ -55,7 +55,7 @@
           <label *ngIf="sourceDataDiv" for="sourceDataType">{{ 'general.adapters.source_data_type' | translate
             }}</label>
           <br *ngIf="sourceDataDiv">
-          <nb-radio-group *ngIf="sourceDataDiv" fullWidth [placeholder]="placeholders.sourceDataType" [(ngModel)]="sourceDataType"
+          <nb-radio-group *ngIf="sourceDataDiv" fullWidth [(ngModel)]="sourceDataType"
             [ngModelOptions]="{standalone: true}" (ngModelChange)="typeDiv=true; sourceDataDiv=false">
             <nb-radio value="csv">CSV</nb-radio>
             <nb-radio value="json">JSON</nb-radio>
@@ -63,36 +63,42 @@
           <br *ngIf="sourceDataDiv"><br *ngIf="sourceDataDiv">
 
           <label *ngIf="typeDiv" for="type">{{ 'general.adapters.type' | translate }}</label>
-          <br  *ngIf="typeDiv">
-          <nb-radio-group *ngIf="typeDiv" fullWidth [placeholder]="placeholders.type" [(ngModel)]="type"
-            [ngModelOptions]="{standalone: true}" (ngModelChange)="typeDiv=false; contextDiv=true">
+          <br *ngIf="typeDiv">
+          <nb-radio-group *ngIf="typeDiv" fullWidth [(ngModel)]="type" [ngModelOptions]="{standalone: true}"
+            (ngModelChange)="typeDiv=false; contextDiv=true">
             <nb-radio value="MODEL">Model</nb-radio>
             <nb-radio value="DATA">Data</nb-radio>
           </nb-radio-group>
-          <br  *ngIf="typeDiv"><br  *ngIf="typeDiv">
+          <br *ngIf="typeDiv"><br *ngIf="typeDiv">
           <label *ngIf="type=='MODEL' && contextDiv" for="context">{{ 'general.adapters.context' | translate
             }}</label>
           <br *ngIf="type=='MODEL' && contextDiv">
-          <nb-radio-group *ngIf="type=='MODEL'  && contextDiv" fullWidth [placeholder]="placeholders.context"
-            [(ngModel)]="context" [ngModelOptions]="{standalone: true}"
-            (ngModelChange)="lastPage=true; contextDiv=false">
+          <nb-radio-group *ngIf="type=='MODEL'  && contextDiv" fullWidth [(ngModel)]="context"
+            [ngModelOptions]="{standalone: true}" (ngModelChange)="lastPage=true;">
             <nb-radio value="IMPORT">Import</nb-radio>
             <nb-radio value="EXPORT">Export</nb-radio>
           </nb-radio-group>
         </div>
+        <!--
         <div *ngIf="lastPage">
           Click confirm to save the adapter
         </div>
+        -->
         <br>
         <br>
         <h3>
-          <button *ngIf="!lastPage && !(type == 'DATA' && this.contextDiv)" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
-            (click)="next()">
+          <button style="float:left" *ngIf="!page1" nbButton appearance="outline" shape="semi-round" size="medium"
+            status="info" (click)="back()">
+            <i class="mx-1">{{ 'general.dmm.back' | translate }}</i>
+          </button>
+          <button style="float:right"
+            *ngIf="!lastPage && !(type == 'DATA' && this.contextDiv) && !(context && contextDiv)" nbButton
+            appearance="outline" shape="semi-round" size="medium" status="info" (click)="next()">
             <i class="mx-1">{{ 'general.adapters.next' | translate }}</i>
           </button>
           <!--<p *ngIf="validURL==false" style=" text-align : center; font-size: 14px; color: red ">Invalid URL or unable to connect to load mapper list <br><br></p>-->
-          <button *ngIf="lastPage || (type == 'DATA' && this.contextDiv)" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
-            (click)="confirm()">
+          <button style="float:right" *ngIf="lastPage || (type == 'DATA' && this.contextDiv) || (context && contextDiv)"
+            nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
           </button>
           &nbsp;

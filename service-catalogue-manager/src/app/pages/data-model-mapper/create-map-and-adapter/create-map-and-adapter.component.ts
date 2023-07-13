@@ -86,8 +86,22 @@ export class CreateMapAndAdapterComponent implements OnInit {
       this.typeDiv = false
     }
     else if (this.contextDiv){
-      this.contextDiv=false
+      //this.contextDiv=false
       this.lastPage= true
+    }
+  }
+
+  back() {
+    if (this.sourceDataDiv) {
+      this.page1 = true
+    }
+    else if (this.typeDiv) {
+      this.sourceDataDiv = true
+      this.typeDiv = false
+    }
+    else if (this.contextDiv){
+      this.contextDiv=false
+      this.typeDiv = true
     }
   }
 
