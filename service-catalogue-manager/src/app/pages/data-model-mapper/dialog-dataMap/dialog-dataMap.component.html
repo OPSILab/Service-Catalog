@@ -7,7 +7,8 @@
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
     <div class="row justify-content-left p-3" *ngIf="selectedItem.base64==undefined">Select encode option</div>
-    <nb-radio-group [(ngModel)]="selectedItem.base64" *ngIf="selectedItem.base64==undefined" (ngModelChange)="encodeChange($event)">
+    <nb-radio-group [(ngModel)]="selectedItem.base64" *ngIf="selectedItem.base64==undefined"
+      (ngModelChange)="encodeChange($event)">
       <nb-radio [value]=true>
         {{ "base64" }}
       </nb-radio>
@@ -15,8 +16,10 @@
         {{ "none" }}
       </nb-radio>
     </nb-radio-group>
-    <div class="row justify-content-left p-3" *ngIf="selectedItem.concat==undefined && selectedItem.base64!=undefined">Single or multi input</div>
-    <nb-radio-group [(ngModel)]="selectedItem.concat" *ngIf="selectedItem.concat==undefined && selectedItem.base64!=undefined">
+    <div class="row justify-content-left p-3" *ngIf="selectedItem.concat==undefined && selectedItem.base64!=undefined">
+      Single or multi input</div>
+    <nb-radio-group [(ngModel)]="selectedItem.concat"
+      *ngIf="selectedItem.concat==undefined && selectedItem.base64!=undefined">
       <nb-radio [value]=true>
         {{ "multi" }}
       </nb-radio>
@@ -24,9 +27,11 @@
         {{ "single" }}
       </nb-radio>
     </nb-radio-group>
-    <div class="row justify-content-left p-3" *ngIf="selectedItem.concat!=undefined && selectedItem.base64!=undefined">Direct or static input</div>
+    <div class="row justify-content-left p-3"
+      *ngIf="selectedItem.concat!=undefined && selectedItem.base64!=undefined && selectedItem.static==undefined && selectedItem.direct==undefined">
+      Direct or static input</div>
     <nb-radio-group [(ngModel)]="selectedItem.direct" (ngModelChange)="selectedItem.static = !selectedItem.direct"
-      *ngIf="selectedItem.concat!=undefined && selectedItem.base64!=undefined">
+      *ngIf="selectedItem.concat!=undefined && selectedItem.base64!=undefined && selectedItem.static==undefined && selectedItem.direct==undefined">
       <nb-radio [value]=true>
         {{ "direct" }}
       </nb-radio>
@@ -48,20 +53,24 @@
         [(ngModel)]="this.selectedProps[this.selectedProps.length-1]" nbInput type="text"
         style="width:400px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
         -->
-      <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" placeholder="Put static data" [(ngModel)]="selectedProp"
-        nbInput type="text" style="width: 250px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
+      <div *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" style="padding-top: 20px;"></div>
+      <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" placeholder="Put static data"
+        [(ngModel)]="selectedProp" nbInput type="text" style="width: 250px;clear:both;float:none"
+        [ngModelOptions]="{standalone: true}" />
 
-      <button style="float: right" *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" nbButton appearance="outline"
-        shape="semi-round" size="medium" status="info" (click)="concat()">
+      <button style="float: right" *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" nbButton
+        appearance="outline" shape="semi-round" size="medium" status="info" (click)="concat()">
         <i class="mx-1">{{ 'general.dmm.add_element' | translate }}</i>
       </button>
       <div style="padding-top: 20px;"></div>
-      <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" fullWidth style="width:400px;clear:both;float:none"
-        [(ngModel)]="spreadProps" nbInput type="text" [ngModelOptions]="{standalone: true}" disabled />
+      <div *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" style="padding-top: 80px;"></div>
+      <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" fullWidth
+        style="width:400px;clear:both;" [(ngModel)]="spreadProps" nbInput type="text"
+        [ngModelOptions]="{standalone: true}" disabled />
 
-      <input *ngIf="!selectedItem.concat && !selectedItem.array && !selectedItem.base64" fullWidth style="width:400px;clear:both;float:none"
-        [(ngModel)]="selectedProp" nbInput type="text" [ngModelOptions]="{standalone: true}"
-        placeholder="Put static value" />
+      <input *ngIf="!selectedItem.concat && !selectedItem.array && !selectedItem.base64" fullWidth
+        style="width:400px;clear:both;float:none" [(ngModel)]="selectedProp" nbInput type="text"
+        [ngModelOptions]="{standalone: true}" placeholder="Put static value" />
     </div>
     <div fullWidth *ngIf="selectedItem.direct" style="width:400px;clear:both;float:none">
       <ng2-smart-table fullWidth style="width:400px;clear:both;float:none" [settings]="settings" [source]="source"
@@ -73,17 +82,18 @@
         [(ngModel)]="selectedProp" nbInput type="text" style="width: 250px;clear:both;float:none"
         [ngModelOptions]="{standalone: true}" />
 
-      <button style="float: right" *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" nbButton appearance="outline"
-        shape="semi-round" size="medium" status="info" (click)="concat()">
+      <button style="float: right" *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" nbButton
+        appearance="outline" shape="semi-round" size="medium" status="info" (click)="concat()">
         <i class="mx-1">{{ 'general.dmm.add_element' | translate }}</i>
       </button>
       <div style="padding-top: 20px;"></div>
-      <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" fullWidth style="width:400px;clear:both;float:none"
-        [(ngModel)]="spreadProps" nbInput type="text" [ngModelOptions]="{standalone: true}" disabled />
+      <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" fullWidth
+        style="width:400px;clear:both;float:none" [(ngModel)]="spreadProps" nbInput type="text"
+        [ngModelOptions]="{standalone: true}" disabled />
 
-      <input *ngIf="!selectedItem.concat && !selectedItem.array && !selectedItem.base64" fullWidth style="width:400px;clear:both;float:none"
-        [(ngModel)]="selectedProp" nbInput type="text" [ngModelOptions]="{standalone: true}"
-        placeholder="Put input field name" />
+      <input *ngIf="!selectedItem.concat && !selectedItem.array && !selectedItem.base64" fullWidth
+        style="width:400px;clear:both;float:none" [(ngModel)]="selectedProp" nbInput type="text"
+        [ngModelOptions]="{standalone: true}" placeholder="Put input field name" />
     </div>
 
     <!--

@@ -102,8 +102,20 @@ export class DialogDataMapComponent implements OnInit {
   }
 
   back() {
-    for (const [key, value] of Object.entries(this.selectedItem))
+
+    if (this.selectedItem.direct || this.selectedItem.static) {
+      this.selectedItem.direct = undefined
+      this.selectedItem.static = undefined
+    }
+    else if (this.selectedItem.array || this.selectedItem.concat && !this.selectedItem.base64) {
+      this.selectedItem.array = undefined
+      this.selectedItem.concat = undefined
+    }
+    else for (const [key, value] of Object.entries(this.selectedItem))
       this.selectedItem[key] = undefined
+
+    this.selectedProp = ""
+    this.selectedProps = []
   }
 
   concat() {
@@ -139,7 +151,9 @@ export class DialogDataMapComponent implements OnInit {
     void this.source.load(sourceMapOptions)
   }
 
-  encodeChange($event){
+  encodeChange($event) {
+    console.debug("EVENT")
+    console.debug($event)
     if ($event) {
       this.selectedItem.concat = false
       this.selectedItem.array = false
