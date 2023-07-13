@@ -20,7 +20,7 @@ import { AvailableAdaptersService } from '../../services/available-adapters/avai
 })
 export class CreateMapAndAdapterComponent implements OnInit {
 
-  @Input() value: any;
+  @Input() value: AdapterEntry;
   @Output() editedValue = new EventEmitter<unknown>();
   adapterId: string
   name: string = ''
@@ -203,16 +203,28 @@ export class CreateMapAndAdapterComponent implements OnInit {
       if (adapterId == '' || adapterId == null)
         throw new Error("Adapter ID must be set");
 
-      await this.availableAdapterService.saveAdapter(((
-        type == "MODEL" ?
-          { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
-          { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry);
+      if (this.value) {
+        await this.availableAdapterService.updateAdapter(((
+          type == "MODEL" ?
+            { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
+            { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry, this.value.adapterId)
+        this.ref.close(this.value);
+        this.editedValue.emit(this.value);
+        this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
+      }
 
-      this.ref.close(type == "MODEL" ?
-      { name, description, status, adapterId, type, url, context, sourceDataType }:
-      { name, description, status, adapterId, type, url, sourceDataType });
-      this.editedValue.emit(this.value);
-      this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
+      else {
+        await this.availableAdapterService.saveAdapter(((
+          type == "MODEL" ?
+            { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
+            { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry);
+
+        this.ref.close(type == "MODEL" ?
+          { name, description, status, adapterId, type, url, context, sourceDataType } :
+          { name, description, status, adapterId, type, url, sourceDataType });
+        this.editedValue.emit(this.value);
+        this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
+      }
     }
     catch (error) {
       let errors: Object[] = []

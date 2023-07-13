@@ -1,8 +1,11 @@
 <nb-card>
   <nb-card-header class="d-flex align-content-center justify-content-between">
     <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
-    <div>
+    <div *ngIf="!value">
       <h3>{{ 'general.adapters.add' | translate }}</h3>
+    </div>
+    <div *ngIf="value">
+      <h3>{{ 'general.adapters.edit' | translate }}</h3>
     </div>
     <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
       <i class="material-icons">close</i>
@@ -13,7 +16,8 @@
       <form>
         <label for="adapterId" fullWidth>{{ 'general.adapters.adapterId' | translate }}</label>
         <br>
-        <input [(ngModel)]="adapterId" nbInput type="text" fullWidth [placeholder] = placeholders.adapterId [ngModelOptions]="{standalone: true}" />
+        <input *ngIf="!value" [(ngModel)]="adapterId" nbInput type="text" fullWidth [placeholder] = placeholders.adapterId [ngModelOptions]="{standalone: true}" />
+        <input *ngIf="value" disabled [(ngModel)]="adapterId" nbInput type="text" fullWidth [placeholder] = placeholders.adapterId [ngModelOptions]="{standalone: true}" />
         <br>
         <br>
         <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>

@@ -1,3 +1,4 @@
+import { AdapterEntry } from './../../model/adapter/adapterEntry';
 import { Mapper } from './../../model/adapter/mapper';
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/unbound-method */
@@ -52,6 +53,8 @@ export class DMMComponent implements OnInit, OnChanges {
   csvSourceData: string;
   sourceRef: string = '';
   typeSource: string;
+  adapter
+  mapObject
   //table
 
   flipped = false;
@@ -87,6 +90,15 @@ export class DMMComponent implements OnInit, OnChanges {
   ) {
     //divElement = document.createElement('div')
     //table = document.createElement('table');
+  }
+
+  updateAdapter() {
+    this.dialogService.open(CreateMapAndAdapterComponent, { context: { value: this.adapter } }).onClose.subscribe(async (adapter) => {
+      if (adapter) {
+        this.adapter = adapter;
+        this.mapObject = await this.dmmService.updateMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
+      }
+    });
   }
 
   schemaChanged($event) {
@@ -162,8 +174,8 @@ export class DMMComponent implements OnInit, OnChanges {
 
     this.setMapEditor();
 
-    if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, {"preview" : "set the source, set the json map and click preview to see the output json preview"});
-    else this.outputEditor.update({"preview" : "set the source, set the json map and click preview to see the output json preview"})
+    if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, { "preview": "set the source, set the json map and click preview to see the output json preview" });
+    else this.outputEditor.update({ "preview": "set the source, set the json map and click preview to see the output json preview" })
 
     //if (this.schemaJson) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, this.schemaJson);
 
@@ -355,12 +367,14 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   saveAdapter() {
-    this.dialogService.open(CreateMapAndAdapterComponent, { context: { sourceDataType: this.inputType || "json" } }).onClose.subscribe((adapter) => {
-      this.dmmService.saveMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
+    this.dialogService.open(CreateMapAndAdapterComponent, { context: { sourceDataType: this.inputType || "json" } }).onClose.subscribe(async (adapter) => {
+      this.adapter = adapter;
+      this.mapObject = await this.dmmService.saveMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
+      this.isNew = true
     });
   }
 
-  updateCSVTable(){
+  updateCSVTable() {
     this.displayCSV(this.csvSourceData, this.csvtable, this.separatorItem)
     mapOptions = this.csvSourceData.slice(0, this.csvSourceData.indexOf("\n")).split(this.separatorItem)
     this.setMapEditor();

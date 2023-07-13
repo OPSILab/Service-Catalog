@@ -18,33 +18,42 @@ export class DMMService {
   }
 
   getSchemas(): any {
-    return this.http.get<any[]>(this.config.data_model_mapper.default_mapper_base_url+"/dataModels").toPromise();
+    return this.http.get<any[]>(this.config.data_model_mapper.default_mapper_base_url + "/dataModels").toPromise();
 
   }
+
   getMaps(): any {
-    return this.http.get<any[]>(this.config.data_model_mapper.default_mapper_base_url+"/maps").toPromise();
+    return this.http.get<any[]>(this.config.data_model_mapper.default_mapper_base_url + "/maps").toPromise();
   }
+
   saveMap(adapter: AdapterEntry, map, schema): any {
-    console.debug("mAAaaaaaaaaaaaaaaaaaap")
-    console.debug(map)
-    return this.http.post<any[]>(this.config.data_model_mapper.default_mapper_base_url+"/map/register", {
-     id : adapter.adapterId,
-     name : adapter.name,
-     map : map,
-     dataModel: schema[0]
+    return this.http.post<any[]>(this.config.data_model_mapper.default_mapper_base_url + "/map/register", {
+      id: adapter.adapterId,
+      name: adapter.name,
+      map: map,
+      dataModel: schema[0]
+    }).toPromise();
+  }
+
+  updateMap(adapter: AdapterEntry, map, schema): any {
+    return this.http.put<any[]>(this.config.data_model_mapper.default_mapper_base_url + "/map", {
+      id: adapter.adapterId,
+      name: adapter.name,
+      map: map,
+      dataModel: schema[0]
     }).toPromise();
   }
 
 
- test(type: string, source: string, mapper, schema, delimiter): Promise<any[]> {
+  test(type: string, source: string, mapper, schema, delimiter): Promise<any[]> {
     return this.http.post<any[]>(this.config.data_model_mapper.default_mapper_url, {
       "sourceDataType": type,
       "sourceData": source,
       "mapData": mapper,
-      "dataModel" : schema,
+      "dataModel": schema,
       "config": {
         "delimiter": delimiter,
-        "NGSI_entity" : false
+        "NGSI_entity": false
       }
     }).toPromise();
   }
