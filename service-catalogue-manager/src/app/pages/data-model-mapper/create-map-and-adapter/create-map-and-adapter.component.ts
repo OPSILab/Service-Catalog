@@ -92,6 +92,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
   }
 
   back() {
+    if (this.lastPage) this.lastPage = false
     if (this.sourceDataDiv) {
       this.page1 = true
     }
@@ -103,6 +104,14 @@ export class CreateMapAndAdapterComponent implements OnInit {
       this.contextDiv=false
       this.typeDiv = true
     }
+  }
+
+  onModelChange($event){
+    if ($event == 'MODEL'){
+      this.contextDiv = true;
+      this.typeDiv = false
+    }
+    else this.lastPage = true
   }
 
   ngOnInit(): void {

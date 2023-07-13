@@ -65,7 +65,7 @@
           <label *ngIf="typeDiv" for="type">{{ 'general.adapters.type' | translate }}</label>
           <br *ngIf="typeDiv">
           <nb-radio-group *ngIf="typeDiv" fullWidth [(ngModel)]="type" [ngModelOptions]="{standalone: true}"
-            (ngModelChange)="typeDiv=false; contextDiv=true">
+            (ngModelChange)="onModelChange($event)">
             <nb-radio value="MODEL">Model</nb-radio>
             <nb-radio value="DATA">Data</nb-radio>
           </nb-radio-group>
@@ -92,12 +92,12 @@
             <i class="mx-1">{{ 'general.dmm.back' | translate }}</i>
           </button>
           <button style="float:right"
-            *ngIf="!lastPage && !(type == 'DATA' && this.contextDiv) && !(context && contextDiv)" nbButton
+            *ngIf="!lastPage && !(type == 'DATA' && !sourceDataDiv) && !(context && contextDiv)" nbButton
             appearance="outline" shape="semi-round" size="medium" status="info" (click)="next()">
             <i class="mx-1">{{ 'general.adapters.next' | translate }}</i>
           </button>
           <!--<p *ngIf="validURL==false" style=" text-align : center; font-size: 14px; color: red ">Invalid URL or unable to connect to load mapper list <br><br></p>-->
-          <button style="float:right" *ngIf="lastPage || (type == 'DATA' && this.contextDiv) || (context && contextDiv)"
+          <button style="float:right" *ngIf="lastPage || (type == 'DATA' && !sourceDataDiv) || (context && contextDiv)"
             nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
           </button>
