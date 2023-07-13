@@ -40,12 +40,6 @@ export class CreateMapAndAdapterComponent implements OnInit {
   mappers: Mapper[];
   validURL = true
   IDs: string[] = [];
-  filteredControlIDOptions$: Observable<string[]>;
-  filteredIDOptions$: Observable<string[]>;
-  IDFormControl: FormControl;
-  NameFormControl: FormControl;
-  filteredControlNameOptions$: Observable<string[]>;
-  filteredNameOptions$: Observable<string[]>;
   names: string[] = [];
   placeholders = {
     adapterId: this.translate.instant('general.adapters.adapterId'),
@@ -75,52 +69,23 @@ export class CreateMapAndAdapterComponent implements OnInit {
     this.ref.close();
   }
 
-  async loadMappers(): Promise<void> {
-    this.IDs = []
-    this.names = []
-    if (this.url && (this.url != this.previousUrl) && this.appConfig.data_model_mapper.connect)
-      try {
-        this.mappers = await this.http.post<any>(this.url, {
-          "getMapperList": true
-        }).toPromise();
-        for (let mapper of this.mappers) {
-          this.IDs.push(mapper.id);
-          this.names.push(mapper.name);
-        }
-        this.loaded = true
-        this.validURL = true
-      }
-      catch (error) {
-        console.error("Cannot get response from remote url")
-        console.error(error)
-        this.validURL = false
-      }
-    else this.validURL = false
-    this.previousUrl = this.url
-  }
-
   ngOnInit(): void {
     console.debug(this)
     this.loaded = false
     this.url = this.appConfig.data_model_mapper.default_mapper_url
-    this.loadMappers()
-    this.filteredControlIDOptions$ = of(this.IDs);
-    this.filteredControlNameOptions$ = of(this.names);
-    this.IDFormControl = new FormControl();
-    this.NameFormControl = new FormControl();
-    this.filteredControlIDOptions$ = this.IDFormControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(filterString => this.filterID(filterString)),
-      );
-    this.filteredControlNameOptions$ = this.NameFormControl.valueChanges
-      .pipe(
-        startWith(''),
-        map(filterString => this.filterID(filterString)),
-      );
+
+    if (this.value) {
+      this.name = this.value.name;
+      this.description = this.value.description;
+      this.status = this.value.status;
+      this.adapterId ? this.adapterId : this.value ? this.value.adapterId : null;
+      this.type = this.value.type;
+      this.url = this.value.url;
+      this.context = this.value.context;
+      this.sourceDataType = this.value.sourceDataType
+    }
+
     try {
-      this.inputItemFormControl = new FormControl();
-      this.textareaItemFormControl = new FormControl();
       if (this.value && this.value.adapterId) this.adapterId = this.value.adapterId
       this.url = this.appConfig.data_model_mapper.default_mapper_url
     }
@@ -145,40 +110,6 @@ export class CreateMapAndAdapterComponent implements OnInit {
     );
   }
 
-  onAdapterIDChange(ID: string) {
-    this.filteredIDOptions$ = of(this.filterID(ID));
-    this.adapterId = ID
-    this.name = this.names[this.IDs.indexOf(ID)]
-  }
-
-  onNameChange(name: string) {
-    this.filteredNameOptions$ = of(this.filterName(name));
-    this.name = name
-  }
-
-  onFileChanged(event: Event): void {
-    try {
-      this.selectedFile = (<HTMLInputElement>event.target).files[0];
-      const fileReader = new FileReader();
-      fileReader.readAsText(this.selectedFile, 'UTF-8');
-      fileReader.onload = () => {
-        try {
-          this.json = JSON.parse(fileReader.result as string) as Record<string, unknown>;
-        } catch (error) {
-          this.errorService.openErrorDialog(error);
-          console.error("error:<\n", error, ">\n")
-          this.ref.close();
-        }
-      };
-
-      fileReader.onerror = (error) => {
-        this.errorService.openErrorDialog(error);
-      };
-    } catch (error) {
-      this.errorService.openErrorDialog(error);
-    }
-  }
-
   confirm() {
     try {
       this.onSubmit()
@@ -189,16 +120,17 @@ export class CreateMapAndAdapterComponent implements OnInit {
   }
 
   async onSubmit() {
+    console.debug(this.value)
     try {
 
-      let name = this.name,
-        description = this.description,
-        status = this.status,
-        adapterId = this.adapterId ? this.adapterId : this.value ? this.value : null,
-        type = this.type,
-        url = this.url,
-        context = this.context,
-        sourceDataType = this.sourceDataType
+      let name = this.name || this.value.name,
+        description = this.description || this.value.description,
+        status = this.status || this.value.status,
+        adapterId = this.adapterId ? this.adapterId : this.value ? this.value.adapterId : null,
+        type = this.type || this.value.type,
+        url = this.url || this.value.url,
+        context = this.context || this.value.context,
+        sourceDataType = this.sourceDataType || this.value.sourceDataType
 
       if (adapterId == '' || adapterId == null)
         throw new Error("Adapter ID must be set");
