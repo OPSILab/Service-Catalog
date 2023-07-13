@@ -1,4 +1,4 @@
-<nb-card>
+<nb-card style="width:400px;height:400px">
   <nb-card-header class="d-flex align-content-center justify-content-between">
     <h5 class="">{{ 'general.editor.import' | translate }}</h5>
     <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
@@ -7,26 +7,30 @@
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
     <div class="row justify-content-left p-3">Select {{type}} data </div>
-    <nb-select fullWidth placeholder="{{'general.services.select_source'
-    | translate}}" [(ngModel)]="selectedItem">
-
-        <nb-option value="file">From File</nb-option>
-        <nb-option value="url">Url</nb-option>
-
-
-    </nb-select>
+    <nb-radio-group [(ngModel)]="selectedItem">
+      <nb-radio value="file">
+        {{ "file" }}
+      </nb-radio>
+      <nb-radio value="url">
+        {{ "url" }}
+      </nb-radio>
+    </nb-radio-group>
     <div *ngIf="selectedItem === 'url'" class="row justify-content-left p-3">
 
       <input [(ngModel)]="dataUrl" nbInput placeholder="Data URL" />
 
     </div>
+    <div *ngIf="selectedItem != 'url'" class="row justify-content-left p-3" style="padding-top:100px">
+      <br><br>
+    </div>
     <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput />
 
     <div class="row justify-content-center mt-3 p-1">
-      <button nbButton [disabled]="selectedItem !== 'file'"class="mr-2" size="medium" status="danger" (click)="fileInput.click()">{{ 'general.editor.browse'
+      <button nbButton [disabled]="selectedItem !== 'file'" class="mr-2" size="medium" status="danger"
+        (click)="fileInput.click()">{{ 'general.editor.browse'
         | translate }}</button>
-      <button nbButton [disabled]="selectedFile === undefined && dataUrl===undefined" class="ml-2" size="medium" status="success"
-        (click)="onUpload(selectedItem)">
+      <button nbButton [disabled]="selectedFile === undefined && dataUrl===undefined" class="ml-2" size="medium"
+        status="success" (click)="onUpload(selectedItem)">
         {{ 'general.editor.upload' | translate }}
       </button>
     </div>
