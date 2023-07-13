@@ -343,6 +343,7 @@
       "message": "Message"
     },
     "adapters": {
+      "next" : "Next",
       "adapter": "Adapter",
       "actions": "Actions",
       "description": "Description",

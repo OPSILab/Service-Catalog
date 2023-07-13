@@ -41,6 +41,11 @@ export class CreateMapAndAdapterComponent implements OnInit {
   validURL = true
   IDs: string[] = [];
   names: string[] = [];
+  page1 = true
+  lastPage = false
+  contextDiv = false
+  typeDiv = false
+  sourceDataDiv = true
   placeholders = {
     adapterId: this.translate.instant('general.adapters.adapterId'),
     status: this.translate.instant('general.adapters.status'),
@@ -67,6 +72,23 @@ export class CreateMapAndAdapterComponent implements OnInit {
 
   cancel(): void {
     this.ref.close();
+  }
+
+  next() {
+    if (this.page1)
+      this.page1 = false
+    else if (this.sourceDataDiv) {
+      this.sourceDataDiv = false
+      this.typeDiv = true
+    }
+    else if (this.typeDiv) {
+      this.contextDiv = true
+      this.typeDiv = false
+    }
+    else if (this.contextDiv){
+      this.contextDiv=false
+      this.lastPage= true
+    }
   }
 
   ngOnInit(): void {
