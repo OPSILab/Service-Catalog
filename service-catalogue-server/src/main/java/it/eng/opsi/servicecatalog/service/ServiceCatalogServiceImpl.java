@@ -165,6 +165,8 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			}
 		}
 
+		System.out.println(response);
+
 		return response;
 	}
 
@@ -222,6 +224,13 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		// log.info("Getting Service Count");
 		return serviceModelRepo.getTotalCount();
+	}
+
+	@Override
+	public List<HashMap<String, Object>> getServicesCountByStatus() {
+
+		// log.info("Getting Service Count");
+		return serviceModelRepo.getCountByStatus();
 	}
 
 	@Override
