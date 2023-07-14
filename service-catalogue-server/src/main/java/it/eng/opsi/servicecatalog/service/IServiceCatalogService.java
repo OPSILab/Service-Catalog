@@ -70,6 +70,8 @@ public interface IServiceCatalogService {
 
       public abstract List<HashMap<String, Object>> getCountBySector();
 
+       public abstract List<HashMap<String, Object>> getServicesCountByStatus();
+
       public abstract List<HashMap<String, Object>> getCountByThematicArea();
 
       public abstract List<HashMap<String, Object>> getCountByGroupedBy();

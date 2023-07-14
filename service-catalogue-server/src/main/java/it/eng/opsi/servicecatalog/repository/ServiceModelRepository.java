@@ -83,5 +83,9 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 			"{$project:{'_id':0,'location':'$_id','count':'$count'}}" })
 	public List<HashMap<String, Object>> getCountByLocation();
 
+	@Aggregation(pipeline = { "{$unwind: '$status'}", "{'$group':{'_id':'$status','count':{$sum:1}}}",
+			"{$project:{'_id':0,'status':'$_id','count':'$count'}}" })
+	public List<HashMap<String, Object>> getCountByStatus();
+
 	// public List<ServiceModel> saveAll(@Valid List<ServiceModel> services);
 }

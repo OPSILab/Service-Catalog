@@ -84,6 +84,13 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     this.loading = true;
   }
 
+  completedServicesCount(servicesCountByStatus) {
+    for (let status of  servicesCountByStatus)
+      if (status.status == "COMPLETED")
+        return status.count
+    return 0
+  }
+
   refresh(catalogueIn) {
     try {
       let apiEndpoint = catalogueIn.apiEndpoint
@@ -92,7 +99,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
         catalogueTmp.lastRefresh = Date.now()
         this.availableServicesService.getRemoteServicesCount(catalogueIn.catalogueID)
           .then(async (value) => {
-            catalogueTmp.services = value.total;
+            catalogueTmp.services = this.completedServicesCount(value);
             try {
               await this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID, false);
               this.ngOnInit();

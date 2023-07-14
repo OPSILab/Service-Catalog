@@ -101,6 +101,13 @@ export class ActionsFederateComponent implements OnInit {
     return this.value.active
   }
 
+  completedServicesCount(servicesCountByStatus) {
+    for (let status of  servicesCountByStatus)
+      if (status.status == "COMPLETED")
+        return status.count
+    return 0
+  }
+
   async ngOnInit(): Promise<void> {
     let catalogue
     if (!this.called) {
@@ -159,7 +166,8 @@ export class ActionsFederateComponent implements OnInit {
         clientID = this.clientID,
         services;
       try {
-        services = (await this.availableServicesService.getRemoteServicesCount(catalogueID)).total
+        let servicesCountByStatus = await this.availableServicesService.getRemoteServicesCount(catalogueID)
+        services = this.completedServicesCount(servicesCountByStatus)
       }
       catch (error) {
         console.error("Error during services count setting")

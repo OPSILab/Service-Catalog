@@ -135,6 +135,8 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountBySector();
 
+		public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByStatus();
+
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByThematicArea();
 
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByGroupedBy();

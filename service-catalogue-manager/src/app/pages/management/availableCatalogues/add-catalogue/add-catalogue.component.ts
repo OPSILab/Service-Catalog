@@ -146,6 +146,13 @@ export class AddCatalogueComponent implements OnInit {
     this.authenticated = authenticated;
   }
 
+  completedServicesCount(servicesCountByStatus) {
+    for (let status of  servicesCountByStatus)
+      if (status.status == "COMPLETED")
+        return status.count
+    return 0
+  }
+
   async onSubmit() {
     let services
 
@@ -176,7 +183,9 @@ export class AddCatalogueComponent implements OnInit {
       }
 
       try {
-        services = (await this.availableServicesService.getRemoteServicesCount(catalogueID)).total
+        //let servicesCountByStatus = await this.availableServicesService.getRemoteServicesCount(catalogueID)
+        let servicesCountByStatus = await this.availableServicesService.getRemoteServicesCount(catalogueID)
+        services = this.completedServicesCount(servicesCountByStatus)
       }
       catch (error) {
         console.error(error.message)
