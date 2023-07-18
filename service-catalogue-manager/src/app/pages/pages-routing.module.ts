@@ -55,6 +55,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
+        path: 'mapper',
+        loadChildren: () => import('./mapper/mapper.module').then((m) => m.MapperModule),
+        canActivate: [AuthGuard],
+      },
+      {
         path: 'management',
         loadChildren: () => import('./management/management.module').then((m) => m.ManagementModule),
         canActivate: [AuthGuard],
