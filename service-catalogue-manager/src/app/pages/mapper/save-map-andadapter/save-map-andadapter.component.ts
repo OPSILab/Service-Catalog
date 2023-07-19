@@ -16,7 +16,7 @@ import { AvailableAdaptersService } from '../../services/available-adapters/avai
 @Component({
   selector: 'save-map-andadapter',
   templateUrl: './save-map-andadapter.component.html',
-  styleUrls: ['./save-map-andadapter.component.css']
+  styleUrls: ['./save-map-andadapter.component.scss']
 })
 export class SaveMapAndadapterComponent implements OnInit {
 

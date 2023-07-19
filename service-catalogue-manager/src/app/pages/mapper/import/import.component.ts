@@ -10,7 +10,7 @@ import { NgxConfigureService } from 'ngx-configure';
 @Component({
   selector: 'import',
   templateUrl: './import.component.html',
-  styleUrls: ['./import.component.css']
+  styleUrls: ['./import.component.scss']
 })
 export class ImportComponent implements OnInit {
   private appConfig: AppConfig;
