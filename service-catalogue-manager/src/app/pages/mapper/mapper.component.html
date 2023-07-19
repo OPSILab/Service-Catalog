@@ -71,6 +71,11 @@
                   {{ 'general.editor.import' | translate }}
                   <i class="mx-1 fas fa-file-import fa-lg"></i>
                 </button>
+                <nb-select placeholder="Separator" size="small" [(selected)]="separatorItem">
+                  <nb-option value=",">Comma separator</nb-option>
+                  <nb-option value=";">Semi-colon separator</nb-option>
+                  <nb-option value="\t">Tab separator</nb-option>
+                </nb-select>
               </div>
             </div>
             <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('schema','json')">
