@@ -28,12 +28,39 @@
     </button>
     -->
   </nb-card-body>
-  <div class="mb-1" id="json-input">
-    <div class="mb-2">
-      <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','json')">
-        {{ 'Import'}}
-        <i class="mx-1 fas fa-file-import fa-lg"></i>
-      </button>
-    </div>
-  </div>
+  <nb-card-footer>
+    <nb-accordion multi>
+      <nb-accordion-item expanded="true">
+        <nb-accordion-item-header>
+
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <div class="mb-1" id="json-input">
+            <div class="mb-2">
+              <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','json')">
+                {{ 'Import'}}
+                <i class="mx-1 fas fa-file-import fa-lg"></i>
+              </button>
+            </div>
+          </div>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      <nb-accordion-item expanded="true">
+        <nb-accordion-item-header>
+
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+      <nb-accordion-item expanded="true">
+        <nb-accordion-item-header>
+
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+  </nb-card-footer>
 </nb-card>
