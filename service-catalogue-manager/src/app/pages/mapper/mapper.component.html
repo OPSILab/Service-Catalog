@@ -106,7 +106,7 @@
               <!--
               <div style="height:500px" id="jsoneditor" (click)="onUpdatePathForDataMap('')"
                 (focusout)="onUpdatePathForDataMap('')" (blur)="onUpdatePathForDataMap('')"></div>
-                -->
+              -->
             </div>
             <div class="mb-2" id="csv-input" style="display:none;">
               <div class="mb-2">
@@ -146,18 +146,18 @@
             <p>Select a schema from below or upload your schema.
             </p>
             <!--
-            <nb-select placeholder="Select Json Schema" size="small" [(ngModel)]=selectedSchema
-              (ngModelChange)="schemaChanged($event)">
-              <nb-option *ngFor="let schema of schemas" value={{schema.id}}>{{schema.name}}</nb-option>
-            </nb-select>
             <br><br><br>
+            -->
             <div style="padding-top:10px"></div>
-            <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('schema','json')">
-              {{ 'general.editor.import' | translate }}
-              <i class="mx-1 fas fa-file-import fa-lg"></i>
-            </button>
+            <!--
+              <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('schema','json')">
+                {{ 'general.editor.import' | translate }}
+                <i class="mx-1 fas fa-file-import fa-lg"></i>
+              </button>
+            -->
+            <!--
             <br>
-           -->
+            -->
           </div>
           <!--
           <div style="height:500px" id="jsoneditor2"></div>
