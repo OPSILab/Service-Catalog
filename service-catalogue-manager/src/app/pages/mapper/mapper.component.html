@@ -1,3 +1,46 @@
+<!-- Save Service modal ng-template
+<ng-template #confirmSaveDialog let-data let-ref="dialogRef">
+  <nb-card status="primary">
+    <nb-card-body class="p-5">{{ 'general.editor.confirm_save' | translate: { name: data.name } }}</nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="data.callback()">
+        {{ 'general.save' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!-- Update Service modal ng-template -->
+<ng-template #confirmUpdateDialog let-data let-ref="dialogRef">
+  <nb-card status="primary">
+    <nb-card-body class="p-5">{{ 'general.editor.confirm_update' | translate: { name: data.name } }}</nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="data.callback()">
+        {{ 'general.editor.update' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+<!-- Existing Service modal - Ask overwrite ng-template -->
+<ng-template #confirmOverwriteDialog let-data let-ref="dialogRef">
+  <nb-card status="primary">
+    <nb-card-body class="p-5">{{ 'general.editor.confirm_overwrite' | translate: { name: data.name } }}</nb-card-body>
+    <nb-card-footer class="d-flex justify-content-center">
+      <button nbButton status="primary" size="small" (click)="data.callback()">
+        {{ 'general.editor.overwrite' | translate }}
+      </button>
+      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
+        {{ 'general.cancel' | translate }}
+      </button>
+    </nb-card-footer>
+  </nb-card>
+</ng-template>
+-->
 <nb-card>
   <nb-card-header class="h3"> Data Model Mapper </nb-card-header>
   <nb-card-body class="row justify-content-center">
@@ -29,6 +72,7 @@
     -->
   </nb-card-body>
   <nb-card-footer>
+    <!--Map Editor accordion-->
     <nb-accordion multi>
       <nb-accordion-item expanded="true">
         <nb-accordion-item-header>
@@ -78,6 +122,16 @@
                 </nb-select>
               </div>
               <div class="mb-3" id="csveditor">
+                <!--
+                <nb-tabset (click)="updateCSVTable()" (focusout)="updateCSVTable()" (blur)="updateCSVTable()">
+                  <nb-tab tabTitle="CSV text">
+                    <textarea id="textarea" nbInput rows="10" fullWidth=true placeholder="Enter CVS text..."
+                      [(ngModel)]="csvSourceData"></textarea>
+                  </nb-tab>
+                  <nb-tab id="csv-table" tabTitle="CSV Table">
+                  </nb-tab>
+                </nb-tabset>
+              -->
               </div>
             </div>
           </div>
@@ -91,7 +145,23 @@
           <div class="mb-2">
             <p>Select a schema from below or upload your schema.
             </p>
+            <!--
+            <nb-select placeholder="Select Json Schema" size="small" [(ngModel)]=selectedSchema
+              (ngModelChange)="schemaChanged($event)">
+              <nb-option *ngFor="let schema of schemas" value={{schema.id}}>{{schema.name}}</nb-option>
+            </nb-select>
+            <br><br><br>
+            <div style="padding-top:10px"></div>
+            <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('schema','json')">
+              {{ 'general.editor.import' | translate }}
+              <i class="mx-1 fas fa-file-import fa-lg"></i>
+            </button>
+            <br>
+           -->
           </div>
+          <!--
+          <div style="height:500px" id="jsoneditor2"></div>
+          -->
         </nb-accordion-item-body>
       </nb-accordion-item>
       <nb-accordion-item expanded="true">
@@ -103,5 +173,6 @@
         </nb-accordion-item-body>
       </nb-accordion-item>
     </nb-accordion>
+    <!--End Map Editor accordion-->
   </nb-card-footer>
 </nb-card>
