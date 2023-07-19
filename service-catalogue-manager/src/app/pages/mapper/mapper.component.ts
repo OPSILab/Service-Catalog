@@ -133,4 +133,12 @@ export class MapperComponent implements OnInit {
 
   }
 
+  saveAdapter() {
+    this.dialogService.open(SaveMapAndadapterComponent, { context: { sourceDataType: this.inputType || "json" } }).onClose.subscribe(async (adapter) => {
+      this.adapter = adapter;
+      this.mapObject = await this.dmmService.saveMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
+      this.isNew = true
+    });
+  }
+
 }
