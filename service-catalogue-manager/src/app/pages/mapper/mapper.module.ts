@@ -9,11 +9,12 @@ import { NgbDropdownModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap
 import { TranslateModule } from '@ngx-translate/core';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { DMMRoutingModule } from '../data-model-mapper/dmm-routing.module';
+import { SaveMapAndadapterComponent } from './save-map-andadapter/save-map-andadapter.component';
 
 
 
 @NgModule({
-  declarations: [MapperComponent, ImportComponent],
+  declarations: [MapperComponent, ImportComponent, SaveMapAndadapterComponent],
   imports: [
     NbCardModule,
     NbSelectModule,
