@@ -67,6 +67,10 @@
             <div class="mb-2" id="csv-input" style="display:none;">
               <div class="mb-2">
                 <br><br>
+                <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','csv')">
+                  {{ 'general.editor.import' | translate }}
+                  <i class="mx-1 fas fa-file-import fa-lg"></i>
+                </button>
               </div>
             </div>
             <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('schema','json')">
