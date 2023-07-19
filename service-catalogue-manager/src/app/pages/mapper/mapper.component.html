@@ -1,128 +1,66 @@
-<!-- Save Service modal ng-template
-<ng-template #confirmSaveDialog let-data let-ref="dialogRef">
-  <nb-card status="primary">
-    <nb-card-body class="p-5">{{ 'general.editor.confirm_save' | translate: { name: data.name } }}</nb-card-body>
-    <nb-card-footer class="d-flex justify-content-center">
-      <button nbButton status="primary" size="small" (click)="data.callback()">
-        {{ 'general.save' | translate }}
-      </button>
-      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
-        {{ 'general.cancel' | translate }}
-      </button>
-    </nb-card-footer>
-  </nb-card>
+<ng-container *ngIf="isNew; then updateButton; else createButton"> </ng-container>
+<ng-template #createButton>
+  <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary" (click)="saveAdapter()">
+    {{ 'general.save' | translate }}
+    <i class="mx-1 material-icons">save</i>
+  </button>
 </ng-template>
-<!-- Update Service modal ng-template -->
-<ng-template #confirmUpdateDialog let-data let-ref="dialogRef">
-  <nb-card status="primary">
-    <nb-card-body class="p-5">{{ 'general.editor.confirm_update' | translate: { name: data.name } }}</nb-card-body>
-    <nb-card-footer class="d-flex justify-content-center">
-      <button nbButton status="primary" size="small" (click)="data.callback()">
-        {{ 'general.editor.update' | translate }}
-      </button>
-      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
-        {{ 'general.cancel' | translate }}
-      </button>
-    </nb-card-footer>
-  </nb-card>
+<ng-template #updateButton>
+  <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary" (click)="updateAdapter()">
+    {{ 'general.editor.update' | translate }}
+    <i class="mx-1 material-icons">update</i>
+  </button>
 </ng-template>
-<!-- Existing Service modal - Ask overwrite ng-template -->
-<ng-template #confirmOverwriteDialog let-data let-ref="dialogRef">
-  <nb-card status="primary">
-    <nb-card-body class="p-5">{{ 'general.editor.confirm_overwrite' | translate: { name: data.name } }}</nb-card-body>
-    <nb-card-footer class="d-flex justify-content-center">
-      <button nbButton status="primary" size="small" (click)="data.callback()">
-        {{ 'general.editor.overwrite' | translate }}
+<button nbButton class="mx-4" shape="rectangle" size="medium" status="success" (click)="testAdapter()">
+  {{ 'general.dmm.preview' | translate }}
+</button>
+<br><br><br>
+Source
+
+<div class="mb-2">
+  <p>To get started, select the type of input (CSV or JSON) and upload or paste your data.
+  </p>
+  <p *ngIf="sourceRef!==''&&sourceRefFormat==='url'">URL: <a class="mb-3" href={{sourceRef}} target="_blank">
+      <i>{{sourceRef}}</i></a></p>
+  <p *ngIf="sourceRef!==''&&sourceRefFormat==='file'">File: <i>{{sourceRef}}</i></p>
+  <div class="mb-2">
+    <nb-select placeholder="Select Input Type" size="small" (selectedChange)="onUpdateInputType($event)">
+      <nb-option value="csv">CSV</nb-option>
+      <nb-option value="json">JSON</nb-option>
+    </nb-select>
+  </div>
+  <div class="mb-1" style="display:none;" id="json-input">
+    <div class="mb-2">
+      <br><br>
+      <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','json')">
+        {{ 'general.editor.import' | translate }}
+        <i class="mx-1 fas fa-file-import fa-lg"></i>
       </button>
-      <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
-        {{ 'general.cancel' | translate }}
+      <nb-select placeholder="Select path" size="small" (selectedChange)="onUpdatePathForDataMap($event)">
+        <nb-option value="">root.</nb-option>
+        <nb-option *ngFor="let path of paths" value={{path}}>.{{path}}</nb-option>
+      </nb-select>
+    </div>
+
+    <div style="height:500px" id="jsoneditor" (click)="onUpdatePathForDataMap('')"
+      (focusout)="onUpdatePathForDataMap('')" (blur)="onUpdatePathForDataMap('')"></div>
+
+  </div>
+  <div class="mb-2" id="csv-input" style="display:none;">
+    <div class="mb-2">
+      <br><br>
+      <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','csv')">
+        {{ 'general.editor.import' | translate }}
+        <i class="mx-1 fas fa-file-import fa-lg"></i>
       </button>
-    </nb-card-footer>
-  </nb-card>
-</ng-template>
--->
-<nb-card>
-  <nb-card-header class="h3"> Data Model Mapper </nb-card-header>
-  <nb-card-body class="row justify-content-center">
-    <ng-container *ngIf="isNew; then updateButton; else createButton"> </ng-container>
-    <ng-template #createButton>
-      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary" (click)="saveAdapter()">
-        {{ 'general.save' | translate }}
-        <i class="mx-1 material-icons">save</i>
-      </button>
-    </ng-template>
-    <ng-template #updateButton>
-      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary" (click)="updateAdapter()">
-        {{ 'general.editor.update' | translate }}
-        <i class="mx-1 material-icons">update</i>
-      </button>
-    </ng-template>
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="success" (click)="testAdapter()">
-      {{ 'general.dmm.preview' | translate }}
-    </button>
-    <!--
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning">
-      {{ 'general.editor.export' | translate }}
-      <i class="mx-1 fas fa-file-export fa-lg"></i>
-    </button>
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger">
-      {{ 'general.editor.import' | translate }}
-      <i class="mx-1 fas fa-file-import fa-lg"></i>
-    </button>
-    -->
-  </nb-card-body>
-  <nb-card-footer>
-    <!--Map Editor accordion-->
-    <nb-accordion multi>
-      <nb-accordion-item expanded="true">
-        <nb-accordion-item-header>
-          Source
-        </nb-accordion-item-header>
-        <nb-accordion-item-body>
-          <div class="mb-2">
-            <p>To get started, select the type of input (CSV or JSON) and upload or paste your data.
-            </p>
-            <p *ngIf="sourceRef!==''&&sourceRefFormat==='url'">URL: <a class="mb-3" href={{sourceRef}} target="_blank">
-                <i>{{sourceRef}}</i></a></p>
-            <p *ngIf="sourceRef!==''&&sourceRefFormat==='file'">File: <i>{{sourceRef}}</i></p>
-            <div class="mb-2">
-              <nb-select placeholder="Select Input Type" size="small" (selectedChange)="onUpdateInputType($event)">
-                <nb-option value="csv">CSV</nb-option>
-                <nb-option value="json">JSON</nb-option>
-              </nb-select>
-            </div>
-            <div class="mb-1" style="display:none;" id="json-input">
-              <div class="mb-2">
-                <br><br>
-                <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','json')">
-                  {{ 'general.editor.import' | translate }}
-                  <i class="mx-1 fas fa-file-import fa-lg"></i>
-                </button>
-                <nb-select placeholder="Select path" size="small" (selectedChange)="onUpdatePathForDataMap($event)">
-                  <nb-option value="">root.</nb-option>
-                  <nb-option *ngFor="let path of paths" value={{path}}>.{{path}}</nb-option>
-                </nb-select>
-              </div>
-              <!--
-              <div style="height:500px" id="jsoneditor" (click)="onUpdatePathForDataMap('')"
-                (focusout)="onUpdatePathForDataMap('')" (blur)="onUpdatePathForDataMap('')"></div>
-              -->
-            </div>
-            <div class="mb-2" id="csv-input" style="display:none;">
-              <div class="mb-2">
-                <br><br>
-                <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','csv')">
-                  {{ 'general.editor.import' | translate }}
-                  <i class="mx-1 fas fa-file-import fa-lg"></i>
-                </button>
-                <nb-select placeholder="Separator" size="small" [(selected)]="separatorItem">
-                  <nb-option value=",">Comma separator</nb-option>
-                  <nb-option value=";">Semi-colon separator</nb-option>
-                  <nb-option value="\t">Tab separator</nb-option>
-                </nb-select>
-              </div>
-              <div class="mb-3" id="csveditor">
-                <!--
+      <nb-select placeholder="Separator" size="small" [(selected)]="separatorItem">
+        <nb-option value=",">Comma separator</nb-option>
+        <nb-option value=";">Semi-colon separator</nb-option>
+        <nb-option value="\t">Tab separator</nb-option>
+      </nb-select>
+    </div>
+    <div class="mb-3" id="csveditor">
+      <!--
                 <nb-tabset (click)="updateCSVTable()" (focusout)="updateCSVTable()" (blur)="updateCSVTable()">
                   <nb-tab tabTitle="CSV text">
                     <textarea id="textarea" nbInput rows="10" fullWidth=true placeholder="Enter CVS text..."
@@ -132,47 +70,6 @@
                   </nb-tab>
                 </nb-tabset>
               -->
-              </div>
-            </div>
-          </div>
-        </nb-accordion-item-body>
-      </nb-accordion-item>
-      <nb-accordion-item expanded="true">
-        <nb-accordion-item-header>
-          Mapper
-        </nb-accordion-item-header>
-        <nb-accordion-item-body>
-          <div class="mb-2">
-            <p>Select a schema from below or upload your schema.
-            </p>
-            <!--
-            <br><br><br>
-            -->
-            <div style="padding-top:10px"></div>
-            <!--
-              <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('schema','json')">
-                {{ 'general.editor.import' | translate }}
-                <i class="mx-1 fas fa-file-import fa-lg"></i>
-              </button>
-            -->
-            <!--
-            <br>
-            -->
-          </div>
-          <!--
-          <div style="height:500px" id="jsoneditor2"></div>
-          -->
-        </nb-accordion-item-body>
-      </nb-accordion-item>
-      <nb-accordion-item expanded="true">
-        <nb-accordion-item-header>
-          Output
-        </nb-accordion-item-header>
-        <nb-accordion-item-body>
-
-        </nb-accordion-item-body>
-      </nb-accordion-item>
-    </nb-accordion>
-    <!--End Map Editor accordion-->
-  </nb-card-footer>
-</nb-card>
+    </div>
+  </div>
+</div>
