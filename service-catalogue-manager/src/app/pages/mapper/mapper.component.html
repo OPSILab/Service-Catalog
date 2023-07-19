@@ -1,5 +1,33 @@
 <nb-card>
   <nb-card-header class="h3"> Data Model Mapper </nb-card-header>
+  <nb-card-body class="row justify-content-center">
+    <ng-container *ngIf="isNew; then updateButton; else createButton"> </ng-container>
+    <ng-template #createButton>
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary" (click)="saveAdapter()">
+        {{ 'general.save' | translate }}
+        <i class="mx-1 material-icons">save</i>
+      </button>
+    </ng-template>
+    <ng-template #updateButton>
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary" (click)="updateAdapter()">
+        {{ 'general.editor.update' | translate }}
+        <i class="mx-1 material-icons">update</i>
+      </button>
+    </ng-template>
+    <button nbButton class="mx-4" shape="rectangle" size="medium" status="success" (click)="testAdapter()">
+      {{ 'general.dmm.preview' | translate }}
+    </button>
+    <!--
+    <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning">
+      {{ 'general.editor.export' | translate }}
+      <i class="mx-1 fas fa-file-export fa-lg"></i>
+    </button>
+    <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger">
+      {{ 'general.editor.import' | translate }}
+      <i class="mx-1 fas fa-file-import fa-lg"></i>
+    </button>
+    -->
+  </nb-card-body>
   <div class="mb-1" id="json-input">
     <div class="mb-2">
       <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','json')">

@@ -56,7 +56,6 @@ export class DMMComponent implements OnInit, OnChanges {
   adapter
   mapObject
   //table
-
   flipped = false;
   csvtable: any;
   sourceRefFormat: string;
@@ -68,7 +67,6 @@ export class DMMComponent implements OnInit, OnChanges {
   schemas
   selectedSchema
   //selectedPath
-
   schemaJson: any[];
   outputEditor: any;
   outputEditorOptions: any;
