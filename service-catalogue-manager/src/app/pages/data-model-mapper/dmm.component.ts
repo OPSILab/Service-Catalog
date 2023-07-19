@@ -75,10 +75,6 @@ export class DMMComponent implements OnInit, OnChanges {
   schemaFromFile
   //divElement;
 
-  toggleView() {
-    this.flipped = !this.flipped;
-  }
-
   constructor(
     @Inject(DOCUMENT) private document: Document,
     protected dialogService: NbDialogService,
@@ -88,6 +84,10 @@ export class DMMComponent implements OnInit, OnChanges {
   ) {
     //divElement = document.createElement('div')
     //table = document.createElement('table');
+  }
+
+  toggleView() {
+    this.flipped = !this.flipped;
   }
 
   updateAdapter() {
