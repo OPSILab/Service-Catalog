@@ -64,6 +64,11 @@
                 (focusout)="onUpdatePathForDataMap('')" (blur)="onUpdatePathForDataMap('')"></div>
                 -->
             </div>
+            <div class="mb-2" id="csv-input" style="display:none;">
+              <div class="mb-2">
+                <br><br>
+              </div>
+            </div>
             <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('schema','json')">
               {{ 'general.editor.import' | translate }}
               <i class="mx-1 fas fa-file-import fa-lg"></i>
