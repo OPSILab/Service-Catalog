@@ -1,11 +1,8 @@
 <nb-card>
   <nb-card-header class="d-flex align-content-center justify-content-between">
     <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
-    <div *ngIf="!value">
+    <div>
       <h3>{{ 'general.adapters.add' | translate }}</h3>
-    </div>
-    <div *ngIf="value">
-      <h3>{{ 'general.adapters.edit' | translate }}</h3>
     </div>
     <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
       <i class="material-icons">close</i>
@@ -14,91 +11,76 @@
   <nb-card-body class="m-2 p-4">
     <h6>
       <form>
-        <div *ngIf="page1">
-          <label for="adapterId" fullWidth>{{ 'general.adapters.adapterId' | translate }}</label>
-          <br>
-          <input *ngIf="!value" [(ngModel)]="adapterId" nbInput type="text" fullWidth
-            [placeholder]=placeholders.adapterId [ngModelOptions]="{standalone: true}" />
-          <input *ngIf="value" disabled [(ngModel)]="adapterId" nbInput type="text" fullWidth
-            [placeholder]=placeholders.adapterId [ngModelOptions]="{standalone: true}" />
-          <br>
-          <br>
-          <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
-          <br>
-          <input [(ngModel)]="name" nbInput type="text" fullWidth
-            placeholder="{{ 'general.adapters.name' | translate }}" [ngModelOptions]="{standalone: true}" />
-          <br><br>
-          <label for="status">{{ 'general.adapters.status' | translate }}</label>
-          <br>
-          <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.status"
-            [(ngModel)]="status" [ngModelOptions]="{standalone: true}">
-          <br>
-          <br>
-          <label for="url">{{ 'general.adapters.url' | translate }}</label>
-          <br>
-          <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.url" [(ngModel)]="url"
-            [ngModelOptions]="{standalone: true}">
-          <!--
+        <label for="adapterId" fullWidth>{{ 'general.adapters.adapterId' | translate }}</label>
+        <br>
+        <input [ngModel]="adapterId" nbInput
+          type="text" fullWidth [placeholder] = placeholders.adapterId
+          [ngModelOptions]="{standalone: true}" />
+        <br>
+        <br>
+        <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
+        <br>
+        <input [ngModel]="name" nbInput type="text"
+            fullWidth placeholder="{{ 'general.adapters.name' | translate }}" [ngModelOptions]="{standalone: true}"/>
+
+        <br><br>
+        <label for="status">{{ 'general.adapters.status' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.status" [(ngModel)]="status"
+          [ngModelOptions]="{standalone: true}">
+        <br>
+        <br>
+        <label for="url">{{ 'general.adapters.url' | translate }}</label>
+        <br>
+        <input type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.url" [(ngModel)]="url"
+          [ngModelOptions]="{standalone: true}">
+        <!--
         <input type="text" *ngIf="!loaded" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
           [ngModelOptions]="{standalone: true}">
         <input type="text" *ngIf="loaded" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
           [ngModelOptions]="{standalone: true}" disabled>
         -->
-          <br><br>
-          <label for="description">{{ 'general.adapters.description' | translate }}</label>
-          <br>
-          <textarea nbInput fullWidth fieldSize="medium" [placeholder]="placeholders.description"
-            [(ngModel)]="description" [ngModelOptions]="{standalone: true}"></textarea>
-          <br><br>
-        </div>
-        <div *ngIf="!page1">
-          <label *ngIf="sourceDataDiv" for="sourceDataType">{{ 'general.adapters.source_data_type' | translate
-            }}</label>
-          <br *ngIf="sourceDataDiv">
-          <nb-radio-group *ngIf="sourceDataDiv" fullWidth [(ngModel)]="sourceDataType"
-            [ngModelOptions]="{standalone: true}" (ngModelChange)="typeDiv=true; sourceDataDiv=false">
-            <nb-radio value="csv">CSV</nb-radio>
-            <nb-radio value="json">JSON</nb-radio>
-          </nb-radio-group>
-          <br *ngIf="sourceDataDiv"><br *ngIf="sourceDataDiv">
-
-          <label *ngIf="typeDiv" for="type">{{ 'general.adapters.type' | translate }}</label>
-          <br *ngIf="typeDiv">
-          <nb-radio-group *ngIf="typeDiv" fullWidth [(ngModel)]="type" [ngModelOptions]="{standalone: true}"
-            (ngModelChange)="onModelChange($event)">
-            <nb-radio value="MODEL">Model</nb-radio>
-            <nb-radio value="DATA">Data</nb-radio>
-          </nb-radio-group>
-          <br *ngIf="typeDiv"><br *ngIf="typeDiv">
-          <label *ngIf="type=='MODEL' && contextDiv" for="context">{{ 'general.adapters.context' | translate
-            }}</label>
-          <br *ngIf="type=='MODEL' && contextDiv">
-          <nb-radio-group *ngIf="type=='MODEL'  && contextDiv" fullWidth [(ngModel)]="context"
-            [ngModelOptions]="{standalone: true}" (ngModelChange)="lastPage=true;">
-            <nb-radio value="IMPORT">Import</nb-radio>
-            <nb-radio value="EXPORT">Export</nb-radio>
-          </nb-radio-group>
-        </div>
-        <!--
-        <div *ngIf="lastPage">
-          Click confirm to save the adapter
-        </div>
-        -->
+        <br><br>
+        <label for="sourceDataType">{{ 'general.adapters.source_data_type' | translate }}</label>
+        <br>
+        <nb-select fullWidth [placeholder]="placeholders.sourceDataType" [(ngModel)]="sourceDataType"
+            [ngModelOptions]="{standalone: true}">
+            <nb-option-group title="context">
+              <nb-option value="csv">CSV</nb-option>
+              <nb-option value="json">JSON</nb-option>
+            </nb-option-group>
+          </nb-select>
+        <br><br>
+        <label for="description">{{ 'general.adapters.description' | translate }}</label>
+        <br>
+        <textarea nbInput fullWidth fieldSize="medium" [placeholder]="placeholders.description" [(ngModel)]="description"
+          [ngModelOptions]="{standalone: true}"></textarea>
+        <br><br>
+        <label for="type">{{ 'general.adapters.type' | translate }}</label>
+        <br>
+        <nb-select fullWidth [placeholder]="placeholders.type" [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
+          <nb-option-group title="type">
+            <nb-option value="MODEL">Model</nb-option>
+            <nb-option value="DATA">Data</nb-option>
+          </nb-option-group>
+        </nb-select>
+        <br><br>
+        <label *ngIf="type=='MODEL'" for="context">{{ 'general.adapters.context' | translate
+          }}</label>
+        <br *ngIf="type=='MODEL'">
+        <nb-select *ngIf="type=='MODEL'" fullWidth [placeholder]="placeholders.context" [(ngModel)]="context"
+          [ngModelOptions]="{standalone: true}">
+          <nb-option-group title="context">
+            <nb-option value="IMPORT">Import</nb-option>
+            <nb-option value="EXPORT">Export</nb-option>
+          </nb-option-group>
+        </nb-select>
         <br>
         <br>
         <h3>
-          <button style="float:left" *ngIf="!page1" nbButton appearance="outline" shape="semi-round" size="medium"
-            status="info" (click)="back()">
-            <i class="mx-1">{{ 'general.dmm.back' | translate }}</i>
-          </button>
-          <button style="float:right"
-            *ngIf="!lastPage && !(type == 'DATA' && !sourceDataDiv) && !(context && contextDiv)" nbButton
-            appearance="outline" shape="semi-round" size="medium" status="info" (click)="next()">
-            <i class="mx-1">{{ 'general.adapters.next' | translate }}</i>
-          </button>
           <!--<p *ngIf="validURL==false" style=" text-align : center; font-size: 14px; color: red ">Invalid URL or unable to connect to load mapper list <br><br></p>-->
-          <button style="float:right" *ngIf="lastPage || (type == 'DATA' && !sourceDataDiv) || (context && contextDiv)"
-            nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
+          <button nbButton appearance="outline" shape="semi-round"
+            size="medium" status="info" (click)="confirm()">
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
           </button>
           &nbsp;

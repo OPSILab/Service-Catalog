@@ -7,14 +7,14 @@
   </nb-card-header>
   <nb-card-body class="m-2 p-4" style="overflow-y: hidden">
     <div class="row justify-content-left p-3">Select {{type}} data </div>
-    <nb-radio-group [(ngModel)]="selectedItem">
-      <nb-radio value="file">
+    <nb-select [(ngModel)]="selectedItem">
+      <nb-option value="file">
         {{ "file" }}
-      </nb-radio>
-      <nb-radio value="url">
+      </nb-option>
+      <nb-option value="url">
         {{ "url" }}
-      </nb-radio>
-    </nb-radio-group>
+      </nb-option>
+    </nb-select>
     <div *ngIf="selectedItem === 'url'" class="row justify-content-left p-3">
 
       <input [(ngModel)]="dataUrl" nbInput placeholder="Data URL" />
