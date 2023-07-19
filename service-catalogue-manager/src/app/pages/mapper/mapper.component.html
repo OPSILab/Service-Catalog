@@ -32,22 +32,29 @@
     <nb-accordion multi>
       <nb-accordion-item expanded="true">
         <nb-accordion-item-header>
-
+          Source
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-          <div class="mb-1" id="json-input">
-            <div class="mb-2">
-              <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','json')">
-                {{ 'Import'}}
-                <i class="mx-1 fas fa-file-import fa-lg"></i>
-              </button>
-            </div>
+          <div class="mb-2">
+            <p>Select a schema from below or upload your schema.
+            </p>
+            <nb-select placeholder="Select Json Schema" size="small" [(ngModel)]=selectedSchema
+              (ngModelChange)="schemaChanged($event)">
+              <nb-option *ngFor="let schema of schemas" value={{schema.id}}>{{schema.name}}</nb-option>
+            </nb-select>
+            <br><br><br>
+            <div style="padding-top:10px"></div>
+            <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('schema','json')">
+              {{ 'general.editor.import' | translate }}
+              <i class="mx-1 fas fa-file-import fa-lg"></i>
+            </button>
+            <br>
           </div>
         </nb-accordion-item-body>
       </nb-accordion-item>
       <nb-accordion-item expanded="true">
         <nb-accordion-item-header>
-
+          Mapper
         </nb-accordion-item-header>
         <nb-accordion-item-body>
 
@@ -55,7 +62,7 @@
       </nb-accordion-item>
       <nb-accordion-item expanded="true">
         <nb-accordion-item-header>
-
+          Output
         </nb-accordion-item-header>
         <nb-accordion-item-body>
 
