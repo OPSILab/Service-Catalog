@@ -449,7 +449,8 @@
       "add_element" : "Aggiungi elemento",
       "map" : "Mappa",
       "back" : "Indietro",
-      "reset" : "Reset"
+      "reset" : "Reset",
+      "add" : "Aggiungi mappa"
     }
   },
   "login": {

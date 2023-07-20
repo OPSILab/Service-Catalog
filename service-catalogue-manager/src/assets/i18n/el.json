@@ -449,7 +449,8 @@
       "add_element" : "Add element",
       "map" : "Map",
       "back" : "Back",
-      "reset" : "Reset"
+      "reset" : "Reset",
+      "add" : "Save map"
     }
   },
   "login": {
