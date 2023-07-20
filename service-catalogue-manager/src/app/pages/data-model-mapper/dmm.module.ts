@@ -27,6 +27,7 @@ import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.componen
 import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-map-and-adapter.component';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { AddKeyComponent } from './dialog-dataMap/add-key/add-key.component';
+import { CreateAdapterComponent } from './create-map-and-adapter/create-adapter/create-adapter.component';
 
 
 
@@ -56,7 +57,7 @@ import { AddKeyComponent } from './dialog-dataMap/add-key/add-key.component';
     TranslateModule.forChild({}),
     NbAutocompleteModule
   ],
-  declarations: [DMMComponent,DialogImportComponent,DialogDataMapComponent, CreateMapAndAdapterComponent, AddKeyComponent,],
+  declarations: [DMMComponent,DialogImportComponent,DialogDataMapComponent, CreateMapAndAdapterComponent, AddKeyComponent, CreateAdapterComponent,],
   providers: [DMMService],
   entryComponents: [
     DialogImportComponent,

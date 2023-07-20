@@ -450,7 +450,8 @@
       "map" : "Mappa",
       "back" : "Indietro",
       "reset" : "Reset",
-      "add" : "Aggiungi mappa"
+      "add" : "Aggiungi mappa",
+      "mapId" : "ID map"
     }
   },
   "login": {

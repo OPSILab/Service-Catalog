@@ -46,8 +46,11 @@ export class CreateMapAndAdapterComponent implements OnInit {
   contextDiv = false
   typeDiv = false
   sourceDataDiv = true
+  createAdapter = false
+  mapId: string
   placeholders = {
     adapterId: this.translate.instant('general.adapters.adapterId'),
+    mapId: this.translate.instant('general.dmm.mapId'),
     status: this.translate.instant('general.adapters.status'),
     url: this.translate.instant('general.adapters.status'),
     sourceDataType: this.translate.instant('general.adapters.source_data_type'),

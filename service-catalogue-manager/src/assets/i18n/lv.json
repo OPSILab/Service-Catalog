@@ -450,7 +450,8 @@
       "map" : "Map",
       "back" : "Back",
       "reset" : "Reset",
-      "save" : "Save map"
+      "add" : "Save map",
+      "mapId" : "Map ID"
     }
   },
   "login": {
