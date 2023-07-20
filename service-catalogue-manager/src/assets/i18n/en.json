@@ -448,7 +448,8 @@
       "preview" : "Preview",
       "add_element" : "Add element",
       "map" : "Map",
-      "back" : "Back"
+      "back" : "Back",
+      "reset" : "Reset"
     }
   },
   "login": {

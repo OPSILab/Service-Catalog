@@ -448,7 +448,8 @@
       "preview": "Anteprima",
       "add_element" : "Aggiungi elemento",
       "map" : "Mappa",
-      "back" : "Indietro"
+      "back" : "Indietro",
+      "reset" : "Reset"
     }
   },
   "login": {

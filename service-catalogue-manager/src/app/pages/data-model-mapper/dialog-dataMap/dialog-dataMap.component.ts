@@ -105,6 +105,12 @@ export class DialogDataMapComponent implements OnInit {
     this.ref.close();
   }
 
+  reset(){
+
+    this.selectedProps = []
+    this.spreadProps = ""
+  }
+
   back() {
 
     if (this.selectedItem.direct || this.selectedItem.static) {
