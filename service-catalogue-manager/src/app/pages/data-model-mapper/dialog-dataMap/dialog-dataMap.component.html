@@ -50,9 +50,10 @@
         [(ngModel)]="this.selectedProps[this.selectedProps.length-1]" nbInput type="text"
         style="width:400px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
         -->
+        <br><br>
       <p>Insert your static value
       </p>
-      <div *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" style="padding-top: 20px;"></div>
+      <div *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" style="padding-top: 10px;"></div>
       <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64 && !selectedItem.direct"
         placeholder="Put static data" [(ngModel)]="selectedProp" nbInput type="text"
         style="width: 250px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
@@ -74,14 +75,23 @@
         [ngModelOptions]="{standalone: true}" placeholder="Put static value" />
     </div>
     <div fullWidth *ngIf="selectedItem.direct" style="width:400px;clear:both;float:none">
-      <nb-select fullWidth style="width:400px;clear:both;float:none" [(ngModel)]="selectedProp">
+      <br><br>
+      <nb-select-label>Select the source key input from below</nb-select-label>
+      <div style="padding-top: 10px;"></div>
+      <nb-select fullWidth style="width:250px;clear:both;float:none" [(ngModel)]="selectedProp">
         <nb-option *ngFor="let option of mapOptions" value={{option}}>{{option}}</nb-option>
       </nb-select>
-      <br>
 
+      <!--
+      <br>
+      <br>
+      -->
+
+      <!--
       <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" placeholder="Put input field name"
         [(ngModel)]="selectedProp" nbInput type="text" style="width: 250px;clear:both;float:none"
         [ngModelOptions]="{standalone: true}" />
+      -->
 
       <button style="float: right" *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" nbButton
         appearance="outline" shape="semi-round" size="medium" status="info" (click)="concat()">
