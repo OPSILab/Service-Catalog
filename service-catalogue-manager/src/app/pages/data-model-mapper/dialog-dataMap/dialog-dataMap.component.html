@@ -7,8 +7,7 @@
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
     <div class="row justify-content-left p-3">Select encode option</div>
-    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.base64"
-      (ngModelChange)="encodeChange($event)">
+    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.base64" (ngModelChange)="encodeChange($event)">
       <nb-option [value]=true>
         {{ "base64" }}
       </nb-option>
@@ -16,9 +15,9 @@
         {{ "none" }}
       </nb-option>
     </nb-select>
-    <div class="row justify-content-left p-3">
+    <div class="row justify-content-left p-3" *ngIf="!selectedItem.base64">
       Single or multi input</div>
-    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.concat">
+    <nb-select (click)="fixBrokenPageBug()" *ngIf="!selectedItem.base64" [(ngModel)]="selectedItem.concat">
       <nb-option [value]=true>
         {{ "multi" }}
       </nb-option>
@@ -28,7 +27,8 @@
     </nb-select>
     <div class="row justify-content-left p-3">
       Direct or static input</div>
-    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.direct" (ngModelChange)="selectedItem.static = !selectedItem.direct">
+    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.direct"
+      (ngModelChange)="selectedItem.static = !selectedItem.direct">
       <nb-option [value]=true>
         {{ "direct" }}
       </nb-option>
@@ -50,12 +50,12 @@
         [(ngModel)]="this.selectedProps[this.selectedProps.length-1]" nbInput type="text"
         style="width:400px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
         -->
-        <p>Insert your static value
-        </p>
+      <p>Insert your static value
+      </p>
       <div *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" style="padding-top: 20px;"></div>
-      <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64 && !selectedItem.direct" placeholder="Put static data"
-        [(ngModel)]="selectedProp" nbInput type="text" style="width: 250px;clear:both;float:none"
-        [ngModelOptions]="{standalone: true}" />
+      <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64 && !selectedItem.direct"
+        placeholder="Put static data" [(ngModel)]="selectedProp" nbInput type="text"
+        style="width: 250px;clear:both;float:none" [ngModelOptions]="{standalone: true}" />
 
       <button style="float: right" *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" nbButton
         appearance="outline" shape="semi-round" size="medium" status="info" (click)="concat()">
@@ -67,16 +67,16 @@
       </p>
       <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" fullWidth
         style="width:400px;clear:both;" [(ngModel)]="spreadProps" nbInput type="text"
-        [ngModelOptions]="{standalone: true}" disabled placeholder="Insert your values above and click add element"/>
+        [ngModelOptions]="{standalone: true}" disabled placeholder="Insert your values above and click add element" />
 
       <input *ngIf="!selectedItem.concat && !selectedItem.array && !selectedItem.base64" fullWidth
         style="width:400px;clear:both;float:none" [(ngModel)]="selectedProp" nbInput type="text"
         [ngModelOptions]="{standalone: true}" placeholder="Put static value" />
     </div>
     <div fullWidth *ngIf="selectedItem.direct" style="width:400px;clear:both;float:none">
-      <ng2-smart-table fullWidth style="width:400px;clear:both;float:none" [settings]="settings" [source]="source"
-        (userRowSelect)="onUserRowSelect($event)">
-      </ng2-smart-table>
+      <nb-select fullWidth style="width:400px;clear:both;float:none" [(ngModel)]="selectedProp">
+        <nb-option *ngFor="let option of mapOptions" value={{option}}>{{option}}</nb-option>
+      </nb-select>
       <br>
 
       <input *ngIf="selectedItem.concat || selectedItem.array || selectedItem.base64" placeholder="Put input field name"
