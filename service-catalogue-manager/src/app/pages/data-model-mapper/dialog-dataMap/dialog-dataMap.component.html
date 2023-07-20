@@ -6,8 +6,8 @@
     </button>
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
-    <div class="row justify-content-left p-3" *ngIf="selectedItem.base64==undefined">Select encode option</div>
-    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.base64" *ngIf="selectedItem.base64==undefined"
+    <div class="row justify-content-left p-3">Select encode option</div>
+    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.base64"
       (ngModelChange)="encodeChange($event)">
       <nb-option [value]=true>
         {{ "base64" }}
@@ -16,10 +16,9 @@
         {{ "none" }}
       </nb-option>
     </nb-select>
-    <div class="row justify-content-left p-3" *ngIf="selectedItem.concat==undefined && selectedItem.base64!=undefined">
+    <div class="row justify-content-left p-3">
       Single or multi input</div>
-    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.concat"
-      *ngIf="selectedItem.concat==undefined && selectedItem.base64!=undefined">
+    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.concat">
       <nb-option [value]=true>
         {{ "multi" }}
       </nb-option>
@@ -27,11 +26,9 @@
         {{ "single" }}
       </nb-option>
     </nb-select>
-    <div class="row justify-content-left p-3"
-      *ngIf="selectedItem.concat!=undefined && selectedItem.base64!=undefined && selectedItem.static==undefined && selectedItem.direct==undefined">
+    <div class="row justify-content-left p-3">
       Direct or static input</div>
-    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.direct" (ngModelChange)="selectedItem.static = !selectedItem.direct"
-      *ngIf="selectedItem.concat!=undefined && selectedItem.base64!=undefined && selectedItem.static==undefined && selectedItem.direct==undefined">
+    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.direct" (ngModelChange)="selectedItem.static = !selectedItem.direct">
       <nb-option [value]=true>
         {{ "direct" }}
       </nb-option>
