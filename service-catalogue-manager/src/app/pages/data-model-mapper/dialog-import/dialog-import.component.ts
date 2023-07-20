@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Byte } from '@angular/compiler/src/util';
@@ -22,14 +22,16 @@ export class DialogImportComponent implements OnInit {
   selectedItem //= 'Json';
   dataUrl: string;
   extension: String;
-  
+
   @Input() type: string;
-  
+
 
   constructor(private http: HttpClient, protected ref: NbDialogRef<DialogImportComponent>,
-    private errorService: ErrorDialogService, 
+    private errorService: ErrorDialogService,
+    @Inject(DOCUMENT) private document: Document,
     ) {
-    
+
+
   }
 
   cancel(): void {
@@ -38,8 +40,12 @@ export class DialogImportComponent implements OnInit {
 
 
   async ngOnInit() {
-    
-    
+
+
+  }
+
+  fixBrokenPageBug(){
+    document.getElementsByTagName('html')[0].className=""
   }
 
   onFileChanged(event: Event): void {
@@ -74,11 +80,11 @@ export class DialogImportComponent implements OnInit {
       this.file = await this.http.get<any>(this.dataUrl, { responseType: 'text' as 'json' }).toPromise();
       this.ref.close({ content: this.file, source: this.dataUrl , format:"url"});
     } else {
-      
+
       this.ref.close({ content: this.file, source: this.selectedFile.name , format:"file"});
     }
-         
-  } 
 
- 
+  }
+
+
 }

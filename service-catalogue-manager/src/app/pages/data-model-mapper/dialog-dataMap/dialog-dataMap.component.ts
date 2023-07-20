@@ -82,6 +82,10 @@ export class DialogDataMapComponent implements OnInit {
     };
   }
 
+  fixBrokenPageBug(){
+    document.getElementsByTagName('html')[0].className=""
+  }
+
   onUserRowSelect(event): void {
     //if (this.selectedItem.concat || this.selectedItem.array)
     //this.selectedProps[this.selectedProps.length] = event.data

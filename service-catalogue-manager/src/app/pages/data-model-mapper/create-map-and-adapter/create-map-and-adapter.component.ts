@@ -74,6 +74,10 @@ export class CreateMapAndAdapterComponent implements OnInit {
     this.ref.close();
   }
 
+  fixBrokenPageBug(){
+    document.getElementsByTagName('html')[0].className=""
+  }
+
   next() {
     if (this.page1)
       this.page1 = false

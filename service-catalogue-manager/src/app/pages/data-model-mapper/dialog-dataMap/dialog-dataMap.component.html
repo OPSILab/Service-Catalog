@@ -7,38 +7,38 @@
   </nb-card-header>
   <nb-card-body class="m-2 p-4">
     <div class="row justify-content-left p-3" *ngIf="selectedItem.base64==undefined">Select encode option</div>
-    <nb-radio-group [(ngModel)]="selectedItem.base64" *ngIf="selectedItem.base64==undefined"
+    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.base64" *ngIf="selectedItem.base64==undefined"
       (ngModelChange)="encodeChange($event)">
-      <nb-radio [value]=true>
+      <nb-option [value]=true>
         {{ "base64" }}
-      </nb-radio>
-      <nb-radio [value]=false>
+      </nb-option>
+      <nb-option [value]=false>
         {{ "none" }}
-      </nb-radio>
-    </nb-radio-group>
+      </nb-option>
+    </nb-select>
     <div class="row justify-content-left p-3" *ngIf="selectedItem.concat==undefined && selectedItem.base64!=undefined">
       Single or multi input</div>
-    <nb-radio-group [(ngModel)]="selectedItem.concat"
+    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.concat"
       *ngIf="selectedItem.concat==undefined && selectedItem.base64!=undefined">
-      <nb-radio [value]=true>
+      <nb-option [value]=true>
         {{ "multi" }}
-      </nb-radio>
-      <nb-radio [value]=false>
+      </nb-option>
+      <nb-option [value]=false>
         {{ "single" }}
-      </nb-radio>
-    </nb-radio-group>
+      </nb-option>
+    </nb-select>
     <div class="row justify-content-left p-3"
       *ngIf="selectedItem.concat!=undefined && selectedItem.base64!=undefined && selectedItem.static==undefined && selectedItem.direct==undefined">
       Direct or static input</div>
-    <nb-radio-group [(ngModel)]="selectedItem.direct" (ngModelChange)="selectedItem.static = !selectedItem.direct"
+    <nb-select (click)="fixBrokenPageBug()" [(ngModel)]="selectedItem.direct" (ngModelChange)="selectedItem.static = !selectedItem.direct"
       *ngIf="selectedItem.concat!=undefined && selectedItem.base64!=undefined && selectedItem.static==undefined && selectedItem.direct==undefined">
-      <nb-radio [value]=true>
+      <nb-option [value]=true>
         {{ "direct" }}
-      </nb-radio>
-      <nb-radio [value]=false>
+      </nb-option>
+      <nb-option [value]=false>
         {{ "static" }}
-      </nb-radio>
-    </nb-radio-group>
+      </nb-option>
+    </nb-select>
 
     <!--
     <nb-checkbox [(ngModel)]="selectedItem.direct" style="float:left; margin-left:15px">&nbsp;Direct</nb-checkbox>&nbsp;

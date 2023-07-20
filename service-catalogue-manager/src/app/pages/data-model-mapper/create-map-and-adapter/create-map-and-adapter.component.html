@@ -43,7 +43,7 @@
         <br><br>
         <label for="sourceDataType">{{ 'general.adapters.source_data_type' | translate }}</label>
         <br>
-        <nb-select fullWidth [placeholder]="placeholders.sourceDataType" [(ngModel)]="sourceDataType"
+        <nb-select fullWidth [placeholder]="placeholders.sourceDataType" [(ngModel)]="sourceDataType" (click)="fixBrokenPageBug()"
             [ngModelOptions]="{standalone: true}">
             <nb-option-group title="context">
               <nb-option value="csv">CSV</nb-option>
@@ -58,7 +58,7 @@
         <br><br>
         <label for="type">{{ 'general.adapters.type' | translate }}</label>
         <br>
-        <nb-select fullWidth [placeholder]="placeholders.type" [(ngModel)]="type" [ngModelOptions]="{standalone: true}">
+        <nb-select fullWidth [placeholder]="placeholders.type" [(ngModel)]="type" (click)="fixBrokenPageBug()" [ngModelOptions]="{standalone: true}">
           <nb-option-group title="type">
             <nb-option value="MODEL">Model</nb-option>
             <nb-option value="DATA">Data</nb-option>
@@ -68,7 +68,7 @@
         <label *ngIf="type=='MODEL'" for="context">{{ 'general.adapters.context' | translate
           }}</label>
         <br *ngIf="type=='MODEL'">
-        <nb-select *ngIf="type=='MODEL'" fullWidth [placeholder]="placeholders.context" [(ngModel)]="context"
+        <nb-select *ngIf="type=='MODEL'" fullWidth [placeholder]="placeholders.context" (click)="fixBrokenPageBug()" [(ngModel)]="context"
           [ngModelOptions]="{standalone: true}">
           <nb-option-group title="context">
             <nb-option value="IMPORT">Import</nb-option>

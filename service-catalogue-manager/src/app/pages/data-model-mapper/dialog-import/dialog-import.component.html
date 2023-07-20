@@ -7,7 +7,8 @@
   </nb-card-header>
   <nb-card-body class="m-2 p-4" style="overflow-y: hidden">
     <div class="row justify-content-left p-3">Select {{type}} data </div>
-    <nb-select [(ngModel)]="selectedItem">
+
+    <nb-select [(ngModel)]="selectedItem" (click)="fixBrokenPageBug()">
       <nb-option value="file">
         {{ "file" }}
       </nb-option>
@@ -15,6 +16,7 @@
         {{ "url" }}
       </nb-option>
     </nb-select>
+
     <div *ngIf="selectedItem === 'url'" class="row justify-content-left p-3">
 
       <input [(ngModel)]="dataUrl" nbInput placeholder="Data URL" />

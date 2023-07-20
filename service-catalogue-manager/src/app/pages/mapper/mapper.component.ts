@@ -10,7 +10,8 @@ import * as _ from "lodash"
 import * as JSONEditor from '../../../../node_modules/jsoneditor/dist/jsoneditor.js';
 
 
-let map = {}, mapperEditor, mapOptions: string[]
+let map = {}, mapperEditor, mapOptions: string[], box1, box2, box3
+
 @Component({
   selector: 'mapper',
   templateUrl: './mapper.component.html',
@@ -53,10 +54,10 @@ export class MapperComponent implements OnInit {
   //divElement;
 
   constructor(@Inject(DOCUMENT) private document: Document,
-  protected dialogService: NbDialogService,
-  private windowService: NbWindowService,
-  private availableServicesService: AvailableServicesService,
-  private dmmService: DmmService,) { }
+    protected dialogService: NbDialogService,
+    private windowService: NbWindowService,
+    private availableServicesService: AvailableServicesService,
+    private dmmService: DmmService,) { }
 
   toggleView() {
     this.flipped = !this.flipped;
@@ -102,11 +103,34 @@ export class MapperComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.sourceEditorContainer = this.document.getElementById('jsoneditor');
-    this.mapperEditorContainer = this.document.getElementById('jsoneditor2');
-    this.outputEditorContainer = this.document.getElementById('jsoneditor3');
-    this.selectBox = <HTMLInputElement>this.document.getElementById('input-type');
-    this.csvtable = this.document.getElementById('csv-table');
+
+    //this.document = new Document()
+
+    box1 = this.document.createElement("div");
+    box2 = this.document.createElement("div");
+    box3 = this.document.createElement("div");
+    box1.id = "jsoneditor";
+    box2.id = "jsoneditor2";
+    box3.id = "jsoneditor3";
+
+    this.documentInspect(this.document.body)
+
+    this.document.body = "" as unknown as HTMLBaseElement
+
+    this.document.body.appendChild(box1);
+    this.document.body.appendChild(box2);
+    this.document.body.appendChild(box3);
+
+    this.sourceEditorContainer = box1;//document.getElementById('jsoneditor');
+    this.mapperEditorContainer = box2;//document.getElementById('jsoneditor2');
+    this.outputEditorContainer = box3;//document.getElementById('jsoneditor3');
+    //this.selectBox = <HTMLInputElement>this.document.getElementById('input-type');
+    //this.csvtable = this.document.getElementById('csv-table');
+
+    console.debug(box1)
+    console.debug(this.document.getElementById('jsoneditor'))
+    console.debug(document)
+    console.debug(this.document)
 
     //await this.loadMapperList()
     await this.loadSchemaList()
@@ -147,6 +171,16 @@ export class MapperComponent implements OnInit {
 
     //if (this.schemaJson) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, this.schemaJson);
 
+  }
+  documentInspect(div) {
+    console.debug(this.document.childNodes)
+    console.debug("inspecting")
+    for (let i in div){
+      console.debug(div[i])
+      return this.documentInspect(div[i])
+    }
+    console.debug("inspecting finished")
+    return 0
   }
 
 
