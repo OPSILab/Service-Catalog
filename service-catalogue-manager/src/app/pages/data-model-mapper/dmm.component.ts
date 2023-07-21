@@ -73,6 +73,7 @@ export class DMMComponent implements OnInit, OnChanges {
   //json2
   sourceJson: any;
   schemaFromFile
+  createAdapter: any;
   //divElement;
 
   constructor(
@@ -91,9 +92,15 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   updateAdapter() {
-    this.dialogService.open(CreateMapAndAdapterComponent, { context: { value: this.adapter } }).onClose.subscribe(async (adapter) => {
+    console.debug("THIS ADAPTER")
+    console.debug(this.adapter)
+    let createAdapter = this.createAdapter
+    let type = this.inputType
+    console.debug(this)
+    this.dialogService.open(CreateMapAndAdapterComponent, { context: { value: this.adapter, update: true, updateAdapter : createAdapter, sourceDataType : type } }).onClose.subscribe(async (adapter) => {
       if (adapter) {
         this.adapter = adapter;
+        if (adapter.description) this.createAdapter = true
         this.mapObject = await this.dmmService.updateMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
       }
     });
@@ -261,6 +268,7 @@ export class DMMComponent implements OnInit, OnChanges {
     const divJsonElement = document.getElementById('json-input');
     const divCSVElement = document.getElementById('csv-input');
 
+    this.inputType = event
     if (event === 'csv') {
       divCSVElement.style.display = 'block';
       divJsonElement.style.display = 'none';
@@ -365,8 +373,9 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   saveAdapter() {
-    this.dialogService.open(CreateMapAndAdapterComponent, { context: { sourceDataType: this.inputType || "json" } }).onClose.subscribe(async (adapter) => {
+    this.dialogService.open(CreateMapAndAdapterComponent, { context: { sourceDataType: this.inputType || "json", save: true } }).onClose.subscribe(async (adapter) => {
       this.adapter = adapter;
+      if (adapter.description) this.createAdapter = true
       this.mapObject = await this.dmmService.saveMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
       this.isNew = true
     });

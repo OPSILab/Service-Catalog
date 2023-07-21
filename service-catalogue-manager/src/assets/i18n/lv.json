@@ -451,6 +451,7 @@
       "back" : "Back",
       "reset" : "Reset",
       "add" : "Save map",
+      "edit" : "Edit map",
       "mapId" : "Map ID"
     }
   },

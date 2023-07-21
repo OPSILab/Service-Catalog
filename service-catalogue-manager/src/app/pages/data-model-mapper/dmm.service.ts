@@ -26,7 +26,7 @@ export class DMMService {
     return this.http.get<any[]>(this.config.data_model_mapper.default_mapper_base_url + "/maps").toPromise();
   }
 
-  saveMap(adapter: AdapterEntry, map, schema): any {
+  saveMap(adapter: Partial<AdapterEntry>, map, schema): any {
     return this.http.post<any[]>(this.config.data_model_mapper.default_mapper_base_url + "/map/register", {
       id: adapter.adapterId,
       name: adapter.name,
@@ -36,6 +36,7 @@ export class DMMService {
   }
 
   updateMap(adapter: AdapterEntry, map, schema): any {
+    console.debug(adapter)
     return this.http.put<any[]>(this.config.data_model_mapper.default_mapper_base_url + "/map", {
       id: adapter.adapterId,
       name: adapter.name,

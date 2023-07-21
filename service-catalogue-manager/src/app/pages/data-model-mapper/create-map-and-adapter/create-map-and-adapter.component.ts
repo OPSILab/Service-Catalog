@@ -12,6 +12,7 @@ import { AppConfig } from '../../../model/appConfig';
 import { ErrorDialogAdapterService } from '../../error-dialog/error-dialog-adapter.service';
 import { AddAdapterComponent } from '../../services/available-adapters/add-adapter/add-adapter.component';
 import { AvailableAdaptersService } from '../../services/available-adapters/available-adapters.service';
+import { DMMService } from '../dmm.service';
 
 @Component({
   selector: 'create-map-and-adapter',
@@ -20,7 +21,7 @@ import { AvailableAdaptersService } from '../../services/available-adapters/avai
 })
 export class CreateMapAndAdapterComponent implements OnInit {
 
-  @Input() value: AdapterEntry;
+  @Input() value: any;
   @Output() editedValue = new EventEmitter<unknown>();
   adapterId: string
   name: string = ''
@@ -48,6 +49,9 @@ export class CreateMapAndAdapterComponent implements OnInit {
   sourceDataDiv = true
   createAdapter = false
   mapId: string
+  save
+  update
+  updateAdapter
   placeholders = {
     adapterId: this.translate.instant('general.adapters.adapterId'),
     mapId: this.translate.instant('general.dmm.mapId'),
@@ -77,8 +81,8 @@ export class CreateMapAndAdapterComponent implements OnInit {
     this.ref.close();
   }
 
-  fixBrokenPageBug(){
-    document.getElementsByTagName('html')[0].className=""
+  fixBrokenPageBug() {
+    document.getElementsByTagName('html')[0].className = ""
   }
 
   next() {
@@ -92,9 +96,9 @@ export class CreateMapAndAdapterComponent implements OnInit {
       this.contextDiv = true
       this.typeDiv = false
     }
-    else if (this.contextDiv){
+    else if (this.contextDiv) {
       //this.contextDiv=false
-      this.lastPage= true
+      this.lastPage = true
     }
   }
 
@@ -107,14 +111,14 @@ export class CreateMapAndAdapterComponent implements OnInit {
       this.sourceDataDiv = true
       this.typeDiv = false
     }
-    else if (this.contextDiv){
-      this.contextDiv=false
+    else if (this.contextDiv) {
+      this.contextDiv = false
       this.typeDiv = true
     }
   }
 
-  onModelChange($event){
-    if ($event == 'MODEL'){
+  onModelChange($event) {
+    if ($event == 'MODEL') {
       this.contextDiv = true;
       this.typeDiv = false
     }
@@ -126,19 +130,11 @@ export class CreateMapAndAdapterComponent implements OnInit {
     this.loaded = false
     this.url = this.appConfig.data_model_mapper.default_mapper_url
 
-    if (this.value) {
-      this.name = this.value.name;
-      this.description = this.value.description;
-      this.status = this.value.status;
-      this.adapterId ? this.adapterId : this.value ? this.value.adapterId : null;
-      this.type = this.value.type;
-      this.url = this.value.url;
-      this.context = this.value.context;
-      this.sourceDataType = this.value.sourceDataType
-    }
+    if (this.value)
+      for (let key in this.value)
+        this[key] = this.value[key]
 
     try {
-      if (this.value && this.value.adapterId) this.adapterId = this.value.adapterId
       this.url = this.appConfig.data_model_mapper.default_mapper_url
     }
     catch (error) {
@@ -173,41 +169,57 @@ export class CreateMapAndAdapterComponent implements OnInit {
 
   async onSubmit() {
     console.debug(this.value)
+
+
+
     try {
 
-      let name = this.name || this.value.name,
-        description = this.description || this.value.description,
-        status = this.status || this.value.status,
-        adapterId = this.adapterId ? this.adapterId : this.value ? this.value.adapterId : null,
-        type = this.type || this.value.type,
-        url = this.url || this.value.url,
-        context = this.context || this.value.context,
-        sourceDataType = this.sourceDataType || this.value.sourceDataType
+      let name = this.name,
+        description = this.description,
+        status = this.status,
+        adapterId = this.adapterId,
+        type = this.type,
+        url = this.url,
+        context = this.context,
+        sourceDataType = this.sourceDataType
 
       if (adapterId == '' || adapterId == null)
         throw new Error("Adapter ID must be set");
 
-      if (this.value) {
-        await this.availableAdapterService.updateAdapter(((
-          type == "MODEL" ?
-            { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
-            { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry, this.value.adapterId)
-        this.ref.close(this.value);
+      if (!this.createAdapter) {
+        this.ref.close({ name, adapterId });
         this.editedValue.emit(this.value);
-        this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
+        this.showToast('primary', this.translate.instant('general.dmm.map_added_message'), '');
       }
 
       else {
-        await this.availableAdapterService.saveAdapter(((
-          type == "MODEL" ?
-            { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
-            { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry);
 
-        this.ref.close(type == "MODEL" ?
-          { name, description, status, adapterId, type, url, context, sourceDataType } :
-          { name, description, status, adapterId, type, url, sourceDataType });
-        this.editedValue.emit(this.value);
-        this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
+        if (this.value && this.value.description) {
+          await this.availableAdapterService.updateAdapter(((
+            type == "MODEL" ?
+              { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
+              { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry, this.value.adapterId)
+          this.value = type == "MODEL" ?
+            { name, description, status, adapterId, type, url, context, sourceDataType } :
+            { name, description, status, adapterId, type, url, sourceDataType }
+          this.ref.close(this.value);
+          this.editedValue.emit(this.value);
+          this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
+        }
+
+        else {
+          await this.availableAdapterService.saveAdapter(((
+            type == "MODEL" ?
+              { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
+              { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry);
+
+          this.ref.close(type == "MODEL" ?
+            { name, description, status, adapterId, type, url, context, sourceDataType } :
+            { name, description, status, adapterId, type, url, sourceDataType });
+
+          this.editedValue.emit(this.value);
+          this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
+        }
       }
     }
     catch (error) {

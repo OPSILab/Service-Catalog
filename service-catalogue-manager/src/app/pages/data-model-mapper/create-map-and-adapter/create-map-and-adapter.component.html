@@ -1,7 +1,10 @@
 <nb-card *ngIf="createAdapter">
   <nb-card-header class="d-flex align-content-center justify-content-between">
     <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
-    <div>
+    <div *ngIf="updateAdapter">
+      <h3>{{ 'general.adapters.edit' | translate }}</h3>
+    </div>
+    <div *ngIf="save || !updateAdapter">
       <h3>{{ 'general.adapters.add' | translate }}</h3>
     </div>
     <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
@@ -19,8 +22,8 @@
         <br>
         <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
         <br>
-        <input disabled [ngModel]="name" nbInput type="text" fullWidth placeholder="{{ 'general.adapters.name' | translate }}"
-          [ngModelOptions]="{standalone: true}" />
+        <input disabled [ngModel]="name" nbInput type="text" fullWidth
+          placeholder="{{ 'general.adapters.name' | translate }}" [ngModelOptions]="{standalone: true}" />
 
         <br><br>
         <label for="status">{{ 'general.adapters.status' | translate }}</label>
@@ -31,8 +34,8 @@
         <br>
         <label for="url">{{ 'general.adapters.url' | translate }}</label>
         <br>
-        <input disabled type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.url" [(ngModel)]="url"
-          [ngModelOptions]="{standalone: true}">
+        <input disabled type="text" nbInput fullWidth fieldSize="small" [placeholder]="placeholders.url"
+          [(ngModel)]="url" [ngModelOptions]="{standalone: true}">
         <!--
         <input type="text" *ngIf="!loaded" nbInput fullWidth fieldSize="small" placeholder="url" [(ngModel)]="url"
           [ngModelOptions]="{standalone: true}">
@@ -97,7 +100,10 @@
 <nb-card *ngIf="!createAdapter">
   <nb-card-header class="d-flex align-content-center justify-content-between">
     <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
-    <div>
+    <div *ngIf="updateAdapter">
+      <h3>{{ 'general.dmm.edit' | translate }}</h3>
+    </div>
+    <div *ngIf="save || !updateAdapter">
       <h3>{{ 'general.dmm.add' | translate }}</h3>
     </div>
     <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
@@ -109,8 +115,10 @@
       <form>
         <label for="mapId" fullWidth>{{ 'general.dmm.mapId' | translate }}</label>
         <br>
-        <input [(ngModel)]="adapterId" nbInput type="text" fullWidth [placeholder]=placeholders.mapId
+        <input *ngIf="save" [(ngModel)]="adapterId" nbInput type="text" fullWidth [placeholder]=placeholders.mapId
           [ngModelOptions]="{standalone: true}" />
+        <input disabled *ngIf="update" [(ngModel)]="adapterId" nbInput type="text" fullWidth
+          [placeholder]=placeholders.mapId [ngModelOptions]="{standalone: true}" />
         <br>
         <br>
         <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
@@ -120,18 +128,24 @@
         <h3>
           <!--<p *ngIf="validURL==false" style=" text-align : center; font-size: 14px; color: red ">Invalid URL or unable to connect to load mapper list <br><br></p>-->
           <br>
-          <button *ngIf="!name || !adapterId" disabled nbButton appearance="outline" shape="semi-round" size="medium" status="info"
-            (click)="createAdapter = true">
+          <button *ngIf="!name || !adapterId" disabled nbButton appearance="outline" shape="semi-round" size="medium"
+            status="info" (click)="createAdapter = true">
             <i class="mx-1">{{ 'general.adapters.add' | translate }}</i>
           </button>
-          <button *ngIf="name && adapterId" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+          <button *ngIf="name && adapterId && update && updateAdapter" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+            (click)="createAdapter = true">
+            <i class="mx-1">{{ 'general.adapters.edit' | translate }}</i>
+          </button>
+          <button *ngIf="name && adapterId && (save || !updateAdapter)" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
             (click)="createAdapter = true">
             <i class="mx-1">{{ 'general.adapters.add' | translate }}</i>
           </button> &nbsp;&nbsp;
-          <button *ngIf="!name || !adapterId" disabled nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
+          <button *ngIf="!name || !adapterId" disabled nbButton appearance="outline" shape="semi-round" size="medium"
+            status="info" (click)="confirm()">
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
           </button>
-          <button *ngIf="name && adapterId" nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="confirm()">
+          <button *ngIf="name && adapterId" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+            (click)="confirm()">
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
           </button>
           &nbsp;
