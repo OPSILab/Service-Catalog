@@ -63,8 +63,11 @@ export class CreateMapAndAdapterComponent implements OnInit {
     context: this.translate.instant('general.adapters.context'),
   }
   private appConfig: AppConfig;
+  jsonMap: any;
+  schema: any;
 
   constructor(
+    private dmmService: DMMService,
     private http: HttpClient,
     protected ref: NbDialogRef<AddAdapterComponent>,
     private toastrService: NbToastrService,
@@ -186,10 +189,18 @@ export class CreateMapAndAdapterComponent implements OnInit {
       if (adapterId == '' || adapterId == null)
         throw new Error("Adapter ID must be set");
 
-      if (!this.createAdapter) {
+      if (!this.createAdapter && this.save) {
+        await this.dmmService.saveMap({ name, adapterId }, this.jsonMap, this.schema);
         this.ref.close({ name, adapterId });
         this.editedValue.emit(this.value);
         this.showToast('primary', this.translate.instant('general.dmm.map_added_message'), '');
+      }
+
+      else if (!this.createAdapter && !this.save) {
+        await this.dmmService.updateMap({ name, adapterId }, this.jsonMap, this.schema);
+        this.ref.close({ name, adapterId });
+        this.editedValue.emit(this.value);
+        this.showToast('primary', this.translate.instant('general.dmm.map_edited_message'), '');
       }
 
       else {
@@ -202,9 +213,12 @@ export class CreateMapAndAdapterComponent implements OnInit {
           this.value = type == "MODEL" ?
             { name, description, status, adapterId, type, url, context, sourceDataType } :
             { name, description, status, adapterId, type, url, sourceDataType }
+
+          await this.dmmService.updateMap({ name, adapterId }, this.jsonMap, this.schema);
           this.ref.close(this.value);
           this.editedValue.emit(this.value);
-          this.showToast('primary', this.translate.instant('general.adapters.adapter_edited_message'), '');
+          this.showToast('primary', this.translate.instant('general.dmm.map_edited_message'), '');
+          this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
         }
 
         else {
@@ -212,6 +226,8 @@ export class CreateMapAndAdapterComponent implements OnInit {
             type == "MODEL" ?
               { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
               { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry);
+          await this.dmmService.saveMap({ name, adapterId }, this.jsonMap, this.schema);
+          this.showToast('primary', this.translate.instant('general.dmm.map_added_message'), '');
 
           this.ref.close(type == "MODEL" ?
             { name, description, status, adapterId, type, url, context, sourceDataType } :
@@ -237,25 +253,25 @@ export class CreateMapAndAdapterComponent implements OnInit {
         "message": "Value required",
         "errorcount": 1
       })
-      if (!this.description) errors.push({
+      if (!this.description && this.createAdapter) errors.push({
         "path": "root.description",
         "property": "minLength",
         "message": "Value required",
         "errorcount": 1
       })
-      if (!this.url) errors.push({
+      if (!this.url && this.createAdapter) errors.push({
         "path": "root.url",
         "property": "minLength",
         "message": "Value required",
         "errorcount": 1
       })
-      if (!this.type) errors.push({
+      if (!this.type && this.createAdapter) errors.push({
         "path": "root.type",
         "property": "minLength",
         "message": "Value required",
         "errorcount": 1
       })
-      if (this.type == "MODEL" && !this.context) errors.push({
+      if (this.type == "MODEL" && !this.context && this.createAdapter) errors.push({
         "path": "root.context",
         "property": "minLength",
         "message": "Value required for adapter type model",
@@ -275,7 +291,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
           ]
         });
       }
-      else if (error.status && error.status == 400) {
+      else if (error.status && error.status == 400 && this.createAdapter) {
         if (error.error.status == "Adapter already exists")
           this.errorService.openErrorDialog({
             error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
@@ -283,6 +299,23 @@ export class CreateMapAndAdapterComponent implements OnInit {
                 "path": "root.adapterId",
                 "property": "minLength",
                 "message": "A adapter with adapter ID < " + this.adapterId + " > already exists",
+                "errorcount": 1
+              }
+            ]
+          });
+        else this.errorService.openErrorDialog({
+          error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
+        });
+      }
+      else if (error.status && error.status == 400) {
+        console.debug(error.error)
+        if (error.error == "id already exists" || error.error.error == "id already exists")
+          this.errorService.openErrorDialog({
+            error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
+              {
+                "path": "root.mapId",
+                "property": "minLength",
+                "message": "A map with map ID < " + this.adapterId + " > already exists",
                 "errorcount": 1
               }
             ]

@@ -452,7 +452,9 @@
       "reset" : "Reset",
       "add" : "Save map",
       "edit" : "Edit map",
-      "mapId" : "Map ID"
+      "mapId" : "Map ID",
+      "map_added_message": "A new map was added",
+      "map_edited_message": "Map was successfully modified"
     }
   },
   "login": {

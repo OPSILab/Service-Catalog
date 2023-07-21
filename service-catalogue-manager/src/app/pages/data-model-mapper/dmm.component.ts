@@ -97,11 +97,11 @@ export class DMMComponent implements OnInit, OnChanges {
     let createAdapter = this.createAdapter
     let type = this.inputType
     console.debug(this)
-    this.dialogService.open(CreateMapAndAdapterComponent, { context: { value: this.adapter, update: true, updateAdapter : createAdapter, sourceDataType : type } }).onClose.subscribe(async (adapter) => {
+    this.dialogService.open(CreateMapAndAdapterComponent, { context: { value: this.adapter, update: true, updateAdapter: createAdapter, sourceDataType: type, jsonMap: JSON.parse(mapperEditor.getText()), schema: this.schemaJson } }).onClose.subscribe(async (adapter) => {
       if (adapter) {
         this.adapter = adapter;
         if (adapter.description) this.createAdapter = true
-        this.mapObject = await this.dmmService.updateMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
+        //this.mapObject = await this.dmmService.updateMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
       }
     });
   }
@@ -373,11 +373,13 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   saveAdapter() {
-    this.dialogService.open(CreateMapAndAdapterComponent, { context: { sourceDataType: this.inputType || "json", save: true } }).onClose.subscribe(async (adapter) => {
-      this.adapter = adapter;
-      if (adapter.description) this.createAdapter = true
-      this.mapObject = await this.dmmService.saveMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
-      this.isNew = true
+    this.dialogService.open(CreateMapAndAdapterComponent, { context: { sourceDataType: this.inputType, save: true, jsonMap: JSON.parse(mapperEditor.getText()), schema: this.schemaJson } }).onClose.subscribe(async (adapter) => {
+      if (adapter) {
+        this.adapter = adapter;
+        if (adapter.description) this.createAdapter = true
+        //this.mapObject = await this.dmmService.saveMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
+        this.isNew = true
+      }
     });
   }
 

@@ -5,7 +5,9 @@ import { Observable } from 'rxjs';
 import { AppConfig } from '../../model/appConfig';
 import { AdapterEntry } from '../../model/adapter/adapterEntry';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class DMMService {
 
   private config: AppConfig;
@@ -35,7 +37,7 @@ export class DMMService {
     }).toPromise();
   }
 
-  updateMap(adapter: AdapterEntry, map, schema): any {
+  updateMap(adapter: Partial<AdapterEntry>, map, schema): any {
     console.debug(adapter)
     return this.http.put<any[]>(this.config.data_model_mapper.default_mapper_base_url + "/map", {
       id: adapter.adapterId,
