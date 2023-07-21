@@ -241,6 +241,16 @@ export class CreateMapAndAdapterComponent implements OnInit {
     catch (error) {
       let errors: Object[] = []
 
+      if (this.jsonMap) errors.push({
+        "path": "root.map",
+        "message": "Value required",
+        "errorcount": 1
+      })
+      if (this.schema) errors.push({
+        "path": "root.schema",
+        "message": "Value required",
+        "errorcount": 1
+      })
       if (!this.adapterId) errors.push({
         "path": "root.adapterId",
         "property": "minLength",
@@ -307,9 +317,9 @@ export class CreateMapAndAdapterComponent implements OnInit {
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
         });
       }
-      else if (error.status && error.status == 400) {
+      else if (error.status && error.status == 400 || error.message == "Schema required" || error.message == "Map required") {
         console.debug(error.error)
-        if (error.error == "id already exists" || error.error.error == "id already exists")
+        if (error?.error == "id already exists" || error?.error?.error == "id already exists")
           this.errorService.openErrorDialog({
             error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
               {
