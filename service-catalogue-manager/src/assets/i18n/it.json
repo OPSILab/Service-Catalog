@@ -450,8 +450,8 @@
       "map" : "Mappa",
       "back" : "Indietro",
       "reset" : "Reset",
-      "add" : "Aggiungi mappa",
-      "edit" : "Modifica mappa",
+      "add" : "Aggiungi adattatore",
+      "edit" : "Modifica adattatore",
       "mapId" : "ID map",
       "map_added_message": "E' stata aggiunta un nuova mappa",
       "map_edited_message": "La mappa è stata modificata con successo"

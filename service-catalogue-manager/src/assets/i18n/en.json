@@ -450,8 +450,8 @@
       "map" : "Map",
       "back" : "Back",
       "reset" : "Reset",
-      "add" : "Save map",
-      "edit" : "Edit map",
+      "add" : "Save adapter",
+      "edit" : "Edit adapter",
       "mapId" : "Map ID",
       "map_added_message": "A new map was added",
       "map_edited_message": "Map was successfully modified"
