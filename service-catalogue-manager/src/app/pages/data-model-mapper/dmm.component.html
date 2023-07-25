@@ -52,9 +52,11 @@
       {{ 'general.editor.update' | translate }}
       <i class="mx-1 material-icons">update</i>
     </button>
+    <!--
     <button nbButton class="mx-4" shape="rectangle" size="medium" status="success" (click)="testAdapter()">
       {{ 'general.dmm.preview' | translate }}
     </button>
+    -->
     <!--
     <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning">
       {{ 'general.editor.export' | translate }}
@@ -154,7 +156,12 @@
           Output
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-
+          <br>  <br>
+          <button nbButton class="mr-2" shape="rectangle" size="small" (click)="testAdapter()">
+            {{ 'general.dmm.preview' | translate }}
+            <i class="mx-1 fas fa-file-import fa-lg"></i>
+          </button>
+          <br>  <br>
           <div style="height:500px" id="jsoneditor3"></div>
         </nb-accordion-item-body>
       </nb-accordion-item>
