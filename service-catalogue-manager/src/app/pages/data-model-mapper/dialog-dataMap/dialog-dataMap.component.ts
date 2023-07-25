@@ -31,7 +31,7 @@ export class DialogDataMapComponent implements OnInit {
     concat: undefined,
     static: undefined,
     array: undefined,
-    base64: undefined
+    base64: false
   };
 
   options = ["direct",
