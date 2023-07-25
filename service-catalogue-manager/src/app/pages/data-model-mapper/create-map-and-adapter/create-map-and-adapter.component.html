@@ -125,34 +125,22 @@
         <br>
         <input [(ngModel)]="name" nbInput type="text" fullWidth placeholder="{{ 'general.adapters.name' | translate }}"
           [ngModelOptions]="{standalone: true}" />
+        <br>
+        <br>
+        <nb-checkbox *ngIf="!name || !adapterId" disabled appearance="outline" status="info" shape="semi-round"
+          size="medium" (click)="createAdapter = true">
+          <i class="mx-1">{{ 'general.dmm.add_sc' | translate }}</i>
+        </nb-checkbox>
+        <nb-checkbox *ngIf="name && adapterId && update && updateAdapter" appearance="outline" status="info"
+          shape="semi-round" size="medium" (click)="createAdapter = true">
+          <i class="mx-1">{{ 'general.dmm.edit_sc' | translate }}</i>
+        </nb-checkbox>
+        <nb-checkbox *ngIf="name && adapterId && (save || !updateAdapter)" appearance="outline" status="info"
+          shape="semi-round" size="medium" (click)="createAdapter = true">
+          <i class="mx-1">{{ 'general.dmm.add_sc' | translate }}</i>
+        </nb-checkbox>
         <h3>
           <br>
-          <!--
-          <button *ngIf="!name || !adapterId" disabled nbButton appearance="outline" shape="semi-round" size="medium"
-            status="info" (click)="createAdapter = true">
-            <i class="mx-1">{{ 'general.adapters.add' | translate }}</i>
-          </button>
-          <button *ngIf="name && adapterId && update && updateAdapter" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
-            (click)="createAdapter = true">
-            <i class="mx-1">{{ 'general.adapters.edit' | translate }}</i>
-          </button>
-          <button *ngIf="name && adapterId && (save || !updateAdapter)" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
-            (click)="createAdapter = true">
-            <i class="mx-1">{{ 'general.adapters.add' | translate }}</i>
-          </button> &nbsp;&nbsp;
-          -->
-          <nb-checkbox *ngIf="!name || !adapterId" disabled appearance="outline" status="info" shape="semi-round" size="medium"
-             (click)="createAdapter = true">
-            <i class="mx-1">{{ 'general.dmm.add_sc' | translate }}</i>
-          </nb-checkbox>
-          <nb-checkbox *ngIf="name && adapterId && update && updateAdapter" appearance="outline" status="info" shape="semi-round" size="medium"
-            (click)="createAdapter = true">
-            <i class="mx-1">{{ 'general.dmm.edit_sc' | translate }}</i>
-          </nb-checkbox>
-          <nb-checkbox *ngIf="name && adapterId && (save || !updateAdapter)" appearance="outline" status="info" shape="semi-round" size="medium"
-            (click)="createAdapter = true">
-            <i class="mx-1">{{ 'general.dmm.add_sc' | translate }}</i>
-          </nb-checkbox> &nbsp;&nbsp;
           <button *ngIf="!name || !adapterId" disabled nbButton appearance="outline" shape="semi-round" size="medium"
             status="info" (click)="confirm()">
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
