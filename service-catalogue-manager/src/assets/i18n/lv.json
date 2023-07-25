@@ -458,7 +458,8 @@
       "edit_sc" : "Edit also in service catalogue",
       "add_sc" : "Add also in service catalogue",
       "confirmSave" : "Save",
-      "confirmEdit" : "Edit"
+      "confirmEdit" : "Edit",
+      "save_as_new" : "Save as new"
     }
   },
   "login": {
