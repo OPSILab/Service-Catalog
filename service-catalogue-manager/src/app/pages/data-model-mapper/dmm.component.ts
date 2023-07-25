@@ -74,6 +74,7 @@ export class DMMComponent implements OnInit, OnChanges {
   sourceJson: any;
   schemaFromFile
   createAdapter: any;
+  selectedPath: any;
   //divElement;
 
   constructor(
@@ -202,7 +203,14 @@ export class DMMComponent implements OnInit, OnChanges {
     console.log("THIS IS THE OUTPUT\n\n\n\n")
     let m = JSON.parse(mapperEditor.getText())
     m["targetDataModel"] = "DataModelTemp"
-    let output = await this.dmmService.test("json", JSON.parse(this.sourceEditor.getText()), m, this.schemaJson[0], ";")
+    let source = JSON.parse(this.sourceEditor.getText())
+    console.debug(source)
+    //source = [source[0], source[1], source[2]]
+    if (source[this.selectedPath]) source = source[this.selectedPath]
+    source = [source[0], source[1], source[2]]
+    //if (source[1][this.selectedPath]) source[1] = source[1][this.selectedPath]
+    //if (source[2][this.selectedPath]) source[2] = source[2][this.selectedPath]
+    let output = await this.dmmService.test("json", source, m, this.schemaJson[0], ";")
     if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, output);
     else this.outputEditor.update(output)
   }
@@ -286,6 +294,7 @@ export class DMMComponent implements OnInit, OnChanges {
     mapOptions = this.selectMapJsonOptions(this.sourceEditor.getText(), event);
     console.log("---------------", mapOptions);
     this.setMapEditor();
+    this.selectedPath = event
   }
 
   setMapEditor() {
