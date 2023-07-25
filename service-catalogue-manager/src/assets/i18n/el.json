@@ -454,7 +454,9 @@
       "edit" : "Edit adapter",
       "mapId" : "Map ID",
       "map_added_message": "A new map was added",
-      "map_edited_message": "Map was successfully modified"
+      "map_edited_message": "Map was successfully modified",
+      "edit_sc" : "Edit also in service catalogue",
+      "add_sc" : "Add also in service catalogue"
     }
   },
   "login": {

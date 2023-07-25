@@ -454,7 +454,9 @@
       "edit" : "Modifica adattatore",
       "mapId" : "ID map",
       "map_added_message": "E' stata aggiunta un nuova mappa",
-      "map_edited_message": "La mappa è stata modificata con successo"
+      "map_edited_message": "La mappa è stata modificata con successo",
+      "edit_sc" : "Modifica anche nel service catalogue",
+      "add_sc" : "Aggiungi anche nel service catalogue"
     }
   },
   "login": {

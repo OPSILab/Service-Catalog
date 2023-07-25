@@ -126,8 +126,8 @@
         <input [(ngModel)]="name" nbInput type="text" fullWidth placeholder="{{ 'general.adapters.name' | translate }}"
           [ngModelOptions]="{standalone: true}" />
         <h3>
-          <!--<p *ngIf="validURL==false" style=" text-align : center; font-size: 14px; color: red ">Invalid URL or unable to connect to load mapper list <br><br></p>-->
           <br>
+          <!--
           <button *ngIf="!name || !adapterId" disabled nbButton appearance="outline" shape="semi-round" size="medium"
             status="info" (click)="createAdapter = true">
             <i class="mx-1">{{ 'general.adapters.add' | translate }}</i>
@@ -140,6 +140,19 @@
             (click)="createAdapter = true">
             <i class="mx-1">{{ 'general.adapters.add' | translate }}</i>
           </button> &nbsp;&nbsp;
+          -->
+          <nb-checkbox *ngIf="!name || !adapterId" disabled appearance="outline" status="info" shape="semi-round" size="medium"
+             (click)="createAdapter = true">
+            <i class="mx-1">{{ 'general.dmm.add_sc' | translate }}</i>
+          </nb-checkbox>
+          <nb-checkbox *ngIf="name && adapterId && update && updateAdapter" appearance="outline" status="info" shape="semi-round" size="medium"
+            (click)="createAdapter = true">
+            <i class="mx-1">{{ 'general.dmm.edit_sc' | translate }}</i>
+          </nb-checkbox>
+          <nb-checkbox *ngIf="name && adapterId && (save || !updateAdapter)" appearance="outline" status="info" shape="semi-round" size="medium"
+            (click)="createAdapter = true">
+            <i class="mx-1">{{ 'general.dmm.add_sc' | translate }}</i>
+          </nb-checkbox> &nbsp;&nbsp;
           <button *ngIf="!name || !adapterId" disabled nbButton appearance="outline" shape="semi-round" size="medium"
             status="info" (click)="confirm()">
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
@@ -149,12 +162,6 @@
             <i class="mx-1">{{ 'general.adapters.confirm' | translate }}</i>
           </button>
           &nbsp;
-          <!--
-          <button *ngIf="(type!='MODEL'||context!='IMPORT') && !loaded" nbButton appearance="outline" shape="semi-round"
-            size="medium" status="info" (click)="loadMappers()">
-            <i class="mx-1">{{ 'general.adapters.load_mapper_list' | translate }}</i>
-          </button>
-          -->
         </h3>
       </form>
     </h6>
