@@ -76,6 +76,7 @@ export class DMMComponent implements OnInit, OnChanges {
   createAdapter: any;
   selectedPath: any;
   selectMap
+  schemaOrMap = "schema"
   //divElement;
 
   constructor(
