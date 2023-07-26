@@ -394,7 +394,10 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   mapChanged($event) {
-    let mapSettings = this.maps.filter(filteredMap => filteredMap.id == this.selectedSchema)[0]
+
+    console.debug($event)
+    let mapSettings = this.maps.filter(filteredMap => filteredMap.id == $event)[0]
+    console.debug(mapSettings)
     this.schemaJson = [
       mapSettings.dataModel
     ];
