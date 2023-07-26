@@ -22,6 +22,7 @@ export class DialogImportComponent implements OnInit {
   selectedItem //= 'Json';
   dataUrl: string;
   extension: String;
+  map
 
   @Input() type: string;
 
@@ -29,7 +30,7 @@ export class DialogImportComponent implements OnInit {
   constructor(private http: HttpClient, protected ref: NbDialogRef<DialogImportComponent>,
     private errorService: ErrorDialogService,
     @Inject(DOCUMENT) private document: Document,
-    ) {
+  ) {
 
 
   }
@@ -44,8 +45,8 @@ export class DialogImportComponent implements OnInit {
 
   }
 
-  fixBrokenPageBug(){
-    document.getElementsByTagName('html')[0].className=""
+  fixBrokenPageBug() {
+    document.getElementsByTagName('html')[0].className = ""
   }
 
   onFileChanged(event: Event): void {
@@ -74,17 +75,14 @@ export class DialogImportComponent implements OnInit {
   }
 
 
-  async onUpload(type:string): Promise<void> {
+  async onUpload(type: string): Promise<void> {
     var source;
     if (type == "url") {
       this.file = await this.http.get<any>(this.dataUrl, { responseType: 'text' as 'json' }).toPromise();
-      this.ref.close({ content: this.file, source: this.dataUrl , format:"url"});
-    } else {
-
-      this.ref.close({ content: this.file, source: this.selectedFile.name , format:"file"});
-    }
-
+      this.ref.close({ content: this.file, source: this.dataUrl, format: "url" });
+    } else if (this.map)
+      this.ref.close({ mapSettings: this.file, source: this.selectedFile.name, format: "file" })
+    else
+      this.ref.close({ content: this.file, source: this.selectedFile.name, format: "file" });
   }
-
-
 }

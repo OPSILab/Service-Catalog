@@ -108,7 +108,12 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   schemaChanged($event) {
-    //console.debug($event)
+    console.debug($event)
+    console.debug(typeof $event == "object")
+    if (typeof $event == "object")
+      this.schemaJson = [
+        $event
+      ];
     if (this.selectedSchema)
       this.schemaJson = [
         this.schema()
@@ -401,11 +406,29 @@ export class DMMComponent implements OnInit, OnChanges {
   import(field, typeSource: string): void {
     this.typeSource = typeSource;
     this.dialogService
-      .open(DialogImportComponent, {
-        context: { type: typeSource },
-      })
-      .onClose.subscribe((result: { content: string; source: string; format: string }) => {
-        if (result && result.content) {
+      .open(DialogImportComponent, field == "map" ?
+        {
+          context: { map: true },
+        }
+        :
+        {
+          context: { type: typeSource },
+        })
+      .onClose.subscribe((result: { content: string; source: string; format: string; mapSettings }) => {
+        if (result.mapSettings) {
+          console.debug(result.mapSettings)
+          console.debug("map settings")
+          result.mapSettings = JSON.parse(result.mapSettings)
+          this.schemaJson = [
+            result.mapSettings.dataModel
+          ];
+          console.debug(this.schemaJson)
+          map = result.mapSettings.map
+          console.debug(map)
+          mapperEditor.update(map)
+          console.debug(mapperEditor)
+        }
+        else if (result && result.content) {
           this.sourceRef = result?.source;
           this.sourceRefFormat = result?.format;
           if (typeSource == 'csv') {
