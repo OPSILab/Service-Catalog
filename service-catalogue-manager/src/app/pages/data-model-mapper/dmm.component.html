@@ -135,8 +135,13 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body>
           <div class="mb-2">
-            <p>Select a schema from below or upload your schema.
+            <p>Select a schema or map settings from below or upload your schema or your map settings.
             </p>
+            <nb-select placeholder="Select map settings" size="small" [(ngModel)]=selectMap
+              (ngModelChange)="mapChanged($event)">
+              <nb-option *ngFor="let map of maps" value={{map.id}}>{{map.name}}</nb-option>
+            </nb-select>
+            &nbsp;&nbsp;
             <nb-select placeholder="Select Json Schema" size="small" [(ngModel)]=selectedSchema
               (ngModelChange)="schemaChanged($event)">
               <nb-option *ngFor="let schema of schemas" value={{schema.id}}>{{schema.name}}</nb-option>

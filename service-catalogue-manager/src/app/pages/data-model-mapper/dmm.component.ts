@@ -75,6 +75,7 @@ export class DMMComponent implements OnInit, OnChanges {
   schemaFromFile
   createAdapter: any;
   selectedPath: any;
+  selectMap
   //divElement;
 
   constructor(
@@ -108,12 +109,7 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   schemaChanged($event) {
-    console.debug($event)
-    console.debug(typeof $event == "object")
-    if (typeof $event == "object")
-      this.schemaJson = [
-        $event
-      ];
+
     if (this.selectedSchema)
       this.schemaJson = [
         this.schema()
@@ -151,7 +147,7 @@ export class DMMComponent implements OnInit, OnChanges {
     this.selectBox = <HTMLInputElement>this.document.getElementById('input-type');
     this.csvtable = this.document.getElementById('csv-table');
 
-    //await this.loadMapperList()
+    await this.loadMapperList()
     await this.loadSchemaList()
 
     //var selectedValue = 'csv';
@@ -395,6 +391,15 @@ export class DMMComponent implements OnInit, OnChanges {
         this.isNew = true
       }
     });
+  }
+
+  mapChanged($event) {
+    let mapSettings = this.maps.filter(filteredMap => filteredMap.id == this.selectedSchema)[0]
+    this.schemaJson = [
+      mapSettings.dataModel
+    ];
+    map = mapSettings.map
+    mapperEditor.update(map)
   }
 
   updateCSVTable() {
