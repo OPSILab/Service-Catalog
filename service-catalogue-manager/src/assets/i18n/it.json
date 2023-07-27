@@ -461,7 +461,8 @@
       "add_sc" : "Aggiungi anche nel service catalogue",
       "confirmSave" : "Salva",
       "confirmEdit" : "Modifica",
-      "save_as_new" : "Salva come nuovo"
+      "save_as_new" : "Salva come nuovo",
+      "export" : "Scarica"
     }
   },
   "login": {

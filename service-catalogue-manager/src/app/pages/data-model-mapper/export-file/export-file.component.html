@@ -1,0 +1,41 @@
+<nb-card style="width: 500px;">
+  <nb-card-header class="d-flex align-content-center justify-content-between">
+    <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+    <div>
+      <h3>{{ 'general.dmm.add' | translate }}</h3>
+    </div>
+    <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="ref.close()">
+      <i class="material-icons">close</i>
+    </button>
+  </nb-card-header>
+  <nb-card-body class="m-2 p-4">
+    <h6>
+      <form>
+        <label for="mapId" fullWidth>{{ 'general.dmm.mapId' | translate }}</label>
+        <br>
+        <input [(ngModel)]="adapterId" nbInput type="text" fullWidth placeholder="{{ 'general.adapters.adapterId' | translate }}"
+          [ngModelOptions]="{standalone: true}" />
+        <br>
+        <br>
+        <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
+        <br>
+        <input [(ngModel)]="name" nbInput type="text" fullWidth placeholder="{{ 'general.adapters.name' | translate }}"
+          [ngModelOptions]="{standalone: true}" />
+        <br>
+        <br>
+        <h3 class="container">
+          <br>
+          <button class="center" *ngIf="!name || !adapterId" disabled nbButton appearance="outline" shape="semi-round" size="medium"
+            status="info" (click)="confirm()">
+            <i class="mx-1">{{'general.dmm.export' | translate}}</i>
+          </button>
+          <button class="center" *ngIf="name && adapterId" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+            (click)="save()">
+            <i class="mx-1">{{'general.dmm.export' | translate}}</i>
+          </button>
+          &nbsp;
+        </h3>
+      </form>
+    </h6>
+  </nb-card-body>
+</nb-card>

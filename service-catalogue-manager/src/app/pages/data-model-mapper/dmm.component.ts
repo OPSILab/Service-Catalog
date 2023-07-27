@@ -30,6 +30,7 @@ import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.componen
 import { AvailableServicesService } from '../services/availableServices/availableServices.service';
 import { AddAdapterComponent } from '../services/available-adapters/add-adapter/add-adapter.component';
 import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-map-and-adapter.component';
+import { ExportFileComponent } from './export-file/export-file.component';
 
 let map = {}, mapperEditor, mapOptions: string[]
 @Component({
@@ -77,6 +78,8 @@ export class DMMComponent implements OnInit, OnChanges {
   selectedPath: any;
   selectMap
   schemaOrMap = "schema"
+  name
+  adapterId
   //divElement;
 
   constructor(
@@ -377,10 +380,46 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   saveAsFile(): void {
+    /*
     this.windowService.open(
-      this.contentTemplate,
-      { title: 'Window content from template', context: { text: 'some text to pass into template' } },
-    );
+      this.contentTemplate
+    ).onClose.subscribe((content) => {
+      this.saveFile(this.name, this.adapterId);
+     });*/
+
+    this.dialogService.open(ExportFileComponent).onClose.subscribe((content) => {
+     this.saveFile(content.name,content.id);
+    })
+  }
+
+  async saveFile(name: string, id): Promise<void> {
+    let model = {
+      id: id,
+      name: name,
+      map: JSON.parse(mapperEditor.getText()),
+      dataModel: this.schemaJson
+    }
+    const filename = `${name}.json`,
+      blob = new Blob([JSON.stringify(model, null, 2)], {
+        type: 'application/json;charset=utf-8',
+      });
+
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+      window.navigator.msSaveOrOpenBlob(blob, filename);
+    } else {
+      const a = document.createElement('a');
+      a.download = filename;
+      a.href = URL.createObjectURL(blob);
+      a.dataset.downloadurl = ['text/plain', a.download, a.href].join(':');
+
+      a.dispatchEvent(
+        new MouseEvent('click', {
+          view: window,
+          bubbles: true,
+          cancelable: false,
+        })
+      );
+    }
   }
 
   saveAdapter() {

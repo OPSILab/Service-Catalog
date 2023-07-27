@@ -57,12 +57,12 @@
       {{ 'general.dmm.preview' | translate }}
     </button>
     -->
-    <!--
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning">
+
+    <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning" (click)="saveAsFile()">
       {{ 'general.editor.export' | translate }}
       <i class="mx-1 fas fa-file-export fa-lg"></i>
     </button>
-    -->
+
     <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger" (click)="import('map', 'json')">
       {{ 'general.editor.import' | translate }}
       <i class="mx-1 fas fa-file-import fa-lg"></i>
@@ -194,6 +194,44 @@
     </div>
   </nb-card-footer>
 </nb-card>
-<ng-template #contentTemplate>
-  <p>Here is the text provided via config</p>
-</ng-template>
+  <nb-card #contentTemplate>
+    <nb-card-header class="d-flex align-content-center justify-content-between">
+      <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+      <div>
+        <h3>{{ 'general.dmm.add' | translate }}</h3>
+      </div>
+      <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="true">
+        <i class="material-icons">close</i>
+      </button>
+    </nb-card-header>
+    <nb-card-body class="m-2 p-4">
+      <h6>
+        <form>
+          <label for="mapId" fullWidth>{{ 'general.dmm.mapId' | translate }}</label>
+          <br>
+          <input [(ngModel)]="adapterId" nbInput type="text" fullWidth placeholder="{{ 'general.adapters.adapterId' | translate }}"
+            [ngModelOptions]="{standalone: true}" />
+          <br>
+          <br>
+          <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
+          <br>
+          <input [(ngModel)]="name" nbInput type="text" fullWidth placeholder="{{ 'general.adapters.name' | translate }}"
+            [ngModelOptions]="{standalone: true}" />
+          <br>
+          <br>
+          <h3>
+            <br>
+            <button *ngIf="!name || !adapterId" disabled nbButton appearance="outline" shape="semi-round" size="medium"
+              status="info" (click)="confirm()">
+              <i class="mx-1">{{ (save) ? ('general.dmm.confirmSave' | translate) :  ('general.dmm.confirmEdit' | translate) }}</i>
+            </button>
+            <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+              (click)="saveAsFile()">
+              <i class="mx-1">{{'general.dmm.export' | translate}}</i>
+            </button>
+            &nbsp;
+          </h3>
+        </form>
+      </h6>
+    </nb-card-body>
+  </nb-card>
