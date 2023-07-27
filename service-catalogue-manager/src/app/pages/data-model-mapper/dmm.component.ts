@@ -215,7 +215,11 @@ export class DMMComponent implements OnInit, OnChanges {
     if (Array.isArray(source)) source = [source[0], source[1], source[2]]
     //if (source[1][this.selectedPath]) source[1] = source[1][this.selectedPath]
     //if (source[2][this.selectedPath]) source[2] = source[2][this.selectedPath]
-    let output = await this.dmmService.test("json", source, m, this.schemaJson[0], ";")
+    console.debug(this)
+    while (this.csvSourceData!=this.csvSourceData.replace("\n", "--newline--"))this.csvSourceData=this.csvSourceData.replace("\n", "--newline--")
+    while (this.csvSourceData!=this.csvSourceData.replace("--newline--", "\r\n"))this.csvSourceData=this.csvSourceData.replace("--newline--", "\r\n")
+    console.debug(this.csvSourceData)
+    let output = await this.dmmService.test(this.inputType, this.inputType == "csv" ? this.csvSourceData : source, m, this.schemaJson[0], ";")
     if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, output);
     else this.outputEditor.update(output)
   }
