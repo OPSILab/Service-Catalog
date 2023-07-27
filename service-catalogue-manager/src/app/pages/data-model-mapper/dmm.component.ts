@@ -387,7 +387,7 @@ export class DMMComponent implements OnInit, OnChanges {
     this.dialogService.open(CreateMapAndAdapterComponent, { context: { sourceDataType: this.inputType, save: true, jsonMap: JSON.parse(mapperEditor.getText()), schema: this.schemaJson } }).onClose.subscribe(async (adapter) => {
       if (adapter) {
         this.adapter = adapter;
-        if (adapter.description) this.createAdapter = true
+        this.createAdapter = adapter.description ? true : false
         //this.mapObject = await this.dmmService.saveMap(adapter, JSON.parse(mapperEditor.getText()), this.schemaJson);
         this.isNew = true
       }

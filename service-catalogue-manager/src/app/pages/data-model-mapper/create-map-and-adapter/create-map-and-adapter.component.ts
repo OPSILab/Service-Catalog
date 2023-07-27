@@ -172,6 +172,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
 
   async onSubmit() {
     console.debug(this.value)
+    console.debug(this)
 
 
 
@@ -205,7 +206,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
 
       else {
 
-        if (this.value && this.value.description) {
+        if (this.value && this.updateAdapter) {
           await this.availableAdapterService.updateAdapter(((
             type == "MODEL" ?
               { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
@@ -218,7 +219,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
           this.ref.close(this.value);
           this.editedValue.emit(this.value);
           this.showToast('primary', this.translate.instant('general.dmm.map_edited_message'), '');
-          this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
+          this.showToast('primary', this.translate.instant('general.dmm.adapter_edited_message'), '');
         }
 
         else {
@@ -228,14 +229,15 @@ export class CreateMapAndAdapterComponent implements OnInit {
               { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry);
           console.debug("MAP\n", this.jsonMap, "SCHEMA\n", this.schema)
           this.update ? await this.dmmService.updateMap({ name, adapterId }, this.jsonMap, this.schema) : await this.dmmService.saveMap({ name, adapterId }, this.jsonMap, this.schema);
-          this.showToast('primary', this.translate.instant('general.dmm.map_added_message'), '');
+          !this.update ? this.showToast('primary', this.translate.instant('general.dmm.map_added_message'), '') :
+          this.showToast('primary', this.translate.instant('general.dmm.map_edited_message'), '')
 
           this.ref.close(type == "MODEL" ?
             { name, description, status, adapterId, type, url, context, sourceDataType } :
             { name, description, status, adapterId, type, url, sourceDataType });
 
           this.editedValue.emit(this.value);
-          this.showToast('primary', this.translate.instant('general.adapters.adapter_added_message'), '');
+          this.showToast('primary', this.translate.instant('general.dmm.adapter_added_message'), '');
         }
       }
     }
