@@ -226,7 +226,8 @@ export class CreateMapAndAdapterComponent implements OnInit {
             type == "MODEL" ?
               { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
               { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry);
-          await this.dmmService.saveMap({ name, adapterId }, this.jsonMap, this.schema);
+          console.debug("MAP\n", this.jsonMap, "SCHEMA\n", this.schema)
+          this.update ? await this.dmmService.updateMap({ name, adapterId }, this.jsonMap, this.schema) : await this.dmmService.saveMap({ name, adapterId }, this.jsonMap, this.schema);
           this.showToast('primary', this.translate.instant('general.dmm.map_added_message'), '');
 
           this.ref.close(type == "MODEL" ?
@@ -241,12 +242,12 @@ export class CreateMapAndAdapterComponent implements OnInit {
     catch (error) {
       let errors: Object[] = []
 
-      if (this.jsonMap) errors.push({
+      if (!this.jsonMap) errors.push({
         "path": "root.map",
         "message": "Value required",
         "errorcount": 1
       })
-      if (this.schema) errors.push({
+      if (!this.schema) errors.push({
         "path": "root.schema",
         "message": "Value required",
         "errorcount": 1
@@ -288,7 +289,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
         "errorcount": 1
       })
 
-      console.error("error:", "\n", error)
+      console.log(error)
       if (error.message == "Adapter ID must be set") {
         this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
