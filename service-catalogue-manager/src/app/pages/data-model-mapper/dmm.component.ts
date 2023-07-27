@@ -51,7 +51,7 @@ export class DMMComponent implements OnInit, OnChanges {
   inputType: any;
   isNew = false;
   separatorItem = ';';
-  csvSourceData: string;
+  csvSourceData: any;
   sourceRef: string = '';
   typeSource: string;
   adapter
@@ -80,6 +80,8 @@ export class DMMComponent implements OnInit, OnChanges {
   schemaOrMap = "schema"
   name
   adapterId
+  partialCsv: any;
+  rows: string[];
   //divElement;
 
   constructor(
@@ -216,10 +218,32 @@ export class DMMComponent implements OnInit, OnChanges {
     //if (source[1][this.selectedPath]) source[1] = source[1][this.selectedPath]
     //if (source[2][this.selectedPath]) source[2] = source[2][this.selectedPath]
     console.debug(this)
-    while (this.csvSourceData!=this.csvSourceData.replace("\n", "--newline--"))this.csvSourceData=this.csvSourceData.replace("\n", "--newline--")
-    while (this.csvSourceData!=this.csvSourceData.replace("--newline--", "\r\n"))this.csvSourceData=this.csvSourceData.replace("--newline--", "\r\n")
+    this.partialCsv = ""
+    //while (this.csvSourceData!=this.csvSourceData.replace("\n", "--newline--"))this.csvSourceData=this.csvSourceData.replace("\n", "--newline--")
+    //while (this.csvSourceData!=this.csvSourceData.replace("--newline--", "\r\n"))this.csvSourceData=this.csvSourceData.replace("--newline--", "\r\n")
+    //if (this.csvSourceData.indexOf("\r\n")>-1) {
+
+    /*
+    this.csvSourceData = this.csvSourceData.split('\r\n')
+    this.partialCsv.concat(this.csvSourceData[0])
+    for (let i = 1; i < 5; i++) {
+      this.partialCsv.concat("\r\n")
+      this.partialCsv.concat(this.csvSourceData[i])
+    }
+    */
+
+    this.partialCsv=this.partialCsv.concat(this.rows[0]).concat("\r\n")
+      .concat(this.rows[1]).concat("\r\n")
+      .concat(this.rows[2]).concat("\r\n")
+      .concat(this.rows[3])
+    //}
+    //else {
+    // this.csvSourceData = this.csvSourceData.split("\n")
+    //for (let i = 0; i < 5; i++)
+    // this.partialCsv.concat(this.csvSourceData[i])
+    //}
     console.debug(this.csvSourceData)
-    let output = await this.dmmService.test(this.inputType, this.inputType == "csv" ? this.csvSourceData : source, m, this.schemaJson[0], ";")
+    let output = await this.dmmService.test(this.inputType, this.inputType == "csv" ? this.partialCsv : source, m, this.schemaJson[0], ";")
     if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, output);
     else this.outputEditor.update(output)
   }
@@ -392,7 +416,7 @@ export class DMMComponent implements OnInit, OnChanges {
      });*/
 
     this.dialogService.open(ExportFileComponent).onClose.subscribe((content) => {
-     this.saveFile(content.name,content.id);
+      this.saveFile(content.name, content.id);
     })
   }
 
@@ -535,14 +559,14 @@ export class DMMComponent implements OnInit, OnChanges {
     divElement.style.overflowY = "auto";
     divElement.style.height = "200px";
 
-    const rows = csvData.split('\n');
+    this.rows = csvData.split('\n');
 
     // Create a table element
     var table = document.createElement('table');
     table.className = 'table table-striped';
 
     // Loop through each row in the CSV data
-    rows.forEach((rowData, index) => {
+    this.rows.forEach((rowData, index) => {
       // Split the row into an array of cells
       const cells = rowData.split(separator);
 
