@@ -403,19 +403,20 @@ export class DMMComponent implements OnInit, OnChanges {
       this.saveFile(this.name, this.adapterId);
      });*/
 
+     /*
     this.dialogService.open(ExportFileComponent).onClose.subscribe((content) => {
       this.saveFile(content.name, content.id);
     })
+    */
+    this.saveFile()
   }
 
-  async saveFile(name: string, id): Promise<void> {
+  async saveFile(): Promise<void> {
     let model = {
-      id: id,
-      name: name,
       map: JSON.parse(mapperEditor.getText()),
       dataModel: this.schemaJson
     }
-    const filename = `${name}.json`,
+    const filename = "exportedFile.json",
       blob = new Blob([JSON.stringify(model, null, 2)], {
         type: 'application/json;charset=utf-8',
       });

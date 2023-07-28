@@ -455,7 +455,7 @@
       "mapId" : "ID map",
       "map_added_message": "E' stata aggiunto un nuova adattatore",
       "map_edited_message": "L' adattatore è stato modificato con successo",
-      "adapter_added_message": " e aggiunto nel service catalogue",
+      "and_added_message": " e aggiunto nel service catalogue",
       "adapter_edited_message": "L' adattatore presente nel service catalogue è stato modificato con successo",
       "edit_sc" : "Modifica anche nel service catalogue",
       "add_sc" : "Aggiungi anche nel service catalogue",

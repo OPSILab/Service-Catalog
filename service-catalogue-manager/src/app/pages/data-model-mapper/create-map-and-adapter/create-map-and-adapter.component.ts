@@ -168,7 +168,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
               { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry);
           console.debug("MAP\n", this.jsonMap, "SCHEMA\n", this.schema)
           !this.update ? this.showToast('primary', this.translate.instant('general.dmm.map_added_message'), '') :
-            this.showToast('primary', this.translate.instant('general.dmm.map_edited_message')+this.translate.instant('general.dmm.adapter_added_message'), '')
+            this.showToast('primary', this.translate.instant('general.dmm.map_edited_message')+this.translate.instant('general.dmm.and_added_message'), '')
 
           this.ref.close(type == "MODEL" ?
             { name, description, status, adapterId, type, url, context, sourceDataType } :
