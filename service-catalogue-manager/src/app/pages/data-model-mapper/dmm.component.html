@@ -59,17 +59,10 @@
         {{ 'general.editor.update' | translate }}
         <i class="mx-1 material-icons">update</i>
       </button>
-      <!--
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="success" (click)="testAdapter()">
-      {{ 'general.dmm.preview' | translate }}
-    </button>
-    -->
-
       <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning" (click)="saveAsFile()">
         {{ 'general.editor.export' | translate }}
         <i class="mx-1 fas fa-file-export fa-lg"></i>
       </button>
-
       <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger" (click)="import('map', 'json')">
         {{ 'general.editor.import' | translate }}
         <i class="mx-1 fas fa-file-import fa-lg"></i>
@@ -178,13 +171,6 @@
     <!--End Map Editor accordion-->
     <br>
     <div class="center">
-      <!--
-      <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="testAdapter()">
-        <i class="mx-1">{{ 'general.dmm.preview' | translate }}</i> </button>
-      &nbsp;
-      <button nbButton appearance="outline" shape="semi-round" size="medium" status="info" (click)="saveAdapter()">
-        <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i> </button>
-      -->
     </div>
   </nb-card-footer>
 </nb-card>

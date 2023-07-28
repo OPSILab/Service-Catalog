@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NgxConfigureService } from 'ngx-configure';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { AppConfig } from '../../model/appConfig';
 import { AdapterEntry } from '../../model/adapter/adapterEntry';
 
@@ -11,8 +10,6 @@ import { AdapterEntry } from '../../model/adapter/adapterEntry';
 export class DMMService {
 
   private config: AppConfig;
-
-  private dmmUrl: string;
 
   constructor(configService: NgxConfigureService, private http: HttpClient) {
     this.config = configService.config as AppConfig;
