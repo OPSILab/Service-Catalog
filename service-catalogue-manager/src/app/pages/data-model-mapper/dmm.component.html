@@ -42,32 +42,39 @@
 </ng-template>
 <nb-card>
   <nb-card-header class="h3"> Data Model Mapper </nb-card-header>
-  <nb-card-body class="row justify-content-center">
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary" (click)="saveAdapter()">
-      {{ 'general.dmm.save_as_new' | translate }}
-      <i class="mx-1 material-icons">save</i>
-    </button>
-    <button *ngIf="isNew" nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
-      (click)="updateAdapter()">
-      {{ 'general.editor.update' | translate }}
-      <i class="mx-1 material-icons">update</i>
-    </button>
-    <!--
+  <nb-card-body>
+    <p>Select map settings from below or upload your map settings.
+    </p>
+    <nb-select placeholder="Select map settings" size="small" [(ngModel)]=selectMap
+      (ngModelChange)="mapChanged($event)">
+      <nb-option *ngFor="let map of maps" value={{map.id}}>{{map.name}}</nb-option>
+    </nb-select>
+    <div class="row justify-content-center">
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="primary" (click)="saveAdapter()">
+        {{ 'general.dmm.save_as_new' | translate }}
+        <i class="mx-1 material-icons">save</i>
+      </button>
+      <button *ngIf="isNew" nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
+        (click)="updateAdapter()">
+        {{ 'general.editor.update' | translate }}
+        <i class="mx-1 material-icons">update</i>
+      </button>
+      <!--
     <button nbButton class="mx-4" shape="rectangle" size="medium" status="success" (click)="testAdapter()">
       {{ 'general.dmm.preview' | translate }}
     </button>
     -->
 
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning" (click)="saveAsFile()">
-      {{ 'general.editor.export' | translate }}
-      <i class="mx-1 fas fa-file-export fa-lg"></i>
-    </button>
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning" (click)="saveAsFile()">
+        {{ 'general.editor.export' | translate }}
+        <i class="mx-1 fas fa-file-export fa-lg"></i>
+      </button>
 
-    <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger" (click)="import('map', 'json')">
-      {{ 'general.editor.import' | translate }}
-      <i class="mx-1 fas fa-file-import fa-lg"></i>
-    </button>
-
+      <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger" (click)="import('map', 'json')">
+        {{ 'general.editor.import' | translate }}
+        <i class="mx-1 fas fa-file-import fa-lg"></i>
+      </button>
+    </div>
   </nb-card-body>
   <nb-card-footer>
     <!--Map Editor accordion-->
@@ -95,7 +102,8 @@
                 {{ 'general.editor.import' | translate }}
                 <i class="mx-1 fas fa-file-import fa-lg"></i>
               </button>
-              <nb-select [(ngModel)]="selectedPath" placeholder="Select path" size="small" (selectedChange)="onUpdatePathForDataMap($event)">
+              <nb-select [(ngModel)]="selectedPath" placeholder="Select path" size="small"
+                (selectedChange)="onUpdatePathForDataMap($event)">
                 <nb-option value="">root.</nb-option>
                 <nb-option *ngFor="let path of paths" value={{path}}>.{{path}}</nb-option>
               </nb-select>
@@ -135,23 +143,9 @@
         </nb-accordion-item-header>
         <nb-accordion-item-body>
           <div class="mb-2">
-            <p>Select schema or map settings
+            <p>Select a schema from below or upload your schema.
             </p>
-            <nb-select size="small" [(ngModel)]=schemaOrMap
-              (ngModelChange)="mapChanged($event)">
-              <nb-option value="schema">Schema</nb-option>
-              <nb-option value="mapSettings">Map settings</nb-option>
-            </nb-select>
-            <br><br>
-            <p *ngIf="schemaOrMap=='mapSettings'">Select map settings from below or upload your map settings.
-            </p>
-            <nb-select *ngIf="schemaOrMap=='mapSettings'" placeholder="Select map settings" size="small" [(ngModel)]=selectMap
-              (ngModelChange)="mapChanged($event)">
-              <nb-option *ngFor="let map of maps" value={{map.id}}>{{map.name}}</nb-option>
-            </nb-select>
-            <p *ngIf="schemaOrMap=='schema'">Select a schema from below or upload your schema.
-            </p>
-            <nb-select *ngIf="schemaOrMap=='schema'" placeholder="Select Json Schema" size="small" [(ngModel)]=selectedSchema
+            <nb-select placeholder="Select Json Schema" size="small" [(ngModel)]=selectedSchema
               (ngModelChange)="schemaChanged($event)">
               <nb-option *ngFor="let schema of schemas" value={{schema.id}}>{{schema.name}}</nb-option>
             </nb-select>
@@ -171,12 +165,12 @@
           Output
         </nb-accordion-item-header>
         <nb-accordion-item-body>
-          <br>  <br>
+          <br> <br>
           <button nbButton class="mr-2" shape="rectangle" size="small" (click)="testAdapter()">
             {{ 'general.dmm.preview' | translate }}
             <i class="mx-1 fas fa-file-import fa-lg"></i>
           </button>
-          <br>  <br>
+          <br> <br>
           <div style="height:500px" id="jsoneditor3"></div>
         </nb-accordion-item-body>
       </nb-accordion-item>
