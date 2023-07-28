@@ -4,8 +4,6 @@ import { FormControl } from '@angular/forms';
 import { NbDialogRef, NbToastrService, NbComponentStatus, NbGlobalPhysicalPosition, NbToastrConfig } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxConfigureService } from 'ngx-configure';
-import { Observable, of } from 'rxjs';
-import { startWith, map } from 'rxjs/operators';
 import { AdapterEntry } from '../../../model/adapter/adapterEntry';
 import { Mapper } from '../../../model/adapter/mapper';
 import { AppConfig } from '../../../model/appConfig';
@@ -68,7 +66,6 @@ export class CreateMapAndAdapterComponent implements OnInit {
 
   constructor(
     private dmmService: DMMService,
-    private http: HttpClient,
     protected ref: NbDialogRef<AddAdapterComponent>,
     private toastrService: NbToastrService,
     private errorService: ErrorDialogAdapterService,
@@ -88,46 +85,6 @@ export class CreateMapAndAdapterComponent implements OnInit {
     document.getElementsByTagName('html')[0].className = ""
   }
 
-  next() {
-    if (this.page1)
-      this.page1 = false
-    else if (this.sourceDataDiv) {
-      this.sourceDataDiv = false
-      this.typeDiv = true
-    }
-    else if (this.typeDiv) {
-      this.contextDiv = true
-      this.typeDiv = false
-    }
-    else if (this.contextDiv) {
-      //this.contextDiv=false
-      this.lastPage = true
-    }
-  }
-
-  back() {
-    if (this.lastPage) this.lastPage = false
-    if (this.sourceDataDiv) {
-      this.page1 = true
-    }
-    else if (this.typeDiv) {
-      this.sourceDataDiv = true
-      this.typeDiv = false
-    }
-    else if (this.contextDiv) {
-      this.contextDiv = false
-      this.typeDiv = true
-    }
-  }
-
-  onModelChange($event) {
-    if ($event == 'MODEL') {
-      this.contextDiv = true;
-      this.typeDiv = false
-    }
-    else this.lastPage = true
-  }
-
   ngOnInit(): void {
     console.debug(this)
     this.loaded = false
@@ -145,22 +102,6 @@ export class CreateMapAndAdapterComponent implements OnInit {
     }
   }
 
-  private filterID(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.IDs.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
-  }
-
-  private filterName(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.names.filter(optionValue => optionValue.toLowerCase().includes(filterValue));
-  }
-
-  getFilteredOptions(value: string): Observable<string[]> {
-    return of(value).pipe(
-      map(filterString => this.filterID(filterString)),
-    );
-  }
-
   confirm() {
     try {
       this.onSubmit()
@@ -171,10 +112,9 @@ export class CreateMapAndAdapterComponent implements OnInit {
   }
 
   async onSubmit() {
+
     console.debug(this.value)
     console.debug(this)
-
-
 
     try {
 
@@ -207,6 +147,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
       else {
 
         if (this.value && this.updateAdapter) {
+          await this.dmmService.updateMap({ name, adapterId }, this.jsonMap, this.schema);
           await this.availableAdapterService.updateAdapter(((
             type == "MODEL" ?
               { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
@@ -214,22 +155,20 @@ export class CreateMapAndAdapterComponent implements OnInit {
           this.value = type == "MODEL" ?
             { name, description, status, adapterId, type, url, context, sourceDataType } :
             { name, description, status, adapterId, type, url, sourceDataType }
-
-          await this.dmmService.updateMap({ name, adapterId }, this.jsonMap, this.schema);
           this.ref.close(this.value);
           this.editedValue.emit(this.value);
           this.showToast('primary', this.translate.instant('general.dmm.map_edited_message'), '');
         }
 
         else {
+          this.update ? await this.dmmService.updateMap({ name, adapterId }, this.jsonMap, this.schema) : await this.dmmService.saveMap({ name, adapterId }, this.jsonMap, this.schema);
           await this.availableAdapterService.saveAdapter(((
             type == "MODEL" ?
               { name, description, status, adapterId, type, url, context, sourceDataType } as unknown :
               { name, description, status, adapterId, type, url, sourceDataType } as unknown)) as AdapterEntry);
           console.debug("MAP\n", this.jsonMap, "SCHEMA\n", this.schema)
-          this.update ? await this.dmmService.updateMap({ name, adapterId }, this.jsonMap, this.schema) : await this.dmmService.saveMap({ name, adapterId }, this.jsonMap, this.schema);
           !this.update ? this.showToast('primary', this.translate.instant('general.dmm.map_added_message'), '') :
-            this.showToast('primary', this.translate.instant('general.dmm.map_edited_message'), '')
+            this.showToast('primary', this.translate.instant('general.dmm.map_edited_message')+this.translate.instant('general.dmm.adapter_added_message'), '')
 
           this.ref.close(type == "MODEL" ?
             { name, description, status, adapterId, type, url, context, sourceDataType } :
