@@ -14,7 +14,7 @@ export class ErrorDialogAdapterComponent {
   constructor(public ref: NbDialogRef<unknown>, private _location: Location, private loginService: LoginService) {}
 
   closeModal(error: { [key: string]: { cause?: string } }): void {
-    if (error.error?.cause === 'it.eng.opsi.cape.exception.AuditLogNotFoundException' || error.status === 0 || error.status === 401)
+    if (error.error?.cause === 'it.eng.opsi.cape.exception.AuditLogNotFoundException' || (error.status as any) === 401)
       void this.loginService.logout().catch((error) => console.log(error));
     // else
     //   this.backClicked();

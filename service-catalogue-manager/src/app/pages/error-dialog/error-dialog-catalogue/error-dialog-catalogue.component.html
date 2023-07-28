@@ -11,9 +11,13 @@
           *ngIf="error.error && error.error !== 'EDITOR_VALIDATION_ERROR'; then genericError; else validationError">
         </ng-container>
         <ng-template #genericError>
+          {{ 'general.errors' | translate }}
+          <!--
           {{error.statusText}}
           {{error.header}}
-          {{error.message}}
+          {{error.message}}-->
+
+
           <!--{{error.error.message}}-->
         </ng-template>
         <ng-template #validationError>
@@ -40,9 +44,11 @@
           *ngIf="error.error && error.error !== 'EDITOR_VALIDATION_ERROR'; then genericErrorDetails; else validationErrorDetails">
         </ng-container>
         <ng-template #genericErrorDetails>
-          {{error.statusText}}
-          {{error.header}}
-          {{error.error.message}}
+          {{error?.status ? "Status : " + error?.status + "\n\n" : null }}
+          {{error?.statusText ? "Status text : " + error?.statusText + "\n\n" : null }}
+          {{error.header ? "Header : " + error.header + "\n" : null }}
+          {{error?.error?.message ? "Message : " + error?.error?.message + "\n\n" : error?.message ? "Message : " +
+          error?.message + "\n\n" : null }}
         </ng-template>
         <ng-template #validationErrorDetails>
           <div class="row p-3">

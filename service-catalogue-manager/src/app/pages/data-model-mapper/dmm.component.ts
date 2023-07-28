@@ -14,6 +14,7 @@ import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.componen
 import { AvailableServicesService } from '../services/availableServices/availableServices.service';
 import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-map-and-adapter.component';
 import { ExportFileComponent } from './export-file/export-file.component';
+import { ErrorDialogAdapterService } from '../error-dialog/error-dialog-adapter.service';
 
 let map = {}, mapperEditor, mapOptions: string[]
 @Component({
@@ -66,6 +67,7 @@ export class DMMComponent implements OnInit, OnChanges {
     protected dialogService: NbDialogService,
     private windowService: NbWindowService,
     private availableServicesService: AvailableServicesService,
+    private errorService: ErrorDialogAdapterService,
     private dmmService: DMMService,
   ) {
     //divElement = document.createElement('div')
@@ -103,7 +105,7 @@ export class DMMComponent implements OnInit, OnChanges {
       ////console.debug("Line 88",editor2)
       mapperEditor.update(map)
       //this.onUpdatePathForDataMap("");
-      this.selectMap="---select map---"
+      this.selectMap = "---select map---"
     }
   }
 
@@ -126,14 +128,21 @@ export class DMMComponent implements OnInit, OnChanges {
 
 
   async ngOnInit(): Promise<void> {
+
     this.sourceEditorContainer = this.document.getElementById('jsoneditor');
     this.mapperEditorContainer = this.document.getElementById('jsoneditor2');
     this.outputEditorContainer = this.document.getElementById('jsoneditor3');
     this.selectBox = <HTMLInputElement>this.document.getElementById('input-type');
     this.csvtable = this.document.getElementById('csv-table');
 
-    await this.loadMapperList()
-    await this.loadSchemaList()
+    try {
+      await this.loadMapperList()
+      await this.loadSchemaList()
+    }
+    catch (error) {
+      console.error(error)
+      this.errorService.openErrorDialog(error)
+    }
 
     //var selectedValue = 'csv';
 
@@ -170,7 +179,6 @@ export class DMMComponent implements OnInit, OnChanges {
     else this.outputEditor.update({ "preview": "set the source, set the json map and click preview to see the output json preview" })
 
     //if (this.schemaJson) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, this.schemaJson);
-
   }
 
   schema() {
@@ -451,7 +459,7 @@ export class DMMComponent implements OnInit, OnChanges {
       ];
       map = mapSettings.map
       mapperEditor.update(map)
-      this.selectedSchema="---select schema---"
+      this.selectedSchema = "---select schema---"
     }
   }
 

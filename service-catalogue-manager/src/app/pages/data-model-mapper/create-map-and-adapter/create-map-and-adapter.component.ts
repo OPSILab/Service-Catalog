@@ -229,7 +229,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
           console.debug("MAP\n", this.jsonMap, "SCHEMA\n", this.schema)
           this.update ? await this.dmmService.updateMap({ name, adapterId }, this.jsonMap, this.schema) : await this.dmmService.saveMap({ name, adapterId }, this.jsonMap, this.schema);
           !this.update ? this.showToast('primary', this.translate.instant('general.dmm.map_added_message'), '') :
-          this.showToast('primary', this.translate.instant('general.dmm.map_edited_message'), '')
+            this.showToast('primary', this.translate.instant('general.dmm.map_edited_message'), '')
 
           this.ref.close(type == "MODEL" ?
             { name, description, status, adapterId, type, url, context, sourceDataType } :
@@ -240,6 +240,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
       }
     }
     catch (error) {
+      console.error(error)
       let errors: Object[] = []
 
       if (!this.jsonMap) errors.push({
@@ -289,7 +290,6 @@ export class CreateMapAndAdapterComponent implements OnInit {
         "errorcount": 1
       })
 
-      console.log(error)
       if (error.message == "Adapter ID must be set") {
         this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
@@ -302,6 +302,8 @@ export class CreateMapAndAdapterComponent implements OnInit {
           ]
         });
       }
+      else if (error.status == 0)
+        this.errorService.openErrorDialog(error)
       else if (error.status && error.status == 400 && this.createAdapter) {
         if (error.error.status == "Adapter already exists")
           this.errorService.openErrorDialog({
