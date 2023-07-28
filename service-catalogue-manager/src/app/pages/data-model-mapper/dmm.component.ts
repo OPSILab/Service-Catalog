@@ -366,12 +366,13 @@ export class DMMComponent implements OnInit, OnChanges {
         }
 
         if (path) {
-          items.push({
+          // items.push instead items = if you want to maintain other menu options
+          items=[{
             text: 'Map', // the text for the menu item
             title: 'Put the map with source', // the HTML title attribute
             className: 'example-class',
             click: pathToMap // the function to call when the menu item is clicked
-          })
+          }]
         }
 
         items.forEach(function (item, index, items) {

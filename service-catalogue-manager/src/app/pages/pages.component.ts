@@ -123,13 +123,7 @@ export class PagesComponent implements OnInit, OnDestroy {
         icon: 'settings-outline',
         link: '/pages/management/manageConfigurations',
         hidden: this.hideManageMenu,
-      },
-      {
-        title: 'general.menu.configuration',
-        icon: 'settings-outline',
-        link: '/pages/mapper',
-        hidden: this.hideManageMenu,
-      },
+      }
     ];
 
     // if put on constructor it will doing twice when refresh a page.
