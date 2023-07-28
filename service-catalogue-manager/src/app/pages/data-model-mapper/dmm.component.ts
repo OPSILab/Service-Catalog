@@ -1,25 +1,9 @@
-import { AdapterEntry } from './../../model/adapter/adapterEntry';
-import { Mapper } from './../../model/adapter/mapper';
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/unbound-method */
-import { Component, OnInit, TemplateRef, ViewChild, ChangeDetectorRef, Inject, OnChanges, SimpleChanges, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, Inject, OnChanges, SimpleChanges } from '@angular/core';
 import { DMMService } from './dmm.service';
 import {
   NbDialogService,
   NbWindowService,
-  NbDialogRef,
-  NbToastrService,
-  NbComponentStatus,
-  NbToastrConfig,
-  NbGlobalPhysicalPosition,
-  NbWindowRef,
 } from '@nebular/theme';
-import { Validators, FormControl, FormGroup, ValidationErrors, FormArray, AbstractControl } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
-import { TranslateService } from '@ngx-translate/core';
-import { Account, AccountNotificationEnum } from '../../model/account/account.model';
-import { NgxConfigureService } from 'ngx-configure';
-import { AppConfig } from '../../model/appConfig';
 import * as _ from "lodash"
 
 import * as JSONEditor from '../../../../node_modules/jsoneditor/dist/jsoneditor.js';
@@ -28,7 +12,6 @@ import { DOCUMENT } from '@angular/common';
 import { DialogImportComponent } from './dialog-import/dialog-import.component';
 import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.component';
 import { AvailableServicesService } from '../services/availableServices/availableServices.service';
-import { AddAdapterComponent } from '../services/available-adapters/add-adapter/add-adapter.component';
 import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-map-and-adapter.component';
 import { ExportFileComponent } from './export-file/export-file.component';
 
@@ -43,7 +26,6 @@ export class DMMComponent implements OnInit, OnChanges {
   @ViewChild('contentTemplate') contentTemplate: TemplateRef<any>;
 
   sourceEditor: any;
-  //editor2:any;
   sourceEditorContainer: any;
   mapperEditorContainer: any;
   outputEditorContainer: any;
@@ -56,22 +38,18 @@ export class DMMComponent implements OnInit, OnChanges {
   typeSource: string;
   adapter
   mapObject
-  //table
   flipped = false;
   csvtable: any;
   sourceRefFormat: string;
-  //mapOptions: string[];
   paths: string[];
   mapperEditor: any;
   maps: any;
   mapper
   schemas
   selectedSchema
-  //selectedPath
   schemaJson: any[];
   outputEditor: any;
   outputEditorOptions: any;
-  //json2
   sourceJson: any;
   schemaFromFile
   createAdapter: any;
@@ -82,7 +60,6 @@ export class DMMComponent implements OnInit, OnChanges {
   adapterId
   partialCsv: any;
   rows: string[];
-  //divElement;
 
   constructor(
     @Inject(DOCUMENT) private document: Document,

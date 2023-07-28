@@ -219,7 +219,6 @@ export class CreateMapAndAdapterComponent implements OnInit {
           this.ref.close(this.value);
           this.editedValue.emit(this.value);
           this.showToast('primary', this.translate.instant('general.dmm.map_edited_message'), '');
-          this.showToast('primary', this.translate.instant('general.dmm.adapter_edited_message'), '');
         }
 
         else {
@@ -237,7 +236,6 @@ export class CreateMapAndAdapterComponent implements OnInit {
             { name, description, status, adapterId, type, url, sourceDataType });
 
           this.editedValue.emit(this.value);
-          this.showToast('primary', this.translate.instant('general.dmm.adapter_added_message'), '');
         }
       }
     }
