@@ -115,17 +115,19 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   schemaChanged($event) {
-
-    if (this.selectedSchema)
-      this.schemaJson = [
-        this.schema()
-      ];
-    //if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, this.schemaJson);
-    //else this.outputEditor.update(this.schemaJson)
-    map = this.getAllNestedProperties(this.schemaJson[0]);
-    ////console.debug("Line 88",editor2)
-    mapperEditor.update(map)
-    //this.onUpdatePathForDataMap("");
+    if ($event && $event != "---select schema---") {
+      if (this.selectedSchema)
+        this.schemaJson = [
+          this.schema()
+        ];
+      //if (!this.outputEditor) this.outputEditor = new JSONEditor(this.outputEditorContainer, this.outputEditorOptions, this.schemaJson);
+      //else this.outputEditor.update(this.schemaJson)
+      map = this.getAllNestedProperties(this.schemaJson[0]);
+      ////console.debug("Line 88",editor2)
+      mapperEditor.update(map)
+      //this.onUpdatePathForDataMap("");
+      this.selectMap="---select map---"
+    }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -367,7 +369,7 @@ export class DMMComponent implements OnInit, OnChanges {
 
         if (path) {
           // items.push instead items = if you want to maintain other menu options
-          items=[{
+          items = [{
             text: 'Map', // the text for the menu item
             title: 'Put the map with source', // the HTML title attribute
             className: 'example-class',
@@ -463,15 +465,17 @@ export class DMMComponent implements OnInit, OnChanges {
   }
 
   mapChanged($event) {
-
-    //console.debug($event)
-    let mapSettings = this.maps.filter(filteredMap => filteredMap.id == $event)[0]
-    //console.debug(mapSettings)
-    this.schemaJson = [
-      mapSettings.dataModel
-    ];
-    map = mapSettings.map
-    mapperEditor.update(map)
+    if ($event && $event != "---select map---") {
+      //console.debug($event)
+      let mapSettings = this.maps.filter(filteredMap => filteredMap.id == $event)[0]
+      //console.debug(mapSettings)
+      this.schemaJson = [
+        mapSettings.dataModel
+      ];
+      map = mapSettings.map
+      mapperEditor.update(map)
+      this.selectedSchema="---select schema---"
+    }
   }
 
   updateCSVTable() {
