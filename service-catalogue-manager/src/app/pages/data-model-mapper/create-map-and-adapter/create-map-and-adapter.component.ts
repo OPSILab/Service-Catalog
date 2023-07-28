@@ -1,4 +1,3 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NbDialogRef, NbToastrService, NbComponentStatus, NbGlobalPhysicalPosition, NbToastrConfig } from '@nebular/theme';
@@ -74,7 +73,6 @@ export class CreateMapAndAdapterComponent implements OnInit {
     private configService: NgxConfigureService
   ) {
     this.appConfig = this.configService.config as AppConfig
-    console.debug(this)
   }
 
   cancel(): void {
@@ -86,7 +84,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.debug(this)
+
     this.loaded = false
     this.url = this.appConfig.data_model_mapper.default_mapper_url
 
@@ -98,7 +96,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
       this.url = this.appConfig.data_model_mapper.default_mapper_url
     }
     catch (error) {
-      console.error("error:<\n", error, ">\n")
+      console.error(error)
     }
   }
 
@@ -107,14 +105,11 @@ export class CreateMapAndAdapterComponent implements OnInit {
       this.onSubmit()
     }
     catch (error) {
-      console.error("error:<\n", error, ">\n")
+      console.error(error)
     }
   }
 
   async onSubmit() {
-
-    console.debug(this.value)
-    console.debug(this)
 
     try {
 
@@ -259,8 +254,7 @@ export class CreateMapAndAdapterComponent implements OnInit {
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
         });
       }
-      else if (error.status && error.status == 400 || error.message == "Schema required" || error.message == "Map required") {
-        console.debug(error.error)
+      else if (error.status && error.status == 400 || error.message == "Schema required" || error.message == "Map required")
         if (error?.error == "id already exists" || error?.error?.error == "id already exists")
           this.errorService.openErrorDialog({
             error: 'EDITOR_VALIDATION_ERROR', validationErrors: [
@@ -275,7 +269,6 @@ export class CreateMapAndAdapterComponent implements OnInit {
         else this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: errors
         });
-      }
     }
   }
 

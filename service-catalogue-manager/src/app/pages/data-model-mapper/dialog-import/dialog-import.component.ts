@@ -1,20 +1,18 @@
-import { Component, Inject, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
-import { CommonModule, DOCUMENT } from '@angular/common';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Byte } from '@angular/compiler/src/util';
-import { AppConfig } from '../../../model/appConfig';
-import { NgxConfigureService } from 'ngx-configure';
+import { DOCUMENT } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+//import { AppConfig } from '../../../model/appConfig';
+//import { NgxConfigureService } from 'ngx-configure';
 
 @Component({
   selector: 'ngx-dialog-import-prompt',
   templateUrl: 'dialog-import.component.html',
   styleUrls: ['dialog-import.component.scss'],
 })
-export class DialogImportComponent implements OnInit {
-  private appConfig: AppConfig;
+export class DialogImportComponent{
+  //private appConfig: AppConfig;
   selectedFile: File;
   file: String;
   fileOutput: String;
@@ -26,23 +24,15 @@ export class DialogImportComponent implements OnInit {
 
   @Input() type: string;
 
-
-  constructor(private http: HttpClient, protected ref: NbDialogRef<DialogImportComponent>,
+  constructor(
+    private http: HttpClient,
+    protected ref: NbDialogRef<DialogImportComponent>,
     private errorService: ErrorDialogService,
     @Inject(DOCUMENT) private document: Document,
-  ) {
-
-
-  }
+  ) {}
 
   cancel(): void {
     this.ref.close();
-  }
-
-
-  async ngOnInit() {
-
-
   }
 
   fixBrokenPageBug() {
@@ -74,9 +64,7 @@ export class DialogImportComponent implements OnInit {
     }
   }
 
-
   async onUpload(type: string): Promise<void> {
-    var source;
     if (type == "url") {
       this.file = await this.http.get<any>(this.dataUrl, { responseType: 'text' as 'json' }).toPromise();
       this.ref.close({ content: this.file, source: this.dataUrl, format: "url" });

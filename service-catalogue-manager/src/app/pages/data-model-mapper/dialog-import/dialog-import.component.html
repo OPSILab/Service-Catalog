@@ -7,7 +7,6 @@
   </nb-card-header>
   <nb-card-body class="m-2 p-4" style="overflow-y: hidden">
     <div class="row justify-content-left p-3">Select {{type}} data </div>
-
     <nb-select [(ngModel)]="selectedItem" (click)="fixBrokenPageBug()">
       <nb-option value="file">
         {{ "file" }}
@@ -16,17 +15,13 @@
         {{ "url" }}
       </nb-option>
     </nb-select>
-
     <div *ngIf="selectedItem === 'url'" class="row justify-content-left p-3">
-
       <input [(ngModel)]="dataUrl" nbInput placeholder="Data URL" />
-
     </div>
     <div *ngIf="selectedItem != 'url'" class="row justify-content-left p-3" style="padding-top:100px">
       <br><br>
     </div>
     <input style="display: none" type="file" (change)="onFileChanged($event)" #fileInput />
-
     <div class="row justify-content-center mt-3 p-1">
       <button nbButton [disabled]="selectedItem !== 'file'" class="mr-2" size="medium" status="danger"
         (click)="fileInput.click()">{{ 'general.editor.browse'
@@ -42,7 +37,6 @@
       <b>{{ 'general.editor.selected' | translate }}:&nbsp;</b> <i> {{ selectedFile.name }}</i>
     </p>
     <p *ngIf="!selectedFile">
-
     </p>
   </nb-card-footer>
 </nb-card>

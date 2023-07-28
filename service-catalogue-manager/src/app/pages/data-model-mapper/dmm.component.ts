@@ -11,7 +11,7 @@ import { DialogImportComponent } from './dialog-import/dialog-import.component';
 import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.component';
 import { AvailableServicesService } from '../services/availableServices/availableServices.service';
 import { CreateMapAndAdapterComponent } from './create-map-and-adapter/create-map-and-adapter.component';
-import { ExportFileComponent } from './export-file/export-file.component';
+//import { ExportFileComponent } from './export-file/export-file.component';
 import { ErrorDialogAdapterService } from '../error-dialog/error-dialog-adapter.service';
 
 let map = {}, mapperEditor, mapOptions: string[]
@@ -107,8 +107,6 @@ export class DMMComponent implements OnInit, OnChanges {
     map = this.getAllNestedProperties(this.schemaJson[0]);
     mapperEditor.update(map)
   }
-
-
 
   async ngOnInit(): Promise<void> {
 
@@ -454,14 +452,10 @@ export class DMMComponent implements OnInit, OnChanges {
       });
   }
 
-
-
   selectMapJsonOptions(content: string, path: string): string[] {
 
     return this.getKeys(_.get(JSON.parse(content), path + '[0]', JSON.parse(content)), true, true)
   }
-
-
 
   displayCSV(csvData: string, element: HTMLElement, separator: string) {
     // Split the CSV data into an array of rows
