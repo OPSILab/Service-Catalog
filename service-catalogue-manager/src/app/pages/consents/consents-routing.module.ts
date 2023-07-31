@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ConsentsComponent } from './consents.component';
-import { TranslateModule } from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -11,7 +10,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [TranslateModule.forChild({}),RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class ConsentsRoutingModule {}

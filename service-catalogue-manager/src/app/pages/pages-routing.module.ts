@@ -4,7 +4,6 @@ import { PagesComponent } from './pages.component';
 import { AuthGuard } from '../auth/services/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AvailableAdaptersComponent } from './adapters/available-adapters.component';
-import { TranslateModule } from '@ngx-translate/core';
 import { AvailableConnectorsComponent } from './connectors/availableConnectors.component';
 
 const routes: Routes = [
@@ -64,7 +63,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [TranslateModule.forChild({}),RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class PagesRoutingModule {}
