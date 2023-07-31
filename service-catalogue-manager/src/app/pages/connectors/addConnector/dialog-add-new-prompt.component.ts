@@ -1,16 +1,17 @@
-import { AdapterEntry } from './../../../../model/adapter/adapterEntry';
-import { ServiceModel } from './../../../../model/services/serviceModel';
-import { FormControl } from '@angular/forms';
-import { NbComponentStatus, NbDialogRef, NbGlobalPhysicalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
-import { AvailableConnectorsService } from '../availableConnectors.service'
-import { NgxConfigureService } from 'ngx-configure';
-import { HttpClient } from '@angular/common/http';
-import { ConnectorEntry } from '../../../../model/connector/connectorEntry'
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
-import { ErrorDialogConnectorService } from '../../../error-dialog/error-dialog-connector.service';
-import { AvailableServicesService } from '../../availableServices/availableServices.service';
-import { AvailableAdaptersService } from '../../../adapters/available-adapters.service';
+import { HttpClient } from "@angular/common/http";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { NbDialogRef, NbToastrService, NbComponentStatus, NbGlobalPhysicalPosition, NbToastrConfig } from "@nebular/theme";
+import { TranslateService } from "@ngx-translate/core";
+import { NgxConfigureService } from "ngx-configure";
+import { AdapterEntry } from "../../../model/adapter/adapterEntry";
+import { ConnectorEntry } from "../../../model/connector/connectorEntry";
+import { ServiceModel } from "../../../model/services/serviceModel";
+import { AvailableAdaptersService } from "../../adapters/available-adapters.service";
+import { ErrorDialogConnectorService } from "../../error-dialog/error-dialog-connector.service";
+import { AvailableServicesService } from "../../services/availableServices/availableServices.service";
+import { AvailableConnectorsService } from "../availableConnectors.service";
+
 
 @Component({
   selector: 'ngx-dialog-import-prompt',

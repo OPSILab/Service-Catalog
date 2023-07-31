@@ -37,12 +37,12 @@ export const MENU_ITEMS: NbMenuItem[] = [
   {
     title: 'general.menu.connectors',
     icon: 'link-2-outline',
-    link: '/pages/services/availableConnectors',
+    link: '/pages/connectors/availableConnectors',
   },
   {
     title: 'general.menu.adapters',
     icon: 'link-2-outline',
-    link: '/pages/services/availableAdapters',
+    link: '/pages/adapters/availableAdapters',
   },
   {
     title: 'general.menu.administration',

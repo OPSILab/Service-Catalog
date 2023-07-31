@@ -1,28 +1,21 @@
-import { Component, Input, Output, OnInit, TemplateRef, EventEmitter, OnDestroy, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { filter, takeUntil } from 'rxjs/operators';
-import { Subject } from 'rxjs';
-import {
-  NbMenuService,
-  NbToastrService,
-  NbDialogService,
-  NbComponentStatus,
-  NbGlobalPhysicalPosition,
-  NbToastrConfig,
-  NbMenuItem,
-} from '@nebular/theme';
-import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
-import { AvailableConnectorsService } from './availableConnectors.service';
-import { LoginService } from '../../../auth/login/login.service';
-import { ConnectorStatusEnum } from '../../../model/services/connector';
-import { ConnectorEntry } from '../../../model/connector/connectorEntry';
-import { AvailableServiceRow } from '../availableServices/availableServices.component';
-import { AvailableServicesService } from '../availableServices/availableServices.service';
-import { ErrorDialogConnectorService } from '../../error-dialog/error-dialog-connector.service';
-import { ServiceModel } from '../../../model/services/serviceModel';
-import { AdapterEntry } from '../../../model/adapter/adapterEntry';
-import { AvailableAdaptersService } from '../../adapters/available-adapters.service';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, ViewChild, TemplateRef } from "@angular/core";
+import { Router } from "@angular/router";
+import { NbMenuItem, NbMenuService, NbDialogService, NbToastrService, NbComponentStatus, NbGlobalPhysicalPosition, NbToastrConfig } from "@nebular/theme";
+import { TranslateService } from "@ngx-translate/core";
+import { Subject } from "rxjs";
+import { takeUntil, filter } from "rxjs/operators";
+import { LoginService } from "../../auth/login/login.service";
+import { AdapterEntry } from "../../model/adapter/adapterEntry";
+import { ConnectorEntry } from "../../model/connector/connectorEntry";
+import { ConnectorStatusEnum } from "../../model/services/connector";
+import { ServiceModel } from "../../model/services/serviceModel";
+import { AvailableAdaptersService } from "../adapters/available-adapters.service";
+import { ErrorDialogConnectorService } from "../error-dialog/error-dialog-connector.service";
+import { ErrorDialogService } from "../error-dialog/error-dialog.service";
+import { AvailableServiceRow } from "../services/availableServices/availableServices.component";
+import { AvailableServicesService } from "../services/availableServices/availableServices.service";
+import { AvailableConnectorsService } from "./availableConnectors.service";
+
 
 @Component({
   selector: 'actionsConnectorMenuRender',

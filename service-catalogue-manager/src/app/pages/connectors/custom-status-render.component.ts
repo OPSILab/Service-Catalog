@@ -14,7 +14,7 @@ import { Component, Input, OnInit } from '@angular/core';
       </button>
     </ng-template>
   `,
-  styleUrls: ['../availableServices/availableServices.component.scss'],
+  styleUrls: ['../services/availableServices/availableServices.component.scss'],
 })
 export class ConnectorStatusRenderComponent implements OnInit {
   active: boolean = false;

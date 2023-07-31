@@ -15,7 +15,7 @@ import { LoginService } from '../../auth/login/login.service';
 import { AdapterEntry } from '../../model/adapter/adapterEntry';
 import { System, AppConfig } from '../../model/appConfig';
 import { ErrorDialogService } from '../error-dialog/error-dialog.service';
-import { ConnectorStatusRenderComponent } from '../services/availableConnectors/custom-status-render.component';
+import { ConnectorStatusRenderComponent } from '../connectors/custom-status-render.component';
 
 @Component({
   selector: 'available-adapters-smart-table',

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { LoginComponent } from './login.component';
 import { LoginPopupComponent } from './loginPopup/loginPopup.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 // noinspection TypeScriptValidateTypes
 export const routes: Routes = [
@@ -21,7 +22,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [TranslateModule.forChild({}),RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class LoginRoutingModule {}

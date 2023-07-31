@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 const components = [DashboardComponent, StatusCardComponent, CategoryPieComponent];
 
 @NgModule({
-  imports: [NbCardModule, ThemeModule, NgxChartsModule, NbIconModule, TranslateModule],
+  imports: [TranslateModule.forChild({}),NbCardModule, ThemeModule, NgxChartsModule, NbIconModule, TranslateModule],
   declarations: [...components],
   providers: [AvailableServicesService],
 })

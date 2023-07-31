@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AvailableCataloguesComponent } from './availableCatalogues/availableCatalogues.component';
 import { RemoteCataloguesComponent } from './remote-catalogues/remote-catalogues.component';
 import { ManageConfigurationsComponent } from './manage-configurations/manage-configurations.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 const routes: Routes = [
@@ -22,7 +23,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes), TranslateModule.forChild({}),],
   exports: [RouterModule],
 })
 export class ManagementRoutingModule {}

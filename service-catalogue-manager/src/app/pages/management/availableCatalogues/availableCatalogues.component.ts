@@ -14,7 +14,6 @@ import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
-import { ConnectorStatusRenderComponent } from '../../services/availableConnectors/custom-status-render.component';
 import { LoginService } from '../../../auth/login/login.service';
 import { StatusRenderComponent } from './status-render/status-render.component';
 import { AvailableServicesService } from '../../services/availableServices/availableServices.service';

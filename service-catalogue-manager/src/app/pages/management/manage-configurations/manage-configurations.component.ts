@@ -9,14 +9,10 @@ import { takeUntil } from 'rxjs/operators';
 import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
 import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
-import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
-import { ConnectorStatusRenderComponent } from '../../services/availableConnectors/custom-status-render.component';
 import { LoginService } from '../../../auth/login/login.service';
 import { AvailableServicesService } from '../../services/availableServices/availableServices.service';
 import { AvailableCataloguesService } from '../availableCatalogues/availableCatalogues.service';
 import { StatusRenderComponent } from '../availableCatalogues/status-render/status-render.component';
-import { AddCatalogueComponent } from '../availableCatalogues/add-catalogue/add-catalogue.component';
-import { ActionsCatalogueMenuRenderComponent } from '../availableCatalogues/actions-catalogue-menu-render/actions-catalogue-menu-render.component';
 import { ActionsMenuRenderComponent } from './actions-menu-render/actions-menu-render.component';
 import { AddRemoteCatalogueDatasetComponent } from './add-remote-catalogue-dataset/add-remote-catalogue-dataset.component';
 import { CatalogueDataset } from '../../../model/catalogue/catalogueDataset';
@@ -63,7 +59,6 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private configService: NgxConfigureService,
     private dialogService: NbDialogService,
-    private availableServicesService: AvailableServicesService,
     private errorService: ErrorDialogService
   ) {
     this.config = this.configService.config as AppConfig;

@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import 'rxjs/add/operator/toPromise';
-import { NgxConfigureService } from 'ngx-configure';
-import { ConnectorEntry } from '../../../model/connector/connectorEntry';
-import { ConnectorEntryLog } from '../../../model/connector/connectorEntryLog';
-import { AppConfig } from '../../../model/appConfig';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { NgxConfigureService } from "ngx-configure";
+import { AppConfig } from "../../model/appConfig";
+import { ConnectorEntry } from "../../model/connector/connectorEntry";
+import { ConnectorEntryLog } from "../../model/connector/connectorEntryLog";
+
 
 @Injectable({ providedIn: 'root' })
 export class AvailableConnectorsService {

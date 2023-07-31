@@ -4,6 +4,8 @@ import { PagesComponent } from './pages.component';
 import { AuthGuard } from '../auth/services/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AvailableAdaptersComponent } from './adapters/available-adapters.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { AvailableConnectorsComponent } from './connectors/availableConnectors.component';
 
 const routes: Routes = [
   {
@@ -37,6 +39,11 @@ const routes: Routes = [
         component: AvailableAdaptersComponent,
       },
       {
+        path: 'connectors',
+        loadChildren: () => import('./connectors/connectors.module').then((m) => m.ConnectorsModule),
+        component: AvailableConnectorsComponent,
+      },
+      {
         path: 'account',
         loadChildren: () => import('./account/account.module').then((m) => m.AccountModule),
         canActivate: [AuthGuard],
@@ -57,7 +64,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [TranslateModule.forChild({}),RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class PagesRoutingModule {}

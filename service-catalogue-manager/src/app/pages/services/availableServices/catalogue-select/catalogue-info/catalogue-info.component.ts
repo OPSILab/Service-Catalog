@@ -5,10 +5,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { ConnectorEntryLog } from '../../../../../model/connector/connectorEntryLog';
 import { Dataset } from '../../../../../model/services/dataset';
 import { ErrorDialogService } from '../../../../error-dialog/error-dialog.service';
-import { AvailableConnectorsService } from '../../../availableConnectors/availableConnectors.service';
 import { AvailableServicesService } from '../../availableServices.service';
 import { ServiceInfoRenderComponent } from '../../serviceInfoRender.component';
 import { AvailableServiceRow } from '../catalogue-select.component';
+import { AvailableConnectorsService } from '../../../../connectors/availableConnectors.service';
 
 @Component({
   selector: 'catalogue-info',

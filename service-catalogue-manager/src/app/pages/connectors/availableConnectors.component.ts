@@ -1,19 +1,20 @@
-import { LocalDataSource } from 'ng2-smart-table';
-import { AvailableConnectorsService } from './availableConnectors.service';
-import { ConnectorInfoRenderComponent } from './connectorInfoRender.component';
-import { TranslateService } from '@ngx-translate/core';
-import { NgxConfigureService } from 'ngx-configure';
-import { AppConfig, System } from '../../../model/appConfig';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { ActionsConnectorMenuRenderComponent } from './actionsConnectorMenuRender.component';
-import { ConnectorEntry } from '../../../model/connector/connectorEntry';
-import { DialogAddNewPromptComponent } from './addConnector/dialog-add-new-prompt.component';
-import { NbDialogService } from '@nebular/theme';
-import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
-import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
-import { ConnectorStatusRenderComponent } from './custom-status-render.component';
-import { LoginService } from '../../../auth/login/login.service';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter } from "@angular/core";
+import { NbDialogService } from "@nebular/theme";
+import { TranslateService } from "@ngx-translate/core";
+import { LocalDataSource } from "ng2-smart-table";
+import { NgxConfigureService } from "ngx-configure";
+import { Subject } from "rxjs";
+import { takeUntil } from "rxjs/operators";
+import { LoginService } from "../../auth/login/login.service";
+import { System, AppConfig } from "../../model/appConfig";
+import { ConnectorEntry } from "../../model/connector/connectorEntry";
+import { ErrorDialogService } from "../error-dialog/error-dialog.service";
+import { ActionsConnectorMenuRenderComponent } from "./actionsConnectorMenuRender.component";
+import { DialogAddNewPromptComponent } from "./addConnector/dialog-add-new-prompt.component";
+import { AvailableConnectorsService } from "./availableConnectors.service";
+import { ConnectorInfoRenderComponent } from "./connectorInfoRender.component";
+import { ConnectorStatusRenderComponent } from "./custom-status-render.component";
+
 
 @Component({
   selector: 'available-connectors-smart-table',

@@ -92,7 +92,7 @@ export class PagesComponent implements OnInit, OnDestroy {
       {
         title: 'general.menu.connectors',
         icon: 'link-2-outline',
-        link: '/pages/services/availableConnectors',
+        link: '/pages/connectors/availableConnectors',
         hidden: this.hideServicesMenu,
       },
       {

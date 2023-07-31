@@ -11,7 +11,7 @@ import { ErrorDialogAdapterService } from './error-dialog-adapter.service';
 import { ErrorDialogCatalogueComponent } from './error-dialog-catalogue/error-dialog-catalogue.component';
 
 @NgModule({
-  imports: [NbAccordionModule, CommonModule, NbCardModule, TranslateModule.forChild()],
+  imports: [TranslateModule.forChild({}),NbAccordionModule, CommonModule, NbCardModule, TranslateModule.forChild()],
   declarations: [ErrorDialogComponent, ErrorDialogConnectorComponent, ErrorDialogAdapterComponent, ErrorDialogCatalogueComponent],
   exports: [ErrorDialogComponent, ErrorDialogConnectorComponent, ErrorDialogAdapterComponent],
   entryComponents: [ErrorDialogComponent, ErrorDialogConnectorComponent, ErrorDialogAdapterComponent],

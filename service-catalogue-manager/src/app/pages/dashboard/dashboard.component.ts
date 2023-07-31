@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { ErrorDialogService } from '../error-dialog/error-dialog.service';
 import { AvailableServicesService } from '../services/availableServices/availableServices.service';
 import { TranslateService } from '@ngx-translate/core';
-import { AvailableConnectorsService } from '../services/availableConnectors/availableConnectors.service';
 import { ServicesCount } from '../../model/services/servicesCount';
 import { AvailableCataloguesService } from '../management/availableCatalogues/availableCatalogues.service';
 import { ManageConfigurationsService } from '../management/manage-configurations/manage-configurations.service';
+import { AvailableConnectorsService } from '../connectors/availableConnectors.service';
 
 
 interface CardSettings {

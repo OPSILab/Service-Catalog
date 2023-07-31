@@ -1,15 +1,15 @@
-import { OnInit } from '@angular/core';
-import { Component, Input, TemplateRef, ViewChild } from '@angular/core';
-import { NbDialogService } from '@nebular/theme';
-import { TranslateService } from '@ngx-translate/core';
-import { ConnectorEntry } from '../../../model/connector/connectorEntry';
-import { ConnectorEntryLog } from '../../../model/connector/connectorEntryLog';
-import { Dataset } from '../../../model/services/dataset';
-import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
-import { AvailableServiceRow } from '../availableServices/availableServices.component';
-import { AvailableServicesService } from '../availableServices/availableServices.service';
-import { ServiceInfoRenderComponent } from '../availableServices/serviceInfoRender.component';
-import { AvailableConnectorsService } from './availableConnectors.service';
+import { Component, OnInit, Input, ViewChild, TemplateRef } from "@angular/core";
+import { NbDialogService } from "@nebular/theme";
+import { TranslateService } from "@ngx-translate/core";
+import { ConnectorEntry } from "../../model/connector/connectorEntry";
+import { ConnectorEntryLog } from "../../model/connector/connectorEntryLog";
+import { Dataset } from "../../model/services/dataset";
+import { ErrorDialogService } from "../error-dialog/error-dialog.service";
+import { AvailableServiceRow } from "../services/availableServices/availableServices.component";
+import { AvailableServicesService } from "../services/availableServices/availableServices.service";
+import { ServiceInfoRenderComponent } from "../services/availableServices/serviceInfoRender.component";
+import { AvailableConnectorsService } from "./availableConnectors.service";
+
 
 
 @Component({

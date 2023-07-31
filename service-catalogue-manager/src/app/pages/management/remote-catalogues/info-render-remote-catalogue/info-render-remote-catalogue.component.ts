@@ -5,11 +5,11 @@ import { ConnectorEntry } from '../../../../model/connector/connectorEntry';
 import { ConnectorEntryLog } from '../../../../model/connector/connectorEntryLog';
 import { Dataset } from '../../../../model/services/dataset';
 import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
-import { AvailableConnectorsService } from '../../../services/availableConnectors/availableConnectors.service';
 import { AvailableServiceRow } from '../../../services/availableServices/availableServices.component';
 import { AvailableServicesService } from '../../../services/availableServices/availableServices.service';
 import { ServiceInfoRenderComponent } from '../../../services/availableServices/serviceInfoRender.component';
 import { CatalogueEntry } from '../../../../model/catalogue/catalogueEntry';
+import { AvailableConnectorsService } from '../../../connectors/availableConnectors.service';
 
 @Component({
   selector: 'info-render-remote-catalogue',
