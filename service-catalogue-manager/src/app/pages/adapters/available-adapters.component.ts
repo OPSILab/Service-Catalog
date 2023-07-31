@@ -4,18 +4,18 @@ import { AvailableAdaptersService } from './available-adapters.service';
 import { AdapterInfoRenderComponent } from './adapter-info-render/adapter-info-render.component';
 import { TranslateService } from '@ngx-translate/core';
 import { NgxConfigureService } from 'ngx-configure';
-import { AppConfig, System } from '../../../model/appConfig';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ActionsAdapterMenuRenderComponent } from './actions-adapter-menu-render/actions-adapter-menu-render.component';
-import { AdapterEntry } from '../../../model/adapter/adapterEntry';
 import { AddAdapterComponent } from './add-adapter/add-adapter.component';
 import { NbDialogService } from '@nebular/theme';
 import { Component, Input, Output, OnInit, EventEmitter, OnDestroy } from '@angular/core';
-import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 import { Row } from 'ng2-smart-table/lib/lib/data-set/row';
-import { ConnectorStatusRenderComponent } from '../availableConnectors/custom-status-render.component';
-import { LoginService } from '../../../auth/login/login.service';
+import { LoginService } from '../../auth/login/login.service';
+import { AdapterEntry } from '../../model/adapter/adapterEntry';
+import { System, AppConfig } from '../../model/appConfig';
+import { ErrorDialogService } from '../error-dialog/error-dialog.service';
+import { ConnectorStatusRenderComponent } from '../services/availableConnectors/custom-status-render.component';
 
 @Component({
   selector: 'available-adapters-smart-table',

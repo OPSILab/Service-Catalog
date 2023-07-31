@@ -98,7 +98,7 @@ export class PagesComponent implements OnInit, OnDestroy {
       {
         title: 'general.menu.adapters',
         icon: 'shuffle-2-outline',
-        link: '/pages/services/availableAdapters',
+        link: '/pages/adapters/availableAdapters',
         hidden: this.hideServicesMenu,
       },
       {

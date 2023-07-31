@@ -1,4 +1,3 @@
-import { AvailableAdaptersService } from './../../available-adapters/available-adapters.service';
 import { AdapterEntry } from './../../../../model/adapter/adapterEntry';
 import { ServiceModel } from './../../../../model/services/serviceModel';
 import { FormControl } from '@angular/forms';
@@ -11,6 +10,7 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ErrorDialogConnectorService } from '../../../error-dialog/error-dialog-connector.service';
 import { AvailableServicesService } from '../../availableServices/availableServices.service';
+import { AvailableAdaptersService } from '../../../adapters/available-adapters.service';
 
 @Component({
   selector: 'ngx-dialog-import-prompt',

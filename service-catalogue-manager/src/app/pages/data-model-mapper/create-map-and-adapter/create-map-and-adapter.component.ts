@@ -7,9 +7,9 @@ import { AdapterEntry } from '../../../model/adapter/adapterEntry';
 import { Mapper } from '../../../model/adapter/mapper';
 import { AppConfig } from '../../../model/appConfig';
 import { ErrorDialogAdapterService } from '../../error-dialog/error-dialog-adapter.service';
-import { AddAdapterComponent } from '../../services/available-adapters/add-adapter/add-adapter.component';
-import { AvailableAdaptersService } from '../../services/available-adapters/available-adapters.service';
 import { DMMService } from '../dmm.service';
+import { AddAdapterComponent } from '../../adapters/add-adapter/add-adapter.component';
+import { AvailableAdaptersService } from '../../adapters/available-adapters.service';
 
 @Component({
   selector: 'create-map-and-adapter',

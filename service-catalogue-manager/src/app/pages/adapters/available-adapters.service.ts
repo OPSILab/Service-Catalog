@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { AdapterEntry } from '../../../model/adapter/adapterEntry';
 import { HttpClient } from '@angular/common/http';
 import 'rxjs/add/operator/toPromise';
 import { NgxConfigureService } from 'ngx-configure';
 import 'rxjs/add/operator/toPromise';
-import { AppConfig } from '../../../model/appConfig';
-import { AdapterEntryLog } from '../../../model/adapter/adapterEntryLog';
-import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
+import { AdapterEntry } from '../../model/adapter/adapterEntry';
+import { AdapterEntryLog } from '../../model/adapter/adapterEntryLog';
+import { AppConfig } from '../../model/appConfig';
+import { ErrorDialogService } from '../error-dialog/error-dialog.service';
 
 @Injectable({
   providedIn: 'root'

@@ -1,6 +1,5 @@
 import { AvailableServicesService } from './../../availableServices/availableServices.service';
 import { AdapterEntry } from './../../../../model/adapter/adapterEntry';
-import { AvailableAdaptersService } from './../../available-adapters/available-adapters.service';
 import { Component, OnInit } from '@angular/core';
 import { NbDialogRef } from '@nebular/theme';
 import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
@@ -11,6 +10,7 @@ import { ServiceModel } from '../../../../model/services/serviceModel';
 import { Byte } from '@angular/compiler/src/util';
 import { AppConfig } from '../../../../model/appConfig';
 import { NgxConfigureService } from 'ngx-configure';
+import { AvailableAdaptersService } from '../../../adapters/available-adapters.service';
 
 @Component({
   selector: 'ngx-dialog-import-prompt',

@@ -4,14 +4,14 @@ import { NbComponentStatus, NbDialogRef, NbGlobalPhysicalPosition, NbToastrConfi
 import { AvailableAdaptersService } from '../available-adapters.service'
 import { NgxConfigureService } from 'ngx-configure';
 import { HttpClient } from '@angular/common/http';
-import { AdapterEntry } from '../../../../model/adapter/adapterEntry'
 import { Component, OnInit, Input, Output, EventEmitter, } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { ErrorDialogAdapterService } from '../../../error-dialog/error-dialog-adapter.service';
-import { AppConfig } from '../../../../model/appConfig';
 import { map, startWith, filter } from 'rxjs/operators';
 import { ChangeDetectionStrategy, ViewChild } from '@angular/core';
-import { Mapper } from '../../../../model/adapter/mapper';
+import { AdapterEntry } from '../../../model/adapter/adapterEntry';
+import { Mapper } from '../../../model/adapter/mapper';
+import { AppConfig } from '../../../model/appConfig';
+import { ErrorDialogAdapterService } from '../../error-dialog/error-dialog-adapter.service';
 
 @Component({
   selector: 'add-adapter',

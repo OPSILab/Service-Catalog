@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AvailableServicesComponent } from './availableServices/availableServices.component';
 import { AvailableConnectorsComponent } from './availableConnectors/availableConnectors.component';
 import { EditorComponent } from './service-editor/editor.component';
-import { AvailableAdaptersComponent } from './available-adapters/available-adapters.component';
 import { AvailableCataloguesComponent } from '../management/availableCatalogues/availableCatalogues.component';
 import { RemoteCataloguesComponent } from '../management/remote-catalogues/remote-catalogues.component';
 import { ManageConfigurationsComponent } from '../management/manage-configurations/manage-configurations.component';
@@ -22,10 +21,6 @@ const routes: Routes = [
   {
     path: 'availableConnectors',
     component: AvailableConnectorsComponent,
-  },
-  {
-    path: 'availableAdapters',
-    component: AvailableAdaptersComponent,
   },
   {
     path: 'federatedCatalogues',

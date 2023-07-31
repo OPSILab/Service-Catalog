@@ -3,8 +3,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import { AuthGuard } from '../auth/services/auth.guard';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { AvailableCataloguesComponent } from './management/availableCatalogues/availableCatalogues.component';
-import {ManagementModule} from './management/management.module'
+import { AvailableAdaptersComponent } from './adapters/available-adapters.component';
 
 const routes: Routes = [
   {
@@ -23,18 +22,6 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'adapters',
-        redirectTo: 'servicess/availableAdapters',
-        pathMatch: 'full',
-        canActivate: [AuthGuard],
-      },
-      {
-        path: 'connectors',
-        redirectTo: 'connectors/availableConnectors',
-        pathMatch: 'full',
-        canActivate: [AuthGuard],
-      },
-      {
         path: 'consents',
         loadChildren: () => import('./consents/consents.module').then((m) => m.ConsentsModule),
         canActivate: [AuthGuard],
@@ -43,6 +30,11 @@ const routes: Routes = [
         path: 'services',
         loadChildren: () => import('./services/services.module').then((m) => m.ServicesModule),
         canActivate: [AuthGuard],
+      },
+      {
+        path: 'adapters',
+        loadChildren: () => import('./adapters/adapters.module').then((m) => m.AdaptersModule),
+        component: AvailableAdaptersComponent,
       },
       {
         path: 'account',

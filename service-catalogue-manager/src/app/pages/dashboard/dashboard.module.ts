@@ -8,7 +8,6 @@ import { StatusCardComponent } from './status-card/status-card.component';
 import { AvailableServicesService } from '../services/availableServices/availableServices.service';
 import { CategoryPieComponent } from './charts/categoryPie.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { AvailableAdaptersService } from '../services/available-adapters/available-adapters.service';
 
 const components = [DashboardComponent, StatusCardComponent, CategoryPieComponent];
 

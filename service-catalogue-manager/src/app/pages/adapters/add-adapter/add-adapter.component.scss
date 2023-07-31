@@ -1,4 +1,4 @@
-@import '../../../../@theme/styles/themes';
+@import '../../../@theme/styles/themes';
 
 @include nb-install-component() {
   input {
@@ -24,15 +24,10 @@
   h3 {
     text-align: center;
   }
-  h2 {
-    text-align: left;
-  }
+
   h6 {
     text-align: left;
     font-weight: normal;
-  }
-  h8 {
-    text-align: left;
   }
 
   input[type="text"] {
@@ -53,9 +48,5 @@
 
   .btn-success {
     margin-left: 1rem;
-  }
-
-  i{
-    text-align: left;
   }
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, TemplateRef, ViewChild } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
 import { TranslateService } from '@ngx-translate/core';
-import { AdapterEntry } from '../../../../model/adapter/adapterEntry';
-import { AdapterEntryLog } from '../../../../model/adapter/adapterEntryLog';
 import { AvailableAdaptersService } from '.././available-adapters.service';
-import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
+import { AdapterEntry } from '../../../model/adapter/adapterEntry';
+import { AdapterEntryLog } from '../../../model/adapter/adapterEntryLog';
+import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 @Component({
   selector: 'adapter-info-render',
   templateUrl: './adapter-info-render.component.html',

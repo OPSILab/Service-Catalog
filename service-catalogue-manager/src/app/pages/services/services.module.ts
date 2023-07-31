@@ -1,4 +1,3 @@
-import { AvailableAdaptersService } from './available-adapters/available-adapters.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -33,10 +32,7 @@ import { ActionsServiceMenuRenderComponent } from './availableServices/actionsSe
 import { ActionsConnectorMenuRenderComponent } from './availableConnectors/actionsConnectorMenuRender.component';
 import { AvailableConnectorsService } from './availableConnectors/availableConnectors.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { AvailableAdaptersComponent } from './available-adapters/available-adapters.component';
-import { AddAdapterComponent } from './available-adapters/add-adapter/add-adapter.component';
-import { ActionsAdapterMenuRenderComponent } from './available-adapters/actions-adapter-menu-render/actions-adapter-menu-render.component';
-import { AdapterInfoRenderComponent } from './available-adapters/adapter-info-render/adapter-info-render.component';
+
 import { CustomKeywordRenderComponent } from './availableServices/custom-keyword-render.component';
 import { CustomStatusRenderComponent } from './availableServices/custom-status-render.component';
 import {ConnectorStatusRenderComponent } from './availableConnectors/custom-status-render.component';
@@ -77,18 +73,18 @@ import { CatalogueInfoComponent } from './availableServices/catalogue-select/cat
     DialogAddNewPromptComponent,
     ActionsConnectorMenuRenderComponent,
     ActionsServiceMenuRenderComponent,
-    AvailableAdaptersComponent,
-    AddAdapterComponent,
-    AvailableAdaptersComponent,
-    ActionsAdapterMenuRenderComponent,
-    AdapterInfoRenderComponent,
+    //AvailableAdaptersComponent,
+    //AddAdapterComponent,
+    //AvailableAdaptersComponent,
+    //ActionsAdapterMenuRenderComponent,
+    //AdapterInfoRenderComponent,
     CustomKeywordRenderComponent,
     CustomStatusRenderComponent,
     ConnectorStatusRenderComponent,
     CatalogueSelectComponent,
     CatalogueInfoComponent,
   ],
-  providers: [AvailableServicesService, AvailableConnectorsService, AvailableAdaptersService],
+  providers: [AvailableServicesService, AvailableConnectorsService],
   entryComponents: [
     ActionsServiceMenuRenderComponent,
     ActionsConnectorMenuRenderComponent,

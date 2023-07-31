@@ -6,7 +6,6 @@ import { AvailableServicesService } from '../services/availableServices/availabl
 import { TranslateService } from '@ngx-translate/core';
 import { AvailableConnectorsService } from '../services/availableConnectors/availableConnectors.service';
 import { ServicesCount } from '../../model/services/servicesCount';
-import { AvailableAdaptersService } from '../services/available-adapters/available-adapters.service';
 import { AvailableCataloguesService } from '../management/availableCatalogues/availableCatalogues.service';
 import { ManageConfigurationsService } from '../management/manage-configurations/manage-configurations.service';
 

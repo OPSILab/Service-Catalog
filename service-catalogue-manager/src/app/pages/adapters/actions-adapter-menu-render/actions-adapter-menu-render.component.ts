@@ -12,16 +12,16 @@ import {
   NbToastrConfig,
   NbMenuItem
 } from '@nebular/theme';
-import { ErrorDialogService } from '../../../error-dialog/error-dialog.service';
 import { AvailableAdaptersService } from '.././available-adapters.service';
-import { LoginService } from '../../../../auth/login/login.service';
-import { AdapterStatusEnum } from '../../../../model/services/adapter';
-import { AdapterEntry } from '../../../../model/adapter/adapterEntry';
 import { NgxConfigureService } from 'ngx-configure';
-import { AppConfig } from '../../../../model/appConfig';
 import { HttpClient } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
-import { Mapper } from '../../../../model/adapter/mapper';
+import { LoginService } from '../../../auth/login/login.service';
+import { AdapterEntry } from '../../../model/adapter/adapterEntry';
+import { Mapper } from '../../../model/adapter/mapper';
+import { AppConfig } from '../../../model/appConfig';
+import { AdapterStatusEnum } from '../../../model/services/adapter';
+import { ErrorDialogService } from '../../error-dialog/error-dialog.service';
 
 @Component({
   selector: 'actions-adapter-menu-render',

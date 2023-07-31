@@ -22,7 +22,7 @@ import { AvailableServicesService } from '../availableServices/availableServices
 import { ErrorDialogConnectorService } from '../../error-dialog/error-dialog-connector.service';
 import { ServiceModel } from '../../../model/services/serviceModel';
 import { AdapterEntry } from '../../../model/adapter/adapterEntry';
-import { AvailableAdaptersService } from '../available-adapters/available-adapters.service';
+import { AvailableAdaptersService } from '../../adapters/available-adapters.service';
 
 @Component({
   selector: 'actionsConnectorMenuRender',
