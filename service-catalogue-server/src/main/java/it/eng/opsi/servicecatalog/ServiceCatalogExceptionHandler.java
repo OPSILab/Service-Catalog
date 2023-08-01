@@ -38,11 +38,9 @@ import it.eng.opsi.servicecatalog.ErrorResponse.ApiValidationError;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)

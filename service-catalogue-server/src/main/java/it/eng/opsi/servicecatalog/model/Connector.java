@@ -2,12 +2,9 @@
 package it.eng.opsi.servicecatalog.model;
 
 import javax.validation.Valid;
-import javax.validation.constraints.*;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.annotation.Id;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;

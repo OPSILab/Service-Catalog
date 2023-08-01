@@ -1,16 +1,12 @@
 package it.eng.opsi.servicecatalog.controller;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.http.ResponseEntity;
-
-import com.github.andrewoma.dexx.collection.internal.adapter.Adapters;
 
 import it.eng.opsi.servicecatalog.exception.AdapterLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotEditableException;

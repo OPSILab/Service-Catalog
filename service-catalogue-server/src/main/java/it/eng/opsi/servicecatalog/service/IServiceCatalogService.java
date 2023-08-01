@@ -5,11 +5,7 @@ import java.net.URISyntaxException;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
-
 import javax.validation.Valid;
-
-import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 
 import it.eng.opsi.servicecatalog.exception.AdapterLogNotFoundException;
 import it.eng.opsi.servicecatalog.exception.AdapterNotEditableException;

@@ -2,13 +2,10 @@ package it.eng.opsi.servicecatalog.controller;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
-import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
-import it.eng.opsi.servicecatalog.model.ServiceModel;
 
 public interface FederatedIServiceCatalogController {
 

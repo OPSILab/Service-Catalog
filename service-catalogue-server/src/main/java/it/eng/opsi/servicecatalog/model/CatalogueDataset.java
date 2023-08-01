@@ -1,7 +1,5 @@
 package it.eng.opsi.servicecatalog.model;
 
-import java.util.Objects;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -11,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import it.eng.opsi.servicecatalog.repository.CatalogueDatasetRepository;
-import it.eng.opsi.servicecatalog.repository.CatalogueRepository;
 import lombok.Data;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
