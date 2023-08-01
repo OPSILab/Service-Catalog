@@ -19,4 +19,8 @@ export class ExportFileComponent implements OnInit {
     this.ref.close({name:this.name,id:this.adapterId})
   }
 
+  close(){
+    this.ref.close()
+  }
+
 }
