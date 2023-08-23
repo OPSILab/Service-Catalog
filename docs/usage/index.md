@@ -158,7 +158,7 @@ the status of connector
     performed if the service is in the status of **inactive** or
     after a de-registration.
 
-
+In ![Data model mapper GUI section](data-model-mapper-gui-usage.md) you can find an explanation on how to save an adapter both in Data model mapper database and in Service catalogue database.
 
 ---
 
