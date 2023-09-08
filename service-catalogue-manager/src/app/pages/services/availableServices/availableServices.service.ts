@@ -34,20 +34,20 @@ export class AvailableServicesService {
   getRemoteServices(catalogueID): Promise<ServiceModel[]> | [] {
     if (catalogueID == "local")
       return this.getServices();
-    return this.http.get<ServiceModel[]>(`${this.serviceRegistryUrl}/api/v2/federated/services?remoteCatalogueID=${catalogueID}&completed=true`).toPromise();
+    return this.http.get<ServiceModel[]>(`${this.serviceRegistryUrl}/api/v2/federated/services?remoteCatalogueID=${catalogueID}`).toPromise();
   }
 
   getServicesCount(): Promise<ServicesCount> {
     return this.http.get<ServicesCount>(`${this.serviceRegistryUrl}/api/v2/services/count`).toPromise();
   }
 
-  getRemoteServicesCount(catalogueID: string): Promise<ServicesCount> {
+  getRemoteServicesCount(catalogueID: string): Promise<any[]> {
 
     /*
     if (url.includes("/api/v2/services")) url = url.split("/api/v2/services")[0]
     return this.http.get<ServicesCount>(`${url}/api/v2/services/count`).toPromise();
     */
-    return this.http.get<ServicesCount>(`${this.serviceRegistryUrl}/api/v2/federated/services/count?remoteCatalogueID=${catalogueID}`).toPromise();
+    return this.http.get<any[]>(`${this.serviceRegistryUrl}/api/v2/federated/services/count?remoteCatalogueID=${catalogueID}`).toPromise();
   }
 
   getServicesIsPersonalDataHandlingCount(): Promise<String> {

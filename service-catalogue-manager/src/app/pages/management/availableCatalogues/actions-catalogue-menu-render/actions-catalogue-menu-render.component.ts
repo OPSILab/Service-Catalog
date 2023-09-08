@@ -114,6 +114,13 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
     return this.value.active;
   }
 
+  completedServicesCount(servicesCountByStatus) {
+    for (let status of  servicesCountByStatus)
+      if (status.status == "COMPLETED")
+        return status.count
+    return 0
+  }
+
   ngOnInit(): void {
     this.catalogueID = this.value.catalogueID
     this.country = this.value.country
@@ -185,6 +192,10 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
           data: 'refresh',
         },
         {
+          title: this.translate.instant('general.catalogues.download_metadata') as string,
+          data: 'Download metadata',
+        },
+        {
           title: this.translate.instant('general.catalogues.deactivate') as string,
           data: 'deregister',
         }
@@ -237,7 +248,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
 
   async refreshNow() {
     try {
-      this.value.services = (await this.availableServicesService.getRemoteServicesCount(this.value.catalogueID)).total
+      this.value.services = this.completedServicesCount((await this.availableServicesService.getRemoteServicesCount(this.value.catalogueID)))
       await this.availableCataloguesService.updateCatalogue(this.value, this.value.catalogueID, false);
     }
     catch (error) {
@@ -314,7 +325,8 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         lastRefresh = this.lastRefresh;
 
       try {
-        services = (await this.availableServicesService.getRemoteServicesCount(catalogueID)).total
+        let servicesCountByStatus = await this.availableServicesService.getRemoteServicesCount(catalogueID)
+        services = this.completedServicesCount(servicesCountByStatus)
       }
       catch {
         services = 0;

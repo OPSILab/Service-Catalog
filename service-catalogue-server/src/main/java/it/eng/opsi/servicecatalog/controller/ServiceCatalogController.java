@@ -887,6 +887,16 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
+	@Operation(summary = "Get the Service Models count grouped by Status.", description = "Get the Service Models count grouped by Status.", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Return an object with count for each status.", responseCode = "200") })
+	@GetMapping(value = "/services/count/status", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<HashMap<String, Object>>> getCountByStatus() {
+
+		return ResponseEntity.ok(catalogService.getServicesCountByStatus());
+	}
+
+	@Override
 	@Operation(summary = "Get the Service Models count grouped by Thematic Area.", description = "Get the Service Models count grouped by Thematic Area.", tags = {
 			"Service model" }, responses = {
 					@ApiResponse(description = "Return an object with count for each sector.", responseCode = "200") })

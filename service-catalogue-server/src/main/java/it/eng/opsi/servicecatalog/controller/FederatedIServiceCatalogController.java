@@ -13,7 +13,7 @@ import it.eng.opsi.servicecatalog.model.ServiceModel;
 public interface FederatedIServiceCatalogController {
 
 	public abstract ResponseEntity<String> getServices(String name, String location, String[] keywords,
-			boolean completed, String remoteCatalogueID)
+			String remoteCatalogueID)
 			throws ServiceNotFoundException, URISyntaxException;
 
 	public abstract ResponseEntity<?> getServiceById(String identifier, String remoteCatalogueURL)
