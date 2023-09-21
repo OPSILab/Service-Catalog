@@ -609,7 +609,25 @@
                     },
                     "datamap": {
                       "type": "string"
-                    }
+                    },
+                    "description": {
+		                "type": "array",
+		                "items": {
+		                  "type": "object",
+		                  "properties": {
+		                    "locale": {
+		                      "type": "string"
+		                    },
+		                    "description": {
+		                      "type": "string"
+		                    },
+		                    "title": {
+		                      "type": "string"
+		                    }
+		                  }
+		                },
+		                "required": ["locale", "description", "title"]
+		              }
                   },
                   "required": [
                     "property",

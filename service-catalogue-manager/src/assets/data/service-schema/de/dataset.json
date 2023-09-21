@@ -168,6 +168,8 @@
           "type": "object",
           "title": "Field",
           "headerTemplate": "{{ self.property }}",
+          "format": "categories",
+          "basicCategoryTitle": "Info",
           "properties": {
             "property": {
               "type": "string",
@@ -288,9 +290,44 @@
 
             "datamap": {
               "$ref": "../../wallet-schema/wallet-schemas.json"
+            },
+
+            "description": {
+              "type": "array",
+              "title": "Description",
+              "description": " Array of localized textual descriptions.",
+              "format": "tabs",
+              "uniqueItems": true,
+              "items": {
+                "type": "object",
+                "headerTemplate": "Locale ({{ self.locale }}) ",
+                "properties": {
+                  "locale": {
+                    "type": "string",
+                    "title": "Locale",
+                    "description": "Language used in textual description, in ISO 639-1 format.",
+                    "enumSource": "possible_langs",
+                    "watch": {
+                      "possible_langs": "root.hasInfo.language"
+                    }
+                  },
+                  "title": {
+                    "type": "string",
+                    "title": "Title",
+                    "description": "Localized Title"
+                  },
+                  "description": {
+                    "type": "string",
+                    "title": "Description",
+                    "description": "Textual description in specified language.",
+                    "format": "textarea"
+                  }
+                },
+                "required": ["locale", "description", "title"]
+              }
             }
           },
-          "required": ["property", "name", "type", "multiple","required", "readonly", "datamap"]
+          "required": ["property", "name", "type", "multiple","required", "readonly", "datamap", "description"]
         }
       }
     }
