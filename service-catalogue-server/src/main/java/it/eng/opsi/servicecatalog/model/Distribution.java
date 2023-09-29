@@ -42,7 +42,7 @@ public class Distribution {
     @JsonProperty("description")
     @Valid
     @NotNull
-    private List<Description__5> description = new ArrayList<Description__5>();
+    private List<Description__1> description = new ArrayList<Description__1>();
     /**
      * 
      * (Required)
@@ -66,7 +66,7 @@ public class Distribution {
      * @param format
      * @param description
      */
-    public Distribution(String distributionId, String accessUrl, List<Description__5> description, String format) {
+    public Distribution(String distributionId, String accessUrl, List<Description__1> description, String format) {
         super();
         this.distributionId = distributionId;
         this.accessUrl = accessUrl;
@@ -120,7 +120,7 @@ public class Distribution {
      * 
      */
     @JsonProperty("description")
-    public List<Description__5> getDescription() {
+    public List<Description__1> getDescription() {
         return description;
     }
 
@@ -130,7 +130,7 @@ public class Distribution {
      * 
      */
     @JsonProperty("description")
-    public void setDescription(List<Description__5> description) {
+    public void setDescription(List<Description__1> description) {
         this.description = description;
     }
 

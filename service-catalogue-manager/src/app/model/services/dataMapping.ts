@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 
+import { Description2 } from './description2';
 
 export interface DataMapping { 
     property: string;
@@ -22,5 +23,6 @@ export interface DataMapping {
     source?: string;
     readonly:boolean;
     datamap?:string;
+    description?: Array<Description2>;
 }
 

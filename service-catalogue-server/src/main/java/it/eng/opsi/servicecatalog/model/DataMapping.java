@@ -1,10 +1,14 @@
 
 package it.eng.opsi.servicecatalog.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -17,7 +21,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "required",
     "source",
     "readonly",
-    "datamap"
+    "datamap",
+    "description"
 })
 public class DataMapping {
 
@@ -89,6 +94,9 @@ public class DataMapping {
     @JsonProperty("datamap")
     @NotNull
     private String datamap;
+    @JsonProperty("description")
+    @Valid
+    private List<Description__2> description = new ArrayList<Description__2>();
 
     /**
      * No args constructor for use in serialization
@@ -105,12 +113,13 @@ public class DataMapping {
      * @param name
      * @param multiple
      * @param conceptId
+     * @param description
      * @param inputType
      * @param source
      * @param type
      * @param required
      */
-    public DataMapping(String property, String conceptId, String name, String type, String inputType, Boolean multiple, Boolean required, String source, Boolean readonly, String datamap) {
+    public DataMapping(String property, String conceptId, String name, String type, String inputType, Boolean multiple, Boolean required, String source, Boolean readonly, String datamap, List<Description__2> description) {
         super();
         this.property = property;
         this.conceptId = conceptId;
@@ -122,6 +131,7 @@ public class DataMapping {
         this.source = source;
         this.readonly = readonly;
         this.datamap = datamap;
+        this.description = description;
     }
 
     /**
@@ -304,6 +314,16 @@ public class DataMapping {
         this.datamap = datamap;
     }
 
+    @JsonProperty("description")
+    public List<Description__2> getDescription() {
+        return description;
+    }
+
+    @JsonProperty("description")
+    public void setDescription(List<Description__2> description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -348,6 +368,10 @@ public class DataMapping {
         sb.append('=');
         sb.append(((this.datamap == null)?"<null>":this.datamap));
         sb.append(',');
+        sb.append("description");
+        sb.append('=');
+        sb.append(((this.description == null)?"<null>":this.description));
+        sb.append(',');
         if (sb.charAt((sb.length()- 1)) == ',') {
             sb.setCharAt((sb.length()- 1), ']');
         } else {
@@ -365,6 +389,7 @@ public class DataMapping {
         result = ((result* 31)+((this.name == null)? 0 :this.name.hashCode()));
         result = ((result* 31)+((this.multiple == null)? 0 :this.multiple.hashCode()));
         result = ((result* 31)+((this.conceptId == null)? 0 :this.conceptId.hashCode()));
+        result = ((result* 31)+((this.description == null)? 0 :this.description.hashCode()));
         result = ((result* 31)+((this.inputType == null)? 0 :this.inputType.hashCode()));
         result = ((result* 31)+((this.source == null)? 0 :this.source.hashCode()));
         result = ((result* 31)+((this.type == null)? 0 :this.type.hashCode()));
@@ -381,7 +406,7 @@ public class DataMapping {
             return false;
         }
         DataMapping rhs = ((DataMapping) other);
-        return (((((((((((this.readonly == rhs.readonly)||((this.readonly!= null)&&this.readonly.equals(rhs.readonly)))&&((this.datamap == rhs.datamap)||((this.datamap!= null)&&this.datamap.equals(rhs.datamap))))&&((this.property == rhs.property)||((this.property!= null)&&this.property.equals(rhs.property))))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.multiple == rhs.multiple)||((this.multiple!= null)&&this.multiple.equals(rhs.multiple))))&&((this.conceptId == rhs.conceptId)||((this.conceptId!= null)&&this.conceptId.equals(rhs.conceptId))))&&((this.inputType == rhs.inputType)||((this.inputType!= null)&&this.inputType.equals(rhs.inputType))))&&((this.source == rhs.source)||((this.source!= null)&&this.source.equals(rhs.source))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.required == rhs.required)||((this.required!= null)&&this.required.equals(rhs.required))));
+        return ((((((((((((this.readonly == rhs.readonly)||((this.readonly!= null)&&this.readonly.equals(rhs.readonly)))&&((this.datamap == rhs.datamap)||((this.datamap!= null)&&this.datamap.equals(rhs.datamap))))&&((this.property == rhs.property)||((this.property!= null)&&this.property.equals(rhs.property))))&&((this.name == rhs.name)||((this.name!= null)&&this.name.equals(rhs.name))))&&((this.multiple == rhs.multiple)||((this.multiple!= null)&&this.multiple.equals(rhs.multiple))))&&((this.conceptId == rhs.conceptId)||((this.conceptId!= null)&&this.conceptId.equals(rhs.conceptId))))&&((this.description == rhs.description)||((this.description!= null)&&this.description.equals(rhs.description))))&&((this.inputType == rhs.inputType)||((this.inputType!= null)&&this.inputType.equals(rhs.inputType))))&&((this.source == rhs.source)||((this.source!= null)&&this.source.equals(rhs.source))))&&((this.type == rhs.type)||((this.type!= null)&&this.type.equals(rhs.type))))&&((this.required == rhs.required)||((this.required!= null)&&this.required.equals(rhs.required))));
     }
 
 }

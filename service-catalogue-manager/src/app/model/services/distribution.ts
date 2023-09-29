@@ -9,13 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Description4 } from './description4';
+import { Description1 } from './description1';
 
 
 export interface Distribution { 
     distributionId:string;
     accessUrl: string;
-    description: Array<Description4>;
+    description: Array<Description1>;
     format: string;
 }
 
