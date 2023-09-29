@@ -1,0 +1,16 @@
+<nb-card>
+  <nb-card-header>
+    <h5 >{{ 'general.editor.import' | translate }}</h5>
+    <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
+      <i>close</i>
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    {{message}}
+  </nb-card-body>
+  <nb-card-footer>
+    <button nbButton appearance="outline" shape="semi-round" size="medium"
+    status="info" (click)="confirm()">
+  </button>
+  </nb-card-footer>
+</nb-card>

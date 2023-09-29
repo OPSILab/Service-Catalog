@@ -7,10 +7,11 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { ErrorDialogCatalogueService } from './error-dialog/error-dialog-catalogue/error-dialog-catalogue.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { HomeComponent } from './mapper-records/home.component';
 
 @NgModule({
   imports: [PagesRoutingModule, ThemeModule, NbMenuModule, DashboardModule, TranslateModule.forChild({}),],
-  declarations: [PagesComponent],
+  declarations: [PagesComponent, HomeComponent],
   providers: [ErrorDialogCatalogueService],
 })
 export class PagesModule {}

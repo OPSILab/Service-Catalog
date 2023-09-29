@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: 'dialog-import.component.html',
   styleUrls: ['dialog-import.component.scss'],
 })
-export class DialogImportComponent{
+export class DialogImportComponent {
   //private appConfig: AppConfig;
   selectedFile: File;
   file: String;
@@ -21,15 +21,16 @@ export class DialogImportComponent{
   dataUrl: string;
   extension: String;
   map
+  //mapSettings
 
   @Input() type: string;
 
   constructor(
-    private http: HttpClient,
-    protected ref: NbDialogRef<DialogImportComponent>,
-    private errorService: ErrorDialogService,
-    @Inject(DOCUMENT) private document: Document,
-  ) {}
+    public http: HttpClient,
+    public ref: NbDialogRef<DialogImportComponent>,
+    public errorService: ErrorDialogService,
+    @Inject(DOCUMENT) public document: Document,
+  ) { }
 
   cancel(): void {
     this.ref.close();
@@ -66,10 +67,20 @@ export class DialogImportComponent{
 
   async onUpload(type: string): Promise<void> {
     if (type == "url") {
-      this.file = await this.http.get<any>(this.dataUrl, { responseType: 'text' as 'json' }).toPromise();
-      this.ref.close({ content: this.file, source: this.dataUrl, format: "url" });
-    } else if (this.map)
+      try {
+        this.file = await this.http.get<any>(this.dataUrl, { responseType: 'text' as 'json' }).toPromise();
+      }
+      catch (error) {
+        console.error(error)
+        this.errorService.openErrorDialog(error)
+      }
+      if (this.map)
+        this.ref.close({ mapSettings: this.file, source: this.selectedFile?.name, format: "file" })
+      else
+        this.ref.close({ content: this.file, source: this.dataUrl, format: "url" });
+    } else if (this.map) {
       this.ref.close({ mapSettings: this.file, source: this.selectedFile.name, format: "file" })
+    }
     else
       this.ref.close({ content: this.file, source: this.selectedFile.name, format: "file" });
   }

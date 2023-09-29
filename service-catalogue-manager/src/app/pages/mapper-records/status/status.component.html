@@ -1,0 +1,11 @@
+<div *ngIf="completed; else unnderDevelopment">
+  <button nbButton ghost shape="rectangle" size="small" status="success">
+    <i class="material-icons">check_circle</i>
+  </button>
+</div>
+
+<ng-template #unnderDevelopment>
+  <button nbButton ghost nbTooltip="Under Development" shape="rectangle" size="small" status="warning">
+    <i class="material-icons">check_circle</i>
+  </button>
+</ng-template>

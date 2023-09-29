@@ -19,25 +19,25 @@
       <div *ngIf="backendDown">Unable to reach server</div>
       <div class="row justify-content-center">
         <button nbButton class="mx-4" shape="rectangle" size="medium" status="info" (click)="reset()">
-          {{ 'general.dmm.create_new' | translate }}
+          Create new
           <i class="mx-1 material-icons">create</i>
         </button>
         <button *ngIf="!backendDown" nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
           (click)="saveRecord()">
-          {{ 'general.dmm.save_as_new' | translate }}
+          Save as new
           <i class="mx-1 material-icons">save</i>
         </button>
         <button *ngIf="isNew && !backendDown" nbButton class="mx-4" shape="rectangle" size="medium" status="primary"
           (click)="updateRecord()">
-          {{ 'general.editor.update' | translate }}
+          Update
           <i class="mx-1 material-icons">update</i>
         </button>
         <button nbButton class="mx-4" shape="rectangle" size="medium" status="warning" (click)="saveAsFile()">
-          {{ 'general.editor.export' | translate }}
+          Export
           <i class="mx-1 fas fa-file-export fa-lg"></i>
         </button>
         <button nbButton class="mx-4" shape="rectangle" size="medium" status="danger" (click)="import('map', 'json')">
-          {{ 'general.editor.upload' | translate }}
+          Import
           <i class="mx-1 fas fa-file-import fa-lg"></i>
         </button>
       </div>
@@ -79,12 +79,12 @@
                 </nb-select>
                 &nbsp;
                 <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','json')">
-                  {{ 'general.editor.upload' | translate }}
+                  Upload
                   <i class="mx-1 fas fa-file-import fa-lg"></i>
                 </button>
                 <button nbButton class="mr-2" shape="rectangle" size="small"
                   (click)="onUpdatePathForDataMap(selectedPath, verifyRoot($event))">
-                  {{ 'general.editor.confirm_source' | translate }}
+                  Update source field list
                   <i class="mx-1 fas fa-file-import fa-lg"></i>
                 </button>
                 <!--
@@ -109,11 +109,11 @@
                   <nb-option *ngFor="let source of sources" value={{source.id}}>{{source.name}}</nb-option>
                 </nb-select>&nbsp;
                 <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('source','csv')">
-                  {{ 'general.editor.upload' | translate }}
+                  Upload
                   <i class="mx-1 fas fa-file-import fa-lg"></i>
                 </button> &nbsp;
                 <button nbButton class="mr-2" shape="rectangle" size="small" (click)="updateCSVTable()">
-                  {{ 'general.editor.confirm_source' | translate }}
+                  Update source field list
                   <i class="mx-1 fas fa-lg"></i>
                 </button>
                 <nb-select placeholder="Separator" size="small" [(selected)]="separatorItem"
@@ -148,25 +148,24 @@
                   target="_blank">
                   <i>{{schemaRef}}</i></a></p>
               <p *ngIf="schemaRef!==''&&schemaRefFormat==='file'">File: <i>{{schemaRef}}</i></p>
-              <nb-select placeholder="Select Json Schema" size="small" [(ngModel)]="selectedSchema"
+              <nb-select placeholder="Select Json Schema" size="small" [(ngModel)]=selectedSchema
                 (ngModelChange)="schemaChanged($event, 'DB')">
                 <nb-option *ngFor="let schema of schemas" value={{schema.id}}>{{schema.name}}</nb-option>
               </nb-select>&nbsp;
               <!--<br><br><br>
               <div style="padding-top:10px"></div>-->
               <button nbButton class="mr-2" shape="rectangle" size="small" (click)="import('schema','json')">
-                {{ 'general.editor.upload' | translate }}
+                Upload
                 <i class="mx-1 fas fa-file-import fa-lg"></i>
               </button>
-              <button *ngIf="properties && !tempSchema || canGenerateSchema" nbButton class="mr-2"
+              <button *ngIf="schemaJson && schemaJson.info!='set your schema here' && !tempSchema" nbButton class="mr-2"
                 shape="rectangle" size="small" (click)="generateMapper(getSchema())">
-                {{ 'general.editor.generate_mapper' | translate }}
+                Generate mapper
                 <i class="mx-1 fas fa-lg"></i>
               </button>
-
               <br>
             </div>
-            <div style="height:500px" id="schemaEditor" (keydown)="onKeydownMain($event)"></div>
+            <div style="height:500px" id="schemaEditor"></div>
             <div style="padding-top:50px"></div>
             <div class="mb-2">
               <p>Set your mapper settings.
@@ -187,16 +186,16 @@
             </p>
             <br> <br> <br>
             <button *ngIf="!dialog" nbButton class="mr-2" shape="rectangle" size="small" (click)="testAdapter()">
-              {{ 'general.dmm.preview' | translate }}
+              Preview
               <i class="mx-1 fas fa-file-import fa-lg"></i>
             </button> &nbsp;
             <button nbButton class="mr-2" shape="rectangle" size="small" (click)="transform()">
-              {{ 'general.dmm.transform' | translate }}
+              Transform
               <i class="mx-1 fas fa-file-import fa-lg"></i>
             </button>
             &nbsp;
             <button nbButton class="mr-2" shape="rectangle" size="small" (click)="download()">
-              {{ 'general.dmm.export' | translate }}
+              Download
               <i class="mx-1 fas fa-file-import fa-lg"></i>
             </button>
             <br> <br>
@@ -212,13 +211,13 @@
             </p>
             <br *ngIf="!dialog"> <br *ngIf="!dialog"> <br *ngIf="!dialog">
             <button *ngIf="!dialog" nbButton class="mr-2" shape="rectangle" size="small"
-              (click)="updateConfigSettings(true)">
-              {{ 'general.dmm.update_config' | translate }}
+              (click)="updateConfigSettings()">
+              Update config
               <i class="mx-1 fas fa-file-import fa-lg"></i>
             </button>
             <button *ngIf="!dialog" nbButton class="mr-2" shape="rectangle" size="small"
               (click)="resetConfigSettings()">
-              {{ 'general.dmm.reset_config' | translate }}
+              Reset config
               <i class="mx-1 fas fa-file-import fa-lg"></i>
             </button>
             <br *ngIf="!dialog"> <br *ngIf="!dialog">

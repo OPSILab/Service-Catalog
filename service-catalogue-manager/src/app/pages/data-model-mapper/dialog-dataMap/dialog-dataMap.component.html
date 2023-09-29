@@ -17,7 +17,7 @@
     </nb-select>
     <div class="row justify-content-left p-3" *ngIf="!selectedItem.base64">
       Single or multi input</div>
-    <nb-select (click)="fixBrokenPageBug()" *ngIf="!selectedItem.base64" [(ngModel)]="selectedItem.concat">
+    <nb-select (click)="fixBrokenPageBug()" *ngIf="!selectedItem.base64" [(ngModel)]="selectedItem.concat" placeholder="single">
       <nb-option [value]=true>
         {{ "multi" }}
       </nb-option>
@@ -89,7 +89,7 @@
     &nbsp;
     <button style="float: right" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
       (click)="confirm()">
-      <i class="mx-1">{{ 'general.connectors.confirm' | translate }}</i>
+      <i class="mx-1">{{ 'general.dmm.confirm' | translate }}</i>
     </button>
   </nb-card-footer>
 </nb-card>

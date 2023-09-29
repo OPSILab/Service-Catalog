@@ -1,0 +1,27 @@
+<nb-card>
+  <nb-card-header class="h3">
+    {{ 'general.menu.map_records' | translate }}
+  </nb-card-header>
+
+  <nb-card-body>
+    <div class="g-0 row mb-2">
+      <div class="col-6 col-md-6 text-left">
+        <button nbButton class="" shape="rectangle" size="medium" status="primary" (click)="addNew()">
+          <i class="material-icons">add</i>&nbsp;{{ 'general.dmm.add_record' | translate }}
+        </button>
+        &nbsp;
+        <button nbButton class="" shape="rectangle" size="medium" status="primary" (click)="ngOnInit()">
+          <i class="material-icons">refresh</i>
+          &nbsp; refresh
+        </button>
+      </div>
+
+      <div class="col-6 col-md-6 text-right">
+        <button nbButton ghost shape="rectangle" size="small" (click)="resetfilters()">
+          <i class="material-icons">cancel</i>&nbsp;{{ 'general.dmm.clear_filters' | translate }}
+        </button>
+      </div>
+    </div>
+    <ng2-smart-table [settings]="settings" [source]="source"> </ng2-smart-table>
+  </nb-card-body>
+</nb-card>

@@ -9,14 +9,19 @@ import { NbDialogRef } from '@nebular/theme';
 export class ExportFileComponent implements OnInit {
   name
   adapterId
+  mode
 
   constructor(protected ref: NbDialogRef<ExportFileComponent>) { }
 
   ngOnInit(): void {
   }
 
+  fixBrokenPageBug() {
+    document.getElementsByTagName('html')[0].className = ""
+  }
+
   save(){
-    this.ref.close({name:this.name,id:this.adapterId})
+    this.ref.close(this.mode)
   }
 
   close(){

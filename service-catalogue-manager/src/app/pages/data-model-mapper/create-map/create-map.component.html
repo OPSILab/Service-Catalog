@@ -1,0 +1,97 @@
+<nb-card *ngIf="!message">
+  <nb-card-header class="d-flex align-content-center justify-content-between">
+    <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+    <div *ngIf="!save || updateAdapter">
+      <h3>{{ 'general.dmm.edit' | translate }}</h3>
+    </div>
+    <div *ngIf="save">
+      <h3>{{ 'general.dmm.add' | translate }}</h3>
+    </div>
+    <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
+      <i class="material-icons">close</i>
+    </button>
+  </nb-card-header>
+  <nb-card-body class="m-2 p-4">
+    <h6>
+      <form>
+        <label for="mapId" fullWidth>{{ 'general.dmm.mapId' | translate }}</label>
+        <br>
+        <input *ngIf="save" [(ngModel)]="adapterId" nbInput type="text" fullWidth [placeholder]=placeholders.mapId
+          [ngModelOptions]="{standalone: true}" />
+        <input disabled *ngIf="update" [(ngModel)]="adapterId" nbInput type="text" fullWidth
+          [placeholder]=placeholders.mapId [ngModelOptions]="{standalone: true}" />
+        <br>
+        <br>
+        <label for="name" fullWidth>{{ 'general.adapters.name' | translate }}</label>
+        <br>
+        <input [(ngModel)]="name" nbInput type="text" fullWidth placeholder="{{ 'general.adapters.name' | translate }}"
+          [ngModelOptions]="{standalone: true}" />
+        <br>
+        <br>
+        <label for="description" fullWidth>{{ 'general.adapters.description' | translate }}</label>
+        <br>
+        <input [(ngModel)]="description" nbInput type="text" fullWidth
+          placeholder="{{ 'general.adapters.description' | translate }}" [ngModelOptions]="{standalone: true}" />
+        <br>
+        <br>
+        <label for="status" fullWidth>{{ 'general.adapters.status' | translate }}</label>
+        <br>
+        <nb-select fullWidth placeholder="Under development" [(ngModel)]="status" (click)="fixBrokenPageBug()"
+          [ngModelOptions]="{standalone: true}">
+          <nb-option value="Completed">Completed</nb-option>
+          <nb-option value="Under development">Under development</nb-option>
+        </nb-select>
+        <br>
+        <br>
+        <nb-checkbox *ngIf="schema" [(ngModel)]="saveSchema" [ngModelOptions]="{standalone: true}">{{ schemaSaved ?
+          ('general.dmm.update_schema' | translate) : ('general.dmm.save_schema' | translate) }} </nb-checkbox>
+        <br>
+        <br>
+        <nb-checkbox *ngIf="sourceData" [(ngModel)]="saveSource" [ngModelOptions]="{standalone: true}">{{ sourceSaved?
+          ('general.dmm.update_source' | translate) : ('general.dmm.save_source' | translate) }} </nb-checkbox>
+        <br>
+        <br>
+        <h3>
+          <br>
+          <button *ngIf="!name || !adapterId" disabled nbButton appearance="outline" shape="semi-round" size="medium"
+            status="info" (click)="confirm()">
+            <i class="mx-1">{{ (save) ? ('general.dmm.confirmSave' | translate) : ('general.dmm.confirmEdit' |
+              translate) }}</i>
+          </button>
+          <button *ngIf="name && adapterId" nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+            (click)="confirm()">
+            <i class="mx-1">{{ (save) ? ('general.dmm.confirmSave' | translate) : ('general.dmm.confirmEdit' |
+              translate) }}</i>
+          </button>
+          &nbsp;
+        </h3>
+      </form>
+    </h6>
+  </nb-card-body>
+</nb-card>
+<nb-card *ngIf="message">
+  <nb-card-header class="d-flex align-content-center justify-content-between">
+    <div> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </div>
+    <h3> Warning</h3>
+    <button nbButton appearance="outline" shape="semi-round" size="tiny" status="info" (click)="cancel()">
+      <i class="material-icons">close</i>
+    </button>
+  </nb-card-header>
+  <nb-card-body class="m-2 p-4">
+    <h6>
+      <form>
+        {{message}}
+        <br>
+        <br>
+        <h3>
+          <br>
+          <button nbButton appearance="outline" shape="semi-round" size="medium" status="info"
+            (click)="confirmSubmit()">
+            Confirm
+          </button>
+          &nbsp;
+        </h3>
+      </form>
+    </h6>
+  </nb-card-body>
+</nb-card>
