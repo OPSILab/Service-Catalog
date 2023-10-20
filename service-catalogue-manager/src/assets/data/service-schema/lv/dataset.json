@@ -222,7 +222,8 @@
                 "tel",
                 "time",
                 "url",
-                "week"
+                "week",
+                "help text"
               ],
               "options": {
                 "enum_titles": [
@@ -242,7 +243,8 @@
                   "tel",
                   "time",
                   "url",
-                  "week"
+                  "week",
+                  "help text"
                 ],
                 "input_width": "85px",
                 "grid_columns": 12
