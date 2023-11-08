@@ -47,6 +47,10 @@ public interface IServiceCatalogService {
 
       public abstract ServiceModel getServiceById(String serviceId) throws ServiceNotFoundException;
 
+      public abstract ServiceModel registerServiceById(String serviceId) throws ServiceNotFoundException;
+
+      public abstract ServiceModel deRegisterServiceById(String serviceId) throws ServiceNotFoundException;
+
       public abstract Connector getConnectorByconnectorId(String connectorId) throws ConnectorNotFoundException;
 
       public abstract Connector getConnectorByserviceId(String connectorId) throws ConnectorNotFoundException;
@@ -70,7 +74,7 @@ public interface IServiceCatalogService {
 
       public abstract List<HashMap<String, Object>> getCountBySector();
 
-       public abstract List<HashMap<String, Object>> getServicesCountByStatus();
+      public abstract List<HashMap<String, Object>> getServicesCountByStatus();
 
       public abstract List<HashMap<String, Object>> getCountByThematicArea();
 

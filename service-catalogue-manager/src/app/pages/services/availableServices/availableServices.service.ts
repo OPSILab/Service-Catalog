@@ -85,12 +85,12 @@ export class AvailableServicesService {
     return this.http.post<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services`, service).toPromise();
   }
 
-  registerService(service: ServiceModel, serviceId: string): Promise<ServiceModel> {
-    return this.http.put<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${urlencode(serviceId)}`, service).toPromise();
+  registerService(serviceId: string): Promise<ServiceModel> {
+    return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/register?identifier=${urlencode(serviceId)}`).toPromise();
   }
 
-  deregisterService(service: ServiceModel, serviceId: string): Promise<ServiceModel> {
-    return this.http.put<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services?identifier=${urlencode(serviceId)}`, service).toPromise();
+  deregisterService(serviceId: string): Promise<ServiceModel> {
+    return this.http.get<ServiceModel>(`${this.serviceRegistryUrl}/api/v2/services/deregister?identifier=${urlencode(serviceId)}`).toPromise();
   }
 
   updateService(service: ServiceModel, serviceId: string): Promise<ServiceModel> {

@@ -54,6 +54,12 @@ public interface IServiceCatalogController {
 	public abstract ResponseEntity<?> getServiceById(HttpServletRequest request, String identifier)
 			throws ServiceNotFoundException, IOException;
 
+	public abstract ResponseEntity<?> registerServiceById(HttpServletRequest request, String identifier)
+			throws ServiceNotFoundException, IOException;
+
+	public abstract ResponseEntity<?> deRegisterServiceById(HttpServletRequest request, String identifier)
+			throws ServiceNotFoundException, IOException;
+
 	public abstract ResponseEntity<?> getServiceByIds(HttpServletRequest request, List<String> identifier)
 			throws ServiceNotFoundException, IOException;
 
@@ -135,7 +141,7 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountBySector();
 
-		public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByStatus();
+	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByStatus();
 
 	public abstract ResponseEntity<List<HashMap<String, Object>>> getCountByThematicArea();
 

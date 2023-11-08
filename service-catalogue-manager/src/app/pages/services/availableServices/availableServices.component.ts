@@ -14,6 +14,7 @@ import { CatalogueEntry } from '../../../model/catalogue/catalogueEntry';
 
 
 export interface AvailableServiceRow extends ServiceModel {
+  remote?: any;
   locale?: string;
   spatial?: string;
   description?: string;

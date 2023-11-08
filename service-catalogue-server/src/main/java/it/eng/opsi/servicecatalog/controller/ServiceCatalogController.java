@@ -179,6 +179,46 @@ public class ServiceCatalogController implements IServiceCatalogController {
 
 	}
 
+	@Override
+	@Operation(summary = "Register the Service model description by Service Id.", description = "Register the Service model description by Service Id.", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Returns the registered Service model description.", responseCode = "200") })
+	@GetMapping(value = "/services/register/**", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> registerServiceById(HttpServletRequest request,
+			@RequestParam("identifier") String identifier)
+			throws ServiceNotFoundException, IOException {
+
+		String serviceIdentifier = request.getRequestURI().split(request.getContextPath() + "/api/v2/services/")[1];
+
+		if (StringUtils.isBlank(serviceIdentifier))
+			throw new IllegalArgumentException("Illegal Service Identifier in input");
+
+		String decodedServiceIdentifier = java.net.URLDecoder.decode(identifier, StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.registerServiceById(decodedServiceIdentifier));
+
+	}
+
+	@Override
+	@Operation(summary = "Deregister the Service model description by Service Id.", description = "Deregister the Service model description by Service Id.", tags = {
+			"Service model" }, responses = {
+					@ApiResponse(description = "Returns the deregistered Service model description.", responseCode = "200") })
+	@GetMapping(value = "/services/deregister/**", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> deRegisterServiceById(HttpServletRequest request,
+			@RequestParam("identifier") String identifier)
+			throws ServiceNotFoundException, IOException {
+
+		String serviceIdentifier = request.getRequestURI().split(request.getContextPath() + "/api/v2/services/")[1];
+
+		if (StringUtils.isBlank(serviceIdentifier))
+			throw new IllegalArgumentException("Illegal Service Identifier in input");
+
+		String decodedServiceIdentifier = java.net.URLDecoder.decode(identifier, StandardCharsets.UTF_8);
+
+		return ResponseEntity.ok(catalogService.deRegisterServiceById(decodedServiceIdentifier));
+
+	}
+
 	@Operation(summary = "Get Service Cost by serviceId. ", tags = {
 			"Service model" }, responses = {
 					@ApiResponse(description = "Get Service Cost records by serviceId.", responseCode = "200") })

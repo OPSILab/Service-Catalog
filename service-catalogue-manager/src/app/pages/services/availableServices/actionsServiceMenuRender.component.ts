@@ -120,7 +120,7 @@ import { ThisReceiver } from '@angular/compiler';
   `,
 })
 export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
-  @Input() value: AvailableServiceRow | any;
+  @Input() value: AvailableServiceRow;
   @Output() updateResult = new EventEmitter<unknown>();
 
   private unsubscribe: Subject<void> = new Subject();
@@ -339,7 +339,7 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
      //TO-DO service registry invocation
      // this.value = (await this.availableServicesService.registerService(this.value.identifier)) as AvailableServiceRow;
      this.value.status=ServiceModelStatusEnum.Completed;
-     await this.availableServicesService.registerService(this.value, this.value.identifier);
+     await this.availableServicesService.registerService(this.value.identifier);
      this.showToast('primary', this.translate.instant('general.services.service_registered_message', { serviceName: this.value.title }), '');
       this.updateResult.emit(this.value);
     } catch (error) {
@@ -354,7 +354,7 @@ export class ActionsServiceMenuRenderComponent implements OnInit, OnDestroy {
   onDeRegisterService = async (): Promise<void> => {
     try {
       this.value.status=ServiceModelStatusEnum.UnderDevelopment;
-      await this.availableServicesService.deregisterService(this.value, this.value.identifier);
+      await this.availableServicesService.deregisterService(this.value.identifier);
 
       this.showToast('primary', this.translate.instant('general.services.service_deregistered_message', { serviceName: this.value.title }), '');
       //this.value.hasServiceInstance.connector.publicKey = null;//G: property publickey does not exists on type connector anymore

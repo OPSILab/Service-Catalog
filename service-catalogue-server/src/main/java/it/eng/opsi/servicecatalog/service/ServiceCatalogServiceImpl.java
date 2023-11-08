@@ -220,6 +220,32 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	}
 
 	@Override
+	public ServiceModel registerServiceById(String serviceId) throws ServiceNotFoundException {
+
+		// log.info("Finding Service Models");
+		ServiceModel service = serviceModelRepo.findByIdentifier(serviceId)
+				.orElseThrow(() -> new ServiceNotFoundException("No Service found with Service Id: " + serviceId));
+
+		service.setStatus(ServiceModel.ServiceDescriptionStatus.fromValue("Completed"));
+
+		return serviceModelRepo.updateService(serviceId, service).orElseThrow(
+				() -> new ServiceNotFoundException("No Service description found for Service Id: " + serviceId));
+	}
+
+	@Override
+	public ServiceModel deRegisterServiceById(String serviceId) throws ServiceNotFoundException {
+
+		// log.info("Finding Service Models");
+		ServiceModel service = serviceModelRepo.findByIdentifier(serviceId)
+				.orElseThrow(() -> new ServiceNotFoundException("No Service found with Service Id: " + serviceId));
+
+		service.setStatus(ServiceModel.ServiceDescriptionStatus.fromValue("UnderDevelopment"));
+
+		return serviceModelRepo.updateService(serviceId, service).orElseThrow(
+				() -> new ServiceNotFoundException("No Service description found for Service Id: " + serviceId));
+	}
+
+	@Override
 	public HashMap<String, Integer> getServicesCount() {
 
 		// log.info("Getting Service Count");
