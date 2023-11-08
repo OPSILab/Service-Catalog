@@ -183,7 +183,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@Operation(summary = "Register the Service model description by Service Id.", description = "Register the Service model description by Service Id.", tags = {
 			"Service model" }, responses = {
 					@ApiResponse(description = "Returns the registered Service model description.", responseCode = "200") })
-	@GetMapping(value = "/services/register/**", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/services/register/**", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> registerServiceById(HttpServletRequest request,
 			@RequestParam("identifier") String identifier)
 			throws ServiceNotFoundException, IOException {
@@ -203,7 +203,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@Operation(summary = "Deregister the Service model description by Service Id.", description = "Deregister the Service model description by Service Id.", tags = {
 			"Service model" }, responses = {
 					@ApiResponse(description = "Returns the deregistered Service model description.", responseCode = "200") })
-	@GetMapping(value = "/services/deregister/**", produces = MediaType.APPLICATION_JSON_VALUE)
+	@PutMapping(value = "/services/deregister/**", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> deRegisterServiceById(HttpServletRequest request,
 			@RequestParam("identifier") String identifier)
 			throws ServiceNotFoundException, IOException {
