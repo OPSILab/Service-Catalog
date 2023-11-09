@@ -216,7 +216,7 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         // console.log(`field with path: [${path as string}] changed to [${JSON.stringify(this.getEditor(path).getValue())}]`);
 
-        if (value !== '"undefined"' && value !== '""') {
+        if (value !== '"undefined"' /*&& value !== '""'*/) {
           // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
           const e = $('select[name="' + this.getEditor(path).formname + '"]');
           const nameValue = e[0].options[e[0].selectedIndex].text;
