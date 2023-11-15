@@ -3,7 +3,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "$id": "http://example.com/root.json",
   "type": "object",
-  "basicCategoryTitle": "Catalogue Info",
+  "basicCategoryTitle": "Informazioni Generali",
   "format": "categories",
   "properties": {
     "title": {

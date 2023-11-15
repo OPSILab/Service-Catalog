@@ -38,7 +38,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   public readOnly = false;
   private config: AppConfig;
   private systemConfig: System;
-  private systemLocale: string;
+  private locale: string;
   apiRoot: string;
   schemaDir: string;
   public isNew = false;
@@ -68,12 +68,12 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
   ) {
     this.config = this.configService.config as AppConfig;
     this.systemConfig = this.config.system;
-    this.systemLocale = this.config.i18n.locale;
+    this.locale = this.translateService.currentLang;
     this.schemaDir =
       (this.systemConfig.serviceEditorUrl.includes('localhost') ? '' : this.systemConfig.serviceEditorUrl) +
       this.systemConfig.editorSchemaPath +
       '/' +
-      this.systemLocale +
+      this.locale +
       '/' +
       this.systemConfig.editorSchemaName;
     this.loading = true;
@@ -96,7 +96,6 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       }
 
       this.initializeEditor(this.serviceData);
-
 
       // this.loading = true;
     } catch (error) {
