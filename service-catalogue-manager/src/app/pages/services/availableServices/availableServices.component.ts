@@ -81,6 +81,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
+    this.activeCatalogues = []
 
     if (this.remote)
       for (let catalogue of this.catalogues) {
@@ -111,15 +112,15 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
     return remoteActiveCatalogues
   }
 
-  toggle(remote: boolean) {
+  async toggle(remote: boolean) {
     if (!remote) this.selectedCatalogueName = this.translate.instant('general.services.local') as string
     this.remote = remote;
+    if (this.remote)
+      await this.ngOnInit()
   }
 
   async ngOnDestroy(): Promise<void> {
     this.unsubscribe.next();
     this.unsubscribe.complete();
-    if (this.remote)
-      await this.ngOnInit()
   }
 }
