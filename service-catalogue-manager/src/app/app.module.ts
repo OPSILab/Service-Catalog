@@ -79,7 +79,7 @@ export function createTranslateLoader(http: HttpClient): TranslateHttpLoader {
           view: '*',
         },
         SERVICE_MANAGER: {
-          view: ['services', 'account'],
+          view: ['services', 'account', 'dashboard'],
         },
         DATA_CONTROLLER: {
           view: ['services','consents','account'],
