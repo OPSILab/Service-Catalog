@@ -4,4 +4,6 @@
   </button>
 </div>
 <br>
-<ng2-smart-table [settings]="settings" [source]="source"> </ng2-smart-table>
+<ng2-smart-table *ngIf="loading" [settings]="settings"[source]="source"> </ng2-smart-table>
+<ng2-smart-table *ngIf="!loading && !unreachable" [settings]="afterLoadSettings" [source]="source"> </ng2-smart-table>
+<ng2-smart-table *ngIf="unreachable" [settings]="datasetUnreachableSettings" [source]="source"> </ng2-smart-table>
