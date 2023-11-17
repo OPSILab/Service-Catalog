@@ -20,46 +20,26 @@ export class AvailableCataloguesService {
     this.serviceRegistryUrl = this.config.serviceRegistry.url;
   }
   getCatalogues(): CatalogueEntry[] | Promise<CatalogueEntry[]> {
-    try {
       return this.http.get<CatalogueEntry[]>(`${this.serviceRegistryUrl}/api/v2/catalogues/public`).toPromise();
-    }
-    catch (error) {
-      console.error("AvailableCataloguesService: catalogues not found")
-      console.error("error:<\n", error, ">\n")
-    }
   }
 
   getIcon(url): any {
-    try {
       return this.http.get<any>(url).toPromise();
-    }
-    catch (error) {
-      console.error("AvailableCataloguesService: catalogues not found")
-      console.error("error:<\n", error, ">\n")
-    }
   }
 
-  getRemoteCatalogues(url): CatalogueEntry[] | Promise<CatalogueEntry[]> {
-    try {
+  getRemoteCataloguesDirectly(url): Promise<CatalogueEntry[]> {
       return this.http.get<CatalogueEntry[]>(url + "/api/v2/catalogues/public").toPromise();
-    }
-    catch (error) {
-      console.error("AvailableCataloguesService: catalogues not found")
-      console.error("error:<\n", error, ">\n")
-    }
   }
 
-  getCataloguesFromFile(URL: any): CatalogueEntry[] | PromiseLike<CatalogueEntry[]> {
-    try {
+  getRemoteCatalogues(url): Promise<CatalogueEntry[]> {
+    return this.http.get<CatalogueEntry[]>(this.serviceRegistryUrl + "/api/v2/federated/catalogues/public"+"?URL="+url).toPromise();
+}
+
+  getCataloguesFromFile(URL: any): Promise<CatalogueEntry[]> {
       return this.http.get<CatalogueEntry[]>(URL).toPromise();
-    }
-    catch (error) {
-      console.error("AvailableCataloguesService: catalogues not found")
-      console.error("error:<\n", error, ">\n")
-    }
   }
 
-  getCatalogueByURL(apiEndpoint: string): CatalogueEntry | Promise<CatalogueEntry> {
+  getCatalogueByURL(apiEndpoint: string): Promise<CatalogueEntry> {
     return this.http.get<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues/json?apiEndpoint=${apiEndpoint}`).toPromise();
   }
 
@@ -76,13 +56,7 @@ export class AvailableCataloguesService {
   }
 
   saveCatalogue(catalogue: CatalogueEntry): Promise<CatalogueEntry> {
-    try {
       return this.http.post<CatalogueEntry>(`${this.serviceRegistryUrl}/api/v2/catalogues`, catalogue).toPromise();
-    }
-    catch (error) {
-      console.error("error:<\n", error, ">\n")
-      console.error("message:<\n", error.error.message, ">\n")
-    }
   }
 
   registerCatalogue(catalogue: CatalogueEntry): Promise<CatalogueEntry> {
@@ -103,6 +77,10 @@ export class AvailableCataloguesService {
 
   getStatus(catalogueID: string) {
     return this.http.get<any>(`${this.serviceRegistryUrl}/api/v2/federated/status?catalogueID=${catalogueID}`).toPromise();
+  }
+
+  getStatusByURL(endpoint: string) {
+    return this.http.get<any>(`${this.serviceRegistryUrl}/api/v2/federated/status?URL=${endpoint}`).toPromise();
   }
 }
 

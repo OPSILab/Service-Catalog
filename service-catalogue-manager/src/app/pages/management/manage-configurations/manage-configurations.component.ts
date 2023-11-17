@@ -86,9 +86,28 @@ export class ManageConfigurationsComponent implements OnInit, OnDestroy {
     //let remoteDatasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
     for (let dataset of this.availableCatalogues)
       try {
-        if (dataset.type == 'Json') await this.availableCatalogueService.getCataloguesFromFile(dataset.URL);
-        else await this.availableCatalogueService.getRemoteCatalogues(dataset.URL)
-        dataset.status = "active"
+        dataset.status = "inactive"
+        if (dataset.type == 'Json')
+          this.availableCatalogueService.getCataloguesFromFile(dataset.URL).then(c => {
+            dataset.status = "active"
+            void this.source.load(this.availableCatalogues)
+          }
+          ).catch(error => {
+            console.error(error.message)
+            dataset.status = "unreachable"
+            void this.source.load(this.availableCatalogues)
+          }
+            );
+        else
+          this.availableCatalogueService.getStatusByURL(dataset.URL).then(c => {
+            dataset.status = c ? c.status : "unreachable"
+            void this.source.load(this.availableCatalogues)
+          }
+          ).catch(error => {
+            console.error(error.message)
+            dataset.status = "unreachable"
+            void this.source.load(this.availableCatalogues)
+          });
       }
       catch (error) {
         console.error("Error during get remote dataset ", dataset.name)

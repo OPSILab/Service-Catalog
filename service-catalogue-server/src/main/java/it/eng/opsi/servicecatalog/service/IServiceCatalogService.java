@@ -175,7 +175,11 @@ public interface IServiceCatalogService {
 
       public abstract String getFederatedStatus(String catalogueID);
 
+      public abstract String getFederatedStatusByURL(String catalogueID);
+
       public abstract List<Catalogue> getCatalogueBycountry(String country);
 
       public abstract Catalogue getCatalogueByApiEndpoint(String apiEndpoint);
+
+      public abstract String getRemoteCatalogues(String URL);
 }

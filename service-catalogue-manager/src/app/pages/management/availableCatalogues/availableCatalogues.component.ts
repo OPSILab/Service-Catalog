@@ -85,7 +85,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   }
 
   completedServicesCount(servicesCountByStatus) {
-    for (let status of  servicesCountByStatus)
+    for (let status of servicesCountByStatus)
       if (status.status == "COMPLETED")
         return status.count
     return 0
@@ -125,9 +125,13 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
       this.availableCatalogues = await this.availableCataloguesService.getCatalogues();
       for (let catalogue of this.availableCatalogues) {
         try {
-          catalogue.status = catalogue.active == true ?
-            (await this.availableCataloguesService.getStatus(catalogue.catalogueID)).status :
-            "inactive"
+          if (catalogue.active == true) {
+            catalogue.status = "inactive"
+            this.availableCataloguesService.getStatus(catalogue.catalogueID).then(c => {
+              catalogue.status = c ? c.status : "unreachable"
+              void this.source.load(this.availableCatalogues);
+            })
+          }
         }
         catch (error) {
           console.error(error)

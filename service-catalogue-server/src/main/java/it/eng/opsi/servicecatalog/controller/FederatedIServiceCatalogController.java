@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
+
+import it.eng.opsi.servicecatalog.exception.CatalogueNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotEditableException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
@@ -63,6 +65,7 @@ public interface FederatedIServiceCatalogController {
 	public abstract ResponseEntity<?> getServiceTime(String remoteCatalogueID, String serviceId)
 			throws ServiceNotFoundException, IOException, URISyntaxException;
 
-	public abstract ResponseEntity<?> getStatus(String catalogueID);
+	public abstract ResponseEntity<?> getStatus(String catalogueID, String URL);
 
+	public abstract ResponseEntity<?> getCatalogues(String URL) throws CatalogueNotFoundException;
 }
