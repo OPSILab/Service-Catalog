@@ -95,7 +95,11 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
         this.isNew = true;
       }
 
+     
+
       this.initializeEditor(this.serviceData);
+
+      this.translateService.onLangChange.subscribe(() =>  this.reloadLocaleEditor());
 
       // this.loading = true;
     } catch (error) {
@@ -264,8 +268,23 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     });
   }
 
+ 
 
 
+  reloadLocaleEditor(): void {
+   
+    var currentData=this.editor.getValue();
+    this.editor.destroy();
+    this.schemaDir =
+    (this.systemConfig.serviceEditorUrl.includes('localhost') ? '' : this.systemConfig.serviceEditorUrl) +
+    this.systemConfig.editorSchemaPath +
+    '/' +
+    this.translateService.currentLang +
+    '/' +
+    this.systemConfig.editorSchemaName;
+          this.initializeEditor(currentData);
+          
+  }
 
   closeSpinner(): void {
     console.log('closing');
