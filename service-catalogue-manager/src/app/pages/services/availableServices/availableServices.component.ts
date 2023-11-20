@@ -81,25 +81,6 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
-    /*this.activeCatalogues = []
-
-    if (this.remote)
-      for (let catalogue of this.catalogues) {
-
-        try {
-          catalogue.status = (await this.availableCataloguesService.getStatus(catalogue.catalogueID)).status
-        }
-        catch (error) {
-          console.error("Error during get status, ngOnInit")
-          if (error.message != "Cannot read properties of null (reading 'status')") console.error(error.message)
-          catalogue.status = "not reachable"
-        }
-
-        if (catalogue.active && catalogue.status == 'active')
-          this.activeCatalogues.push(catalogue)
-      }
-
-    this.catalogues = this.activeCatalogues*/
     this.activeCatalogues = this.catalogues
     this.activeCatalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country, active: 'active' })
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.translate.instant('general.services.local') as string
