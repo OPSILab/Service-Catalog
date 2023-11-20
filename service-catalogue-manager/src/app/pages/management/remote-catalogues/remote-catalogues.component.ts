@@ -70,6 +70,7 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
   private unsubscribe: Subject<void> = new Subject();
 
   homePageLabel: string;
+  remoteCatalogues: any[];
 
   constructor(
     private errorService: ErrorDialogService,
@@ -84,7 +85,6 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
     this.config = this.configService.config as AppConfig;
     this.systemConfig = this.config.system;
     this.systemLocale = this.config.i18n.locale;
-    this.settings = this.loadTableSettings();
     this.locale = (this.configService.config as AppConfig).i18n.locale; // TODO change with user language preferences
     this.schemaDir =
       (this.systemConfig.serviceEditorUrl.includes('localhost') ? '' : this.systemConfig.serviceEditorUrl) +
@@ -106,30 +106,13 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
     this.ngOnInit()
   }
 
-  async activeDatasetsFilter(){
-    this.datasets=[]
-      let remoteDatasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
-      for (let dataset of remoteDatasets)
-        try {
-          if (dataset.type=="Service Catalogue") await this.availableCataloguesService.getRemoteCatalogues(dataset.URL)
-          else await this.availableCataloguesService.getCataloguesFromFile(dataset.URL)
-          this.datasets.push(dataset)
-        }
-        catch (error) {
-          console.error("Error during get remote dataset ", dataset.name)
-          console.error(error.message)
-        }
+  async activeDatasetsFilter() {
+    this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
   }
 
   async ngOnInit() {
     try {
       await this.activeDatasetsFilter()
-      //this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
-      if (!this.selectedDataset.catalogueDatasetID) this.selectedDataset = this.datasets[0]
-      if (!this.selectedDatasetName && this.selectedDataset) this.selectedDatasetName = this.selectedDataset.name
-      if (this.selectedDataset?.type == "Service Catalogue") this.availableCatalogues = await this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL);
-      else if (this.selectedDataset) this.availableCatalogues = await this.availableCataloguesService.getCataloguesFromFile(this.selectedDataset?.URL);
-      if (this.availableCatalogues) void await this.source.load(this.availableCatalogues);
     } catch (error) {
       console.error("Remote catalogues component")
       console.error(error)
@@ -162,65 +145,6 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
       this.errorService.openErrorDialog(error);
     }
   }
-
-  loadTableSettings(): Record<string, unknown> {
-    this.nameLabel = this.translate.instant('general.catalogues.name') as string;
-    this.homePageLabel = this.translate.instant('general.catalogues.home_page') as string;
-    this.countryLabel = this.translate.instant('general.catalogues.country') as string;
-    this.actionsLabel = this.translate.instant('general.catalogues.actions') as string;
-    this.infoLabel = this.translate.instant('general.catalogues.details') as string;
-    this.statusLabel = this.translate.instant('general.catalogues.status') as string;
-    this.activeLabel = this.translate.instant('general.catalogues.active') as string;
-    this.servicesLabel = this.translate.instant('general.catalogues.services') as string;
-
-    return {
-      mode: 'external',
-      attr: {
-        class: 'table table-bordered',
-      },
-      actions: {
-        add: false,
-        edit: false,
-        delete: false,
-        editService: false
-      },
-
-      columns: {
-        name: {
-          title: this.nameLabel,
-          type: 'text',
-          width: '25%',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row.name,
-        },
-        country: {
-          title: this.countryLabel,
-          type: 'text',
-          width: '25%',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row.country,
-        },
-        host: {
-          title: this.homePageLabel,
-          type: 'text',
-          width: '25%',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row.homePage,
-        },
-        actions: {
-          title: this.actionsLabel,
-          sort: false,
-          width: '5%',
-          filter: false,
-          type: 'custom',
-          valuePrepareFunction: (cell, row: CatalogueEntry) => row,
-          renderComponent: ActionsCatalogueMenuRenderComponent,
-          onComponentInitFunction: (instance) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
-            instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe(() => this.ngOnInit());
-          },
-        },
-      },
-    };
-  }
-
 }
 
 

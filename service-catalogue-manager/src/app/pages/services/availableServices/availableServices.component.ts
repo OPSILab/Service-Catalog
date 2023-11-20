@@ -81,7 +81,7 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.catalogues = await this.availableCataloguesService.getCatalogues()
-    this.activeCatalogues = []
+    /*this.activeCatalogues = []
 
     if (this.remote)
       for (let catalogue of this.catalogues) {
@@ -99,7 +99,8 @@ export class AvailableServicesComponent implements OnInit, OnDestroy {
           this.activeCatalogues.push(catalogue)
       }
 
-    this.catalogues = this.activeCatalogues
+    this.catalogues = this.activeCatalogues*/
+    this.activeCatalogues = this.catalogues
     this.activeCatalogues.push({ name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country, active: 'active' })
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.translate.instant('general.services.local') as string
     this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country }

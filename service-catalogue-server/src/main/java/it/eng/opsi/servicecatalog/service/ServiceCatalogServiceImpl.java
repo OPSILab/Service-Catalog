@@ -165,7 +165,10 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			}
 		}
 
-		System.out.println(response);
+		if (response != null && response.length() > 20)
+			System.out.println(response.substring(0, 20).concat("..."));
+		else
+			System.out.println(response);
 
 		return response;
 	}
@@ -200,6 +203,22 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 				catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/"));
 			else
 				catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/services"));
+
+		WebClient client = WebClient.create();
+		return client.get()
+				.uri(new URI(catalogue.getApiEndpoint().concat(relativeURL)))
+				.header("Authorization", "Bearer ".concat(accessToken))
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve()
+				.bodyToMono(String.class)
+				.block();
+	}
+
+	public String getFederatedCataloguesResponse(String relativeURL, String accessToken,
+			Catalogue catalogue) throws URISyntaxException {
+
+		// if (!catalogue.getApiEndpoint().contains("/api/v2/catalogues/public"))
+		// catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/catalogues/public"));
 
 		WebClient client = WebClient.create();
 		return client.get()
@@ -872,6 +891,71 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		catalogue.setClientSecret(null);
 
 		return catalogue;
+	}
+
+	@Override
+	public String getRemoteCatalogues(String URL) {
+
+		Catalogue catalogue = new Catalogue();
+		catalogue.setApiEndpoint(URL);
+		System.out.println(catalogue.getApiEndpoint());
+		String response = "";
+
+		try {
+			catalogue.setApiEndpoint(catalogue.getApiEndpoint().split("services")[0]);
+			response = getFederatedCataloguesResponse("catalogues/public", accessToken, catalogue);
+		} catch (Exception e) {
+			System.out.println(e);
+			try {
+				catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/"));
+				response = getFederatedCataloguesResponse("catalogues/public", accessToken, catalogue);
+			} catch (Exception ex) {
+				System.out.println(ex);
+			}
+		}
+		return response;
+	}
+
+	@Override
+	public String getFederatedStatusByURL(String URL) {
+
+		Catalogue catalogue = new Catalogue();
+		catalogue.setApiEndpoint(URL);
+
+		String response = "";
+
+		try {
+			catalogue.setApiEndpoint(catalogue.getApiEndpoint().split("services")[0]);
+			response = getFederatedServicesResponse("status", accessToken, catalogue);
+		} catch (Exception e) {
+			System.out.println(e);
+			try {
+				catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/"));
+				response = getFederatedServicesResponse("status", accessToken, catalogue);
+			} catch (Exception ex) {
+				System.out.println(ex);
+				try {
+					getToken(catalogue);
+				} catch (IOException e1) {
+					System.out.println(e1);
+				} catch (InterruptedException e1) {
+					System.out.println(e1);
+				}
+				try {
+					catalogue.setApiEndpoint(catalogue.getApiEndpoint().split("services")[0]);
+					response = getFederatedServicesResponse("status", accessToken, catalogue);
+				} catch (Exception exc) {
+					System.out.println(exc);
+					try {
+						catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/"));
+						response = getFederatedServicesResponse("status", accessToken, catalogue);
+					} catch (Exception exce) {
+						System.out.println(exce);
+					}
+				}
+			}
+		}
+		return response;
 	}
 
 	@Override

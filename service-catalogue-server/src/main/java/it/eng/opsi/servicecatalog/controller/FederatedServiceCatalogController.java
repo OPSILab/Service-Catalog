@@ -22,8 +22,9 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-
+import it.eng.opsi.servicecatalog.exception.CatalogueNotFoundException;
 import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
+import it.eng.opsi.servicecatalog.model.Catalogue;
 import it.eng.opsi.servicecatalog.service.IServiceCatalogService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -251,7 +252,8 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	@Operation(summary = "Get the count of the registered Service model descriptions (total, public and private services).", tags = {
 			"Service model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/services/count", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<String> getServicesCount(@RequestParam("remoteCatalogueID") String remoteCatalogueID) throws ServiceNotFoundException, URISyntaxException {
+	public ResponseEntity<String> getServicesCount(@RequestParam("remoteCatalogueID") String remoteCatalogueID)
+			throws ServiceNotFoundException, URISyntaxException {
 
 		return ResponseEntity
 				.ok(catalogService.getFederatedServices(remoteCatalogueID, "services/count/status"));
@@ -298,7 +300,20 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 			"Status" }, responses = {
 					@ApiResponse(description = "Returns the Service catalogue's status.", responseCode = "200") })
 	@GetMapping(value = "/status", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> getStatus(@RequestParam("catalogueID") String catalogueID) {
-		return ResponseEntity.ok(catalogService.getFederatedStatus(catalogueID));
+	public ResponseEntity<?> getStatus(@RequestParam(required = false) String catalogueID,
+			@RequestParam(required = false) String URL) {
+		if (catalogueID != null)
+			return ResponseEntity.ok(catalogService.getFederatedStatus(catalogueID));
+		return ResponseEntity.ok(catalogService.getFederatedStatusByURL(URL));
+	}
+
+	@Override
+	@Operation(summary = "Get all the catalogue descriptions.", description = "Get all the catalogue descriptions saved in the Service Catalog.", tags = {
+			"Catalogue model" }, responses = {
+					@ApiResponse(description = "Returns the list of all registered catalogue descriptions.", responseCode = "200") })
+	@GetMapping(value = "/catalogues/public", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getCatalogues(@RequestParam("URL") String URL)
+			throws CatalogueNotFoundException {
+		return ResponseEntity.ok(catalogService.getRemoteCatalogues(URL));
 	}
 }
