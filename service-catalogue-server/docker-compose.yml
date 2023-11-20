@@ -4,7 +4,7 @@ services:
     image: capesuite/service-catalog
     build: .
     ports:
-      - "8086:8086"
+      - "8085:8086"
     environment:
      #- PROFILE=
       - SPRING_LOGGING_LEVEL=INFO
@@ -16,7 +16,7 @@ services:
       - MONGODB_PWD=root
       - ENABLE_AUTH=false
       - IDM_ISSUER_URI=https://idm.cape-suite.eu/auth/realms/Cape
-      - IDM_ALLOWED_ORIGIN_PATTERNS=http://localhost:81,http://localhost,http://localhost:82,http://localhost:83
+      - IDM_ALLOWED_ORIGIN_PATTERNS=http://host.docker.internal:81,http://host.docker.internal,http://host.docker.internal:82,http://host.docker.internal:83
       - IDM_ALLOWED_ORIGINS=
       - STATUS=active
     networks:

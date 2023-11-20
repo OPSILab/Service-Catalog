@@ -31,7 +31,7 @@ export class AvailableServicesService {
     }
   }
 
-  getRemoteServices(catalogueID): Promise<ServiceModel[]> | [] {
+  getRemoteServices(catalogueID): Promise<ServiceModel[]> {
     if (catalogueID == "local")
       return this.getServices();
     return this.http.get<ServiceModel[]>(`${this.serviceRegistryUrl}/api/v2/federated/services?remoteCatalogueID=${catalogueID}`).toPromise();
