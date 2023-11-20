@@ -101,29 +101,33 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
   }
 
   async response(c) {
-    this.remoteCatalogues = c
-    this.loading = false
-    this.unreachable = false
-    this.loaded = true
-    this.settings.noDataMessage = "No data found"
-    //void this.source.load(c)
-    if (this.remoteCatalogues && this.remoteCatalogues[0]) {
-      for (let remoteCatalogue of this.remoteCatalogues) {
-        let cataloguesAlreadyFedarated
-        try {
-          cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogueByURL(remoteCatalogue.apiEndpoint)
+    if (Array.isArray(c)) {
+      this.remoteCatalogues = c
+      this.loading = false
+      this.unreachable = false
+      this.loaded = true
+      this.settings.noDataMessage = "No data found"
+      //void this.source.load(c)
+      if (this.remoteCatalogues && this.remoteCatalogues[0]) {
+        for (let remoteCatalogue of this.remoteCatalogues) {
+          let cataloguesAlreadyFedarated
+          try {
+            cataloguesAlreadyFedarated = await this.availableCataloguesService.getCatalogueByURL(remoteCatalogue.apiEndpoint)
+          }
+          catch (error) {
+            console.error(error.message)
+          }
+          if (cataloguesAlreadyFedarated)
+            remoteCatalogue.federated = true;
+          remoteCatalogue.clientID = undefined;//TODO verify if ID must be hidden
         }
-        catch (error) {
-          console.error(error.message)
-        }
-        if (cataloguesAlreadyFedarated)
-          remoteCatalogue.federated = true;
-        remoteCatalogue.clientID = undefined;//TODO verify if ID must be hidden
       }
+      else this.remoteCatalogues = []
+      void this.source.load(this.remoteCatalogues);
+      this.updateResult.emit(this.remoteCatalogues);
     }
-    else this.remoteCatalogues = []
-    void this.source.load(this.remoteCatalogues);
-    this.updateResult.emit(this.remoteCatalogues);
+    else (this.handleResponseError({ message: "Remote catalogue dataset is unreachable" }))
+
   }
 
   async ngOnChanges(changes: SimpleChanges | any): Promise<void> {
@@ -177,19 +181,6 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
 
   async activeDatasetsFilter() {
     this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
-
-    /*   this.datasets = []
-       let remoteDatasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
-       for (let dataset of remoteDatasets)
-         try {
-           if (dataset.type == "Service Catalogue") await this.availableCataloguesService.getRemoteCatalogues(dataset.URL)
-           else await this.availableCataloguesService.getCataloguesFromFile(dataset.URL)
-           this.datasets.push(dataset)
-         }
-         catch (error) {
-           console.error("Error during get remote dataset ", dataset.name)
-           console.error(error.message)
-         }*/
   }
 
   async ngOnInit() {

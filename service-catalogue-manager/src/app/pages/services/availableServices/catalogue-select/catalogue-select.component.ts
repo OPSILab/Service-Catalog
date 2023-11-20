@@ -98,33 +98,20 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     //if (!this.selectedCatalogue) this.selectedCatalogue = this.catalogues[0];
     //if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
     this.selectedCatalogue = this.catalogues.filter(catalogue => catalogue.name == changes['selectedCatalogueName'].currentValue)[0]// || this.datasets[0]
-    console.debug(changes['selectedCatalogueName'].currentValue)
-    console.debug(this.selectedCatalogue)
-    console.debug(this.loading)
     if (!(changes['selectedCatalogueName'].currentValue == this.translate.instant('general.services.local') as string)) {
-      console.debug("REMOTE")
       this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID)
-        .then(async c => await this.response(c))
+        .then(async s => await this.response(s))
         .catch(error => this.handleResponseError(error))
       this.country = this.selectedCatalogue.country
     }
     if ((changes['selectedCatalogueName'].currentValue == this.translate.instant('general.services.local') as string)) {
-      console.debug("LOCAL")
       this.availableServicesService.getServices()
         .then(async c => await this.response(c))
         .catch(error => this.handleResponseError(error))
       this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country }
       this.country = this.selectedCatalogue.country
     }
-    /*
-    try {
-      void await this.source.load(this.services);
-    }
-    catch (error) {
-      void await this.source.load([])
-    }*/
-    //this.updateResult.emit(this.services);
-    //this.selectedCatalogueCountry.emit(this.selectedCatalogue.country || "Italy")
+
     this.selectedCatalogueCountry.emit(this.selectedCatalogue || { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country })
     //this.loadSource(this.selectedCatalogue?.catalogueID || "local");
 
@@ -139,7 +126,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
 
     this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID)
-      .then(async c => await this.response(c))
+      .then(async s => await this.response(s))
       .catch(error => this.handleResponseError(error))
     //void await this.source.load(this.services);
     //this.updateResult.emit(this.services);
@@ -158,9 +145,9 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     void this.source.load([])
   }
 
-  async response(c) {
-    if (Array.isArray(c)) {
-      this.services = c
+  async response(s) {
+    if (Array.isArray(s)) {
+      this.services = s
       this.loading = false
       this.unreachable = false
       this.loaded = true
@@ -409,8 +396,6 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
         },
       },  }
   local() {
-    //console.debug(this.selectedCatalogue)
-    //console.debug(!this.selectedCatalogue || this.selectedCatalogue.catalogueID == "local")
     return !this.selectedCatalogue || this.selectedCatalogue.catalogueID == "local"
   }
 

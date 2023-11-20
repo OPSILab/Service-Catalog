@@ -107,21 +107,6 @@ export class RemoteCataloguesComponent implements OnInit, OnChanges {
   }
 
   async activeDatasetsFilter() {
-
-    /*
-    this.datasets=[]
-      let remoteDatasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
-      for (let dataset of remoteDatasets)
-        try {
-          if (dataset.type=="Service Catalogue") await this.availableCataloguesService.getRemoteCatalogues(dataset.URL)
-          else await this.availableCataloguesService.getCataloguesFromFile(dataset.URL)
-          this.datasets.push(dataset)
-        }
-        catch (error) {
-          console.error("Error during get remote dataset ", dataset.name)
-          console.error(error.message)
-        }*/
-
     this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
   }
 

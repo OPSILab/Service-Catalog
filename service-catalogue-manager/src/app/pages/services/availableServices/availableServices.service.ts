@@ -42,11 +42,6 @@ export class AvailableServicesService {
   }
 
   getRemoteServicesCount(catalogueID: string): Promise<any[]> {
-
-    /*
-    if (url.includes("/api/v2/services")) url = url.split("/api/v2/services")[0]
-    return this.http.get<ServicesCount>(`${url}/api/v2/services/count`).toPromise();
-    */
     return this.http.get<any[]>(`${this.serviceRegistryUrl}/api/v2/federated/services/count?remoteCatalogueID=${catalogueID}`).toPromise();
   }
 
