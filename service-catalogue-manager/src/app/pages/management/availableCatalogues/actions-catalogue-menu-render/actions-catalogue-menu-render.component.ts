@@ -114,11 +114,14 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
     return this.value.active;
   }
 
-  completedServicesCount(servicesCountByStatus) {
-    for (let status of  servicesCountByStatus)
-      if (status.status == "COMPLETED")
-        return status.count
-    return 0
+  completedServicesCount(services) {
+    console.debug("TOTAL SERVICES", services.length)
+    let completed = 0
+    if (services)
+      for (let service of services)
+        if (service.status == "COMPLETED")
+          completed = completed + 1
+    return completed
   }
 
   ngOnInit(): void {
@@ -246,15 +249,32 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
       */
   }
 
-  async refreshNow() {
-    try {
-      this.value.services = this.completedServicesCount((await this.availableServicesService.getRemoteServicesCount(this.value.catalogueID)))
-      await this.availableCataloguesService.updateCatalogue(this.value, this.value.catalogueID, false);
-    }
-    catch (error) {
-      console.error("Unable to refresh\n", error.message)
-    }
-    this.updateResult.emit(this.value);
+  refreshNow() {
+    //try {
+      //this.value.services = this.completedServicesCount((await this.availableServicesService.getRemoteServicesCount(this.value.catalogueID)))
+      this.availableServicesService.getRemoteServices(this.value.catalogueID)
+          .then(async (value) => {
+            console.debug("GET REMOTE SERVICES COUNT", value.length)
+            this.value.services = value.length//this.completedServicesCount(value);
+            //console.debug(this.value.services)
+            try {
+              await this.availableCataloguesService.updateCatalogue(this.value, this.value.catalogueID, false);
+              this.ngOnInit();
+              this.updateResult.emit(this.value);
+            }
+            catch (error) {
+              console.error(error)
+              console.error("unable to refresh services")
+            }
+          })
+          .catch(error => {
+            console.error(error.message)
+          })
+    //}
+    //catch (error) {
+      //console.error("Unable to refresh\n", error.message)
+    //}
+
     //this.showToast('primary', this.translate.instant('general.catalogues.catalogue_refreshed_message', { catalogueName: name }), '');
   }
 
@@ -285,8 +305,8 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
         type: 'application/json;charset=utf-8',
       });
 
-    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-      window.navigator.msSaveOrOpenBlob(blob, filename);
+    if (window.navigator && (window.navigator as any).msSaveOrOpenBlob) {
+      (window.navigator as any).msSaveOrOpenBlob(blob, filename);
     } else {
       const a = document.createElement('a');
       a.download = filename;

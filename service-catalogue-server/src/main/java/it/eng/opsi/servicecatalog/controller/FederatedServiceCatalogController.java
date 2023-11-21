@@ -256,7 +256,7 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 			throws ServiceNotFoundException, URISyntaxException {
 
 		return ResponseEntity
-				.ok(catalogService.getFederatedServices(remoteCatalogueID, "services/count/status"));
+				.ok(catalogService.getFederatedServicesCount(remoteCatalogueID, "/api/v2/services/count"));
 	}
 
 	@Override

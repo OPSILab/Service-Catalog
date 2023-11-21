@@ -8,9 +8,9 @@
       <div class="col-6 col-md-6 text-left">
         <nb-select fullWidth placeholder="{{ 'general.catalogues.dataset.catalogue_dataset' | translate }}"
           [(ngModel)]="selectedDatasetName" [ngModelOptions]="{standalone: true}">
-          <nb-option-group title="Datasets">
+          <!--<nb-option-group title="Datasets">-->
             <nb-option *ngFor="let dataset of datasets" value={{dataset.name}}>{{dataset.name}}</nb-option>
-          </nb-option-group>
+          <!--</nb-option-group>-->
         </nb-select>
       </div>
     </div>
