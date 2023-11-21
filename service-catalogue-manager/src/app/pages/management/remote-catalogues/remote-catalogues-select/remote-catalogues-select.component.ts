@@ -135,29 +135,7 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
 
   }
 
-  async ngOnChanges(changes: SimpleChanges | any): Promise<void> {
-    if (changes) {
-      this.loading = true
-      this.noDatasetSelected = false
-    }
-    else {
-      this.loading = false
-      this.noDatasetSelected = true
-    }
-    this.unreachable = false
-    this.loaded = false
-    this.localserverError = false
-    this.settings.noDataMessage = "Loading, please wait..."
-    if (!this.datasets)
-      this.availableCatalogueDatasetsService.getCatalogueDatasets()
-        .then(datasets => this.datasets = datasets)
-        .catch(error => {
-          console.error(error)
-          this.loading = this.unreachable = this.loaded = this.noDatasetSelected = false
-          this.localserverError = true
-        })
-    //if (!this.selectedDataset && this.datasets && this.datasets[0]) this.selectedDataset = this.datasets[0];
-    //if (!this.selectedDatasetName && this.selectedDataset) this.selectedDatasetName = this.selectedDataset.name
+  applyChanges(changes) {
     if (changes) {
       this.selectedDataset = this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0]// || this.datasets[0]
       if (this.selectedDataset) {
@@ -183,6 +161,37 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
         void this.source.load([])
       }
     }
+  }
+
+  async ngOnChanges(changes: SimpleChanges | any): Promise<void> {
+    if (changes) {
+      this.loading = true
+      this.noDatasetSelected = false
+    }
+    else {
+      this.loading = false
+      this.noDatasetSelected = true
+    }
+    this.unreachable = false
+    this.loaded = false
+    this.localserverError = false
+    this.settings.noDataMessage = "Loading, please wait..."
+    if (!this.datasets)
+      this.availableCatalogueDatasetsService.getCatalogueDatasets()
+        .then(datasets => {
+          this.datasets = datasets
+          this.applyChanges(changes)
+        })
+        .catch(error => {
+          console.error(error)
+          this.loading = this.unreachable = this.loaded = this.noDatasetSelected = false
+          this.localserverError = true
+        })
+    else
+      this.applyChanges(changes)
+    //if (!this.selectedDataset && this.datasets && this.datasets[0]) this.selectedDataset = this.datasets[0];
+    //if (!this.selectedDatasetName && this.selectedDataset) this.selectedDatasetName = this.selectedDataset.name
+
     //else
     //  void this.source.load([])
   }

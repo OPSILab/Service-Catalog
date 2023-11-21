@@ -80,10 +80,10 @@
           </div>
         </div>
       </div>
-      <div *ngIf = "value.refresh" class="row justify-content-center">
+      <div *ngIf="lastUpdate" class="row justify-content-center">
         <div class="col-sm py-1">
           <div class="accent">
-            <i><b>{{ 'general.catalogues.refresh' | translate }}:</b> {{ data.refresh }}</i>
+            <i><b>{{ 'general.catalogues.last_update' | translate }}:</b> {{ lastUpdate }}</i>
           </div>
         </div>
       </div>

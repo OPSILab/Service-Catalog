@@ -419,6 +419,7 @@
       "api_endpoint" : "API endpoint",
       "type" : "Tipo",
       "refresh" : "Refresh",
+      "last_update" : "Ultimo aggiornamento",
       "authenticated" : "authenticato",
       "oauth2_endpoint": "Oauth2 Endpoint",
       "client_ID": "Client ID",

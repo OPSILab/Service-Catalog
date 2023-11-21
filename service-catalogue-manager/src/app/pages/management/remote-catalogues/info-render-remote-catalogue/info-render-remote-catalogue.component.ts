@@ -28,6 +28,7 @@ export class InfoRenderRemoteCatalogueComponent implements OnInit {
   private date: Date;
   private message: String;
   dialogRef
+  lastUpdate: string;
 
 
   constructor(
@@ -44,11 +45,30 @@ export class InfoRenderRemoteCatalogueComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
 
+    this.lastUpdate = this.refresh()
+
+  }
+
+  refresh() {
+    let lastUpdate = Date.now() - this.value.lastRefresh
+    let lastUpdateDetails = {
+      day: lastUpdate / 86400000,
+      week: lastUpdate / 604800000,
+      month: lastUpdate / 2629800000
+
+    }
+    if (lastUpdateDetails.month > 1 || lastUpdateDetails.month == 1)
+      return lastUpdateDetails.month.toString()[0] + " months ago"
+    if (lastUpdateDetails.week > 1 || lastUpdateDetails.week == 1)
+      return lastUpdateDetails.week.toString()[0] + " weeks ago"
+    if (lastUpdateDetails.day > 1 || lastUpdateDetails.day == 1)
+      return lastUpdateDetails.day.toString()[0] + " days ago"
+
   }
 
   async showCatalogueInfoModal(): Promise<void> {
-    type Context = {[key: string] : any}
-    let context : Context = {}
+    type Context = { [key: string]: any }
+    let context: Context = {}
     if (this.value.name) context.modalHeader = this.value.name;
     if (this.value.country) context.country = this.value.country;
     if (this.value.services) context.services = this.value.services;
