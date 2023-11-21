@@ -62,6 +62,8 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
   loaded: boolean;
   afterLoadSettings: Record<string, unknown>;
   datasetUnreachableSettings: Record<string, unknown>;
+  localServerError: boolean;
+  localServerErrorSettings: Record<string, unknown>;
 
   constructor(
     private availableServicesService: AvailableServicesService,
@@ -76,6 +78,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
   ) {
     this.settings = this.loadTableSettings("Loading, please wait...");
     this.afterLoadSettings = this.loadTableSettings("No data found");
+    this.localServerErrorSettings= this.loadTableSettings("Local server errors occurred");
     this.datasetUnreachableSettings = this.loadTableSettings("Remote catalogue dataset is unreachable");
     // this.locale = (this.configService.config as AppConfig).i18n.locale;    // TODO change with user language preferences
     this.locale = this.translate.currentLang;
@@ -93,43 +96,51 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     this.loading = true
     this.unreachable = false
     this.loaded = false
+    this.localServerError = false
     void await this.source.load([])
-    try {
-      if (!this.catalogues) this.catalogues = await this.availableCataloguesService.getCatalogues()
-    }
-    catch (error) {
-      console.error(error.message)
-      this.loading = false
-      this.unreachable = true
-      this.loaded = false
-    }
-    if (!this.unreachable) {
-      //if (!this.selectedCatalogue) this.selectedCatalogue = this.catalogues[0];
-      //if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
-      this.selectedCatalogue = this.catalogues.filter(catalogue => catalogue.name == changes['selectedCatalogueName'].currentValue)[0]// || this.datasets[0]
-      if (!(changes['selectedCatalogueName'].currentValue == this.translate.instant('general.services.local') as string)) {
-        this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID)
-          .then(async s => await this.response(s))
-          .catch(error => this.handleResponseError(error))
-        this.country = this.selectedCatalogue.country
-      }
-      if ((changes['selectedCatalogueName'].currentValue == this.translate.instant('general.services.local') as string)) {
-        this.availableServicesService.getServices()
-          .then(async c => await this.response(c))
-          .catch(error => this.handleResponseError(error))
-        this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country }
-        this.country = this.selectedCatalogue.country
-      }
+    if (!this.catalogues)
+      this.availableCataloguesService.getCatalogues()
+        .then(c => {
+          this.catalogues = c
+          this.selectedCatalogue = this.catalogues.filter(catalogue => catalogue.name == changes['selectedCatalogueName'].currentValue)[0]// || this.datasets[0]
+          if (!(changes['selectedCatalogueName'].currentValue == this.translate.instant('general.services.local') as string)) {
+            this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID)
+              .then(async s => await this.response(s))
+              .catch(error => this.handleResponseError(error))
+            this.country = this.selectedCatalogue.country
+          }
+          if ((changes['selectedCatalogueName'].currentValue == this.translate.instant('general.services.local') as string)) {
+            this.availableServicesService.getServices()
+              .then(async c => await this.response(c))
+              .catch(error => this.handleResponseError(error))
+            this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country }
+            this.country = this.selectedCatalogue.country
+          }
 
-      this.selectedCatalogueCountry.emit(this.selectedCatalogue || { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country })
-      //this.loadSource(this.selectedCatalogue?.catalogueID || "local");
-    }
+          this.selectedCatalogueCountry.emit(this.selectedCatalogue || { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country })
+        })
+        .catch(error => {
+          console.error(error.message)
+          this.localServerError = true
+          this.unreachable = this.loaded = this.loading = false
+        }
+        )
+
+    //if (!this.selectedCatalogue) this.selectedCatalogue = this.catalogues[0];
+    //if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
+
+    //if (!this.unreachable) {
+
+    //this.loadSource(this.selectedCatalogue?.catalogueID || "local");
+    //}
   }
 
   async ngOnInit(): Promise<void> {
     this.loading = true
     this.unreachable = false
     this.loaded = false
+    this.localServerError = false
+
     try {
       if (!this.catalogues)
         this.catalogues = await this.availableCataloguesService.getCatalogues()
@@ -146,8 +157,9 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     catch (error) {
       console.error(error.message)
       this.loading = false
-      this.unreachable = true
+      this.unreachable = false
       this.loaded = false
+      this.localServerError = true
     }
     if (!this.unreachable)
       this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID)
@@ -167,6 +179,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     this.unreachable = true
     this.loading = false
     this.loaded = false
+    this.localServerError = false
     void this.source.load([])
   }
 
@@ -176,6 +189,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
       this.loading = false
       this.unreachable = false
       this.loaded = true
+      this.localServerError = false
       this.settings.noDataMessage = "No data found"
       //void this.source.load(this.services);
       if (this.selectedCatalogue) await this.loadSource(this.selectedCatalogue.catalogueID);
