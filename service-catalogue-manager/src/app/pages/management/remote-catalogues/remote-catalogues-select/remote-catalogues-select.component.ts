@@ -72,6 +72,8 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
   loaded: boolean;
   noDatasetSelected: boolean;
   noDatasetSelectedSettings: Record<string, unknown>;
+  localserverError: boolean;
+  localserverErrorSettings: Record<string, unknown>;
   //availableCatalogues: CatalogueEntry[];
 
   constructor(
@@ -89,6 +91,7 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     this.afterLoadSettings = this.loadTableSettings("No data found");
     this.datasetUnreachableSettings = this.loadTableSettings("Remote catalogue dataset is unreachable");
     this.noDatasetSelectedSettings = this.loadTableSettings("No dataset selected");
+    this.localserverErrorSettings = this.loadTableSettings("Local server errors occurred");
     this.locale = (this.configService.config as AppConfig).i18n.locale; // TODO change with user language preferences
     this.schemaDir =
       (this.systemConfig.serviceEditorUrl.includes('localhost') ? '' : this.systemConfig.serviceEditorUrl) +
@@ -104,6 +107,8 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     if (Array.isArray(c)) {
       this.remoteCatalogues = c
       this.loading = false
+      this.localserverError = false
+
       this.unreachable = false
       this.loaded = true
       this.settings.noDataMessage = "No data found"
@@ -130,19 +135,11 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
 
   }
 
-  async ngOnChanges(changes: SimpleChanges | any): Promise<void> {
-    this.loading = true
-    this.unreachable = false
-    this.loaded = false
-    this.settings.noDataMessage = "Loading, please wait..."
-    if (!this.datasets) await this.activeDatasetsFilter()
-    //if (!this.selectedDataset && this.datasets && this.datasets[0]) this.selectedDataset = this.datasets[0];
-    //if (!this.selectedDatasetName && this.selectedDataset) this.selectedDatasetName = this.selectedDataset.name
+  applyChanges(changes) {
     if (changes) {
       this.selectedDataset = this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0]// || this.datasets[0]
       if (this.selectedDataset) {
         void this.source.load[0]
-        console.log(this.selectedDataset)
         this.noDatasetSelected = false
         if (this.selectedDataset.type == "Service Catalogue")
           this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL)
@@ -158,9 +155,42 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
         this.unreachable = false
         this.loaded = false
         this.noDatasetSelected = true
+        this.localserverError = false
+
         void this.source.load([])
       }
     }
+  }
+
+  async ngOnChanges(changes: SimpleChanges | any): Promise<void> {
+    if (changes) {
+      this.loading = true
+      this.noDatasetSelected = false
+    }
+    else {
+      this.loading = false
+      this.noDatasetSelected = true
+    }
+    this.unreachable = false
+    this.loaded = false
+    this.localserverError = false
+    this.settings.noDataMessage = "Loading, please wait..."
+    if (!this.datasets)
+      this.availableCatalogueDatasetsService.getCatalogueDatasets()
+        .then(datasets => {
+          this.datasets = datasets
+          this.applyChanges(changes)
+        })
+        .catch(error => {
+          console.error(error)
+          this.loading = this.unreachable = this.loaded = this.noDatasetSelected = false
+          this.localserverError = true
+        })
+    else
+      this.applyChanges(changes)
+    //if (!this.selectedDataset && this.datasets && this.datasets[0]) this.selectedDataset = this.datasets[0];
+    //if (!this.selectedDatasetName && this.selectedDataset) this.selectedDatasetName = this.selectedDataset.name
+
     //else
     //  void this.source.load([])
   }
@@ -170,6 +200,8 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     this.unreachable = true
     this.loading = false
     this.loaded = false
+    this.localserverError = false
+
     this.source.load([])
     this.updateResult.emit(this.datasets[0].name);
   }
@@ -179,12 +211,8 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
     this.source.reset();
   }
 
-  async activeDatasetsFilter() {
-    this.datasets = await this.availableCatalogueDatasetsService.getCatalogueDatasets()
-  }
-
   async ngOnInit() {
-    this.noDatasetSelected = true
+    //this.noDatasetSelected = true
     await this.ngOnChanges(undefined)//{ selectedDatasetName: { currentValue: this.selectedDatasetName } })
   }
 

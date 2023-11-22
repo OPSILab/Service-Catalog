@@ -95,7 +95,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
         this.isNew = true;
       }
 
-     
+
 
       this.initializeEditor(this.serviceData);
 
@@ -104,7 +104,7 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
       // this.loading = true;
     } catch (error) {
       this.router.navigate(['/services']);
-      console.log(error);
+      console.error(error.message)
       this.errorDialogService.openErrorDialog(error);
     }
   }
@@ -153,7 +153,6 @@ export class EditorComponent implements OnInit, AfterContentInit, OnDestroy {
           return result.title;
         },
         renderResult_services: function (editor, result, props) {
-          console.log(locale)
           var description = result.hasInfo.description.reduce((filtered: Description[], description: Description) => {
             if (locale !== 'en' && description.locale === locale) filtered = [description, ...filtered];
             else if (description.locale === 'en') filtered = [...filtered, description];
@@ -268,11 +267,11 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     });
   }
 
- 
+
 
 
   reloadLocaleEditor(): void {
-   
+
     var currentData=this.editor.getValue();
     this.editor.destroy();
     this.schemaDir =
@@ -283,11 +282,10 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
     '/' +
     this.systemConfig.editorSchemaName;
           this.initializeEditor(currentData);
-          
+
   }
 
   closeSpinner(): void {
-    console.log('closing');
     this.loading = false;
     $('nb-spinner').remove();
   }
@@ -345,8 +343,8 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
         type: 'application/json;charset=utf-8',
       });
 
-    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
-      window.navigator.msSaveOrOpenBlob(blob, filename);
+    if (window.navigator && (window.navigator as any).msSaveOrOpenBlob) {
+      (window.navigator as any).msSaveOrOpenBlob(blob, filename);
     } else {
       const a = document.createElement('a');
       a.download = filename;
@@ -364,7 +362,6 @@ JSONEditor.defaults.custom_validators.push((schema, value, path) => {
   }
 
   stopLoading(): void {
-    console.log(this.loading);
     this.loading = false;
   }
 

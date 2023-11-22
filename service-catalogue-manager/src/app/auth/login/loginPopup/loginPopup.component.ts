@@ -68,7 +68,7 @@ export class LoginPopupComponent implements AfterViewInit, OnDestroy {
        */
       this.closeLoginPopup();
     } catch (err) {
-      console.log(err);
+      console.error(err.message);
       this.openDialog(this.errorDialogTemplateRef, {
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
         error: err as ErrorResponse,

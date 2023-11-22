@@ -62,6 +62,8 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
   loaded: boolean;
   afterLoadSettings: Record<string, unknown>;
   datasetUnreachableSettings: Record<string, unknown>;
+  localServerError: boolean;
+  localServerErrorSettings: Record<string, unknown>;
 
   constructor(
     private availableServicesService: AvailableServicesService,
@@ -76,6 +78,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
   ) {
     this.settings = this.loadTableSettings("Loading, please wait...");
     this.afterLoadSettings = this.loadTableSettings("No data found");
+    this.localServerErrorSettings = this.loadTableSettings("Local server errors occurred");
     this.datasetUnreachableSettings = this.loadTableSettings("Remote catalogue dataset is unreachable");
     // this.locale = (this.configService.config as AppConfig).i18n.locale;    // TODO change with user language preferences
     this.locale = this.translate.currentLang;
@@ -89,14 +92,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     return this.translate.instant('general.services.local') as string
   }
 
-  async ngOnChanges(changes: SimpleChanges): Promise<void> {
-    this.loading = true
-    this.unreachable = false
-    this.loaded = false
-    void await this.source.load([])
-    if (!this.catalogues) this.catalogues = await this.availableCataloguesService.getCatalogues()
-    //if (!this.selectedCatalogue) this.selectedCatalogue = this.catalogues[0];
-    //if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
+  applyChanges(changes) {
     this.selectedCatalogue = this.catalogues.filter(catalogue => catalogue.name == changes['selectedCatalogueName'].currentValue)[0]// || this.datasets[0]
     if (!(changes['selectedCatalogueName'].currentValue == this.translate.instant('general.services.local') as string)) {
       this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID)
@@ -113,21 +109,60 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     }
 
     this.selectedCatalogueCountry.emit(this.selectedCatalogue || { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country })
-    //this.loadSource(this.selectedCatalogue?.catalogueID || "local");
+  }
 
+
+  async ngOnChanges(changes: SimpleChanges): Promise<void> {
+    this.loading = true
+    this.unreachable = false
+    this.loaded = false
+    this.localServerError = false
+    void await this.source.load([])
+    if (!this.catalogues)
+      this.availableCataloguesService.getCatalogues()
+        .then(c => {
+          this.catalogues = c
+          this.applyChanges(changes)
+        })
+        .catch(error => {
+          console.error(error.message)
+          this.localServerError = true
+          this.unreachable = this.loaded = this.loading = false
+        })
+    else
+      this.applyChanges(changes)
   }
 
   async ngOnInit(): Promise<void> {
     this.loading = true
     this.unreachable = false
-    this.loaded = true
-    if (!this.catalogues) this.catalogues = await this.availableCataloguesService.getCatalogues()
-    if (!this.selectedCatalogue) this.selectedCatalogue = { name: this.translate.instant('general.services.local') as string, catalogueID: "local", country: this.config.system.country }
-    if (!this.selectedCatalogueName) this.selectedCatalogueName = this.selectedCatalogue.name
+    this.loaded = false
+    this.localServerError = false
 
-    this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID)
-      .then(async s => await this.response(s))
-      .catch(error => this.handleResponseError(error))
+    try {
+      if (!this.catalogues)
+        this.catalogues = await this.availableCataloguesService.getCatalogues()
+      if (!this.selectedCatalogue)
+        this.selectedCatalogue =
+        {
+          name: this.translate.instant('general.services.local') as string,
+          catalogueID: "local",
+          country: this.config.system.country
+        }
+      if (!this.selectedCatalogueName)
+        this.selectedCatalogueName = this.selectedCatalogue.name
+    }
+    catch (error) {
+      console.error(error.message)
+      this.loading = false
+      this.unreachable = false
+      this.loaded = false
+      this.localServerError = true
+    }
+    if (!this.unreachable)
+      this.availableServicesService.getRemoteServices(this.selectedCatalogue.catalogueID)
+        .then(async s => await this.response(s))
+        .catch(error => this.handleResponseError(error))
     //void await this.source.load(this.services);
     //this.updateResult.emit(this.services);
 
@@ -142,6 +177,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
     this.unreachable = true
     this.loading = false
     this.loaded = false
+    this.localServerError = false
     void this.source.load([])
   }
 
@@ -151,6 +187,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
       this.loading = false
       this.unreachable = false
       this.loaded = true
+      this.localServerError = false
       this.settings.noDataMessage = "No data found"
       //void this.source.load(this.services);
       if (this.selectedCatalogue) await this.loadSource(this.selectedCatalogue.catalogueID);
@@ -201,7 +238,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       console.error(error.error)
       if (error.statusCode === '401' || error.status == 401) {
-        void this.loginService.logout().catch((error) => console.log(error));
+        void this.loginService.logout().catch((error) => console.error(error.message));
         // this.router.navigate(['/login']);
       } else this.errorDialogService.openErrorDialog(error);
     }
@@ -321,80 +358,81 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
 
   loadingSettings = {
 
-      mode: 'external',
-      attr: {
-        class: 'table table-bordered',
+    mode: 'external',
+    attr: {
+      class: 'table table-bordered',
+    },
+    actions: {
+      add: false,
+      edit: false,
+      delete: false,
+    },
+    noDataMessage: "Loading, please wait ... ",
+    columns: {
+      title: {
+        title: this.translate.instant('general.services.service') as string,
+        type: 'text',
+        width: '15%',
+        valuePrepareFunction: (cell, row: AvailableServiceRow) => row.title,
       },
+      spatial: {
+        title: this.translate.instant('general.services.location') as string,
+        type: 'text',
+        width: '15%',
+      },
+
+      description: {
+        title: this.translate.instant('general.services.description') as string,
+        editor: {
+          type: 'textarea',
+        },
+        width: '55%',
+      },
+      keywords: {
+        title: "Keywords",
+        type: 'custom',
+        width: '5%',
+        valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
+        renderComponent: CustomKeywordRenderComponent,
+
+      },
+
+      status: {
+        title: this.translate.instant('general.services.status') as string,
+        sort: false,
+        filter: false,
+        width: '5%',
+        type: 'custom',
+        valuePrepareFunction: (cell, row: AvailableServiceRow) => row.status,
+        renderComponent: CustomStatusRenderComponent,
+      },
+      details: {
+        title: this.translate.instant('general.services.details') as string,
+        filter: false,
+        sort: false,
+        width: '5%',
+        type: 'custom',
+        valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
+        renderComponent: ServiceInfoRenderComponent,
+      },
+
       actions: {
-        add: false,
-        edit: false,
-        delete: false,
+        title: this.translate.instant('general.services.actions') as string,
+        sort: false,
+        width: '5%',
+        filter: false,
+        type: 'custom',
+        valuePrepareFunction: (cell, row) =>
+          this.local ? row : this.remoteService(row),
+        renderComponent: ActionsServiceMenuRenderComponent,
+
+        onComponentInitFunction: (instance) => {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
+          instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe((updatedServiceData: unknown) => this.ngOnInit());
+        },
       },
-      noDataMessage: "Loading, please wait ... ",
-      columns: {
-        title: {
-          title: this.translate.instant('general.services.service') as string,
-          type: 'text',
-          width: '15%',
-          valuePrepareFunction: (cell, row: AvailableServiceRow) => row.title,
-        },
-        spatial: {
-          title: this.translate.instant('general.services.location') as string,
-          type: 'text',
-          width: '15%',
-        },
-
-        description: {
-          title: this.translate.instant('general.services.description') as string,
-          editor: {
-            type: 'textarea',
-          },
-          width: '55%',
-        },
-        keywords: {
-          title: "Keywords",
-          type: 'custom',
-          width: '5%',
-          valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
-          renderComponent: CustomKeywordRenderComponent,
-
-        },
-
-        status: {
-          title: this.translate.instant('general.services.status') as string,
-          sort: false,
-          filter: false,
-          width: '5%',
-          type: 'custom',
-          valuePrepareFunction: (cell, row: AvailableServiceRow) => row.status,
-          renderComponent: CustomStatusRenderComponent,
-        },
-        details: {
-          title: this.translate.instant('general.services.details') as string,
-          filter: false,
-          sort: false,
-          width: '5%',
-          type: 'custom',
-          valuePrepareFunction: (cell, row: AvailableServiceRow) => row,
-          renderComponent: ServiceInfoRenderComponent,
-        },
-
-        actions: {
-          title: this.translate.instant('general.services.actions') as string,
-          sort: false,
-          width: '5%',
-          filter: false,
-          type: 'custom',
-          valuePrepareFunction: (cell, row) =>
-            this.local ? row : this.remoteService(row),
-          renderComponent: ActionsServiceMenuRenderComponent,
-
-          onComponentInitFunction: (instance) => {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unused-vars
-            instance.updateResult.pipe(takeUntil(this.unsubscribe)).subscribe((updatedServiceData: unknown) => this.ngOnInit());
-          },
-        },
-      },  }
+    },
+  }
   local() {
     return !this.selectedCatalogue || this.selectedCatalogue.catalogueID == "local"
   }

@@ -19,14 +19,8 @@ export class ManageConfigurationsService {
     this.config = this.configService.config as AppConfig;
     this.serviceRegistryUrl = this.config.serviceRegistry.url;
   }
-  getCatalogueDatasets(): CatalogueDataset[] | Promise<CatalogueDataset[]> {
-    try {
+  getCatalogueDatasets(): Promise<CatalogueDataset[]> {
       return this.http.get<CatalogueDataset[]>(`${this.serviceRegistryUrl}/api/v2/catalogueDatasets/public`).toPromise();
-    }
-    catch (error) {
-      console.error("AvailableCatalogueDatasetsService: catalogueDatasets not found")
-      console.error("error:<\n", error, ">\n")
-    }
   }
 
   getCatalogueDatasetsCount(): Promise<{ total: number, publicCatalogueDatasets, privateCatalogueDatasets }> {
@@ -38,13 +32,9 @@ export class ManageConfigurationsService {
   }
 
   saveCatalogueDataset(catalogueDataset: CatalogueDataset): Promise<CatalogueDataset> {
-    try {
+
       return this.http.post<CatalogueDataset>(`${this.serviceRegistryUrl}/api/v2/catalogueDatasets`, catalogueDataset).toPromise();
-    }
-    catch (error) {
-      console.error("error:<\n", error, ">\n")
-      console.error("message:<\n", error.error.message, ">\n")
-    }
+
   }
 
   registerCatalogueDataset(catalogueDataset: CatalogueDataset): Promise<CatalogueDataset> {

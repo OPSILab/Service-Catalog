@@ -16,3 +16,4 @@
 <ng2-smart-table *ngIf="loading" [(settings)]="loadingSettings"[source]="[]"> </ng2-smart-table>
 <ng2-smart-table *ngIf="loaded" [(settings)]="afterLoadSettings" [source]="source"> </ng2-smart-table>
 <ng2-smart-table *ngIf="unreachable" [(settings)]="datasetUnreachableSettings" [source]="[]"> </ng2-smart-table>
+<ng2-smart-table *ngIf="localServerError" [(settings)]="localServerErrorSettings" [source]="[]"> </ng2-smart-table>

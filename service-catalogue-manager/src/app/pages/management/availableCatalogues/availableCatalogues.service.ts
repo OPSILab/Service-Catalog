@@ -19,7 +19,7 @@ export class AvailableCataloguesService {
     this.config = this.configService.config as AppConfig;
     this.serviceRegistryUrl = this.config.serviceRegistry.url;
   }
-  getCatalogues(): CatalogueEntry[] | Promise<CatalogueEntry[]> {
+  getCatalogues(): Promise<CatalogueEntry[]> {
       return this.http.get<CatalogueEntry[]>(`${this.serviceRegistryUrl}/api/v2/catalogues/public`).toPromise();
   }
 

@@ -37,6 +37,9 @@ public interface IServiceCatalogService {
       public abstract String getFederatedServices(String remoteCatalogueID, String relativeURL)
                   throws ServiceNotFoundException, URISyntaxException;
 
+      public abstract String getFederatedServicesCount(String remoteCatalogueID, String relativeURL)
+                  throws ServiceNotFoundException, URISyntaxException;
+
       public abstract List<Adapter> getAdapters() throws AdapterNotFoundException;
 
       public abstract List<ServiceModel> getServicesbyIds(List<String> ids) throws ServiceNotFoundException;
@@ -134,8 +137,9 @@ public interface IServiceCatalogService {
       public abstract List<ServiceModel> getServices(String name, String location, String[] keywords,
                   boolean completed);
 
-      public abstract String getFederatedServices(String name, String location, String[] keywords,
-                  boolean completed, String remoteCatalogueID);
+      // public abstract String getFederatedServices(String name, String location,
+      // String[] keywords,
+      // boolean completed, String remoteCatalogueID);
 
       public abstract Object getTimeByServiceId(String decodedServiceIdentifier);
 

@@ -84,38 +84,37 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     this.loading = true;
   }
 
-  completedServicesCount(servicesCountByStatus) {
-    for (let status of servicesCountByStatus)
-      if (status.status == "COMPLETED")
-        return status.count
-    return 0
+  completedServicesCount(services) {
+    let completed = 0
+    if (services)
+      for (let service of services)
+        if (service.status == "COMPLETED")
+          completed = completed + 1
+    return completed
   }
 
   refresh(catalogueIn) {
-    try {
-      let apiEndpoint = catalogueIn.apiEndpoint
-      if ((Date.now() > (catalogueIn.lastRefresh + catalogueIn.refresh)) && catalogueIn.active) {
-        let catalogueTmp: CatalogueEntry = catalogueIn
-        catalogueTmp.lastRefresh = Date.now()
-        this.availableServicesService.getRemoteServicesCount(catalogueIn.catalogueID)
-          .then(async (value) => {
-            catalogueTmp.services = this.completedServicesCount(value);
-            try {
-              await this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID, false);
-              this.ngOnInit();
-            }
-            catch (error) {
-              console.error(error)
-              console.error("unable to refresh services")
-            }
-          });
-      }
-      //this.refreshTry = 0;
+    let apiEndpoint = catalogueIn.apiEndpoint
+    if ((Date.now() > (catalogueIn.lastRefresh + catalogueIn.refresh)) && catalogueIn.active) {
+      let catalogueTmp: CatalogueEntry = catalogueIn
+      catalogueTmp.lastRefresh = Date.now()
+      this.availableServicesService.getRemoteServices(catalogueIn.catalogueID)
+        .then(async (value) => {
+          catalogueTmp.services = value.length//this.completedServicesCount(value);
+          try {
+            await this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID, false);
+            this.ngOnInit();
+          }
+          catch (error) {
+            console.error(error)
+            console.error("unable to refresh services")
+          }
+        })
+        .catch(error => {
+          console.error(error.message)
+        })
     }
-    catch (error) {
-      console.error("API calls error")
-      console.error(error)
-    }
+    //this.refreshTry = 0;
     //else console.error("Unable to refresh service count")
     return catalogueIn.services
   }
@@ -123,30 +122,31 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     try {
       this.availableCatalogues = await this.availableCataloguesService.getCatalogues();
-      for (let catalogue of this.availableCatalogues) {
-        try {
-          if (catalogue.active == true) {
-            catalogue.status = "inactive"
-            this.availableCataloguesService.getStatus(catalogue.catalogueID).then(c => {
-              catalogue.status = c ? c.status : "unreachable"
-              void this.source.load(this.availableCatalogues);
-            })
-          }
-        }
-        catch (error) {
-          console.error(error)
-          if (error.statusCode === '401' || error.status == 401 || (error.error && (error.error.statusCode === '401' || error.error.status == 401))) catalogue.status = "Unauthorized"
-          else catalogue.status = "Unreachable"
-        }
-      }
-      //this.refreshLimit = this.availableCatalogues.length;
       void this.source.load(this.availableCatalogues);
-    } catch (error) {
+    }
+    catch (error) {
       console.error("errors during ng on init")
       console.error("error:<\n", error, ">\n")
       if (error.statusCode === '401' || error.status == 401)
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))
       this.errorService.openErrorDialog(error);
+    }
+    for (let catalogue of this.availableCatalogues) {
+      catalogue.status = "inactive"
+      if (catalogue.active == true) {
+        this.refresh(catalogue)
+        this.availableCataloguesService.getStatusByURL(catalogue.apiEndpoint).then(status => {
+          catalogue.status = status ? status.status : "unreachable"
+          void this.source.load(this.availableCatalogues);
+        })
+          .catch(error => {
+            console.error(error.message)
+            if (error.statusCode === '401' || error.status == 401 || (error.error && (error.error.statusCode === '401' || error.error.status == 401)))
+              catalogue.status = "Unauthorized"
+            else catalogue.status = "Unreachable"
+          })
+      }
+      //this.refreshLimit = this.availableCatalogues.length;
     }
   }
 
@@ -228,7 +228,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           filter: false,
           width: '5%',
           type: 'custom',
-          valuePrepareFunction: async (cell, row: CatalogueEntry) => row.status,
+          valuePrepareFunction: async (cell, row: CatalogueEntry) => this.getStatus(row),
           renderComponent: StatusRenderComponent,
         },
         active: {
@@ -264,6 +264,9 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
         },
       },
     };
+  }
+  getStatus(row) {
+    return row.status
   }
 
   resetfilters(): void {
