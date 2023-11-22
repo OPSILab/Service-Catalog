@@ -238,7 +238,7 @@ export class CatalogueSelectComponent implements OnInit, OnChanges {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       console.error(error.error)
       if (error.statusCode === '401' || error.status == 401) {
-        void this.loginService.logout().catch((error) => console.log(error));
+        void this.loginService.logout().catch((error) => console.error(error.message));
         // this.router.navigate(['/login']);
       } else this.errorDialogService.openErrorDialog(error);
     }

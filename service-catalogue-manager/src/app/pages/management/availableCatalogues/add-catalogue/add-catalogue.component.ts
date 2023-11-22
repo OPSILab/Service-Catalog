@@ -51,7 +51,7 @@ export class AddCatalogueComponent implements OnInit {
   clientID: string;
   clientSecret: string;
   filteredCountryOptions$: Observable<string[]>;
-  countries : string[] = spatials.enum//Countries.countries
+  countries: string[] = spatials.enum//Countries.countries
   placeholders = {
     competentAuthority: this.translate.instant('general.catalogues.competent_authority'),
     country: this.translate.instant('general.catalogues.country'),
@@ -94,7 +94,7 @@ export class AddCatalogueComponent implements OnInit {
       if (this.value.description) this.description = this.value.description
       if (this.value.status) this.status = this.value.status
       if (this.value.competentAuthority) this.competentAuthority = this.value.competentAuthority
-      if (this.value.active!=undefined) this.active = this.value.active
+      if (this.value.active != undefined) this.active = this.value.active
       if (this.value.apiEndpoint) this.apiEndpoint = this.value.apiEndpoint
       if (this.value.authenticated) this.authenticated = this.value.authenticated
       if (this.value.catalogueID) this.catalogueID = this.value.catalogueID
@@ -147,7 +147,7 @@ export class AddCatalogueComponent implements OnInit {
   }
 
   completedServicesCount(servicesCountByStatus) {
-    for (let status of  servicesCountByStatus)
+    for (let status of servicesCountByStatus)
       if (status.status == "COMPLETED")
         return status.count
     return 0
@@ -163,7 +163,7 @@ export class AddCatalogueComponent implements OnInit {
         country = this.country,
         category = this.category,
         homePage = this.homePage,
-        iconURL=this.iconURL,
+        iconURL = this.iconURL,
         apiEndpoint = this.apiEndpoint,
         active = this.active,
         refresh,
@@ -223,11 +223,10 @@ export class AddCatalogueComponent implements OnInit {
       if (!this.name) errors.push(this.errorTemplate("name"))
       if (!this.apiEndpoint) errors.push(this.errorTemplate("apiEndpoint"))
       if (!this.authenticated) errors.push(this.errorTemplate("authenticated"))
-      if (this.active===undefined) errors.push(this.errorTemplate("active"))
+      if (this.active === undefined) errors.push(this.errorTemplate("active"))
       if (!this.refresh) errors.push(this.errorTemplate("refresh"))
 
-      console.log("error:", "\n", error)
-
+      console.error(error.message)
       if (error.status && error.status == 400 && error.error && error.error.status == "Catalogue already exists") {
         this.errorService.openErrorDialog({
           error: 'EDITOR_VALIDATION_ERROR', validationErrors: [

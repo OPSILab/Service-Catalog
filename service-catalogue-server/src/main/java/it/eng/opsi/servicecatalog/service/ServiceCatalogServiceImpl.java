@@ -159,9 +159,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		} catch (Exception e) {
 			System.out.println(e);
 			try {
-				System.out.println("Refreshing token");
 				getToken(catalogue);
-				System.out.println("Token is refreshed");
 				response = getFederatedServicesResponse(relativeURL, accessToken, catalogue);
 			} catch (Exception ex) {
 				System.out.println("Errors occurred when get federated services");
@@ -169,7 +167,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			}
 		}
 
-		System.out.println("RESPONSE is:\n");
 		if (response != null && response.length() > 20)
 			System.out.println(response.substring(0, 20).concat("..."));
 		else
@@ -210,8 +207,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 				catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/services"));
 
 		WebClient client = WebClient.create();
-		System.out.println("GET FEDERATED SERVICES IS CALLING\n");
-		System.out.println(catalogue.getApiEndpoint().concat(relativeURL));
 		return client.get()
 				.uri(new URI(catalogue.getApiEndpoint().concat(relativeURL)))
 				.header("Authorization", "Bearer ".concat(accessToken))
@@ -225,8 +220,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			Catalogue catalogue) throws URISyntaxException {
 
 		WebClient client = WebClient.create();
-		System.out.println("GET FEDERATED SERVICES COUNT IS CALLING\n");
-		System.out.println(catalogue.getApiEndpoint().concat(relativeURL));
 		return client.get()
 				.uri(new URI(catalogue.getApiEndpoint().concat(relativeURL)))
 				.header("Authorization", "Bearer ".concat(accessToken))
@@ -240,8 +233,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			Catalogue catalogue) throws URISyntaxException {
 
 		WebClient client = WebClient.create();
-		System.out.println("GET FEDERATED STATUS IS CALLING\n");
-		System.out.println(catalogue.getApiEndpoint().concat(relativeURL));
 		return client.get()
 				.uri(new URI(catalogue.getApiEndpoint().concat(relativeURL)))
 				.header("Authorization", "Bearer ".concat(accessToken))
@@ -928,7 +919,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 		Catalogue catalogue = new Catalogue();
 		catalogue.setApiEndpoint(URL);
-		System.out.println(catalogue.getApiEndpoint());
 		String response = "";
 
 		try {
@@ -949,29 +939,14 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 	@Override
 	public String getFederatedStatusByURL(String URL) {
 
-		System.out.println("\n\n\n-------------------GET FEDERATED STATUS BY URL----------------------\n\n\n");
-
 		Catalogue catalogue = new Catalogue();
-		//System.out.println(catalogue);
 		catalogue.setApiEndpoint(URL);
-		//System.out.println(catalogue);
 		String response = "";
 
 		try {
-			/*
-			 * if (catalogue.getApiEndpoint() != null)
-			 * catalogue.setApiEndpoint(catalogue.getApiEndpoint().split("services")[0]);
-			 * else
-			 * return "Invalid catalogue api endpoint: null";
-			 * response = getFederatedStatusResponse("status", accessToken, catalogue);
-			 * } catch (Exception e) {
-			 * System.out.println(e);
-			 * try {
-			 */
-			// catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/"));
 			response = getFederatedStatusResponse("/api/v2/status", accessToken, catalogue);
 		} catch (Exception ex) {
-			System.out.println("UNABLE TO ACHIEVE STATUS DUE TO : \n\n");
+			System.out.println("Error: unable to achieve status");
 			System.out.println(ex);
 		}
 		return response;
@@ -979,8 +954,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Override
 	public String getFederatedStatus(String catalogueID) {
-
-		System.out.println("--------------GET FEDERATED STATUS BY CATALOGUE ID---------------");
 
 		Catalogue catalogue = catalogueRepo.findBycatalogueID(catalogueID);
 
@@ -1000,17 +973,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		String response = "";
 
 		try {
-			/*
-			 * if (catalogue.getApiEndpoint() != null)
-			 * catalogue.setApiEndpoint(catalogue.getApiEndpoint().split("services")[0]);
-			 * else
-			 * return "Invalid catalogue api endpoint: null";
-			 * response = getFederatedStatusResponse("status", accessToken, catalogue);
-			 * } catch (Exception e) {
-			 * System.out.println(e);
-			 * try {
-			 */
-			// catalogue.setApiEndpoint(catalogue.getApiEndpoint().concat("/api/v2/"));
 			response = getFederatedStatusResponse("/api/v2/status", accessToken, catalogue);
 		} catch (Exception ex) {
 			System.out.println(ex);
@@ -1054,9 +1016,7 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		} catch (Exception e) {
 			System.out.println(e);
 			try {
-				System.out.println("Refreshing token");
 				getToken(catalogue);
-				System.out.println("Token is refreshed");
 				response = getFederatedServicesCountResponse(relativeURL, accessToken, catalogue);
 			} catch (Exception ex) {
 				System.out.println("Errors occurred when get federated services count");
@@ -1064,7 +1024,6 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 			}
 		}
 
-		System.out.println("RESPONSE\n\n");
 		if (response != null && response.length() > 20)
 			System.out.println(response.substring(0, 20).concat("..."));
 		else

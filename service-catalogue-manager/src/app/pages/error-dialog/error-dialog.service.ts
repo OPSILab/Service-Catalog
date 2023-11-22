@@ -7,7 +7,7 @@ export class ErrorDialogService {
   constructor(private modalService: NbDialogService) {}
 
   openErrorDialog(error): void {
-    console.log(error)
+    console.error(error.message)
     this.modalService.open(ErrorDialogComponent, {
       context: {
         error: error,

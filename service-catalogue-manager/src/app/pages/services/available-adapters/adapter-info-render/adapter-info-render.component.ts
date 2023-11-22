@@ -42,7 +42,7 @@ export class AdapterInfoRenderComponent implements OnInit {
       this.logs = await this.availableAdaptersService.getAdapterLogs(this.value.adapterId)
     }
     catch (error) {
-      console.log("Error:\n\n", error)
+      console.error(error.message)
     }
     this.modalService.open(this.adapterInfoModalRef, {
       context: {

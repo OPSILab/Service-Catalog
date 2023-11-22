@@ -115,7 +115,6 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
   }
 
   completedServicesCount(services) {
-    console.debug("TOTAL SERVICES", services.length)
     let completed = 0
     if (services)
       for (let service of services)
@@ -254,9 +253,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
       //this.value.services = this.completedServicesCount((await this.availableServicesService.getRemoteServicesCount(this.value.catalogueID)))
       this.availableServicesService.getRemoteServices(this.value.catalogueID)
           .then(async (value) => {
-            console.debug("GET REMOTE SERVICES COUNT", value.length)
             this.value.services = value.length//this.completedServicesCount(value);
-            //console.debug(this.value.services)
             try {
               await this.availableCataloguesService.updateCatalogue(this.value, this.value.catalogueID, false);
               this.ngOnInit();
@@ -390,7 +387,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
       if (this.active === undefined) errors.push(this.errorTemplate("active"))
       if (!this.refresh) errors.push(this.errorTemplate("refresh"))
 
-      console.log("error:", "\n", error)
+      console.error(error.message)
 
       if (error.status && error.status == 400 && error.error && error.error.status == "Catalogue already exists") {
         this.errorDialogService.openErrorDialog({

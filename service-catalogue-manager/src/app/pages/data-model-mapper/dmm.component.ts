@@ -33,7 +33,7 @@ import { DialogDataMapComponent } from './dialog-dataMap/dialog-dataMap.componen
 })
 export class DMMComponent implements OnInit {
   @ViewChild('contentTemplate') contentTemplate: TemplateRef<any>;
-  
+
   editor: any;
   //editor2:any;
   container: any;
@@ -60,20 +60,20 @@ export class DMMComponent implements OnInit {
 
   constructor(@Inject(DOCUMENT) private document: Document, protected dialogService: NbDialogService, private windowService: NbWindowService) {}
 
-  
-  
+
+
   ngOnInit(): void {
     this.container = this.document.getElementById('jsoneditor');
     this.container2 = this.document.getElementById('jsoneditor2');
     this.container3 = this.document.getElementById('jsoneditor3');
     this.selectBox = <HTMLInputElement>this.document.getElementById('input-type');
     this.csvtable = this.document.getElementById('csv-table');
-    
 
-    
-  
 
-  
+
+
+
+
 
     //var selectedValue = 'csv';
 
@@ -95,7 +95,7 @@ export class DMMComponent implements OnInit {
 
     const json3 = [
       {
-        
+
       }
     ];
 
@@ -115,12 +115,12 @@ export class DMMComponent implements OnInit {
     }
     return properties;
 
-        
+
   }
 
-   //skipArrays:Ignore the array part 
-   //keepObjKeys:Whether to keep the parent object keys 
-  
+   //skipArrays:Ignore the array part
+   //keepObjKeys:Whether to keep the parent object keys
+
    getKeys(obj, keepObjKeys, skipArrays, keys=[], scope=[]) {
 
     if (Array.isArray(obj)) {
@@ -139,7 +139,6 @@ export class DMMComponent implements OnInit {
   }
 
   onUpdateInputType(event) {
-    console.log(event);
     const divJsonElement = document.getElementById('json-input');
     const divCSVElement = document.getElementById('csv-input');
 
@@ -153,42 +152,37 @@ export class DMMComponent implements OnInit {
   }
 
   onUpdatePathForDataMap(event) {
-    console.log(event);
-    console.log(this.editor.getText());
     this.mapOptions= this.selectMapJsonOptions(this.editor.getText(), event);
-    console.log(this.mapOptions);
     this.setMapEditor();
   }
   setMapEditor() {
 
     var dialogService= this.dialogService;
     var mOptions=this.mapOptions
-    console.log(mOptions);
 
     const options2 = {
       mode: 'tree',
       modes: ['tree', 'code', 'view', 'preview'], // allowed modes
       onModeChange: function (newMode, oldMode) {
 
-       
+
       },
-      
+
 
       onCreateMenu: function (items, node) {
         const path = node.path
 
         // log the current items and node for inspection
-        console.log('items:', items, 'node:', node)
-      
+
         var selectPath = path;
         function pathToMap() {
-         
+
          dialogService
       .open(DialogDataMapComponent, {
         context: { mapOptions: mOptions, selectPath:selectPath  },
-      })   
-        
-        
+      })
+
+
         }
 
         if (path) {
@@ -230,7 +224,7 @@ export class DMMComponent implements OnInit {
 
     };
 
-    const json2 = { 
+    const json2 = {
       "name": "",
       "location": "",
       "totalSlotNumber": "",
@@ -243,7 +237,7 @@ export class DMMComponent implements OnInit {
   const editor2 = new JSONEditor(this.container2, options2, json2);
 
   this.editor2=editor2;
-    
+
   }
 
   saveAsFile(): void {
@@ -268,35 +262,33 @@ export class DMMComponent implements OnInit {
             this.csvSourceData = result.content;
             this.displayCSV(this.csvSourceData, this.csvtable, this.separatorItem);
             this.mapOptions= this.csvSourceData.slice(0, this.csvSourceData.indexOf("\n")).split(this.separatorItem);
-            
+
           } else {
             this.editor.setText(result.content);
-           
+
             //this.mapOptions = this.getAllNestedProperties(JSON.parse(result.content));
             this.paths=this.selectMapJsonOptions(result.content, '')
-
-            console.log( this.paths);
           }
         }
       });
   }
- 
- 
- 
+
+
+
   selectMapJsonOptions(content: string, path:string): string[] {
 
     return this.getKeys(_.get(JSON.parse(content), path+'[0]', JSON.parse(content) ), true, true)
 
-    
+
   }
 
- 
+
 
   displayCSV(csvData: string, element: HTMLElement, separator: string) {
     // Split the CSV data into an array of rows
     var divElement = document.createElement('div');
-    divElement.style.overflowY="auto"; 
-    divElement.style.height="200px"; 
+    divElement.style.overflowY="auto";
+    divElement.style.height="200px";
 
     const rows = csvData.split('\n');
 
@@ -329,7 +321,7 @@ export class DMMComponent implements OnInit {
     element.appendChild(divElement);
   }
 
-    
+
 }
 
 

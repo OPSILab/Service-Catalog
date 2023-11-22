@@ -98,7 +98,7 @@ export class AvailableAdaptersComponent implements OnInit, OnDestroy {
       this.ngOnInit()
     }
     catch (error) {
-      console.log("error:<\n", error, ">\n")
+      console.error(error.message)
 
       if (error.statusCode === '401' || error.status == 401) {
         void this.loginService.logout().catch((error) => this.errorService.openErrorDialog(error))

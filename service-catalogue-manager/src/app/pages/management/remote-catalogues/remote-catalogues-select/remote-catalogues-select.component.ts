@@ -140,7 +140,6 @@ export class RemoteCataloguesSelectComponent implements OnInit, OnChanges {
       this.selectedDataset = this.datasets.filter(dataset => dataset.name == changes['selectedDatasetName'].currentValue)[0]// || this.datasets[0]
       if (this.selectedDataset) {
         void this.source.load[0]
-        console.log(this.selectedDataset)
         this.noDatasetSelected = false
         if (this.selectedDataset.type == "Service Catalogue")
           this.availableCataloguesService.getRemoteCatalogues(this.selectedDataset.URL)

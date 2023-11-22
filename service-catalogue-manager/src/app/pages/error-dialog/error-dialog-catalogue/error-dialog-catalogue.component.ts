@@ -18,9 +18,9 @@ export class ErrorDialogCatalogueComponent {
     this.appConfig = this.configService.config as AppConfig
   }
 
-  closeModal(error: { [key: string]: { cause?: string } }): void {
+  closeModal(error): void {
     if (error.error?.cause === 'it.eng.opsi.cape.exception.AuditLogNotFoundException' || error.status === 0 || error.status === 401)
-      void this.loginService.logout().catch((error) => console.log(error));
+      void this.loginService.logout().catch((error) => console.error(error.message));
     // else
     //   this.backClicked();
     this.ref.close();

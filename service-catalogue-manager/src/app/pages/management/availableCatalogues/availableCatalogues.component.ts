@@ -85,7 +85,6 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
   }
 
   completedServicesCount(services) {
-    console.debug("TOTAL SERVICES", services.length)
     let completed = 0
     if (services)
       for (let service of services)
@@ -101,7 +100,6 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
       catalogueTmp.lastRefresh = Date.now()
       this.availableServicesService.getRemoteServices(catalogueIn.catalogueID)
         .then(async (value) => {
-          console.debug("GET REMOTE SERVICES COUNT", value.length)
           catalogueTmp.services = value.length//this.completedServicesCount(value);
           try {
             await this.availableCataloguesService.updateCatalogue(catalogueTmp, catalogueTmp.catalogueID, false);
@@ -136,10 +134,8 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     for (let catalogue of this.availableCatalogues) {
       catalogue.status = "inactive"
       if (catalogue.active == true) {
-        console.debug("CATALOGUE IS ACTIVE, SERVICES WILL BE REFRESHED")
         this.refresh(catalogue)
         this.availableCataloguesService.getStatusByURL(catalogue.apiEndpoint).then(status => {
-          console.debug("STATUS", status.status)
           catalogue.status = status ? status.status : "unreachable"
           void this.source.load(this.availableCatalogues);
         })
@@ -270,7 +266,6 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
     };
   }
   getStatus(row) {
-    console.debug("STATUS", row.status)
     return row.status
   }
 
