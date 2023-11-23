@@ -378,6 +378,8 @@
       "source_data_type" : "Tipo di dato in ingresso"
     },
     "catalogues": {
+      "enabled": "Abilitato",
+      "disabled":"Disabilitato",
       "select" : "Seleziona catalogo",
       "dataset": {
         "dataset_added_message" : "Un nuovo dataset di cataloghi è stato aggiunto",
@@ -413,6 +415,11 @@
       "services": "Servizi",
       "active": "Abilitato",
       "name" : "Nome",
+      "status_enum": {
+        "active": "attivo",
+        "inactive": "inattivo",
+        "unreachable": "non raggiungibile"
+      },
       "competent_authority" : "Autorità competente",
       "category" : "Categoria",
       "home_page" : "Home page",

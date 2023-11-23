@@ -23,8 +23,8 @@
       "publicServices": "Public Services",
       "privateServices": "Private Services",
       "personalDataServices": "Using Personal Data",
-      "federatedCatalogues" : "Federated Catalogues",
-      "catalogueDatasets" : "Catalogue Datasets"
+      "federatedCatalogues": "Federated Catalogues",
+      "catalogueDatasets": "Catalogue Datasets"
     },
     "menu": {
       "dashboard": "Dashboard",
@@ -208,7 +208,7 @@
       "no_type": "Type not provided"
     },
     "services": {
-      "local" : "Local Service catalogue",
+      "local": "Local Service catalogue",
       "authority": "CompetentAuthority",
       "location": "Location",
       "channels": "Channels",
@@ -378,7 +378,9 @@
       "source_data_type": "Source Data Type"
     },
     "catalogues": {
-      "select" : "Select catalogue",
+      "enabled": "Enabled",
+      "disabled": "Disabled",
+      "select": "Select catalogue",
       "dataset": {
         "dataset_added_message": "A new catalogue dataset was added",
         "delete_dataset_message": "Are you sure to delete permanently the catalogue dataset <strong>{{catalogueDatasetName}}</strong>?\n",
@@ -401,7 +403,7 @@
         "add": "Add catalogue dataset",
         "actions": "Actions"
       },
-      "reset" : "Reset client ID and secret",
+      "reset": "Reset client ID and secret",
       "add": "Add catalogue",
       "confirm": "Confirm",
       "catalogues": "Catalogues",
@@ -412,6 +414,11 @@
       "country": "Country",
       "services": "Services",
       "active": "Enabled",
+      "status_enum": {
+        "active": "active",
+        "inactive": "inactive",
+        "unreachable": "unreachable"
+      },
       "name": "Name",
       "competent_authority": "Competent Authority",
       "category": "Category",
@@ -419,7 +426,7 @@
       "api_endpoint": "API endpoint",
       "type": "Type",
       "refresh": "Refresh",
-      "last_update" : "Last update",
+      "last_update": "Last update",
       "authenticated": "authenticated",
       "oauth2_endpoint": "Oauth2 Endpoint",
       "client_ID": "Client ID",

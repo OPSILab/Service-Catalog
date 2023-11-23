@@ -33,6 +33,7 @@ import { RemoteCataloguesSelectComponent } from './remote-catalogues/remote-cata
 import { ActionsFederateComponent } from './remote-catalogues/remote-catalogues-select/actions-federate/actions-federate.component';
 import { InfoRenderRemoteCatalogueComponent } from './remote-catalogues/info-render-remote-catalogue/info-render-remote-catalogue.component';
 import { IconComponent } from './availableCatalogues/iconRender/icon.component';
+import { ActiveRenderComponent } from './availableCatalogues/actions-catalogue-menu-render/active-render/active-render.component';
 
 
 @NgModule({
@@ -70,7 +71,8 @@ import { IconComponent } from './availableCatalogues/iconRender/icon.component';
     RemoteCataloguesSelectComponent,
     ActionsFederateComponent,
     InfoRenderRemoteCatalogueComponent,
-    IconComponent
+    IconComponent,
+    ActiveRenderComponent
   ],
   providers: [AvailableCataloguesService],
   entryComponents: [
