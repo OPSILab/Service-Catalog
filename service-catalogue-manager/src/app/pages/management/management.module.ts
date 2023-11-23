@@ -17,6 +17,7 @@ import {
   NbRadioModule,
   NbTagModule,
   NbAutocompleteModule,
+  NbTooltipModule,
 } from '@nebular/theme';
 import { AvailableCataloguesComponent } from './availableCatalogues/availableCatalogues.component';
 import { AvailableCataloguesService } from './availableCatalogues/availableCatalogues.service';
@@ -57,7 +58,8 @@ import { ActiveRenderComponent } from './availableCatalogues/active-render/activ
     FormsModule,
     ReactiveFormsModule,
     NbAutocompleteModule,
-    ManagementRoutingModule
+    ManagementRoutingModule,
+    NbTooltipModule
   ],
   declarations: [
     AvailableCataloguesComponent,

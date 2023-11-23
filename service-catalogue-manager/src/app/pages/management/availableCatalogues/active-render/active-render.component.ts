@@ -5,23 +5,24 @@ import { NbDialogService } from '@nebular/theme';
   selector: 'status-render',
   template: `
     <div *ngIf="active==true">
-      <button nbButton ghost shape="rectangle" size="small" status="success" (click)="showStatus()">
+      <button nbButton ghost shape nbTooltip="{{'general.catalogues.enabled' | translate}}" size="small" status="success" (click)="showStatus()">
         <i class="material-icons">check_circle</i>
       </button>
     </div>
 
     <div *ngIf="active==false">
-      <button nbButton ghost nbTooltip="Under Development" shape="rectangle" size="small" status="warning" (click)="showStatus()">
+      <button nbButton ghost nbTooltip="{{'general.catalogues.disabled' | translate}}" shape="rectangle" size="small" status="warning">
         <i class="material-icons">check_circle</i>
       </button>
     </div>
 
     <div *ngIf="active!=true && active!=false">
-      <button nbButton ghost nbTooltip="Under Development" shape="rectangle" size="small" status="danger" (click)="showStatus()">
+      <button nbButton ghost nbTooltip="{{'general.catalogues.status_enum.unreachable' | translate}}" shape="rectangle" size="small" status="danger">
         <i class="material-icons">check_circle</i>
       </button>
     </div>
 
+    <!--
     <ng-template #showStatusDialog let-data let-ref="dialogRef">
       <nb-card>
         <nb-card-header class="d-flex justify-content-between">
@@ -41,7 +42,7 @@ import { NbDialogService } from '@nebular/theme';
           </button>
         </nb-card-footer>
       </nb-card>
-    </ng-template>
+    </ng-template>-->
   `,
   styleUrls: ['../../../services/availableServices/availableServices.component.scss'],
 })
@@ -60,6 +61,7 @@ export class ActiveRenderComponent implements OnInit {
     else this.active = this.value
   }
 
+  /*
   showStatus(): void {
     this.dialogService
       .open(this.showStatusDialog, {
@@ -71,6 +73,6 @@ export class ActiveRenderComponent implements OnInit {
       .onClose.subscribe((confirm) => {
         //if (confirm) void this.onRegisterService();
       });
-  }
+  }*/
 }
 

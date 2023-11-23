@@ -190,7 +190,7 @@ export class ActionsCatalogueMenuRenderComponent implements OnInit, OnDestroy {
     if (this.registered) {
       return [
         {
-          title: this.translate.instant('general.catalogues.refresh') as string,
+          title: this.translate.instant('general.catalogues.refresh_metadata') as string,
           data: 'refresh',
         },
         {

@@ -381,6 +381,8 @@
       "enabled": "Enabled",
       "disabled": "Disabled",
       "select": "Select catalogue",
+      "refresh_list": "Refresh list",
+      "refresh_metadata": "Refresh metadata",
       "dataset": {
         "dataset_added_message": "A new catalogue dataset was added",
         "delete_dataset_message": "Are you sure to delete permanently the catalogue dataset <strong>{{catalogueDatasetName}}</strong>?\n",
@@ -415,9 +417,9 @@
       "services": "Services",
       "active": "Enabled",
       "status_enum": {
-        "active": "active",
-        "inactive": "inactive",
-        "unreachable": "unreachable"
+        "active": "Active",
+        "inactive": "Inactive",
+        "unreachable": "Unreachable"
       },
       "name": "Name",
       "competent_authority": "Competent Authority",

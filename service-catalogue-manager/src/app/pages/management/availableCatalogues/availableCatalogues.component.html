@@ -10,9 +10,9 @@
           <i class="material-icons">add</i>&nbsp;{{ 'general.services.add_new' | translate }}
         </button>
         &nbsp;
-        <button nbButton class="" shape="rectangle" size="medium" status="primary" (click)="ngOnInit()">
-          <i class="material-icons">refresh list</i>
-          &nbsp; refresh list
+        <button nbButton nbTooltip="{{'general.catalogues.refresh_list' | translate}}" class="" shape="rectangle" size="medium" status="primary" (click)="ngOnInit()">
+          <i class="material-icons">refresh</i>
+          &nbsp; {{'general.catalogues.refresh' | translate}}
         </button>
       </div>
 

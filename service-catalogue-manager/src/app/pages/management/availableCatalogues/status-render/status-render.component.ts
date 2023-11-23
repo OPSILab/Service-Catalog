@@ -6,19 +6,19 @@ import { TranslateService } from '@ngx-translate/core';
   selector: 'status-render',
   template: `
     <div *ngIf="active==true">
-      <button nbButton ghost shape="rectangle" size="small" status="success" (click)="showStatus()">
+      <button nbButton ghost shape nbTooltip="{{'general.catalogues.status_enum.active' | translate}}" size="small" status="success">
         <i class="material-icons">check_circle</i>
       </button>
     </div>
 
     <div *ngIf="active==false">
-      <button nbButton ghost nbTooltip="Under Development" shape="rectangle" size="small" status="warning" (click)="showStatus()">
+      <button nbButton ghost nbTooltip="{{'general.catalogues.status_enum.inactive' | translate}}" shape="rectangle" size="small" status="warning">
         <i class="material-icons">check_circle</i>
       </button>
     </div>
 
     <div *ngIf="active!=true && active!=false">
-      <button nbButton ghost nbTooltip="Under Development" shape="rectangle" size="small" status="danger" (click)="showStatus()">
+      <button nbButton ghost nbTooltip="{{'general.catalogues.status_enum.unreachable' | translate}}" shape="rectangle" size="small" status="danger">
         <i class="material-icons">check_circle</i>
       </button>
     </div>
