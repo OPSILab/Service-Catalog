@@ -43,7 +43,7 @@ import { NbDialogService } from '@nebular/theme';
       </nb-card>
     </ng-template>
   `,
-  styleUrls: ['../../../../services/availableServices/availableServices.component.scss'],
+  styleUrls: ['../../../services/availableServices/availableServices.component.scss'],
 })
 export class ActiveRenderComponent implements OnInit {
   active: boolean | string = false;
