@@ -20,6 +20,7 @@ import { StatusRenderComponent } from './status-render/status-render.component';
 import { AvailableServicesService } from '../../services/availableServices/availableServices.service';
 import { ErrorDialogCatalogueService } from '../../error-dialog/error-dialog-catalogue/error-dialog-catalogue.service';
 import { IconComponent } from './iconRender/icon.component';
+import { ActiveRenderComponent } from './active-render/active-render.component';
 
 @Component({
   selector: 'available-catalogues-smart-table',
@@ -238,7 +239,7 @@ export class AvailableCataloguesComponent implements OnInit, OnDestroy {
           width: '5%',
           type: 'custom',
           valuePrepareFunction: (cell, row: CatalogueEntry) => row.active,
-          renderComponent: StatusRenderComponent,
+          renderComponent: ActiveRenderComponent,
         },
         /*info: {
           title: this.infoLabel,

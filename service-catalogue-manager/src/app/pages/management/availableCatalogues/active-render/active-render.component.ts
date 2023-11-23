@@ -1,6 +1,5 @@
 import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { NbDialogService } from '@nebular/theme';
-import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'status-render',
@@ -29,7 +28,12 @@ import { TranslateService } from '@ngx-translate/core';
           <h5>{{ 'general.catalogues.status' | translate }}</h5>
         </nb-card-header>
         <nb-card-body class="p-5 text-center">
-          {{'general.catalogues.status' | translate}} : {{this.translateStatus(data.status)}}
+        <div *ngIf="active">
+          {{'general.catalogues.enabled' | translate}}
+          </div>
+          <div *ngIf="!active">
+          {{'general.catalogues.disabled' | translate}}
+          </div>
         </nb-card-body>
         <nb-card-footer class="d-flex justify-content-center">
           <button nbButton class="ml-2" ghost shape="rectangle" status="primary" (click)="ref.close()">
@@ -41,15 +45,13 @@ import { TranslateService } from '@ngx-translate/core';
   `,
   styleUrls: ['../../../services/availableServices/availableServices.component.scss'],
 })
-export class StatusRenderComponent implements OnInit {
+export class ActiveRenderComponent implements OnInit {
   active: boolean | string = false;
 
   @Input() value;
   @ViewChild('showStatusDialog', { static: false }) showStatusDialog: TemplateRef<unknown>;
 
-
-
-  constructor(private dialogService: NbDialogService, private translate: TranslateService) { }
+  constructor(private dialogService: NbDialogService,) { }
 
   ngOnInit() {
     if (this.value.__zone_symbol__value != undefined) this.value = this.value.__zone_symbol__value
@@ -69,14 +71,6 @@ export class StatusRenderComponent implements OnInit {
       .onClose.subscribe((confirm) => {
         //if (confirm) void this.onRegisterService();
       });
-  }
-
-  translateStatus(status) {
-
-    if (status == "active") return this.translate.instant('general.catalogues.status_enum.active') as string;
-    if (status == "inactive") return this.translate.instant('general.catalogues.status_enum.inactive') as string;
-    if (status == "unreachable") return this.translate.instant('general.catalogues.status_enum.unreachable') as string;
-    return status
   }
 }
 
