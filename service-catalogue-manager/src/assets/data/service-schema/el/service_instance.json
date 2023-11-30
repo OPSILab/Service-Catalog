@@ -183,7 +183,7 @@
         "email": {
           "type": "string",
           "title": "Email",
-          "description": "Email Address."
+          "description": "DPO Email Address."
         },
         "telephone": {
           "type": "string",
