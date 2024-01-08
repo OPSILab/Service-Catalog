@@ -53,6 +53,10 @@ export class AvailableServicesService {
     return this.http.get<Record<string, number>[]>(`${this.serviceRegistryUrl}/api/v2/services/count/sector`).toPromise();
   }
 
+  getServicesCountByStatus(): Promise<Record<string, number | string>[]> {
+    return this.http.get<Record<string, number>[]>(`${this.serviceRegistryUrl}/api/v2/services/count/status`).toPromise();
+  }
+
   getServicesCountByThematicArea(): Promise<Record<string, number>[]> {
     return this.http.get<Record<string, number>[]>(`${this.serviceRegistryUrl}/api/v2/services/count/thematicArea`).toPromise();
   }

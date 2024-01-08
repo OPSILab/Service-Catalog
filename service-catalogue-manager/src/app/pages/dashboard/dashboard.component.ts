@@ -30,7 +30,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public servicesCountByGroupedBy: Record<string, number>;
   public servicesCountByLocation: Record<string, number>;
   public servicesCount: ServicesCount;
-  public servicesPersonalDataHandlingCount:String;
+  public completedServicesCount;
+  public servicesPersonalDataHandlingCount: String;
 
   constructor(
     private servicesService: AvailableServicesService,
@@ -40,11 +41,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private loginService: LoginService,
     private errorDialogService: ErrorDialogService
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
     try {
       this.servicesCount = await this.servicesService.getServicesCount();
+      this.completedServicesCount = (await this.servicesService.getServicesCountByStatus()).filter(group => group.status == "COMPLETED")[0].count
       this.servicesPersonalDataHandlingCount = await this.servicesService.getServicesIsPersonalDataHandlingCount();
       this.servicesCountBySector = (await this.servicesService.getServicesCountBySector()).reduce((partial, current) => {
         return {
@@ -77,42 +79,42 @@ export class DashboardComponent implements OnInit, OnDestroy {
           title: this.translateService.instant('general.dashboard.services') as string,
           iconClass: 'nb-grid-b-outline',
           type: 'primary',
-          value: this.servicesCount==null? '0' : this.servicesCount.total.toString(),
+          value: this.completedServicesCount == null ? '0' : this.completedServicesCount.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.connectors') as string,
           iconClass: 'nb-power',
           type: 'success',
-          value: await this.connectorsService.getConnectorsCount()==null? '0': (await this.connectorsService.getConnectorsCount()).total.toString(),
+          value: await this.connectorsService.getConnectorsCount() == null ? '0' : (await this.connectorsService.getConnectorsCount()).total.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.federatedCatalogues') as string,
           iconClass: 'nb-tables',
           type: 'danger',
-          value: await this.availableCataloguesService.getCataloguesCount()==null? '0': (await this.availableCataloguesService.getCataloguesCount()).total.toString(),
+          value: await this.availableCataloguesService.getCataloguesCount() == null ? '0' : (await this.availableCataloguesService.getCataloguesCount()).total.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.publicServices') as string,
           iconClass: 'nb-home',
           type: 'info',
-          value: this.servicesCount==null? '0' : this.servicesCount.publicServices.toString(),
+          value: this.servicesCount == null ? '0' : this.servicesCount.publicServices.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.privateServices') as string,
           iconClass: 'nb-e-commerce',
           type: 'warning',
-          value: this.servicesCount==null? '0' : this.servicesCount.privateServices.toString(),
+          value: this.servicesCount == null ? '0' : this.servicesCount.privateServices.toString(),
         },
         {
           title: this.translateService.instant('general.dashboard.personalDataServices') as string,
           iconClass: 'nb-person',
           type: 'primary',
-          value: this.servicesPersonalDataHandlingCount==null? '0' : this.servicesPersonalDataHandlingCount.toString(),
+          value: this.servicesPersonalDataHandlingCount == null ? '0' : this.servicesPersonalDataHandlingCount.toString(),
         },
       ];
     } catch (error) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      if (error.statusCode === '401'||error.status==401)  {
+      if (error.statusCode === '401' || error.status == 401) {
         this.loginService.logout().catch((error) => this.errorDialogService.openErrorDialog(error));
         // this.router.navigate(['/login']);
       } else console.error(error.message)//this.errorDialogService.openErrorDialog(error);
