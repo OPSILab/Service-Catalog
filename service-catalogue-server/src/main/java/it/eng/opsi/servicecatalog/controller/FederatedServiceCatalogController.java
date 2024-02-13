@@ -249,7 +249,7 @@ public class FederatedServiceCatalogController implements FederatedIServiceCatal
 	}
 
 	@Override
-	@Operation(summary = "Get the count of the registered Service model descriptions (total, public and private services).", tags = {
+	@Operation(summary = "Get the count of the Service model descriptions (total, public and private services).", tags = {
 			"Service model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/services/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<String> getServicesCount(@RequestParam("remoteCatalogueID") String remoteCatalogueID)

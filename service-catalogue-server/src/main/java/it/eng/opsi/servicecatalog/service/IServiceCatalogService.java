@@ -22,6 +22,7 @@ import it.eng.opsi.servicecatalog.exception.ServiceNotFoundException;
 import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Status;
+import it.eng.opsi.servicecatalog.model.Version;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Catalogue;
@@ -176,6 +177,8 @@ public interface IServiceCatalogService {
       public abstract HashMap<String, Integer> getCatalogueDatasetsCount();
 
       public abstract Status getStatus();
+
+      public abstract Version getVersion();
 
       public abstract String getFederatedStatus(String catalogueID);
 

@@ -60,6 +60,7 @@ import it.eng.opsi.servicecatalog.model.HasInfo;
 import it.eng.opsi.servicecatalog.model.HasServiceInstance;
 import it.eng.opsi.servicecatalog.model.ServiceModel;
 import it.eng.opsi.servicecatalog.model.Status;
+import it.eng.opsi.servicecatalog.model.Version;
 import it.eng.opsi.servicecatalog.model.Adapter;
 import it.eng.opsi.servicecatalog.model.AdapterLog;
 import it.eng.opsi.servicecatalog.model.Catalogue;
@@ -123,6 +124,9 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 
 	@Value("${spring.application.status}")
 	private String STATUS;
+
+	@Value("${spring.application.version}")
+	private String VERSION;
 
 	String accessToken = "";
 	Integer expires_in;
@@ -889,6 +893,13 @@ public class ServiceCatalogServiceImpl implements IServiceCatalogService {
 		Status status = new Status();
 		status.setStatus(STATUS);
 		return status;
+	}
+
+	@Override
+	public Version getVersion() {
+		Version version = new Version();
+		version.setVersion(VERSION);
+		return version;
 	}
 
 	@Override

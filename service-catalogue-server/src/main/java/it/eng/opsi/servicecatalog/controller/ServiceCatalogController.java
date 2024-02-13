@@ -439,7 +439,7 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	}
 
 	@Override
-	@Operation(summary = "Get the count of the registered Service model descriptions (total, public and private services).", tags = {
+	@Operation(summary = "Get the count of the Service model descriptions (total, public and private services).", tags = {
 			"Service model" }, responses = { @ApiResponse(description = "Returns the count.", responseCode = "200") })
 	@GetMapping(value = "/services/count", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<HashMap<String, Integer>> getServicesCount() {
@@ -973,5 +973,14 @@ public class ServiceCatalogController implements IServiceCatalogController {
 	@GetMapping(value = "/status", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<?> getStatus() {
 		return ResponseEntity.ok(catalogService.getStatus());
+	}
+
+  @Override
+	@Operation(summary = "Get Service catalogue's version.", description = "Get Service catalogue's version.", tags = {
+			"Version" }, responses = {
+					@ApiResponse(description = "Returns the Service catalogue's version.", responseCode = "200") })
+	@GetMapping(value = "/version", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<?> getVersion() {
+		return ResponseEntity.ok(catalogService.getVersion());
 	}
 }

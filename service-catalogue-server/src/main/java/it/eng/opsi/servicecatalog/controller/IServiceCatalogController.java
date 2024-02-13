@@ -170,4 +170,6 @@ public interface IServiceCatalogController {
 
 	public abstract ResponseEntity<?> getStatus();
 
+	public abstract ResponseEntity<?> getVersion();
+
 }

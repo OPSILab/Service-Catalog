@@ -75,8 +75,10 @@ public interface ServiceModelRepository extends MongoRepository<ServiceModel, St
 	public List<HashMap<String, Object>> getCountBySector();
 
 	@Aggregation(pipeline = {
-			" {$group:{'_id':'_','publicServices':{$sum:{$cond:['$isPublicService',1,0]}},'privateServices':{$sum:{$cond:['$isPublicService',0,1]}}}}",
-			"{$project:{'_id':0,'publicServices':1,'privateServices':1,'total':{$sum:['$publicServices','$privateServices']}}}" })
+			"{$match: {'status': 'COMPLETED'}}",
+			"{$group: {'_id': '_', 'publicServices': {$sum: {$cond: ['$isPublicService', 1, 0]}}, 'privateServices': {$sum: {$cond: ['$isPublicService', 0, 1]}}}}",
+			"{$project: {'_id': 0, 'publicServices': 1, 'privateServices': 1, 'total': {$sum: ['$publicServices', '$privateServices']}}}"
+	})
 	public HashMap<String, Integer> getTotalCount();
 
 	@Aggregation(pipeline = { "{$unwind: '$hasInfo.spatial'}", "{'$group':{'_id':'$hasInfo.spatial','count':{$sum:1}}}",
