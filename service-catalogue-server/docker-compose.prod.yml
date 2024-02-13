@@ -19,6 +19,7 @@ services:
       - IDM_ALLOWED_ORIGIN_PATTERNS=http://localhost:81,http://localhost,http://localhost:82,http://localhost:83
       - IDM_ALLOWED_ORIGINS=
       - STATUS=active
+      - VERSION=1.3.2
     networks:
       - sc-network
 
